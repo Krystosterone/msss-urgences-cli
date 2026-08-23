@@ -9,9 +9,9 @@ Initial release.
 
 - `msss-urgences` CLI with `urgences` subcommand reading the MSSS hourly
   open-data CSV (`Releve_horaire_urgences_7jours_nbpers.csv`).
-- Deterministic, cache-aware fetch: local JSON cache keyed on the source's
-  `Mise_a_jour` timestamp, default TTL 30 min, `--refresh` to force, graceful
-  fallback on cache failure.
+- Deterministic, cache-aware fetch: single-file local cache whose validity is
+  governed by a wall-clock TTL (default 30 min, below the source's 1-hour
+  refresh), `--refresh` to force, graceful fallback on cache failure.
 - Data contract: regions → facilities with occupancies, >24h/48h, patients
   present, wait-for-care, DMS average-stay durations; derived occupancy %,
   region average, and delta-from-average.

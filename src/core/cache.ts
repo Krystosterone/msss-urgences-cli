@@ -44,18 +44,31 @@ export function readCache(cfg: CacheConfig = {}): CacheEntry | null {
   try {
     raw = readFileSync(file, 'utf8');
   } catch {
-    return null;
+    return null; // no cache file yet — a clean miss, not a warning
   }
   try {
     const entry = JSON.parse(raw) as CacheEntry;
-    if (!entry?.report || typeof entry.storedAt !== 'string') return null;
+    if (!entry?.report || typeof entry.storedAt !== 'string') {
+      warnCache('corrupt cache entry');
+      return null;
+    }
     const ageMinutes = (Date.now() - Date.parse(entry.storedAt)) / 60_000;
     if (cfg.refresh) return null; // caller wants fresh data
     const ttl = cfg.ttlMinutes ?? DEFAULT_TTL_MINUTES;
     if (Number.isFinite(ageMinutes) && ageMinutes > ttl) return null;
     return entry;
   } catch {
+    warnCache('unreadable cache file');
     return null;
+  }
+}
+
+/** Emit a one-line warning to stderr when the cache is present-but-unusable. */
+function warnCache(reason: string): void {
+  try {
+    process.stderr.write(`msss-urgences: warning — ${reason}; using a live fetch instead\n`);
+  } catch {
+    /* never let logging break the CLI */
   }
 }
 

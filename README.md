@@ -120,9 +120,11 @@ ERs — that's correct, not an error.
 
 The source updates **hourly**, so the CLI caches locally and only re-fetches
 when the cache is older than the TTL (default **30 min**, below the 1-hour
-refresh) or when `--refresh` is passed. The cache file is written atomically and
-keyed on the CSV's `Mise_a_jour` timestamp; cache read/write failures degrade to
-a live fetch and never fail the command.
+refresh) or when `--refresh` is passed. The cache file is written atomically to a
+single file whose validity is governed by a wall-clock TTL on when it was
+written (default 30 min); cache read/write failures degrade to a live fetch and
+never fail the command. The report still carries the source's `Mise_a_jour`
+(`dataDate`) so consumers know how fresh the underlying data is.
 
 - Cache dir: `~/.cache/msss-urgences` (override with `MSSS_URGENCES_CACHE_DIR`).
 

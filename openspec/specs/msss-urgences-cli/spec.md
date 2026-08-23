@@ -53,18 +53,18 @@ mirrors the previous tool's contract so consumers are not surprised.
 
 Repeated invocations within a configurable TTL (MUST default to 30 minutes,
 below the source's 1-hour refresh) SHALL reuse a local file cache instead of
-re-fetching. The cache SHALL be keyed on the source's `Mise_a_jour` data
-timestamp so a fresh hourly publication invalidates it.
+re-fetching. Cache validity is governed by a wall-clock TTL on when the cache
+was written; the report SHALL still carry the source's `Mise_a_jour`
+(`dataDate`) as freshness metadata for consumers.
 
 #### Scenario: Stale cache triggers a fresh fetch
 
-- **WHEN** the local cache is older than the TTL or the source data timestamp is
-  newer than the cached one
+- **WHEN** the local cache is older than the TTL or `--refresh` is passed
 - **THEN** the CLI fetches a fresh CSV, updates the cache, and reports the data
 
 #### Scenario: Fresh cache is reused without network
 
-- **WHEN** the cache is younger than the TTL and its data timestamp matches
+- **WHEN** the cache is younger than the TTL
 - **THEN** the CLI returns the cached report and marks it as cached without
   contacting the server
 
