@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.history/
+.agents/skills/openspec-*/
+cache/
+*.log
+.DS_Store

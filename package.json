@@ -1,0 +1,39 @@
+{
+  "name": "msss-urgences-cli",
+  "version": "0.1.0",
+  "description": "Deterministic CLI for Québec emergency-room occupancy and wait-time data from the MSSS hourly open-data CSV",
+  "type": "commonjs",
+  "bin": {
+    "msss-urgences": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "start": "node dist/cli.js",
+    "test": "node --import tsx --test test/*.test.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "msss",
+    "quebec",
+    "urgences",
+    "emergency-room",
+    "cli",
+    "open-data"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "csv-parse": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

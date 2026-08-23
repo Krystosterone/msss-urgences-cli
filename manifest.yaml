@@ -1,0 +1,12 @@
+# msss-urgences-cli install manifest — consumed by install-repo.sh.
+name: msss-urgences-cli
+
+# No cron jobs, no databases, no promoted plugins. The CLI is query-on-demand;
+# nothing runs periodically. The runtime dependency (Node? it's already present;
+# npm-managed deps are installed by install.sh) is declared, if any, under
+# dependencies.tool below.
+#
+# dependencies:
+#   tool:
+#     - command: msss-urgences
+#       uv: ...
