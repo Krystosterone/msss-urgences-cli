@@ -25,15 +25,17 @@ export function normalize(text: string): string {
 }
 
 function facilityMatches(f: Facility, filters: UrgencesFilters): boolean {
+  // Explicit ids always win: they override --available-only so that a caller
+  // targeting a specific facility sees it even when it's not reporting right now.
+  if (filters.ids && filters.ids.length > 0) {
+    return filters.ids.includes(String(f.id ?? ''));
+  }
   if (filters.availableOnly && !f.available) return false;
   if (
     filters.search &&
     !normalize(f.name).toLowerCase().includes(normalize(filters.search).toLowerCase())
   )
     return false;
-  if (filters.ids && filters.ids.length > 0) {
-    return filters.ids.includes(String(f.id ?? ''));
-  }
   return true;
 }
 
