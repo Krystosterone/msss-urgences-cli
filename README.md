@@ -34,11 +34,16 @@ During development you can skip the build and run the TypeScript directly:
 
 ### Link the skill
 
-The opinions/prose layer lives in
-[`.agents/skills/msss-urgences`](.agents/skills/msss-urgences/SKILL.md). Agents that
-follow the Agent Skills standard (Pi, Codex) discover `.agents/skills/`
+The opinions/prose layer lives in two skills under `.agents/skills/`:
+
+- **`msss-urgences`** — generic: any ER or region ("how busy is Verdun?", "which
+  Montréal hospital has the shortest wait?").
+- **`msss-urgences-children`** — specific: the two Montréal pediatric ERs
+  (Sainte-Justine vs Montreal Children's), with hardcoded ranking rules.
+
+Agents that follow the Agent Skills standard (Pi, Codex) discover `.agents/skills/`
 automatically after trusting the project once; Hermes uses
-`hermes skills trust <repo>`. No symlink or copy step. The skill invokes the
+`hermes skills trust <repo>`. No symlink or copy step. They invoke the
 linked `msss-urgences` binary, so run `npm link` first.
 
 ## Usage
@@ -146,7 +151,8 @@ src/
 test/
   fixtures/urgences_nbpers.csv   # a real saved file -> deterministic tests
   *.test.ts
-.agents/skills/msss-urgences/SKILL.md   # the opinions/prose layer (agent skill)
+.agents/skills/msss-urgences/SKILL.md            # generic opinions/prose layer (agent skill)
+.agents/skills/msss-urgences-children/SKILL.md   # pediatric-specific opinions/prose layer (agent skill)
 ```
 
 Adding a second tool means adding `src/tools/<name>.ts` and a subcommand in
