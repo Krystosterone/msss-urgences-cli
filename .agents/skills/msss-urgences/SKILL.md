@@ -44,18 +44,13 @@ msss-urgences urgences --region montreal --search "verdun" --json
 msss-urgences urgences --available-only --json
 ```
 
-Each facility in the JSON has: `id` (the stable MSSS permit number), `name`,
+Each facility in the JSON has an `id` (the stable MSSS permit number), `name`,
 `occupancyPct`, `totalPresent`, `waitingForCare`, `over24h`, `over48h`,
-`available`, and `deltaFromRegionAvgPct`; each region has
-`averageOccupancyPct`. `null` metrics / `available: false` mean the hospital
-isn't reporting right now.
-
-Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or bad usage.
-
-The CLI caches locally for 30 minutes by default, so repeated calls within the
-hour are cheap. Pass `--refresh` to force a fresh fetch. Check the report's
-`dataDate` (the source's `Mise_a_jour`) and `cached` fields when freshness
-matters.
+`available`, and `deltaFromRegionAvgPct`; each region has `averageOccupancyPct`.
+`null` metrics / `available: false` mean the hospital isn't reporting right now.
+For the exact field dictionary, all CLI flags, exit codes, and cache/freshness
+semantics, see [`references/cli-reference.md`](references/cli-reference.md) — load
+it when you need the full contract or a field's precise meaning.
 
 ## 2. Stable hospital ids
 

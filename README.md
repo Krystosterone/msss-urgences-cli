@@ -152,7 +152,10 @@ test/
   fixtures/urgences_nbpers.csv   # a real saved file -> deterministic tests
   *.test.ts
 .agents/skills/msss-urgences/SKILL.md            # generic opinions/prose layer (agent skill)
+.agents/skills/msss-urgences/references/cli-reference.md    # on-demand CLI/contract reference
 .agents/skills/msss-urgences-children/SKILL.md   # pediatric-specific opinions/prose layer (agent skill)
+.agents/skills/msss-urgences-children/references/cli-reference.md  # pediatric CLI/contract reference
+scripts/validate-skills.py   # Agent Skills spec conformance validator (frontmatter + structure + references)
 ```
 
 Adding a second tool means adding `src/tools/<name>.ts` and a subcommand in

@@ -8,6 +8,9 @@ to [Semantic Versioning](https://semver.org).
 - Split `.agents/skills/msss-urgences` into two skills with distinct intents:
   `msss-urgences` (generic — any ER/region) and `msss-urgences-children`
   (specific — the two Montréal pediatric ERs with hardcoded ranking rules).
+- Add per-skill `references/cli-reference.md` (progressive disclosure) and
+  `scripts/validate-skills.py` — an Agent Skills spec conformance validator
+  (frontmatter, naming, description, body-size, structure, references).
 
 ## [0.1.0] - 2026-08-23
 

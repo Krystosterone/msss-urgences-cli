@@ -23,6 +23,7 @@ During development, skip the build and run TypeScript directly:
 ```bash
 npm test               # deterministic suite against test/fixtures/urgences_nbpers.csv
 RUN_LIVE=1 npm test    # also runs the opt-in live network smoke test
+python3 scripts/validate-skills.py   # Agent Skills spec conformance for .agents/skills/
 MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv msss-urgences urgences --json  # offline
 ```
 

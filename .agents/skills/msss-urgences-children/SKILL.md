@@ -31,10 +31,9 @@ msss-urgences urgences --id 51222800,51223279 --json
 Each facility has: `id`, `name`, `occupancyPct`, `waitingForCare`, `over24h`,
 `over48h`, `available`, and `deltaFromRegionAvgPct`; the `regions[0]` entry has
 `averageOccupancyPct` (Montréal's average). `null` / `available: false` means
-not reporting right now. Exit codes: `0` success · `1` network/HTTP · `2` structure/bad usage.
-
-The CLI caches for 30 min by default; pass `--refresh` for the freshest data and
-note the report's `dataDate`/`cached` if freshness matters.
+not reporting right now. For the exact command contract, full field dictionary,
+exit codes, and cache/freshness semantics, see
+[`references/cli-reference.md`](references/cli-reference.md).
 
 ## 2. The two pediatric ERs (stable ids)
 
