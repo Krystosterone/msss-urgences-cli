@@ -51,10 +51,10 @@ mirrors the previous tool's contract so consumers are not surprised.
 
 ### Requirement: Cache locally so the source is not hit on every query
 
-Repeated invocations within a configurable TTL (default 30 minutes, below the
-source's 1-hour refresh) reuse a local file cache instead of re-fetching. The
-cache is keyed on the source's `Mise_a_jour` data timestamp so a fresh hourly
-publication invalidates it.
+Repeated invocations within a configurable TTL (MUST default to 30 minutes,
+below the source's 1-hour refresh) SHALL reuse a local file cache instead of
+re-fetching. The cache SHALL be keyed on the source's `Mise_a_jour` data
+timestamp so a fresh hourly publication invalidates it.
 
 #### Scenario: Stale cache triggers a fresh fetch
 
@@ -76,8 +76,8 @@ publication invalidates it.
 
 ### Requirement: Filter facilities by region, id, search, and availability
 
-The CLI supports filters for region (slug or name, accent-insensitive), stable
-facility id (the MSSS permit number, repeatable or comma-separated), name
+The CLI SHALL support filters for region (slug or name, accent-insensitive),
+stable facility id (the MSSS permit number, repeatable or comma-separated), name
 substring search (accent-insensitive), and available-only.
 
 #### Scenario: Region filter narrows the report
@@ -93,9 +93,9 @@ substring search (accent-insensitive), and available-only.
 
 ### Requirement: Emit JSON or a human table and map exit codes
 
-Output is JSON when piped or `--json`, a human-readable table on a TTY or
-`--table`. Exit codes are `0` success, `1` network/HTTP error, `2` structure or
-usage error.
+The CLI MUST emit JSON when piped or with `--json`, and SHALL render a
+human-readable table on a TTY or with `--table`. Exit codes SHALL be `0`
+success, `1` network/HTTP error, and `2` structure or usage error.
 
 #### Scenario: Deterministic output formats
 

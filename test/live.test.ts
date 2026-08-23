@@ -7,7 +7,7 @@ import { fetchUrgencesReport } from '../src/tools/urgences';
 // changes their format or moves/removes the file.
 test('live fetch parses the current MSSS CSV into the expected shape', { skip: !process.env.RUN_LIVE }, async () => {
   const report = await fetchUrgencesReport({
-    cache: { dir: '/tmp/msss-live-test' },
+    cache: { dir: '/tmp/msss-live-test', refresh: true },
     filters: { ids: ['51222800'] }, // CHU Sainte-Justine must still exist
   });
   assert.equal(report.cached, false);
