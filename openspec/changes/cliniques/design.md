@@ -55,8 +55,9 @@ day, appointment slots offered in each time band.
 4. **Route through the existing CLI dispatch.** `src/cli.ts` gains a
    `cliniques` branch (first-arg subcommand) mirroring `urgences`; structure/usage
    errors exit 2.
-5. **Blank = "no slots offered".** Empty time-band cells are zero capacity, not
-   missing data; surfaced as `0` with the band still listed.
+5. **Blank band = `null` (no offers listed).** Empty time-band cells are emitted
+   as `null` (not `0`) to distinguish "no appointments offered" from a real
+   zero; `totalOffered` sums only non-`null` bands.
 6. **Skill owns routing, CLI owns numbers.** `cliniques --json` returns facts
    and derived totals; `.agents/skills/msss-urgences-cliniques` interprets them
    ("capacity exists → recommend clinic over ER") and is cross-referenced by the

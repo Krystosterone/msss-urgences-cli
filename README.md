@@ -93,6 +93,7 @@ msss-urgences cliniques [options]
 | Option | Description |
 |--------|-------------|
 | `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `bas-saint-laurent` |
+| `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
 | `--date <YYYY-MM-DD>` | The date to report (default: latest date in the source) |
 | `--refresh` | Force a fresh fetch |
@@ -100,6 +101,7 @@ msss-urgences cliniques [options]
 | `--json` | JSON output (default when piped) |
 | `--table` | Human-readable table (default on a TTY) |
 | `--fixture <path>` | Read a local CSV instead of the network (deterministic offline run) |
+| `-h, --help` | Show cliniques help |
 
 ```bash
 # Capacity in a region as JSON
@@ -110,6 +112,9 @@ msss-urgences cliniques --search "La Pocatière" --json
 
 # A specific day as a table
 msss-urgences cliniques --region bas-saint-laurent --date 2026-08-19 --table
+
+# Filter by RLS (local service network)
+msss-urgences cliniques --rls "Champlain" --json
 ```
 
 Exit codes: `0` success · `1` network/HTTP error · `2` page structure changed or bad usage.
@@ -173,27 +178,34 @@ never fail the command. The report still carries the source's `Mise_a_jour`
 src/
   core/
     types.ts     # the data contract
-    source.ts    # canonical MSSS URL + open-data fallback
-    fetch.ts     # plain fetch() + Latin-1 decode (I/O boundary)
+    source.ts    # canonical MSSS URLs + open-data fallbacks
+    fetch.ts     # plain fetch() + Latin-1 decode (urgences; I/O boundary)
     parse.ts     # CSV -> Region[]  (csv-parse; the only runtime dep)
     derive.ts    # objective derived metrics (occupancy, region avg, delta)
-    cache.ts     # TTL-keyed local JSON cache (atomic write, graceful degrade)
+    cache.ts     # TTL-keyed local JSON cache (urgences; atomic write, graceful degrade)
+    fetchCliniques.ts   # plain fetch() + UTF-8/BOM strip (cliniques)
+    parseCliniques.ts   # daily clinic CSV -> Clinic[] (iface; csv-parse)
+    cliniquesCache.ts   # parsed-slice cache (cliniques; daily TTL, graceful degrade)
     errors.ts    # FetchError / ParseError -> exit codes
   tools/
-    urgences.ts  # orchestrate fetch/cache/parse/derive/filter/assemble report
-  cli.ts         # arg parsing, dispatch, JSON/table output
+    urgences.ts          # orchestrate fetch/cache/parse/derive/filter/assemble report
+    cliniques.ts         # orchestrate fetch/cache/parse/filter/assemble clinics report
+  cli.ts         # arg parsing, multi-command dispatch, JSON/table output
 test/
-  fixtures/urgences_nbpers.csv   # a real saved file -> deterministic tests
+  fixtures/urgences_nbpers.csv   # a real saved file -> deterministic urgences tests
+  fixtures/rdvoffert_DOuv.csv    # a real saved file -> deterministic cliniques tests
   *.test.ts
-.agents/skills/msss-urgences/SKILL.md            # generic opinions/prose layer (agent skill)
+.agents/skills/msss-urgences/SKILL.md            # generic ER opinions/prose layer (agent skill)
 .agents/skills/msss-urgences/references/cli-reference.md    # on-demand CLI/contract reference
 .agents/skills/msss-urgences-children/SKILL.md   # pediatric-specific opinions/prose layer (agent skill)
 .agents/skills/msss-urgences-children/references/cli-reference.md  # pediatric CLI/contract reference
+.agents/skills/msss-urgences-cliniques/SKILL.md  # clinic-availability routing opinions/prose layer
+.agents/skills/msss-urgences-cliniques/references/cli-reference.md  # cliniques CLI/contract reference
 scripts/validate-skills.py   # Agent Skills spec conformance validator (frontmatter + structure + references)
 ```
 
-Adding a second tool means adding `src/tools/<name>.ts` and a subcommand in
-`cli.ts`, reusing `core/`.
+Adding another tool means adding `src/tools/<name>.ts`, the matching
+`src/core/<name>*` modules, and a dispatch branch in `cli.ts`.
 
 ### Why no scraping / no headless browser?
 

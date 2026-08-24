@@ -54,6 +54,16 @@ test('search filters by clinic name substring, accent-insensitive', async () => 
   assert.ok(report.clinics.every((c) => c.name.toLowerCase().includes('pocatière')));
 });
 
+test('rls filter narrows to a local service network, accent-insensitive', async () => {
+  const report = await fetchCliniquesReport({
+    fixture: FIXTURE,
+    cache: CACHE,
+    filters: { rls: 'kamouraska' },
+  });
+  assert.ok(report.clinics.length > 0);
+  assert.ok(report.clinics.every((c) => c.rlsName.toLowerCase().includes('kamouraska')));
+});
+
 test('CLI: cliniques --fixture --json emits parseable output with correct shape', async () => {
   const { stdout } = await runCli(['cliniques', '--region', 'bas-saint-laurent', '--fixture', FIXTURE, '--json']);
   const report = JSON.parse(stdout);
@@ -69,9 +79,24 @@ test('CLI: unknown command exits 2', async () => {
   assert.equal(code, 2);
 });
 
-test('CLI: cliniques without a subcommand target exits 2 usage', async () => {
+test('CLI: cliniques --ttl abc exits 2 usage', async () => {
   const code = await main(['cliniques', '--ttl', 'abc', '--fixture', FIXTURE]);
   assert.equal(code, 2);
+});
+
+test('CLI: cliniques rejects a malformed --date with exit 2', async () => {
+  const code = await main(['cliniques', '--date', '2026-99-99', '--fixture', FIXTURE]);
+  assert.equal(code, 2);
+});
+
+test('CLI: cliniques rejects an impossible calendar date with exit 2', async () => {
+  const code = await main(['cliniques', '--date', '2026-02-30', '--fixture', FIXTURE]);
+  assert.equal(code, 2);
+});
+
+test('CLI: cliniques accepts a well-formed present date', async () => {
+  const code = await main(['cliniques', '--date', '2026-08-19', '--region', 'bas-saint-laurent', '--fixture', FIXTURE, '--json']);
+  assert.equal(code, 0);
 });
 
 test('CLI: --version of the binary includes both commands in help', async () => {

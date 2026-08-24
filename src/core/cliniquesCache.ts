@@ -55,9 +55,14 @@ export function readCliniquesCache(cfg: CacheConfig = {}): CliniquesCacheEntry |
       return null;
     }
     const ageMinutes = (Date.now() - Date.parse(entry.storedAt)) / 60_000;
+    if (!Number.isFinite(ageMinutes)) {
+      // An unparseable storedAt (non-ISO) should degrade to a miss, not a hit.
+      warnCache('unreadable cache entry (invalid storedAt)');
+      return null;
+    }
     if (cfg.refresh) return null;
     const ttl = cfg.ttlMinutes ?? DEFAULT_TTL_MINUTES;
-    if (Number.isFinite(ageMinutes) && ageMinutes > ttl) return null;
+    if (ageMinutes > ttl) return null;
     return entry;
   } catch {
     warnCache('unreadable cache file');

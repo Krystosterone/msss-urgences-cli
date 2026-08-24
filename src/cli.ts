@@ -55,6 +55,7 @@ Usage:
 
 Options:
   --region <name>     Filter to a region by name (accent-insensitive), e.g. "bas-saint-laurent"
+  --rls <name>        Filter to a local service network (RLS) by name (accent-insensitive)
   --search <text>     Filter clinics by name (accent-insensitive substring)
   --date <YYYY-MM-DD> The date to report (default: the latest date in the source)
   --refresh           Force a fresh fetch, ignoring the local cache
@@ -172,6 +173,7 @@ function parseCli(args: string[]): { values: Record<string, unknown>; positional
       region: { type: 'string' },
       id: { type: 'string', multiple: true },
       search: { type: 'string' },
+      rls: { type: 'string' },
       'available-only': { type: 'boolean' },
       date: { type: 'string' },
       refresh: { type: 'boolean' },
@@ -249,8 +251,25 @@ async function runCliniques(values: Record<string, unknown>, positionals: string
   }
   const filters: CliniquesFilters = {};
   if (typeof values.region === 'string') filters.region = values.region;
+  if (typeof values.rls === 'string' && values.rls !== '') filters.rls = values.rls;
   if (typeof values.search === 'string' && values.search !== '') filters.search = values.search;
-  if (typeof values.date === 'string') filters.date = values.date;
+  if (typeof values.date === 'string') {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(values.date)) {
+      process.stderr.write(`--date must be a YYYY-MM-DD date (got "${values.date}").\n`);
+      return 2;
+    }
+    // Reject impossible dates (e.g. 2026-99-99, 2026-02-30) that the regex
+    // format check alone would accept. Round-trip through Date and compare.
+    const d = new Date(`${values.date}T00:00:00Z`);
+    const valid =
+      !Number.isNaN(d.getTime()) &&
+      d.toISOString().startsWith(values.date);
+    if (!valid) {
+      process.stderr.write(`--date is not a valid calendar date (got "${values.date}").\n`);
+      return 2;
+    }
+    filters.date = values.date;
+  }
   const cache = { ttlMinutes, refresh: values.refresh === true };
   try {
     const report = await fetchCliniquesReport({

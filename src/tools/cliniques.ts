@@ -8,6 +8,8 @@ import { MSSS_CLINIQUES_URL } from '../core/source';
 export interface CliniquesFilters {
   /** Filter to a region by name (accent-insensitive). */
   region?: string;
+  /** Filter to an RLS (local service network) by name (accent-insensitive). */
+  rls?: string;
   /** Filter to a clinic by name (accent-insensitive substring). */
   search?: string;
   /** A specific date (YYYY-MM-DD). Defaults to the latest date present in the source. */
@@ -26,6 +28,11 @@ function clinicMatches(c: Clinic, filters: CliniquesFilters, wantedDate: string)
   if (
     filters.region &&
     !normalize(c.regionName).toLowerCase().includes(normalize(filters.region).toLowerCase())
+  )
+    return false;
+  if (
+    filters.rls &&
+    !normalize(c.rlsName).toLowerCase().includes(normalize(filters.rls).toLowerCase())
   )
     return false;
   if (

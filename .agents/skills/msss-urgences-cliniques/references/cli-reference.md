@@ -12,6 +12,7 @@ msss-urgences cliniques [options]
 | Option | Description |
 |--------|-------------|
 | `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `bas-saint-laurent` |
+| `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
 | `--date <YYYY-MM-DD>` | The date to report; default = the latest date present in the source |
 | `--refresh` | Force a fresh fetch, ignoring the local cache |
