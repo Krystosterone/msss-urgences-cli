@@ -42,9 +42,9 @@ the raw file on every query.
 
 ### Requirement: The CLI SHALL filter clinics like the ER tool
 
-The tool SHALL filter by region name (accent-insensitive), RLS name, clinic-name
-search, and a specific `--date`, and derive a per-clinic daily total of offered
-slots.
+The tool SHALL filter by region name (accent-insensitive), RLS name
+(accent-insensitive), clinic-name search, and a specific `--date`; it SHALL
+derive a per-clinic daily total of offered slots.
 
 #### Scenario: Region and name filtering
 

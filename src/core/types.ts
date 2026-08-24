@@ -72,3 +72,68 @@ export interface UrgencesReport {
   cacheAgeMinutes: number;
   regions: Region[];
 }
+
+/** Appointment slots offered per time band for a clinic/day. */
+export interface ClinicSlots {
+  /** 06h00–09h00 slots offered (may be 0 = band listed but no offers). */
+  '6h_9h': number | null;
+  /** 09h00–12h00 slots offered. */
+  '9h_12h': number | null;
+  /** 12h00–15h00 slots offered. */
+  '12h_15h': number | null;
+  /** 15h00–18h00 slots offered. */
+  '15h_18h': number | null;
+  /** 18h00–21h00 slots offered. */
+  '18h_21h': number | null;
+  /** 21h00–06h00 slots offered. */
+  '21h_6h': number | null;
+}
+
+/** Ordered band keys for stable output. */
+export const CLINIQUE_BAND_KEYS = [
+  '6h_9h',
+  '9h_12h',
+  '12h_15h',
+  '15h_18h',
+  '18h_21h',
+  '21h_6h',
+] as const;
+
+/** A single clinic/day row from the daily clinic-appointments CSV. */
+export interface Clinic {
+  /** The `date` column (YYYY-MM-DD). */
+  date: string;
+  /** `clinique_id_rts` — region (RTS) code. */
+  regionCode: string | null;
+  /** `clinique_nom_rts` — region display name, e.g. "RTS du Bas-Saint-Laurent". */
+  regionName: string;
+  /** `clinique_id_rls` — local service network (RLS) code. */
+  rlsCode: string | null;
+  /** `clinique_nom_rls` — RLS display name. */
+  rlsName: string;
+  /** `clinique_nom_groupe` — clinic name. */
+  name: string;
+  /** `grp_prof_med` — professional group, e.g. "Médecin" / "Infirmière". */
+  professionGroup: string;
+  /** Appointment slots offered per time band (blank cell = no offers). */
+  slots: ClinicSlots;
+  /** DERIVED: total slots offered across all bands for this clinic/day. */
+  totalOffered: number;
+}
+
+/** Top-level report emitted by the `cliniques` tool. */
+export interface CliniquesReport {
+  /** Source URL the data was fetched from. */
+  source: string;
+  /** ISO-8601 timestamp stamped when the data was fetched (not cached). */
+  fetchedAt: string;
+  /** The `date` the report is for (the requested date, or the latest present). */
+  dataDate: string;
+  /** True when this report was served from the local cache, false on a live fetch. */
+  cached: boolean;
+  /** Cache-freshness: age of the served data in minutes. */
+  cacheAgeMinutes: number;
+  /** Distinct dates present in the source (newest first). */
+  availableDates: string[];
+  clinics: Clinic[];
+}
