@@ -17,7 +17,8 @@ ER to rank first, what "good" means for a child — and turns the numbers into a
 recommendation.
 
 > This skill is **specifically** for the children's-ER comparison. For any other
-> ER/region question, use the generic **`msss-urgences`** skill.
+> ER/region question, use the generic **`msss-urgences`** skill. For clinic
+> appointment availability, use **`msss-urgences-cliniques`**.
 
 ## 1. Get the data
 
