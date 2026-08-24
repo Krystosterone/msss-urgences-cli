@@ -185,6 +185,25 @@ the CLI itself read a local file instead of the network.
 Runtime dependencies: **`csv-parse`** only. Everything else (fetch, arg parsing
 via `node:util`, the test runner via `node:test`) is built into Node ≥ 18.
 
+## Roadmap
+
+The CLI is architected for multiple tools: a new tool is `src/tools/<name>.ts` +
+a subcommand, sharing the fetch/cache/CLI plumbing and an optional opinion
+skill. Planned additions, all from official MSSS open-data CSVs (no scraping):
+
+| Tool | Dataset | Cadence | Status |
+|------|---------|---------|--------|
+| `urgences` | [Fichier horaire de la situation à l'urgence](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly | ✅ shipped |
+| `cliniques` | [Portrait quotidien des rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | daily | 🔵 planned ([OpenSpec change](openspec/changes/cliniques/)) |
+| `chirurgies` | [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente) | monthly/fiscal period | 🔲 backlog |
+| `urgences-cumulatif` | [Fichier cumulatif des données des urgences](https://www.donneesquebec.ca/recherche/dataset/fichier-cumulatif-des-donnees-des-urgences) | fiscal period | 🔲 backlog (trends) |
+
+`cliniques` is the priority: it is the direct counterpart to `urgences`
+(primary-care capacity vs ER occupancy) and rounds out the "where should this
+person actually go?" routing the skills already make. `chirurgies` and
+`urgences-cumulatif` are longer-horizon planning/trend tools suited to their
+own cadence.
+
 ## Versioning
 
 This project follows [Semantic Versioning](https://semver.org); changes are

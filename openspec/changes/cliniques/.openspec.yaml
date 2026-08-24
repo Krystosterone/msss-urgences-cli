@@ -1,0 +1,5 @@
+schema: spec-driven
+created: 2026-08-24
+goal: Extend msss-urgences-cli with a cliniques subcommand that surfaces daily
+  per-clinic appointment availability so the skills can route to primary care
+  instead of the ER.
