@@ -5,8 +5,13 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add `cliniques` tool + `msss-urgences-cliniques` skill: daily clinic
+  appointment availability from the MSSS `rdvoffert_DOuv.csv` daily CSV
+  (UTF-8/BOM; per-time-band offered slots; region/search/date filters);
+  CLI is now multi-command (`msss-urgences <command>`).
 - Add a tools roadmap to the README (`cliniques`, `chirurgies`,
   `urgences-cumulatif` planned; `urgences` shipped).
+
 - OpenSpec change `cliniques`: plan only (proposal, spec, design, tasks) for a
   `cliniques` subcommand surfacing daily clinic appointment availability from
   the MSSS `rdvoffert_DOuv.csv` daily CSV.

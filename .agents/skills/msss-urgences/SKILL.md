@@ -19,8 +19,10 @@ do not ask the CLI to rank or judge.
 
 > For the **children's-ER comparison specifically**, use the
 > **`msss-urgences-children`** skill instead — it targets the two pediatric ERs
-> with hardcoded ranking rules. This generic skill is for every other ER
-> question.
+> with hardcoded ranking rules. For **clinic-availability** questions (whether
+> clinics have appointments today), use **`msss-urgences-cliniques`** — it
+> routes to primary care instead of the ER when capacity exists.
+> This generic skill is for every other ER question.
 
 ## 1. Get the data
 

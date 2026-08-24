@@ -34,12 +34,14 @@ During development you can skip the build and run the TypeScript directly:
 
 ### Link the skill
 
-The opinions/prose layer lives in two skills under `.agents/skills/`:
+The opinions/prose layer lives in three skills under `.agents/skills/`:
 
-- **`msss-urgences`** — generic: any ER or region ("how busy is Verdun?", "which
+- **`msss-urgences`** — generic ER: any ER or region ("how busy is Verdun?", "which
   Montréal hospital has the shortest wait?").
-- **`msss-urgences-children`** — specific: the two Montréal pediatric ERs
-  (Sainte-Justine vs Montreal Children's), with hardcoded ranking rules.
+- **`msss-urgences-children`** — the two Montréal pediatric ERs (Sainte-Justine
+  vs Montreal Children's), with hardcoded ranking rules.
+- **`msss-urgences-cliniques`** — daily clinic appointment availability, routing
+  to primary care instead of the ER when capacity exists.
 
 Agents that follow the Agent Skills standard (Pi, Codex) discover `.agents/skills/`
 automatically after trusting the project once; Hermes uses
@@ -47,6 +49,10 @@ automatically after trusting the project once; Hermes uses
 linked `msss-urgences` binary, so run `npm link` first.
 
 ## Usage
+
+Multi-command CLI: `msss-urgences <command> [options]`.
+
+### `urgences` — live ER occupancy (hourly)
 
 ```bash
 msss-urgences urgences [options]
@@ -76,6 +82,34 @@ msss-urgences urgences --search "sainte-justine" --json
 
 # Force a fresh fetch
 msss-urgences urgences --region montreal --refresh
+```
+
+### `cliniques` — daily clinic appointment availability (daily)
+
+```bash
+msss-urgences cliniques [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `bas-saint-laurent` |
+| `--search <text>` | Filter clinics by name (accent-insensitive substring) |
+| `--date <YYYY-MM-DD>` | The date to report (default: latest date in the source) |
+| `--refresh` | Force a fresh fetch |
+| `--ttl <minutes>` | Cache TTL in minutes (default 1440 — the dataset updates daily) |
+| `--json` | JSON output (default when piped) |
+| `--table` | Human-readable table (default on a TTY) |
+| `--fixture <path>` | Read a local CSV instead of the network (deterministic offline run) |
+
+```bash
+# Capacity in a region as JSON
+msss-urgences cliniques --region montreal --json
+
+# A specific clinic by name
+msss-urgences cliniques --search "La Pocatière" --json
+
+# A specific day as a table
+msss-urgences cliniques --region bas-saint-laurent --date 2026-08-19 --table
 ```
 
 Exit codes: `0` success · `1` network/HTTP error · `2` page structure changed or bad usage.
@@ -194,7 +228,7 @@ skill. Planned additions, all from official MSSS open-data CSVs (no scraping):
 | Tool | Dataset | Cadence | Status |
 |------|---------|---------|--------|
 | `urgences` | [Fichier horaire de la situation à l'urgence](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly | ✅ shipped |
-| `cliniques` | [Portrait quotidien des rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | daily | 🔵 planned ([OpenSpec change](openspec/changes/cliniques/)) |
+| `cliniques` | [Portrait quotidien des rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | daily | ✅ shipped |
 | `chirurgies` | [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente) | monthly/fiscal period | 🔲 backlog |
 | `urgences-cumulatif` | [Fichier cumulatif des données des urgences](https://www.donneesquebec.ca/recherche/dataset/fichier-cumulatif-des-donnees-des-urgences) | fiscal period | 🔲 backlog (trends) |
 
