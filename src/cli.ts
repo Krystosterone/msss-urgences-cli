@@ -10,6 +10,7 @@ import {
 import { fetchChirurgiesReport, type ChirurgiesFilters } from './tools/chirurgies';
 import { CHIRURGIES_DEFAULT_TTL_MINUTES } from './core/chirurgiesCache';
 import { FetchError, ParseError, UsageError } from './core/errors';
+import { REGIONS, datasetCodes, resolveRegion, type RssRegion } from './core/regions';
 import type { Facility, Region, UrgencesReport } from './core/types';
 import type { Clinic, CliniquesReport } from './core/types';
 import { CLINIQUE_BAND_KEYS, CUMULATIF_LEVELS, CHIRURGIE_SPECIALTIES } from './core/types';
@@ -31,6 +32,8 @@ Commands:
               Fiscal-year-to-date ER indicators + year-over-year trends
               (MSSS cumulative CSV, updated each fiscal period)
   chirurgies  Surgical waitlist by region, specialty and wait time (MSSS, per fiscal period)
+  regions     The 18 Québec health regions (RSS): codes, names and accepted
+              --region spellings, shared by every command (offline)
 
 Global options:
   -h, --help      Show this help
@@ -45,11 +48,16 @@ Usage:
   msss-urgences urgences [options]
 
 Options:
-  --region <name>     Filter to a region by name (accent-insensitive), e.g. "montreal"
+  --region <name|code> Filter to a region (name, alias or RSS code; see "msss-urgences regions"),
+                      e.g. "montreal", "06"
   --id <n[,n...]>     Filter to facility id(s) (MSSS permit number); repeatable or comma-separated
   --search <text>     Filter facilities by name (accent-insensitive substring)
   --available-only    Only facilities currently reporting live data
-  --refresh           Force a fresh fetch, ignoring the local cache
+  --baseline          Add each facility's fiscal-year-to-date values (MSSS cumulative file) and
+                      the live-minus-baseline length-of-stay difference ("worse than usual?")
+  --baseline-fixture <path>
+                      Read a local cumulative CSV for --baseline (offline run)
+  --refresh           Force a fresh fetch, ignoring the local cache (both files with --baseline)
   --ttl <minutes>     Cache TTL (default 30)
   --json              Output JSON (default when piped)
   --table             Output a human-readable table (default on a TTY)
@@ -59,6 +67,7 @@ Options:
 Examples:
   msss-urgences urgences --region montreal --table
   msss-urgences urgences --id 51222800,51223279 --json
+  msss-urgences urgences --region 06 --baseline --table
 `;
 
 const CLINIQUES_HELP = `msss-urgences cliniques — daily clinic appointment availability (MSSS daily CSV)
@@ -67,7 +76,8 @@ Usage:
   msss-urgences cliniques [options]
 
 Options:
-  --region <name>     Filter to a region by name (accent-insensitive), e.g. "bas-saint-laurent"
+  --region <name|code> Filter to an RSS region (name, alias or code, e.g. "montreal", "06": all
+                      its RTS sub-regions), or one RTS by code ("061") or name ("Montérégie-Est")
   --rls <name>        Filter to a local service network (RLS) by name (accent-insensitive)
   --search <text>     Filter clinics by name (accent-insensitive substring)
   --date <YYYY-MM-DD> The date to report (default: the latest date in the source)
@@ -94,7 +104,7 @@ Usage:
   msss-urgences urgences-cumulatif [options]
 
 Options:
-  --region <name|code>  Filter to a region by name (accent-insensitive) or RSS code, e.g. "montreal" or "06"
+  --region <name|code>  Filter to a region by name, alias or RSS code, e.g. "montreal" or "06"
   --id <n[,n...]>       Filter to facility id(s) (MSSS permit number); repeatable or comma-separated
   --search <text>       Filter by facility/establishment/region name (accent-insensitive substring)
   --year <YYYY-YYYY>    Fiscal year to report (default: the latest in the source)
@@ -124,7 +134,7 @@ Usage:
   msss-urgences chirurgies [options]
 
 Options:
-  --region <name|code> Filter to a region by name (accent-insensitive) or RSS code ("RSS06", "06")
+  --region <name|code> Filter to a region by name, alias or RSS code ("montreal", "RSS06", "06")
   --specialty <name>   Filter to specialties by name (accent-insensitive substring), e.g. "ortho"
   --period <YYZZ-Pnn>  Fiscal period to report, e.g. "2627-P04" (default: the latest in the source)
   --refresh            Force a fresh fetch, ignoring the local cache
@@ -141,6 +151,38 @@ Examples:
   msss-urgences chirurgies --specialty ortho --json
   msss-urgences chirurgies --region RSS03 --period 2627-P01 --json
 `;
+
+const REGIONS_HELP = `msss-urgences regions — Québec health regions (RSS) shared by every command
+
+Lists the 18 régions sociosanitaires with their two-digit code, official name,
+slug and accepted aliases, plus how each dataset writes the code. Static: no
+network. Every command's --region accepts any of these spellings, a 1–2 digit
+code ("6", "06", "RSS06") or an unambiguous prefix of the name ("laurent").
+
+Usage:
+  msss-urgences regions [options]
+
+Options:
+  --region <name|code>  Show only the region this input resolves to (exit 2 if none)
+  --json                Output JSON (default when piped)
+  --table               Output a human-readable table (default on a TTY)
+  -h, --help            Show this help
+
+Examples:
+  msss-urgences regions --table
+  msss-urgences regions --region "bas-st-laurent" --json
+`;
+
+/** JSON shape of one `regions` entry. */
+function regionEntry(r: RssRegion) {
+  return { code: r.code, name: r.name, slug: r.slug, aliases: r.aliases, datasetCodes: datasetCodes(r) };
+}
+
+/** Render the region registry as an aligned table. */
+export function formatRegionsTable(regions: readonly RssRegion[]): string {
+  const rows = regions.map((r) => [r.code, r.name, [r.slug, ...r.aliases].join(', ')]);
+  return renderGrid([['RSS', 'NAME', 'ACCEPTED (--region)'], ...rows]);
+}
 
 /** Parse `--id` values (repeated flags and/or comma lists) into non-empty strings. */
 export function parseIdList(raw: string | string[] | undefined): string[] | undefined {
@@ -187,22 +229,38 @@ function renderGrid(rows: string[][]): string {
 /** Render an ER report as an aligned human-readable table. */
 export function formatTable(report: UrgencesReport): string {
   if (report.regions.length === 0) return 'No facilities matched the filters.';
-  const header = ['OCC', 'ΔAVG', 'TOT', 'WAIT', '>24h', '>48h', 'ID', 'FACILITY'];
+  const b = report.baseline;
+  const header = ['OCC', 'ΔAVG', 'TOT', 'WAIT', '>24h', '>48h'];
+  if (b) header.push('DMS', 'FY-DMS', 'ΔDMS%');
+  header.push('ID', 'FACILITY');
   const blocks = report.regions.map((region) => {
     const title = `${region.name} — avg ${fmtCell(region.averageOccupancyPct, '%')} · ${region.facilities.length} facilities`;
-    const rows = region.facilities.map((f) => [
-      fmtCell(f.occupancyPct, '%'),
-      fmtDelta(f.deltaFromRegionAvgPct),
-      fmtCell(f.totalPresent),
-      fmtCell(f.waitingForCare),
-      fmtCell(f.over24h),
-      fmtCell(f.over48h),
-      f.id ?? '—',
-      f.name,
-    ]);
+    const rows = region.facilities.map((f) => {
+      const row = [
+        fmtCell(f.occupancyPct, '%'),
+        fmtDelta(f.deltaFromRegionAvgPct),
+        fmtCell(f.totalPresent),
+        fmtCell(f.waitingForCare),
+        fmtCell(f.over24h),
+        fmtCell(f.over48h),
+      ];
+      if (b) {
+        row.push(fmtHours(f.dmsStretcher), fmtHours(f.baseline?.dmsStretcher), fmtSigned(f.vsBaseline?.dmsStretcherPct));
+      }
+      row.push(f.id ?? '—', f.name);
+      return row;
+    });
     return `${title}\n${renderGrid([header, ...rows])}`;
   });
-  const meta = `source: ${report.source}\ndataDate: ${report.dataDate} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}`;
+  let meta = `source: ${report.source}\ndataDate: ${report.dataDate} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}`;
+  if (b) {
+    meta +=
+      b.status === 'ok'
+        ? `\nbaseline: ${b.source}\n  fiscal year ${b.fiscalYear} (Apr 1 → period ${b.period}) · ${b.cached ? 'cached' : 'live'} · ` +
+          `${b.matched} matched${b.unmatched.length ? ` · no baseline row: ${b.unmatched.join(', ')}` : ''}\n` +
+          `  DMS = stretcher length of stay in hours, patients who left yesterday · FY-DMS = same, fiscal year to date · ΔDMS% = DMS vs FY-DMS`
+        : `\nbaseline: unavailable (${b.error})`;
+  }
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
@@ -364,6 +422,8 @@ function parseCli(args: string[]): { values: Record<string, unknown>; positional
       search: { type: 'string' },
       rls: { type: 'string' },
       'available-only': { type: 'boolean' },
+      baseline: { type: 'boolean' },
+      'baseline-fixture': { type: 'string' },
       date: { type: 'string' },
       year: { type: 'string' },
       compare: { type: 'string' },
@@ -407,10 +467,12 @@ async function runUrgences(values: Record<string, unknown>, positionals: string[
   }
   const { filters, cache } = buildFilters(values, ttlMinutes);
   try {
+    const baselineFixture = typeof values['baseline-fixture'] === 'string' ? values['baseline-fixture'] : undefined;
     const report = await fetchUrgencesReport({
       filters,
       cache,
       fixture: typeof values.fixture === 'string' ? values.fixture : undefined,
+      baseline: values.baseline === true || baselineFixture !== undefined ? { fixture: baselineFixture } : false,
     });
     const output = resolveFormat(values) === 'json' ? JSON.stringify(report, null, 2) : formatTable(report);
     process.stdout.write(`${output}\n`);
@@ -610,6 +672,36 @@ async function runChirurgies(values: Record<string, unknown>, positionals: strin
   }
 }
 
+function runRegions(values: Record<string, unknown>, positionals: string[]): number {
+  const sub = positionals[1];
+  if (values.help === true || sub === '--help' || sub === '-h') {
+    process.stdout.write(REGIONS_HELP);
+    return 0;
+  }
+  if (sub !== undefined) {
+    process.stderr.write(`Unexpected argument to regions: ${sub}\n\n${REGIONS_HELP}`);
+    return 2;
+  }
+  let regions: readonly RssRegion[] = REGIONS;
+  if (typeof values.region === 'string') {
+    const r = resolveRegion(values.region);
+    if (!r) {
+      process.stderr.write(
+        `usage error: "${values.region}" does not name exactly one region. ` +
+          `Run "msss-urgences regions --table" for the accepted spellings.\n`,
+      );
+      return 2;
+    }
+    regions = [r];
+  }
+  const output =
+    resolveFormat(values) === 'json'
+      ? JSON.stringify({ regions: regions.map(regionEntry) }, null, 2)
+      : formatRegionsTable(regions);
+  process.stdout.write(`${output}\n`);
+  return 0;
+}
+
 export async function main(argv: string[]): Promise<number> {
   let values: Record<string, unknown>;
   let positionals: string[];
@@ -638,10 +730,15 @@ export async function main(argv: string[]): Promise<number> {
   if (command === 'cliniques') return runCliniques(values, positionals);
   if (command === 'urgences-cumulatif') return runUrgencesCumulatif(values, positionals);
   if (command === 'chirurgies') return runChirurgies(values, positionals);
+  if (command === 'regions') return runRegions(values, positionals);
   process.stderr.write(`Unknown command: ${command}\n\n${HELP}`);
   return 2;
 }
 
 if (typeof require !== 'undefined' && require.main === module) {
-  main(process.argv.slice(2)).then((code) => process.exit(code));
+  // Set exitCode rather than calling process.exit(): exit() drops stdout still
+  // buffered for a pipe, truncating large --json output at 64 KiB.
+  main(process.argv.slice(2)).then((code) => {
+    process.exitCode = code;
+  });
 }

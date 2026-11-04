@@ -6,6 +6,7 @@ import { changeBetween, facilityCounts, previousFiscalYear, snapshotOf } from '.
 import { readJsonCache, writeJsonCache, type CacheConfig } from '../core/jsonCache';
 import { UsageError } from '../core/errors';
 import { MSSS_URGENCES_CUMULATIF_URL } from '../core/source';
+import { resolveRegion } from '../core/regions';
 import {
   CUMULATIF_LEVELS,
   type CumulatifEntry,
@@ -16,7 +17,11 @@ import {
 } from '../core/types';
 
 export interface UrgencesCumulatifFilters {
-  /** Region by name or slug (accent-insensitive substring) or RSS code (e.g. "06"). */
+  /**
+   * Region: any spelling `resolveRegion` accepts (name, slug, alias, unique
+   * prefix, RSS code "6"/"06"/"RSS06"); otherwise an accent-insensitive
+   * substring of the region name, or an exact RSS code.
+   */
   region?: string;
   /** Facility permit number(s). Matches facility rows only. */
   ids?: string[];
@@ -62,7 +67,11 @@ function fold(text: string): string {
 function rowMatches(r: CumulatifRow, f: UrgencesCumulatifFilters, levels: Set<CumulatifLevel>): boolean {
   if (!levels.has(r.level)) return false;
   if (f.ids && f.ids.length > 0 && (r.id === null || !f.ids.includes(r.id))) return false;
-  if (f.region) {
+  const resolved = f.region ? resolveRegion(f.region) : null;
+  if (resolved) {
+    // The province row (RSS 99) is not in any region.
+    if (r.level === 'province' || r.regionCode !== resolved.code) return false;
+  } else if (f.region) {
     const wantSlug = slugify(f.region);
     const byCode = f.region.trim() === r.regionCode;
     const byName =
@@ -110,8 +119,10 @@ export async function fetchUrgencesCumulatifReport(opts: {
   const filters = opts.filters ?? {};
   const cache = opts.cache ?? {};
 
-  const hit = readJsonCache(CACHE_FILE, cache, DEFAULT_TTL_MINUTES, isCachedPayload);
-  const { rows, fiscalYears } = hit ? hit.payload : await loadFresh(opts.fixture, cache);
+  const { rows, fiscalYears, cached, cacheAgeMinutes } = await loadCumulatifRows({
+    cache,
+    fixture: opts.fixture ?? process.env.MSSS_URGENCES_FIXTURE ?? null,
+  });
 
   const fiscalYear = filters.year ?? fiscalYears[0]!;
   if (!fiscalYears.includes(fiscalYear)) {
@@ -198,8 +209,8 @@ export async function fetchUrgencesCumulatifReport(opts: {
   return {
     source: SOURCE_URL,
     fetchedAt: new Date().toISOString(),
-    cached: hit !== null,
-    cacheAgeMinutes: hit ? Math.round((Date.now() - Date.parse(hit.storedAt)) / 60_000) : 0,
+    cached,
+    cacheAgeMinutes,
     fiscalYear,
     period,
     compareTo,
@@ -210,10 +221,34 @@ export async function fetchUrgencesCumulatifReport(opts: {
   };
 }
 
-async function loadFresh(fixture: string | undefined, cache: CacheConfig): Promise<CachedPayload> {
-  const fp = fixture ?? process.env.MSSS_URGENCES_FIXTURE;
-  const text = fp ? (await readFile(fp, 'utf8')).replace(/^﻿/, '') : await fetchUtf8Csv(SOURCE_URL);
+/** Every parsed cumulative row (all fiscal years), from the cache or a fresh fetch. */
+export interface CumulatifRows {
+  rows: CumulatifRow[];
+  /** Distinct fiscal years, newest first. */
+  fiscalYears: string[];
+  cached: boolean;
+  cacheAgeMinutes: number;
+}
+
+/**
+ * Load the parsed cumulative rows: from the shared cache when fresh (unless
+ * `refresh`), else fetch (or read `fixture`, a local CSV path; null = network),
+ * parse and cache. Shared by `urgences-cumulatif` and `urgences --baseline`.
+ */
+export async function loadCumulatifRows(opts: { cache?: CacheConfig; fixture: string | null }): Promise<CumulatifRows> {
+  const cache = opts.cache ?? {};
+  const hit = readJsonCache(CACHE_FILE, cache, DEFAULT_TTL_MINUTES, isCachedPayload);
+  if (hit) {
+    return {
+      ...hit.payload,
+      cached: true,
+      cacheAgeMinutes: Math.round((Date.now() - Date.parse(hit.storedAt)) / 60_000),
+    };
+  }
+  const text = opts.fixture
+    ? (await readFile(opts.fixture, 'utf8')).replace(/^\uFEFF/, '')
+    : await fetchUtf8Csv(SOURCE_URL);
   const parsed = parseCumulatif(text);
   writeJsonCache(CACHE_FILE, parsed, cache);
-  return parsed;
+  return { ...parsed, cached: false, cacheAgeMinutes: 0 };
 }

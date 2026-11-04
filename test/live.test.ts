@@ -17,3 +17,17 @@ test('live fetch parses the current MSSS CSV into the expected shape', { skip: !
   assert.ok(sj.name.includes('SAINTE-JUSTINE'));
   assert.ok(report.dataDate.length > 0);
 });
+
+test('live --baseline joins the hourly file with the cumulative file on permit numbers', {
+  skip: !process.env.RUN_LIVE,
+}, async () => {
+  const report = await fetchUrgencesReport({
+    cache: { dir: '/tmp/msss-urgences-baseline-live-test', refresh: true },
+    baseline: true,
+  });
+  assert.equal(report.baseline!.status, 'ok', report.baseline!.error);
+  assert.match(report.baseline!.fiscalYear!, /^\d{4}-\d{4}$/);
+  const facilities = report.regions.flatMap((r) => r.facilities);
+  // Most ERs have a validated cumulative row; a sudden drop means the join key changed.
+  assert.ok(report.baseline!.matched > facilities.length / 2, `matched ${report.baseline!.matched}/${facilities.length}`);
+});

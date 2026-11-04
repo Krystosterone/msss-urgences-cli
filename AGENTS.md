@@ -3,7 +3,8 @@
 Deterministic, cache-aware CLI that reads Québec health-services data directly
 from canonical MSSS open-data CSVs (a plain HTTPS fetch + CSV parse — no
 browser, no HTML scraping), plus agent skills on top that own the
-human-facing recommendations. Ships four tools: `urgences` (hourly ER occupancy,
+human-facing recommendations. Ships four data tools plus `regions` (the shared
+RSS region registry behind every `--region`; `src/core/regions.ts`): `urgences` (hourly ER occupancy,
 Latin-1 CSV), `cliniques` (daily clinic appointment availability, UTF-8/BOM
 CSV), `urgences-cumulatif` (fiscal-year-to-date ER indicators and
 year-over-year trends, UTF-8/BOM CSV updated each fiscal period) and
@@ -20,6 +21,8 @@ msss-urgences urgences --region montreal --json
 msss-urgences cliniques --region montreal --json
 msss-urgences urgences-cumulatif --region montreal --json
 msss-urgences chirurgies --region montreal --json
+msss-urgences urgences --region 06 --baseline --json   # live ER joined with fiscal-year-to-date values
+msss-urgences regions --json                           # region codes/aliases accepted by --region
 ```
 
 During development, skip the build and run TypeScript directly:
@@ -38,6 +41,7 @@ MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv msss-urgences urgences -
 MSSS_URGENCES_FIXTURE=test/fixtures/rdvoffert_DOuv.csv msss-urgences cliniques --json   # offline cliniques
 MSSS_URGENCES_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences-cumulatif --json  # offline cumulatif
 MSSS_URGENCES_FIXTURE=test/fixtures/Chirurgie_ListeAttente.csv msss-urgences chirurgies --json  # offline chirurgies
+MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv MSSS_URGENCES_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences --baseline --json  # offline --baseline
 ```
 
 Node's built-in `fetch` ignores `HTTPS_PROXY`; behind a proxy run live fetches
@@ -49,7 +53,8 @@ To force a live fetch past the cache, add `--refresh` to any command (e.g.
 ## Env
 
 See `.env.example`. Slots: `MSSS_URGENCES_CACHE_DIR` (default
-`~/.cache/msss-urgences`). No secrets.
+`~/.cache/msss-urgences`); `MSSS_URGENCES_BASELINE_FIXTURE` (local cumulative
+CSV for `urgences --baseline`, offline runs only). No secrets.
 
 ## Cron / databases
 

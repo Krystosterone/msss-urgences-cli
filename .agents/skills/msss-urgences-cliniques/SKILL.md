@@ -36,7 +36,12 @@ msss-urgences cliniques --search <clinic> --json
 msss-urgences cliniques --date YYYY-MM-DD --region <name> --json
 ```
 
-The report has `clinics[]` (each: `name`, `regionName`, `rlsName`,
+`--region` takes the same names and RSS codes as every other `msss-urgences`
+command (`montreal`, `06`) and covers all of that region's RTS sub-regions; to
+pair clinics with ERs in the same region, match a clinic's `rssCode` with the
+ER report's `regionCode`.
+
+The report has `clinics[]` (each: `name`, `regionName`, `rlsName`, `rssCode`,
 `professionGroup`, `totalOffered`, and `slots` with six time bands
 `6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate` (the day the
 report is for), and `availableDates` (distinct dates present, newest first).

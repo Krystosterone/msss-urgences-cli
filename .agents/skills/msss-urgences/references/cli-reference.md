@@ -11,11 +11,13 @@ msss-urgences urgences [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `montreal` |
+| `--region <name\|code>` | Filter to a region: name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `06`, `RSS06`). Same spellings in every command; list them with `msss-urgences regions` |
 | `--id <n[,n...]>` | Filter to facility id(s) (MSSS permit number); repeatable or comma-separated. Explicit ids override `--available-only` |
 | `--search <text>` | Filter facilities by name (accent-insensitive substring) |
 | `--available-only` | Only facilities currently reporting live data |
-| `--refresh` | Force a fresh fetch, ignoring the local cache |
+| `--baseline` | Join each facility with its fiscal-year-to-date values from the cumulative ER file (by permit number) — adds `baseline` / `vsBaseline` |
+| `--baseline-fixture <path>` | Read a local cumulative CSV for `--baseline` (offline; env `MSSS_URGENCES_BASELINE_FIXTURE` also works) |
+| `--refresh` | Force a fresh fetch, ignoring the local cache (both files with `--baseline`) |
 | `--ttl <minutes>` | Cache TTL in minutes (default 30) |
 | `--json` | JSON output (default when piped) |
 | `--table` | Human-readable table (default on a TTY) |
@@ -52,8 +54,42 @@ Each `facility`:
 
 `null` metrics / `available: false` = not reporting right now.
 
+### With `--baseline`
+
+Each facility also gets `baseline` (null when the cumulative file has no row
+for it in the baseline fiscal year) and `vsBaseline` (null with it):
+
+| Field | Meaning |
+|-------|---------|
+| `baseline.fiscalYear` / `baseline.period` | Fiscal year and period (1–13) the values are cumulated through (April 1 → end of period) |
+| `baseline.dmsStretcher` / `baseline.dmsAmbulatory` | Fiscal-year-to-date mean stay, decimal hours (`dms_sur_civiere` / `dms_ambulatoire`) |
+| `baseline.pecDelayHours` | Context only: FYTD mean delay to first physician assessment, hours (no live equivalent) |
+| `baseline.stretcherOver24hPct` / `stretcherOver48hPct` | Context only: FYTD share of stretcher visits lasting 24 h+ / 48 h+, % |
+| `vsBaseline.dmsStretcherHours` / `dmsAmbulatoryHours` | DERIVED: live − baseline, hours (2 decimals) |
+| `vsBaseline.dmsStretcherPct` / `dmsAmbulatoryPct` | DERIVED: the same difference as an integer % of the baseline |
+
+**Window:** the live `dmsStretcher` / `dmsAmbulatory` are MSSS's *previous-day*
+mean stay (patients who left the ER yesterday); `baseline.*` is the mean over
+every stay since April 1. Same indicator, different window. The live
+`over24h` / `waitingForCare` are head counts *now* and have no FYTD equivalent.
+
+Top level gains `baseline`: `status` (`ok` | `unavailable`), `source`,
+`fiscalYear`, `period`, `cached`, `cacheAgeMinutes`, `matched` (facilities with
+a baseline row), `unmatched` (their ids without one) and, when unavailable,
+`error`. An unavailable baseline never fails the command: live data is still
+returned, every `baseline` is null, exit code stays `0`.
+
+## Regions
+
+`msss-urgences regions --json` lists the 18 RSS regions (`code`, `name`, `slug`,
+`aliases`, and `datasetCodes` — how each dataset writes the code).
+`msss-urgences regions --region <input>` shows what an input resolves to, exit
+`2` if it names no region or several (e.g. `mont`). Static, no network.
+
 ## Freshness & cache
 
 - Source updates **hourly**; CLI caches locally for **30 min** by default (wall-clock TTL).
 - Repeated calls within the hour are cheap and return `cached: true`.
 - `--refresh` forces a fresh fetch. Note `dataDate` and `cached` when freshness matters.
+- The `--baseline` file updates once per fiscal period (~4 weeks) and keeps its
+  own 24 h cache, shared with `urgences-cumulatif`.

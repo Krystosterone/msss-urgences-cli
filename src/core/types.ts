@@ -43,6 +43,71 @@ export interface Facility {
   available: boolean;
   /** DERIVED (by core/derive): occupancyPct minus the region average. */
   deltaFromRegionAvgPct: number | null;
+  /**
+   * Only with `--baseline`: this facility's fiscal-year-to-date values from the
+   * cumulative ER file (joined on the permit number), or null when that file
+   * has no row for it in the baseline fiscal year.
+   */
+  baseline?: FacilityBaseline | null;
+  /** Only with `--baseline`: DERIVED live − baseline differences; null when `baseline` is null. */
+  vsBaseline?: FacilityVsBaseline | null;
+}
+
+/**
+ * A facility's fiscal-year-to-date values (April 1 → end of `period`) from
+ * `Donnees_cumulatives_Urgence.csv`, verbatim, in decimal hours.
+ *
+ * Window note: the hourly file's `dmsStretcher` / `dmsAmbulatory` are the mean
+ * stay of patients who left the ER the *previous day*; these are the mean over
+ * every stay since April 1. Same indicator (arrival → departure), different window.
+ */
+export interface FacilityBaseline {
+  /** Fiscal year of the baseline row, e.g. "2026-2027". */
+  fiscalYear: string;
+  /** Fiscal period (1–13) the baseline is cumulated through. */
+  period: number;
+  /** `dms_sur_civiere` — comparable with the live `dmsStretcher`. */
+  dmsStretcher: number | null;
+  /** `dms_ambulatoire` — comparable with the live `dmsAmbulatory`. */
+  dmsAmbulatory: number | null;
+  /** Context only: `delai_pec_total`, mean delay to first physician assessment (no live equivalent). */
+  pecDelayHours: number | null;
+  /** Context only, DERIVED: share of stretcher visits that lasted 24 h+, % (1 decimal). */
+  stretcherOver24hPct: number | null;
+  /** Context only, DERIVED: share of stretcher visits that lasted 48 h+, % (1 decimal). */
+  stretcherOver48hPct: number | null;
+}
+
+/** DERIVED: live (previous-day) mean stay minus the fiscal-year-to-date mean. */
+export interface FacilityVsBaseline {
+  /** dmsStretcher − baseline.dmsStretcher, hours (2 decimals). */
+  dmsStretcherHours: number | null;
+  /** Same difference as an integer % of baseline.dmsStretcher. */
+  dmsStretcherPct: number | null;
+  /** dmsAmbulatory − baseline.dmsAmbulatory, hours (2 decimals). */
+  dmsAmbulatoryHours: number | null;
+  /** Same difference as an integer % of baseline.dmsAmbulatory. */
+  dmsAmbulatoryPct: number | null;
+}
+
+/** Report-level description of the `--baseline` join. */
+export interface UrgencesBaselineMeta {
+  /** "unavailable" when the cumulative file could not be fetched/parsed; live data is still returned. */
+  status: 'ok' | 'unavailable';
+  /** Cumulative-file URL. */
+  source: string;
+  /** Fiscal year used (the latest in the cumulative file); null when unavailable. */
+  fiscalYear: string | null;
+  /** Fiscal period the baseline is cumulated through; null when unavailable. */
+  period: number | null;
+  cached: boolean;
+  cacheAgeMinutes: number | null;
+  /** Facilities in this (filtered) report that have a baseline row. */
+  matched: number;
+  /** Ids of facilities in this report with no row in the baseline fiscal year. */
+  unmatched: string[];
+  /** Why the baseline is unavailable (only when status is "unavailable"). */
+  error?: string;
 }
 
 /** A Québec administrative region and its facilities. */
@@ -71,6 +136,8 @@ export interface UrgencesReport {
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
   regions: Region[];
+  /** Only with `--baseline`: what the facilities' `baseline` fields were joined from. */
+  baseline?: UrgencesBaselineMeta;
 }
 
 /** Appointment slots offered per time band for a clinic/day. */
@@ -107,6 +174,12 @@ export interface Clinic {
   regionCode: string | null;
   /** `clinique_nom_rts` — region display name, e.g. "RTS du Bas-Saint-Laurent". */
   regionName: string;
+  /**
+   * DERIVED: the two-digit RSS region the RTS belongs to (its code's first two
+   * digits, e.g. "061" → "06"), matching `urgences` / `urgences-cumulatif`
+   * region codes. Null when the RTS code is blank or unknown.
+   */
+  rssCode: string | null;
   /** `clinique_id_rls` — local service network (RLS) code. */
   rlsCode: string | null;
   /** `clinique_nom_rls` — RLS display name. */

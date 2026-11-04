@@ -20,7 +20,9 @@ direction is better, what counts as a meaningful change, and the summary.
 > This is **trend** data (cumulated over months, updated every ~4 weeks). For
 > **right-now** ER occupancy use **`msss-urgences`** (generic) or
 > **`msss-urgences-children`** (pediatric); for clinic openings today use
-> **`msss-urgences-cliniques`**.
+> **`msss-urgences-cliniques`**. To set *yesterday* against this fiscal year
+> ("is it worse than usual right now?"), `msss-urgences` uses
+> `msss-urgences urgences --baseline`, which joins this file to the hourly one.
 
 ## 1. Get the data
 

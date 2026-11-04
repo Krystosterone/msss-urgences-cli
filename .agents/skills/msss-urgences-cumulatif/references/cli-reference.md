@@ -11,7 +11,7 @@ msss-urgences urgences-cumulatif [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Region by name (accent-insensitive substring of the slug) or RSS code, e.g. `montreal`, `06` |
+| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `6`, `06`, `RSS06`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`msss-urgences regions` lists them) |
 | `--id <n[,n...]>` | Facility permit number(s); repeatable or comma-separated (facility rows only) |
 | `--search <text>` | Entry name, accent-insensitive substring (facility, establishment or region name per level) |
 | `--year <YYYY-YYYY>` | Fiscal year to report; default = latest in the source |

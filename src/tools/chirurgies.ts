@@ -5,6 +5,7 @@ import { readChirurgiesCache, writeChirurgiesCache, type CacheConfig } from '../
 import { slugify } from '../core/parse';
 import { UsageError } from '../core/errors';
 import { MSSS_CHIRURGIES_URL } from '../core/source';
+import { resolveRegion } from '../core/regions';
 import {
   CHIRURGIE_SPECIALTIES,
   RSS_REGIONS,
@@ -58,6 +59,8 @@ export function resolveSpecialties(filter: string | undefined): ChirurgieSpecial
 }
 
 function regionMatches(code: string, name: string, filter: string): boolean {
+  const resolved = resolveRegion(filter);
+  if (resolved) return code === `RSS${resolved.code}`;
   const f = filter.trim();
   const asCode = /^(?:rss)?\s*(\d{1,2})$/i.exec(f);
   if (asCode) return code === `RSS${asCode[1]!.padStart(2, '0')}`;

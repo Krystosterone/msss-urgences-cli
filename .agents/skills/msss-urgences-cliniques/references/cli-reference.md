@@ -11,7 +11,7 @@ msss-urgences cliniques [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `bas-saint-laurent` |
+| `--region <name\|code>` | An RSS region by name, alias or code (`montreal`, `06`) — all of its RTS sub-regions; otherwise one RTS by code (`061`) or name substring (`Montérégie-Est`). Same spellings in every command (`msss-urgences regions` lists them) |
 | `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
 | `--date <YYYY-MM-DD>` | The date to report; default = the latest date present in the source |
@@ -43,6 +43,7 @@ Each `clinic`:
 |-------|---------|
 | `date` | The day (YYYY-MM-DD) this row is for |
 | `regionCode` / `regionName` | RTS region code / display name |
+| `rssCode` | DERIVED: the two-digit RSS region the RTS belongs to (`061` → `06`) — the same code as `urgences` `regionCode`, for joining |
 | `rlsCode` / `rlsName` | Local service network (RLS) code / name |
 | `name` | Clinic name (`clinique_nom_groupe`) |
 | `professionGroup` | `Médecin` / `Infirmière` (etc.) |
