@@ -5,6 +5,19 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add `urgences-cumulatif` tool + `msss-urgences-cumulatif` skill:
+  fiscal-year-to-date ER indicators (visits, length of stay, delay to
+  physician, 24h/48h stretcher stays, 75+ and mental-health counts) per
+  facility, establishment, region and province from the MSSS
+  `Donnees_cumulatives_Urgence.csv` (UTF-8/BOM, updated each fiscal period);
+  like-for-like year-over-year `previous`/`change`, `--history`, coverage
+  signals (`facilityCount`, `missingFromFiscalYear`); region/id/search/year/
+  compare/level filters. New exit-2 `UsageError` for an unknown fiscal year.
+- Point all MSSS source URLs at the bare `msss.gouv.qc.ca` host
+  (`www.msss.gouv.qc.ca` now 301-redirects there).
+- Extract a shared UTF-8/BOM fetcher (`core/fetchUtf8.ts`) used by `cliniques`
+  and `urgences-cumulatif`.
+
 - Add `cliniques` tool + `msss-urgences-cliniques` skill: daily clinic
   appointment availability from the MSSS `rdvoffert_DOuv.csv` daily CSV
   (UTF-8/BOM; per-time-band offered slots; region/search/date filters);
