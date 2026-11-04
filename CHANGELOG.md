@@ -5,6 +5,8 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
+  config) and the `.gitignore` entry for generated `openspec-*` skills.
 - Add `urgences-historique`: ER occupancy history from the archived hourly
   snapshots, by `hour`, `weekday-hour` or `day` over `--days` (default 28),
   with each facility's latest snapshot vs its typical level at that hour
