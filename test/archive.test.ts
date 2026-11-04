@@ -243,3 +243,63 @@ test('refuses to run in a clone that has not opted in (exit 2)', { skip }, () =>
     s.cleanup();
   }
 });
+
+test('after an upstream history rewrite, resets instead of pushing the old history back', { skip }, () => {
+  const s = sandbox();
+  try {
+    // A human adds a file, the job archives on top of it.
+    const human = join(s.dir, 'human');
+    git(s.dir, 'clone', '-q', s.origin, human);
+    writeFileSync(join(human, 'extra.yaml'), 'name: x\n');
+    git(human, 'add', 'extra.yaml');
+    git(human, 'commit', '-q', '-m', 'add extra file');
+    git(human, 'push', '-q', 'origin', 'main');
+    assert.equal(s.run().status, 0);
+
+    // The human rewrites main without that file and force-pushes.
+    git(human, 'fetch', '-q', 'origin');
+    git(human, 'reset', '-q', '--hard', 'origin/main~2');
+    writeFileSync(join(human, 'code.ts'), 'export {};\n');
+    git(human, 'add', 'code.ts');
+    git(human, 'commit', '-q', '-m', 'rewritten history');
+    git(human, 'push', '-q', '--force', 'origin', 'main');
+    const rewritten = git(human, 'rev-parse', 'HEAD');
+
+    const r = s.run();
+    assert.equal(r.status, 0, r.log);
+    assert.match(r.log, /resetting to origin\/main/);
+    assert.equal(git(s.origin, 'log', '-1', '--format=%P', 'main'), rewritten, 'data commit sits on the rewrite');
+    assert.deepEqual(filesIn(s.origin, 'main').sort(), [CUM, URG].sort());
+    assert.equal(git(s.origin, 'ls-tree', '--name-only', 'main', 'extra.yaml'), '', 'removed file stays removed');
+  } finally {
+    s.cleanup();
+  }
+});
+
+test('after a filter-style rewrite of the root commit, never pushes the removed file back', { skip }, () => {
+  const s = sandbox();
+  try {
+    assert.equal(s.run().status, 0);
+    // Rewrite every commit to drop README.md (which is in the root commit), the
+    // way `git filter-repo --invert-paths` would: same content otherwise, but no
+    // common ancestor with the job's clone. Rebasing the old history onto it
+    // would apply cleanly and re-add README.md.
+    const human = join(s.dir, 'human');
+    git(s.dir, 'clone', '-q', s.origin, human);
+    const r1 = spawnSync('git', ['filter-branch', '-f', '--index-filter', 'git rm -q --cached --ignore-unmatch README.md', '--', 'main'], {
+      cwd: human,
+      env: { ...GIT_ENV, FILTER_BRANCH_SQUELCH_WARNING: '1' },
+      encoding: 'utf8',
+    });
+    assert.equal(r1.status, 0, r1.stderr);
+    git(human, 'push', '-q', '--force', 'origin', 'main');
+    const rewritten = git(human, 'rev-parse', 'HEAD');
+
+    const r = s.run();
+    assert.equal(r.status, 0, r.log);
+    assert.equal(git(s.origin, 'rev-parse', 'main'), rewritten, 'nothing to push: same data, history left as rewritten');
+    assert.equal(git(s.origin, 'ls-tree', '--name-only', 'main', 'README.md'), '', 'removed file stays removed');
+  } finally {
+    s.cleanup();
+  }
+});

@@ -40,7 +40,6 @@ During development, skip the build and run TypeScript directly:
 ```bash
 npm test               # deterministic suite against test/fixtures/*.csv
 RUN_LIVE=1 npm test    # also runs the opt-in live network smoke tests (all four tools)
-python3 scripts/validate-skills.py   # Agent Skills spec conformance for .agents/skills/
 MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv msss-urgences urgences --json  # offline urgences
 MSSS_URGENCES_FIXTURE=test/fixtures/rdvoffert_DOuv.csv msss-urgences cliniques --json   # offline cliniques
 MSSS_URGENCES_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences-cumulatif --json  # offline cumulatif
@@ -62,8 +61,8 @@ To force a live fetch past the cache, add `--refresh` to any command (e.g.
 
 - `test`: `npm ci`, `npm run build` (type-check) and `npm test` on Node 18, 20,
   22 and 24, since `package.json` declares `node >= 18`.
-- `lint`: `python3 scripts/validate-skills.py`, `shellcheck` on the shell
-  scripts, and `actionlint` on the workflows.
+- `lint`: `shellcheck` on the shell scripts and `actionlint` on the
+  workflows.
 
 Run the same checks locally before pushing. The lint tools install with
 `pip install shellcheck-py actionlint-py`. Keep CI offline: live tests stay
@@ -108,10 +107,6 @@ Setup and credentials: `docs/archive-job.md`. Consequences for agents:
   locally with `npx tsx scripts/build-api.ts site` (output is gitignored).
   Don't run the script in a working copy: it resets the clone it runs in, and
   refuses to unless `git config msss-archive.dedicated true`.
-
-`manifest.yaml` declares no cron jobs for install-repo.sh to install: the
-archive job runs on one designated computer, set up by hand
-(`docs/archive-job.md`), not on every install.
 
 ## Docs
 

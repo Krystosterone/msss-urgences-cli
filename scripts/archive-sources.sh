@@ -139,6 +139,15 @@ recover_checkout() {
   git clean -q -fd -- archive/
 }
 
+# True when the local branch shares history with $UPSTREAM and every local
+# commit missing from it touches archive/ only, i.e. rebasing them is safe.
+# False after an upstream history rewrite (no common ancestor, or old code
+# commits that upstream no longer has): rebasing those would push them back.
+local_commits_are_archive_only() {
+  git merge-base HEAD "$UPSTREAM" >/dev/null 2>&1 &&
+    [ -z "$(git log --format=%H "$UPSTREAM..HEAD" -- . ':(exclude)archive/')" ]
+}
+
 # Fetch origin/main and put local (unpushed) archive commits on top of it.
 # Local commits that touch anything outside archive/ (or that conflict) are
 # dropped: the job never pushes code, and this run fetches fresh data anyway.
@@ -149,8 +158,8 @@ sync_with_upstream() {
     [ "$i" = 3 ] && { log "fetch failed; continuing offline (the commit is pushed next run)"; return 1; }
     sleep $((i * 2))
   done
-  if [ -n "$(git diff --name-only "$UPSTREAM...HEAD" -- . ':(exclude)archive/')" ]; then
-    log "local branch has non-archive commits; resetting to $REMOTE/$BRANCH"
+  if ! local_commits_are_archive_only; then
+    log "local branch has non-archive commits or history $REMOTE/$BRANCH no longer has; resetting to $REMOTE/$BRANCH"
     git reset -q --hard "$UPSTREAM"
   elif ! git rebase -q "$UPSTREAM" >/dev/null 2>&1; then
     log "rebase of unpushed archive commits conflicted; resetting to $REMOTE/$BRANCH"
@@ -215,8 +224,8 @@ push_with_rebase() {
   local attempt
   for attempt in $(seq 1 "$PUSH_ATTEMPTS"); do
     if git fetch -q "$REMOTE" "+refs/heads/$BRANCH:$UPSTREAM"; then
-      if ! git rebase -q "$UPSTREAM" >/dev/null 2>&1; then
-        log "rebase conflicted; re-applying this run's files on top of $REMOTE/$BRANCH"
+      if ! local_commits_are_archive_only || ! git rebase -q "$UPSTREAM" >/dev/null 2>&1; then
+        log "can't rebase onto $REMOTE/$BRANCH; re-applying this run's files on top of it"
         git rebase --abort >/dev/null 2>&1 || true
         git reset -q --hard "$UPSTREAM"
         apply_and_commit

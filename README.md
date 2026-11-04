@@ -106,7 +106,7 @@ API on GitHub Pages, which `urgences-historique` reads.
 
 Build, test and repo conventions for coding agents and humans are in
 [`AGENTS.md`](AGENTS.md). CI ([`ci.yml`](.github/workflows/ci.yml)) runs the
-tests on Node 18–24 and lints the skills, shell scripts and workflows on every
+tests on Node 18–24 and lints the shell scripts and workflows on every
 pull request.
 
 The code is MIT-licensed. The data is © Gouvernement du Québec (MSSS),

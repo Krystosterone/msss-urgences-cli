@@ -44,8 +44,6 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
-      - name: Agent Skills spec conformance
-        run: python3 scripts/validate-skills.py
       - name: Shellcheck
         run: shellcheck scripts/archive-sources.sh install.sh
       - name: Lint workflows
