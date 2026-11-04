@@ -11,7 +11,7 @@ msss-urgences chirurgies [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Region by name/slug (accent-insensitive substring) or RSS code: `RSS06`, `06`, `6` |
+| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `RSS06`, `06`, `6`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`msss-urgences regions` lists them) |
 | `--specialty <name>` | Specialties by label or key (accent-insensitive substring), e.g. `ortho`, `gynécologie`. `chirurgie` matches six of them |
 | `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04`; default = latest in the source |
 | `--refresh` | Force a fresh fetch, ignoring the local cache |

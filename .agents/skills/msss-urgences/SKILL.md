@@ -48,7 +48,14 @@ msss-urgences urgences --region montreal --search "verdun" --json
 
 # Everything currently reporting data:
 msss-urgences urgences --available-only --json
+
+# "Is it worse than usual?" — add each hospital's fiscal-year-to-date baseline:
+msss-urgences urgences --region montreal --baseline --json
 ```
+
+`--region` takes a name, an alias or an RSS code (`montreal`, `mtl`, `06`) and
+means the same region in every `msss-urgences` command; `msss-urgences regions
+--json` lists them.
 
 Each facility in the JSON has an `id` (the stable MSSS permit number), `name`,
 `occupancyPct`, `totalPresent`, `waitingForCare`, `over24h`, `over48h`,
@@ -84,6 +91,26 @@ For a general ER-occupancy question, apply these rules:
 4. **`waitingForCare`** is the queue to be seen — weigh it alongside occupancy.
 5. If a hospital is `available: false`, say its data isn't being reported right now.
 
+**With `--baseline`** ("is this normal for this hospital?"):
+
+6. **`vsBaseline.dmsStretcherPct` answers "worse than usual?"** It compares
+   yesterday's mean stretcher stay with the same hospital's fiscal-year-to-date
+   mean. Treat roughly **±10% as normal day-to-day noise**; **+25% or more** is
+   "noticeably longer than usual"; **−25% or less** is "unusually quick". Say
+   it is *yesterday's* stay (the CLI's `dmsStretcher` is previous-day data), not
+   the stay of someone arriving now.
+7. **Occupancy and the baseline answer different questions.** A hospital can be
+   at 200% and still in line with its own norm (chronically full), or at 90%
+   and well above it. Report both: "busy, but normal for it" vs "busier than it
+   usually is".
+8. **`baseline: null`** means MSSS has not validated that hospital's data for
+   the fiscal year yet (listed in the top-level `baseline.unmatched`). Say so;
+   don't infer a norm. If `baseline.status` is `unavailable`, answer from the
+   live data alone and mention the comparison couldn't be made.
+9. `baseline.pecDelayHours` and `baseline.stretcherOver24hPct` are context only
+   ("this ER usually takes ~2 h to see a physician"); they have no live
+   counterpart to subtract.
+
 More generally: lower occupancy and lower long-stay counts are better; always
 give the reader the regional average as context so a percentage means something.
 
@@ -95,6 +122,11 @@ Lead with the recommendation, then the numbers, then context. Example shape:
 > - Verdun: 58% occupancy, 12 waiting, 0 patients > 24h.
 > - The Montréal average is 104%, so Verdun sits well below the norm (Δ −46).
 > - It carries the shortest non-priority wait of the region right now.
+
+With `--baseline`, add one line per hospital mentioned, e.g.:
+
+> - Its stretcher stays yesterday (13.5 h) were 19% shorter than its usual
+>   16.7 h this fiscal year — a good day for Verdun.
 
 Round nothing the CLI didn't round; quote occupancy as shown. Note the
 `dataDate` (the ministry's own update timestamp) and whether the data was

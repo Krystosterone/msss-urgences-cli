@@ -110,6 +110,8 @@ function runCli(args: string[]): Promise<{ stdout: string; stderr: string; code:
   return new Promise((resolve) => {
     const p: ChildProcess = spawn('node', ['--import', 'tsx', 'src/cli.ts', ...args], {
       cwd: process.cwd(),
+      // Isolated cache: a developer's real cache (live data) must not leak into fixture runs.
+      env: { ...process.env, MSSS_URGENCES_CACHE_DIR: `/tmp/msss-cliniques-cli-test-${process.pid}-${Date.now()}` },
     });
     let stdout = '';
     let stderr = '';

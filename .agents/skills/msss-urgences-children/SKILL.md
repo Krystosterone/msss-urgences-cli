@@ -20,7 +20,9 @@ recommendation.
 > ER/region question, use the generic **`msss-urgences`** skill. For clinic
 > appointment availability, use **`msss-urgences-cliniques`**.
 > For how the two pediatric ERs have **trended** over fiscal years, use
-> **`msss-urgences-cumulatif`** (`--id 51222800,51223279 --history`).
+> **`msss-urgences-cumulatif`** (`--id 51222800,51223279 --history`). Adding
+> `--baseline` to the query below also gives each ER's fiscal-year-to-date stay
+> (`baseline`, `vsBaseline`); interpret it per rules 6–9 of **`msss-urgences`**.
 
 ## 1. Get the data
 

@@ -64,11 +64,13 @@ msss-urgences urgences [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `montreal` |
+| `--region <name\|code>` | Filter to a region by name, alias or RSS code, e.g. `montreal`, `mtl`, `06` (see [`regions`](#regions--the-shared-region-list)) |
 | `--id <n[,n...]>` | Filter to facility id(s) (MSSS permit number); repeatable or comma-separated. Explicit ids override `--available-only` |
 | `--search <text>` | Filter facilities by name (accent-insensitive substring) |
 | `--available-only` | Only facilities currently reporting live data |
-| `--refresh` | Force a fresh fetch, ignoring the local cache |
+| `--baseline` | Add each facility's fiscal-year-to-date values from the cumulative file and the live-minus-baseline length-of-stay difference (see below) |
+| `--baseline-fixture <path>` | Read a local cumulative CSV for `--baseline` (offline run) |
+| `--refresh` | Force a fresh fetch, ignoring the local cache (both files with `--baseline`) |
 | `--ttl <minutes>` | Cache TTL in minutes (default 30) |
 | `--json` | JSON output (default when piped) |
 | `--table` | Human-readable table (default on a TTY) |
@@ -86,7 +88,42 @@ msss-urgences urgences --search "sainte-justine" --json
 
 # Force a fresh fetch
 msss-urgences urgences --region montreal --refresh
+
+# Is each Montréal ER worse than usual? (live vs fiscal year to date)
+msss-urgences urgences --region 06 --baseline --table
 ```
+
+#### `--baseline` — "worse than usual?"
+
+`--baseline` joins each hospital in the hourly file with **the same hospital**
+in [`Donnees_cumulatives_Urgence.csv`](#urgences-cumulatif--fiscal-year-to-date-er-indicators-and-trends-each-fiscal-period)
+(the MSSS permit number is the key in both files), using the latest fiscal year
+in that file:
+
+```jsonc
+// Hôpital de Verdun (51218097), from the test fixtures; live dmsStretcher 15.78, dmsAmbulatory 7.14
+"baseline": {                       // per facility; null if the cumulative file has no row for it
+  "fiscalYear": "2026-2027", "period": 7,   // April 1 → end of fiscal period 7
+  "dmsStretcher": 16.652688149366625,       // FYTD mean stay, hours (verbatim)
+  "dmsAmbulatory": 4.965913639211779,
+  "pecDelayHours": 2.410010683760683,       // context: FYTD delay to first physician
+  "stretcherOver24hPct": 25,                // context: FYTD share of stretcher visits ≥ 24 h
+  "stretcherOver48hPct": 1
+},
+"vsBaseline": {                     // DERIVED: live − baseline
+  "dmsStretcherHours": -0.87, "dmsStretcherPct": -5,
+  "dmsAmbulatoryHours": 2.17, "dmsAmbulatoryPct": 44
+}
+```
+
+The comparison is like-for-like in *what* is measured (arrival → departure, in
+hours) but not in *when*: MSSS publishes the hourly file's lengths of stay as
+**the previous day's** mean, and the cumulative file's as the mean since April 1.
+The report-level `baseline` object records the fiscal year, cache state, and
+which facilities had no baseline row (`unmatched` — typically hospitals whose
+current-year data MSSS has not validated yet). If the cumulative file can't be
+fetched or parsed, the command still returns the live data with
+`baseline.status: "unavailable"` and exits `0`.
 
 ### `cliniques` — daily clinic appointment availability (daily)
 
@@ -96,7 +133,7 @@ msss-urgences cliniques [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name>` | Filter to a region by name (accent-insensitive), e.g. `bas-saint-laurent` |
+| `--region <name\|code>` | An RSS region by name, alias or code (`montreal`, `06`: all of its RTS sub-regions); otherwise one RTS by code (`061`) or name (`Montérégie-Est`) |
 | `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
 | `--date <YYYY-MM-DD>` | The date to report (default: latest date in the source) |
@@ -135,7 +172,7 @@ msss-urgences urgences-cumulatif [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Filter to a region by name (accent-insensitive) or RSS code, e.g. `montreal` or `06` |
+| `--region <name\|code>` | Filter to a region by name, alias or RSS code, e.g. `montreal`, `6` or `06` |
 | `--id <n[,n...]>` | Filter to facility id(s) (MSSS permit number); repeatable or comma-separated |
 | `--search <text>` | Filter by entry name (accent-insensitive substring) |
 | `--year <YYYY-YYYY>` | Fiscal year to report (default: the latest in the source) |
@@ -183,7 +220,7 @@ msss-urgences chirurgies [options]
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Region by name (accent-insensitive substring) or RSS code (`RSS06`, `06`, `6`) |
+| `--region <name\|code>` | Region by name, alias or RSS code (`montreal`, `RSS06`, `06`, `6`) |
 | `--specialty <name>` | Specialties by name (accent-insensitive substring), e.g. `ortho` |
 | `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04` (default: latest in the source) |
 | `--refresh` | Force a fresh fetch |
@@ -212,6 +249,35 @@ Each region carries `overall` and per-specialty waitlists. Each has the verbatim
 absent from 2627-P02 onward), which the province total therefore excludes. A
 blank source cell is `null`, never `0`. The full contract is in
 [`.agents/skills/msss-urgences-chirurgies/references/cli-reference.md`](.agents/skills/msss-urgences-chirurgies/references/cli-reference.md).
+
+### `regions` — the shared region list
+
+Every MSSS dataset spells regions differently (`06`, `RSS06`, RTS `061`–`065`,
+`Montréal`, `Error` for RSS 10 …). One registry
+([`src/core/regions.ts`](src/core/regions.ts)) of the 18 régions
+sociosanitaires (RSS) makes `--region` mean the same thing in **every** command.
+It accepts:
+
+- an RSS code: `6`, `06`, `RSS06`;
+- the name or slug, accent- and case-insensitive, with `St`/`Ste` expanded:
+  `Montréal`, `bas-st-laurent`;
+- an alias (other datasets' spellings and short names): `mtl`, `gaspesie`,
+  `lac-saint-jean`, `mauricie-et-du-centre-du-quebec`;
+- an unambiguous prefix (3+ characters) of an official name: `laurent` →
+  Laurentides (`mont` is ambiguous and matches nothing).
+
+When the input names no single region, each command falls back to its previous
+name matching, so finer filters such as a cliniques RTS (`Montérégie-Est`, `061`)
+still work. Clinic rows also carry a derived `rssCode` (`061` → `06`) so they can
+be joined with the ER reports' `regionCode`.
+
+```bash
+msss-urgences regions --table                    # code, name, accepted spellings
+msss-urgences regions --region bsl --json        # what an input resolves to (exit 2 if none/ambiguous)
+```
+
+Static, no network. JSON entries: `code`, `name`, `slug`, `aliases`,
+`datasetCodes` (`urgences`, `urgencesCumulatif`, `chirurgies`, `cliniquesRtsPrefix`).
 
 Exit codes: `0` success · `1` network/HTTP error · `2` page structure changed or bad usage.
 
@@ -288,6 +354,8 @@ src/
     jsonCache.ts        # generic TTL'd JSON cache (urgences-cumulatif; atomic write, graceful degrade)
     parseChirurgies.ts  # surgical-waitlist CSV -> rows (header-validated; csv-parse)
     chirurgiesCache.ts  # parsed-history cache (chirurgies; daily TTL, graceful degrade)
+    regions.ts          # shared RSS region registry: --region resolution + dataset code normalisation
+    baseline.ts         # urgences --baseline: join hourly facilities with cumulative rows by permit
     errors.ts    # FetchError / ParseError -> exit codes
   tools/
     urgences.ts          # orchestrate fetch/cache/parse/derive/filter/assemble report
@@ -330,6 +398,9 @@ browser, no `node-html-parser`, no anti-blocking stack.
 npm test                 # runs the deterministic suite against the saved fixture
 RUN_LIVE=1 npm test      # also runs the live network smoke tests (all four tools)
 MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv msss-urgences urgences --json   # offline
+MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv \
+  MSSS_URGENCES_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv \
+  msss-urgences urgences --baseline --json                                             # offline --baseline
 ```
 
 Tests are written test-first and run against `test/fixtures/urgences_nbpers.csv`

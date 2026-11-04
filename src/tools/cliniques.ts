@@ -4,9 +4,14 @@ import { parseCliniques } from '../core/parseCliniques';
 import { readCliniquesCache, writeCliniquesCache, type CacheConfig } from '../core/cliniquesCache';
 import type { Clinic, CliniquesReport } from '../core/types';
 import { MSSS_CLINIQUES_URL } from '../core/source';
+import { resolveRegion, rssCodeOf, type RssRegion } from '../core/regions';
 
 export interface CliniquesFilters {
-  /** Filter to a region by name (accent-insensitive). */
+  /**
+   * Filter to a region: an RSS region in any spelling `resolveRegion` accepts
+   * (all of its RTS sub-regions), else a three-digit RTS code, else an
+   * accent-insensitive substring of the RTS name (e.g. "Montérégie-Est").
+   */
   region?: string;
   /** Filter to an RLS (local service network) by name (accent-insensitive). */
   rls?: string;
@@ -23,13 +28,21 @@ export function normalize(text: string): string {
   return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-function clinicMatches(c: Clinic, filters: CliniquesFilters, wantedDate: string): boolean {
+function regionMatches(c: Clinic, filter: string, resolved: RssRegion | null): boolean {
+  if (resolved) return rssCodeOf(c.regionCode) === resolved.code;
+  const f = filter.trim();
+  if (/^\d{3}$/.test(f)) return c.regionCode === f;
+  return normalize(c.regionName).toLowerCase().includes(normalize(f).toLowerCase());
+}
+
+function clinicMatches(
+  c: Clinic,
+  filters: CliniquesFilters,
+  wantedDate: string,
+  resolved: RssRegion | null,
+): boolean {
   if (c.date !== wantedDate) return false;
-  if (
-    filters.region &&
-    !normalize(c.regionName).toLowerCase().includes(normalize(filters.region).toLowerCase())
-  )
-    return false;
+  if (filters.region && !regionMatches(c, filters.region, resolved)) return false;
   if (
     filters.rls &&
     !normalize(c.rlsName).toLowerCase().includes(normalize(filters.rls).toLowerCase())
@@ -66,7 +79,11 @@ export async function fetchCliniquesReport(opts: {
       : await loadFresh(opts.fixture, cache);
 
   const wantedDate = filters.date ?? dates[0]!;
-  const matched = clinics.filter((c) => clinicMatches(c, filters, wantedDate));
+  const resolved = filters.region ? resolveRegion(filters.region) : null;
+  // rssCode is re-derived so rows from a cache written before it existed carry it too.
+  const matched = clinics
+    .filter((c) => clinicMatches(c, filters, wantedDate, resolved))
+    .map((c) => ({ ...c, rssCode: rssCodeOf(c.regionCode) }));
 
   const report: CliniquesReport = {
     source: SOURCE_URL,

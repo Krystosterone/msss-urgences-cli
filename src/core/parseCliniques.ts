@@ -1,6 +1,7 @@
 import { parse as parseCsv } from 'csv-parse/sync';
 import type { Clinic, ClinicSlots } from './types';
 import { CLINIQUE_BAND_KEYS } from './types';
+import { rssCodeOf } from './regions';
 import { ParseError } from './errors';
 
 /** Column names as published by the daily clinic-appointments CSV. */
@@ -120,6 +121,7 @@ export function parseCliniques(csv: string): {
       date,
       regionCode: clean(r.clinique_id_rts) === '' ? null : clean(r.clinique_id_rts),
       regionName: clean(r.clinique_nom_rts),
+      rssCode: rssCodeOf(clean(r.clinique_id_rts)),
       rlsCode: clean(r.clinique_id_rls) === '' ? null : clean(r.clinique_id_rls),
       rlsName: clean(r.clinique_nom_rls),
       name: clean(r.clinique_nom_groupe),

@@ -5,6 +5,40 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add a shared region registry (`src/core/regions.ts`) of the 18 RSS regions,
+  used by every command's `--region`: RSS codes in any form (`6`, `06`,
+  `RSS06`), names/slugs (accent-insensitive, `St`/`Ste` expanded), aliases
+  (`mtl`, `gaspesie`, other datasets' spellings) and unambiguous name prefixes.
+  Inputs that name no single region fall back to each command's previous
+  matching. Behaviour changes: `urgences --region` now accepts codes, aliases
+  and prefixes (it required an exact name before); `cliniques --region` with an
+  RSS name or code now covers all of that region's RTS (e.g. `gaspesie` now
+  includes the Îles RTS) and also accepts a three-digit RTS code;
+  `urgences-cumulatif --region` now accepts `6` and `RSS06`.
+- Add `regions` command: lists the registry (codes, names, aliases, per-dataset
+  code spellings) and shows what a `--region` input resolves to (exit 2 when it
+  names no region or several). Static, no network.
+- `cliniques`: each clinic gains a derived `rssCode` (`061` → `06`) for joining
+  with the ER reports' `regionCode`.
+- Add `urgences --baseline`: joins each facility with its fiscal-year-to-date
+  row in the cumulative ER file (by permit number, latest fiscal year) — verbatim
+  `baseline` lengths of stay plus context (delay to physician, 24h/48h shares)
+  and a derived `vsBaseline` (live − baseline, hours and %). The hourly file's
+  lengths of stay are previous-day means; the window difference is documented.
+  A report-level `baseline` lists `matched`/`unmatched` facilities; an
+  unavailable cumulative file degrades to live data with
+  `baseline.status: "unavailable"` (exit 0). `--baseline-fixture` /
+  `MSSS_URGENCES_BASELINE_FIXTURE` for offline runs. `--table` gains
+  `DMS`/`FY-DMS`/`ΔDMS%` columns. The cumulative loader is shared
+  (`loadCumulatifRows`), so both commands reuse one 24 h cache.
+- `msss-urgences` skill: interpretation rules for the baseline ("worse than
+  usual?"); pointers from the cumulatif, cliniques and children skills.
+- Fix: piped output larger than 64 KiB (e.g. `cliniques --region montreal
+  --json`) was truncated because the CLI called `process.exit()` before stdout
+  drained; it now sets `process.exitCode`.
+- Tests: the cliniques CLI test now uses an isolated cache dir (it read the
+  developer's real cache, failing after any live run).
+
 - Add `chirurgies` tool + `msss-urgences-chirurgies` skill: the surgical
   waitlist from the MSSS `Chirurgie_ListeAttente.csv` (UTF-8/BOM; 13 updates a
   year; history since 1920-P12), by region (RSS), specialty and wait band
