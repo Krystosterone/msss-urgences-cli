@@ -243,16 +243,3 @@ test('refuses to run in a clone that has not opted in (exit 2)', { skip }, () =>
     s.cleanup();
   }
 });
-
-test('reports pushed=true|false to GitHub Actions via $GITHUB_OUTPUT', { skip }, () => {
-  const s = sandbox();
-  try {
-    const out = join(s.dir, 'gh-output');
-    writeFileSync(out, '');
-    assert.equal(s.run({ GITHUB_OUTPUT: out }).status, 0);
-    assert.equal(s.run({ GITHUB_OUTPUT: out }).status, 0);
-    assert.equal(readFileSync(out, 'utf8'), 'pushed=true\npushed=false\n');
-  } finally {
-    s.cleanup();
-  }
-});

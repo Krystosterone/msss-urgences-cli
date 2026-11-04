@@ -5,6 +5,14 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Run the archive job from cron on a maintainer's computer instead of GitHub
+  Actions: MSSS answers GitHub's runners with HTTP 403 (first Actions run,
+  2026-11-04). `archive-msss.yml` is removed. The Pages deploy moves to its
+  own `pages.yml`, triggered by data pushes (deploy key) and builder changes.
+  New `archive-freshness.yml` fails, and so emails you, when no new urgences
+  version has arrived for 6 hours. Workflow actions bumped to their Node 24
+  majors. The archive script drops its now-unused `pushed=` Actions output.
+  `docs/archive-job.md` rewritten around the computer setup.
 - Add CI (`.github/workflows/ci.yml`) on pull requests and code pushes to
   `main`, skipping `archive/`-only changes: type-check, build and the offline
   test suite on Node 18, 20, 22 and 24, plus skills validation, `shellcheck`

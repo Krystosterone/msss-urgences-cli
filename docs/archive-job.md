@@ -5,11 +5,18 @@ and commits them straight to `main`. Anyone who clones the repo gets every
 published version in git history.
 
 - **Code:** [`scripts/archive-sources.sh`](../scripts/archive-sources.sh) (bash + git + curl; no Node).
-- **Scheduler:** [`.github/workflows/archive-msss.yml`](../.github/workflows/archive-msss.yml) (GitHub Actions).
-  Its second job, `pages`, rebuilds the static history API from the archive and
-  deploys it to GitHub Pages when the archive changed (see
-  [History API (GitHub Pages)](#history-api-github-pages)).
-  It can also run from cron on any computer (see [Running from another computer](#running-from-another-computer-instead)).
+- **Runs on a computer you control, from cron.** It doesn't run on GitHub
+  Actions: MSSS answers GitHub's cloud runners with **HTTP 403** (seen on the
+  first Actions run, 2026-11-04), while ordinary clients get the files. Don't
+  try to get around that block. If a cloud runner is ever wanted, ask MSSS or
+  Données Québec first.
+- **On GitHub, nothing contacts MSSS:**
+  - [`pages.yml`](../.github/workflows/pages.yml) rebuilds the static history
+    API from the archive and deploys it to GitHub Pages whenever the computer
+    pushes new data (see [History API](#history-api-github-pages)).
+  - [`archive-freshness.yml`](../.github/workflows/archive-freshness.yml) fails,
+    and so emails you, when the archive stops moving (see [Monitoring](#monitoring)).
+  - [`ci.yml`](../.github/workflows/ci.yml) skips data-only pushes.
 - **Sources:** `urgences` (hourly) and `urgences-cumulatif` (each fiscal period).
   `cliniques` and `chirurgies` aren't archived, because MSSS already publishes
   their full history in the file itself (and `cliniques` is ~136 MB, over
@@ -35,8 +42,8 @@ published version in git history.
 5. **Rebases onto the latest `origin/main`, then pushes** with a plain
    `git push`. It never force-pushes. If a human pushed in between, it
    re-fetches, rebases and retries (4 attempts with backoff). A push that still
-   fails leaves the commit local for the next run (on another computer; Actions
-   checkouts are fresh) and exits 1.
+   fails leaves the commit in the clone, the next run delivers it, and this run
+   exits 1.
 
 Exit codes: `0` ok (including "nothing changed") · `1` a source or the push
 failed · `2` misconfigured (not a git checkout, clone not opted in, `git` or
@@ -46,79 +53,88 @@ The script hard-resets the checkout it runs in, so it refuses to run unless
 that clone opted in with `git config msss-archive.dedicated true`. Don't run it
 in your working copy.
 
-## Setup (GitHub Actions, recommended)
+## Setup
 
-Nothing to install, and no secret to create.
+### On GitHub (once)
 
-1. **Make the repo public** (Settings → General → Danger Zone → Change
-   visibility). Actions minutes are free and unlimited for public repos on
-   GitHub-hosted runners. On a private repo they count against your plan's
-   included minutes. Before flipping, check the history for anything you don't
-   want published.
-2. **Merge the PR into `main`.** GitHub only runs scheduled workflows from the
-   default branch.
-3. **Check Actions is allowed** (Settings → Actions → General → "Allow all
-   actions…", or at least actions by GitHub, for `actions/checkout`).
-4. **Turn on GitHub Pages:** Settings → Pages → *Build and deployment* →
-   Source: **GitHub Actions**. (Do this before step 5, or that run's `pages`
-   job fails with "Get Pages site failed".)
-5. **Trigger the first run by hand:** Actions → `archive-msss` → *Run
-   workflow*. The first run commits both CSVs and deploys the history API to
-   `https://krystosterone.github.io/msss-urgences-cli/`. After that, a run
-   commits only when MSSS publishes something new, and redeploys only then.
+1. **Turn on GitHub Pages:** Settings → Pages → *Build and deployment* →
+   Source: **GitHub Actions**.
+2. **Create the job's credential, a deploy key with write access.** It's the
+   minimum GitHub offers (write access to this one repository only), and unlike
+   a personal access token it never expires, so the job keeps running with no
+   human involved.
+   1. On the computer that will run the job:
+      `ssh-keygen -t ed25519 -N "" -C msss-archive -f ~/.ssh/msss_archive_key`
+      (no passphrase: cron can't type one).
+   2. Settings → Deploy keys → *Add deploy key*: paste
+      `~/.ssh/msss_archive_key.pub` and tick **Allow write access**.
 
-**Credential.** The job uses the workflow's built-in `GITHUB_TOKEN`, scoped to
-this repository and valid only for the run. Each job requests only what it
-needs: `archive` gets `contents: write` (to push), and `pages` gets
-`contents: read`, `pages: write` and `id-token: write` (to deploy to Pages). If the repo default (Settings →
-Actions → General → Workflow permissions) is "Read repository contents", that's
-fine: the workflow's own `permissions:` block grants write for this workflow
-only.
+   The private key never leaves that computer (`chmod 600`). A fine-grained
+   personal access token with *Contents: Read and write* on this repository
+   only also works, but it expires and stops the job when it does.
 
-**Schedule line** (UTC; in the workflow):
+### On the computer
 
-```cron
-7,22,37,52 * * * *
+Any always-on machine on a network MSSS accepts: a home connection works,
+GitHub's cloud runners don't. A home server, a NAS or a Raspberry Pi is ideal;
+a laptop that sleeps loses those hours.
+
+**Install:** `bash`, `git` ≥ 2.28, `curl`, and `flock` (util-linux on Linux;
+`brew install flock` on macOS; optional, but without it overlapping runs
+aren't prevented). No Node needed.
+
+**One-time setup** (a dedicated clone, which the job resets):
+
+```bash
+git clone git@github.com:Krystosterone/msss-urgences-cli.git ~/msss-archive
+cd ~/msss-archive
+git config core.sshCommand "ssh -i ~/.ssh/msss_archive_key -o IdentitiesOnly=yes"
+git config msss-archive.dedicated true
+bash scripts/archive-sources.sh     # first run: commits both CSVs, pushes
 ```
 
-Every 15 minutes, off the top of the hour. MSSS publishes urgences once an hour
-(around :45). GitHub runs scheduled workflows on a best-effort basis: they can
-be delayed, or dropped under load, especially at :00. Four tries an hour make
-a lost hour unlikely, and the extra runs cost nothing on a public repo. Strictly
-hourly works too (`52 * * * *`), but a dropped run then loses that hour's
-snapshot for good.
+That first push triggers `pages.yml`, which publishes the history API at
+`https://krystosterone.github.io/msss-urgences-cli/`.
+
+**Schedule line** (`crontab -e`; the job logs in UTC, so cron's time zone
+doesn't matter):
+
+```cron
+7,22,37,52 * * * * /usr/bin/env bash "$HOME/msss-archive/scripts/archive-sources.sh" >> "$HOME/msss-archive.log" 2>&1
+```
+
+That's every 15 minutes, off the top of the hour. MSSS publishes urgences once
+an hour (around :45), and runs with no new data commit nothing, so the extra
+tries only cost four small downloads an hour. A strictly hourly line
+(`52 * * * *`) works too, but a run that fails then loses that hour.
+
+The log grows by under 20 MB a year. Rotate it with `logrotate`, or truncate
+it now and then.
+
+Data commits are authored `msss-archive-bot <msss-archive-bot@noreply.invalid>`.
+To change that, set `ARCHIVE_GIT_NAME` / `ARCHIVE_GIT_EMAIL` on the cron line.
+Behind a proxy, `curl` and `git` honour `HTTPS_PROXY` themselves (the CLI's
+`NODE_USE_ENV_PROXY=1` note doesn't apply; the job doesn't use Node).
 
 ### Branch protection
 
-The job pushes directly to `main`. If you add a branch protection rule or a
-ruleset that blocks direct pushes (e.g. "Require a pull request"), the
-`GITHUB_TOKEN` push is rejected. The run goes red (exit 1) and nothing breaks,
-but nothing is archived either until it's fixed. Fix it with a deploy key that
-the rule lets through:
+The job pushes directly to `main` with its deploy key. If you add a ruleset
+that blocks direct pushes (e.g. "Require a pull request"), the push is
+rejected. Each run then exits 1 and keeps its commit for later, nothing
+breaks, and nothing reaches GitHub until it's fixed. Use a **ruleset**
+(Settings → Rules → Rulesets) rather than a classic branch protection rule, and
+add **Deploy keys** to its *Bypass list*. Classic branch protection has no way
+to exempt a deploy key.
 
-1. Generate a key (no passphrase, used only for this):
-   `ssh-keygen -t ed25519 -N "" -C msss-archive -f msss_archive_key`
-2. Settings → Deploy keys → *Add deploy key*: paste `msss_archive_key.pub`,
-   tick **Allow write access**. A deploy key works for this one repository
-   only.
-3. Settings → Secrets and variables → Actions → *New repository secret*
-   `ARCHIVE_DEPLOY_KEY`: paste the private key `msss_archive_key`. Then delete
-   both local key files.
-4. In `.github/workflows/archive-msss.yml`, uncomment
-   `ssh-key: ${{ secrets.ARCHIVE_DEPLOY_KEY }}`.
-5. Use a **ruleset** (Settings → Rules → Rulesets) rather than a classic branch
-   protection rule, and add **Deploy keys** to its *Bypass list*. Classic
-   branch protection has no way to exempt a deploy key.
+Pushes made with a deploy key trigger workflows. That's what makes `pages.yml`
+deploy each new version. `ci.yml` ignores `archive/**`; give any new
+push-triggered workflow the same `paths-ignore`, or it will run on every data
+commit.
 
-Pushes made with a deploy key, unlike `GITHUB_TOKEN` pushes, *do* trigger other
-workflows. [`ci.yml`](../.github/workflows/ci.yml) already ignores
-`archive/**`; give any other push-triggered workflow the same `paths-ignore`, or
-it will run on every data commit.
-
-If the ruleset also **requires the `ci` checks**, the bot's direct pushes aren't
+If the ruleset also **requires the `ci` checks**, the job's pushes aren't
 affected (deploy keys bypass the ruleset). A PR that touches only `archive/`
-would never get those checks, though, because CI skips it. None is expected,
-since data only arrives by the bot's direct pushes.
+would never get those checks, because CI skips it. None is expected: data only
+arrives through the job's direct pushes.
 
 ### Living with an hourly bot on `main`
 
@@ -126,28 +142,33 @@ since data only arrives by the bot's direct pushes.
   machine is often rejected as non-fast-forward. Run `git pull --rebase` and
   push again. Merging PRs isn't affected.
 - **Log noise:** `git log -- . ':(exclude)archive/'` shows only code changes.
-  Data commits are authored by `github-actions[bot]` and only touch `archive/`.
 - **Clone size:** urgences adds an estimated 35–50 MB of history a year;
   cumulatif about 1 MB. To clone the code without old data versions:
   `git clone --filter=blob:none …`.
-- **CI:** `ci.yml` skips changes confined to `archive/`. Give any new
-  push-triggered workflow `paths-ignore: ['archive/**']` too.
 
-### Monitoring
+## Monitoring
 
-GitHub emails the workflow's owner when a scheduled run fails. Typical causes:
-MSSS is down or serves an error page (one source skipped, exit 1, retried in 15
-minutes), or the push was rejected (see [Branch protection](#branch-protection)).
-GitHub disables scheduled workflows in a public repo after 60 days without
-repository activity. The job's own commits should count as activity, but if
-MSSS stopped publishing for two months, re-enable the workflow from the Actions
-tab.
+- **`archive-freshness.yml`** runs every 6 hours. It fails when no new urgences
+  version has been archived for 6 hours, which means the computer is off or
+  offline, its pushes are failing, or MSSS stopped publishing. GitHub emails a
+  failed scheduled run to whoever last changed that workflow's schedule. Before
+  the first archive commit it passes with a notice. You can run it by hand from
+  the Actions tab.
+- **The computer's log** (`~/msss-archive.log`) says why. `download failed` or
+  `unexpected first bytes` mean MSSS was down or served an error page; the next
+  run retries. `push attempt … failed` means a credential or branch-protection
+  problem (see [Branch protection](#branch-protection)).
+- **`pages.yml` runs** show up in the Actions tab after each data push.
+- GitHub disables scheduled workflows in a public repo after 60 days without
+  repository activity. The job's hourly commits keep it active; if the
+  archive stopped for two months, re-enable `archive-freshness` from the
+  Actions tab.
 
 ## History API (GitHub Pages)
 
 `scripts/build-api.ts` reads every version of the urgences CSV from
-`archive/`'s git history and writes a static site. It's never committed: the
-`pages` job uploads it as the Pages artifact.
+`archive/`'s git history and writes a static site. It's never committed:
+`pages.yml` uploads it as the Pages artifact.
 
 ```
 index.html                       landing page
@@ -156,11 +177,11 @@ api/v1/urgences/<YYYY-MM>.json   every snapshot of the month, per facility
 ```
 
 `msss-urgences urgences-historique` reads it (contract:
-[`cli-reference.md`](../.agents/skills/msss-urgences/references/cli-reference.md#urgences-historique-history)). A month is
-`complete` once a later month has data, and clients cache complete months
-indefinitely. The `pages` job runs when the archive job pushed, on manual runs,
-and on pushes to `main` that change the builder. A failed deploy is retried
-automatically by the next data commit, within the hour.
+[`cli-reference.md`](../.agents/skills/msss-urgences/references/cli-reference.md#urgences-historique-history)).
+A month is `complete` once a later month has data, and clients cache complete
+months indefinitely. `pages.yml` runs on pushes to `main` that change
+`archive/urgences/` or the builder, and on manual runs. A failed deploy is
+retried by the next data push, within the hour.
 
 To build and query it locally:
 
@@ -173,49 +194,6 @@ Free-tier limits: a month of hourly snapshots is about 4 MB of JSON (served
 gzipped). GitHub Pages' soft limits (1 GB site, 100 GB/month bandwidth) leave
 years of headroom. With a custom Actions workflow, Pages' 10-builds-per-hour
 limit doesn't apply.
-
-The deploy is part of the Actions workflow. If you run the archive job from
-cron on another computer instead, the API only updates when the workflow runs
-(by hand, or on a builder change), so keep Actions as the scheduler if you want
-the API to stay current.
-
-## Running from another computer instead
-
-Use this if you'd rather not use Actions. Disable the workflow if you switch
-(Actions → `archive-msss` → ⋯ → *Disable workflow*). Running both is harmless
-(identical data produces no second commit) but pointless.
-
-**Install:** `bash`, `git` ≥ 2.28, `curl`, and `flock` (util-linux on Linux;
-`brew install flock` on macOS, optional: without it, overlapping runs aren't
-prevented). No Node needed.
-
-**Credential:** a **deploy key with write access**, created as in steps 1–2 of
-[Branch protection](#branch-protection), with the private key kept on that
-computer (`chmod 600`). It's the minimum GitHub offers: write access to this
-one repository only. Unlike a personal access token, it never expires, so the
-job keeps working with no human involved. (A fine-grained token with
-*Contents: Read and write* on this repository only also works, but expires.)
-
-**One-time setup** (a dedicated clone; the job resets it):
-
-```bash
-git clone git@github.com:Krystosterone/msss-urgences-cli.git ~/msss-archive
-cd ~/msss-archive
-git config core.sshCommand "ssh -i ~/.ssh/msss_archive_key -o IdentitiesOnly=yes"
-git config msss-archive.dedicated true
-bash scripts/archive-sources.sh     # first run: commits both CSVs, pushes
-```
-
-**Schedule line** (`crontab -e`; the job uses UTC timestamps, so the cron
-timezone doesn't matter):
-
-```cron
-7,22,37,52 * * * * /usr/bin/env bash "$HOME/msss-archive/scripts/archive-sources.sh" >> "$HOME/msss-archive.log" 2>&1
-```
-
-The computer must be on and online. While it's off, those hours of urgences are
-lost. Behind a proxy, `curl` and `git` honour `HTTPS_PROXY` themselves. The
-CLI's `NODE_USE_ENV_PROXY=1` note doesn't apply, since the job doesn't use Node.
 
 ## Adding a source
 
