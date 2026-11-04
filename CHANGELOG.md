@@ -5,8 +5,36 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add CI (`.github/workflows/ci.yml`) on pull requests and code pushes to
+  `main`, skipping `archive/`-only changes: type-check, build and the offline
+  test suite on Node 18, 20, 22 and 24, plus skills validation, `shellcheck`
+  and `actionlint`. `archive-sources.sh` is now shellcheck-clean.
 - Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
   config) and the `.gitignore` entry for generated `openspec-*` skills.
+- Rewrite the README agents first: what the repo is, which skill answers which
+  question, how to call the CLI (`--json`, ids, `--region`, freshness, `null`,
+  exit codes), install, and a one-line-per-command overview with its MSSS
+  source. Option tables, output contracts, caching internals, the source tree
+  and the finished roadmap are gone: they live in `--help`, the skills'
+  `references/cli-reference.md` and the code. AGENTS.md gains the docs and
+  versioning conventions.
+- Add `urgences-historique`: ER occupancy history from the archived hourly
+  snapshots, by `hour`, `weekday-hour` or `day` over `--days` (default 28),
+  with each facility's latest snapshot vs its typical level at that hour
+  (`latest.deltaFromTypicalPct`). Reads a static JSON API (schema 1:
+  `api/v1/index.json`, `api/v1/urgences/<YYYY-MM>.json`) that the
+  `archive-msss` workflow builds from `archive/`'s git history
+  (`scripts/build-api.ts`) and deploys to GitHub Pages whenever the archive
+  changes. Complete months are cached indefinitely. `msss-urgences` skill:
+  best-time and now-vs-typical rules.
+- Add a scheduled raw-data archive: `scripts/archive-sources.sh`, run every 15
+  minutes by the `archive-msss` GitHub Actions workflow, commits the MSSS
+  `urgences` (hourly) and `urgences-cumulatif` (per fiscal period) CSVs to
+  `archive/` on `main`. Byte for byte (`.gitattributes` `-text`), only when
+  bytes change, rebased before each push, never force-pushed, and self-healing
+  after a failed run. `cliniques` and `chirurgies` aren't archived, since MSSS
+  ships their full history in the file. Setup: `docs/archive-job.md`; tests:
+  `test/archive.test.ts`.
 - Add a shared region registry (`src/core/regions.ts`) of the 18 RSS regions,
   used by every command's `--region`: RSS codes in any form (`6`, `06`,
   `RSS06`), names/slugs (accent-insensitive, `St`/`Ste` expanded), aliases

@@ -1,10 +1,18 @@
 # msss-urgences-cli install manifest — consumed by install-repo.sh.
 name: msss-urgences-cli
 
-# No cron jobs, no databases, no promoted plugins. The CLI is query-on-demand;
-# nothing runs periodically. (The runtime dependency — Node — is already
-# present; npm-managed deps are installed by install.sh.) Declared, if any,
-# under dependencies.tool below.
+# No cron jobs for install-repo.sh to install, no databases, no promoted
+# plugins. The CLI itself is query-on-demand.
+#
+# One scheduled job does run, but in GitHub Actions, not on the install host:
+# .github/workflows/archive-msss.yml runs scripts/archive-sources.sh every 15
+# minutes to commit new MSSS CSV versions to archive/ on main, then deploys
+# the static history API to GitHub Pages when it changed (see
+# docs/archive-job.md, which also covers running it from cron on another
+# computer). Installing this repo doesn't schedule anything.
+#
+# (The runtime dependency — Node — is already present; npm-managed deps are
+# installed by install.sh.) Declared, if any, under dependencies.tool below.
 #
 # dependencies:
 #   tool:

@@ -79,6 +79,58 @@ a baseline row), `unmatched` (their ids without one) and, when unavailable,
 `error`. An unavailable baseline never fails the command: live data is still
 returned, every `baseline` is null, exit code stays `0`.
 
+## `urgences-historique` (history)
+
+```bash
+msss-urgences urgences-historique [--region R] [--id N,...] [--search T]
+  [--days 28] [--by hour|weekday-hour|day] [--api URL] [--refresh] [--ttl 30]
+  [--json|--table] [--fixture DIR]
+```
+
+Reads the static history API built from the hourly snapshots archived in the
+repo (`archive/`), served by GitHub Pages at
+`https://krystosterone.github.io/msss-urgences-cli/api/v1` (override with
+`--api` or `MSSS_URGENCES_API_URL`). The window is the `--days` before the
+**latest archived snapshot**, not the wall clock. Every number is DERIVED from
+the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
+
+```jsonc
+{
+  "source": "https://krystosterone.github.io/msss-urgences-cli/api/v1",
+  "generatedAt": "…",          // when the API was built from the archive
+  "cached": false,
+  "window": { "from": "2026-10-06T21:45", "to": "2026-11-03T21:45", "days": 28,
+              "snapshots": 650, "archiveStart": "2026-11-03T21:45" },
+  "groupBy": "weekday-hour",
+  "facilities": [{
+    "id": "51222800", "name": "CHU SAINTE-JUSTINE", "region": "Montréal", "regionCode": "06",
+    "summary": { "samples": 650, "occupancyPctMean": 112.4, "occupancyPctMin": 50,
+                 "occupancyPctMax": 175, "waitingForCareMean": 28.1,
+                 "totalPresentMean": 61.3, "over24hMean": 0.4, "dmsStretcherMean": 7.2 },
+    "latest": { "dataDate": "2026-11-03T21:45", "occupancyPct": 125, "waitingForCare": 34,
+                "totalPresent": 79, "typicalOccupancyPct": 108.3,
+                "typicalOccupancyPctSameWeekday": 115, "deltaFromTypicalPct": 16.7 },
+    "profile": [ { "weekday": 1, "weekdayName": "Monday", "hour": 0, "samples": 4,
+                   "occupancyPctMean": 96.9, "occupancyPctMin": 87.5, "occupancyPctMax": 106.3,
+                   "waitingForCareMean": 9.5, "totalPresentMean": 31, "over24hMean": 0,
+                   "dmsStretcherMean": 7.1 } ]
+  }]
+}
+```
+
+- `profile` keys: `hour` (0–23) for `--by hour`; `weekday` (ISO 1 = Monday …
+  7 = Sunday), `weekdayName`, `hour` for `--by weekday-hour`; `date`
+  (YYYY-MM-DD) for `--by day`. Each row's `samples` is its snapshot count.
+- `latest.typicalOccupancyPct`: mean at the same hour over the rest of the
+  window; `…SameWeekday`: same weekday and hour. `null` when there's no other
+  sample.
+- Caching: the index and the current month for `--ttl` minutes (default 30);
+  complete months are kept indefinitely (they never change). `--refresh`
+  re-fetches the index and the current month only.
+- Exit codes: `1` when the API can't be reached (HTTP 404 means Pages isn't
+  deployed yet), `2` for a bad `--days`/`--by` or a document that doesn't match
+  schema 1.
+
 ## Regions
 
 `msss-urgences regions --json` lists the 18 RSS regions (`code`, `name`, `slug`,
