@@ -1,5 +1,7 @@
 # msss-urgences-cli
 
+[![CI](https://github.com/Krystosterone/msss-urgences-cli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Krystosterone/msss-urgences-cli/actions/workflows/ci.yml?query=branch%3Amain)
+
 Québec health-services open data, built for AI agents. Agent skills answer
 questions like *"which Montréal ER is calmest right now?"* or *"can I see a
 clinic doctor today instead?"*. Behind them, a deterministic CLI returns the
