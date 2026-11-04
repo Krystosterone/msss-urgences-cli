@@ -149,7 +149,8 @@ api/v1/index.json                months available, snapshot range, build commit
 api/v1/urgences/<YYYY-MM>.json   every snapshot of the month, per facility
 ```
 
-`msss-urgences urgences-historique` reads it (see the README). A month is
+`msss-urgences urgences-historique` reads it (contract:
+[`cli-reference.md`](../.agents/skills/msss-urgences/references/cli-reference.md#urgences-historique-history)). A month is
 `complete` once a later month has data, and clients cache complete months
 indefinitely. The `pages` job runs when the archive job pushed, on manual runs,
 and on pushes to `main` that change the builder. A failed deploy is retried

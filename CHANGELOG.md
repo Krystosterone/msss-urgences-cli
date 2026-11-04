@@ -5,6 +5,13 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Rewrite the README agents first: what the repo is, which skill answers which
+  question, how to call the CLI (`--json`, ids, `--region`, freshness, `null`,
+  exit codes), install, and a one-line-per-command overview with its MSSS
+  source. Option tables, output contracts, caching internals, the source tree
+  and the finished roadmap are gone: they live in `--help`, the skills'
+  `references/cli-reference.md` and the code. AGENTS.md gains the docs and
+  versioning conventions.
 - Add `urgences-historique`: ER occupancy history from the archived hourly
   snapshots, by `hour`, `weekday-hour` or `day` over `--days` (default 28),
   with each facility's latest snapshot vs its typical level at that hour

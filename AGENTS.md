@@ -31,8 +31,9 @@ msss-urgences urgences-historique --region 06 --by weekday-hour --json  # histor
 During development, skip the build and run TypeScript directly:
 `npm run dev -- urgences --region montreal`,
 `npm run dev -- cliniques --region montreal`,
-`npm run dev -- urgences-cumulatif --region montreal`, or
-`npm run dev -- chirurgies --region montreal`.
+`npm run dev -- urgences-cumulatif --region montreal`,
+`npm run dev -- chirurgies --region montreal`, or
+`npm run dev -- urgences-historique --region montreal`.
 
 ## Test
 
@@ -45,6 +46,7 @@ MSSS_URGENCES_FIXTURE=test/fixtures/rdvoffert_DOuv.csv msss-urgences cliniques -
 MSSS_URGENCES_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences-cumulatif --json  # offline cumulatif
 MSSS_URGENCES_FIXTURE=test/fixtures/Chirurgie_ListeAttente.csv msss-urgences chirurgies --json  # offline chirurgies
 MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv MSSS_URGENCES_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences --baseline --json  # offline --baseline
+npx tsx scripts/build-api.ts site && MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --json  # offline history, from this clone's archive/
 ```
 
 Node's built-in `fetch` ignores `HTTPS_PROXY`; behind a proxy run live fetches
@@ -87,3 +89,14 @@ GitHub Pages; the API is never committed. Setup and credentials:
 
 `manifest.yaml` declares no cron jobs for install-repo.sh to install; the
 schedule lives in GitHub Actions.
+
+## Docs and versioning
+
+- `README.md` is the front door, agents first: skill routing, how to call the
+  CLI, a one-line-per-command overview, links. Don't put option tables, output
+  contracts or internals there. Options belong in each command's `--help`
+  (`src/cli.ts`), output contracts in the matching skill's
+  `references/cli-reference.md`, archive/API operations in
+  `docs/archive-job.md`, and anything the code already says, nowhere.
+- Semantic Versioning; record changes in `CHANGELOG.md`. Keep `package.json`'s
+  `version` and the skills' frontmatter `version` in sync.
