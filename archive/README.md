@@ -18,6 +18,14 @@ itself: `cliniques` (`rdvoffert_DOuv.csv`, every day since 2024-01-01, ~136 MB,
 over GitHub's 100 MB file limit) and `chirurgies` (`Chirurgie_ListeAttente.csv`,
 every fiscal period since 2019-20 P12).
 
+## History API
+
+You don't need git to use the history: the `archive-msss` workflow builds a
+static JSON API from these files and serves it on GitHub Pages at
+`https://krystosterone.github.io/msss-urgences-cli/api/v1/`. That's what
+`msss-urgences urgences-historique` reads. See
+[`docs/archive-job.md`](../docs/archive-job.md#history-api-github-pages).
+
 ## Reading the history
 
 ```bash

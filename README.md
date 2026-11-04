@@ -255,6 +255,55 @@ absent from 2627-P02 onward), which the province total therefore excludes. A
 blank source cell is `null`, never `0`. The full contract is in
 [`.agents/skills/msss-urgences-chirurgies/references/cli-reference.md`](.agents/skills/msss-urgences-chirurgies/references/cli-reference.md).
 
+### `urgences-historique` — ER occupancy history (archived hourly snapshots)
+
+`urgences` only ever sees the current hour. `urgences-historique` reads the
+**static history API** that the archive job builds from every hourly snapshot
+in [`archive/`](archive/README.md) and serves on GitHub Pages
+(`https://krystosterone.github.io/msss-urgences-cli/api/v1`). It answers "when
+is this ER usually least busy?" and "is it busier than usual right now?".
+
+```bash
+msss-urgences urgences-historique [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--region <name\|code>` | Filter to a region (name, alias or RSS code) |
+| `--id <n[,n...]>` | Filter to facility id(s) (MSSS permit number) |
+| `--search <text>` | Filter facilities by name (accent-insensitive substring) |
+| `--days <n>` | Window length, ending at the latest archived snapshot (default 28) |
+| `--by <grouping>` | `hour` (default), `weekday-hour` or `day` |
+| `--api <url>` | History API base (default `$MSSS_URGENCES_API_URL`, else the Pages URL above) |
+| `--refresh` | Re-fetch the index and the current month (complete months stay cached) |
+| `--ttl <minutes>` | Cache TTL for the index and the current month (default 30) |
+| `--json` / `--table` | JSON (default when piped) / human table (default on a TTY) |
+| `--fixture <dir>` | Read a local API directory instead of the network |
+
+```bash
+# Sainte-Justine's typical occupancy by weekday and hour, last 4 weeks
+msss-urgences urgences-historique --id 51222800 --by weekday-hour --json
+
+# Every Montréal ER, hour of day, last week
+msss-urgences urgences-historique --region montreal --days 7 --table
+
+# Daily trend over three months
+msss-urgences urgences-historique --search verdun --by day --days 90 --json
+```
+
+Per facility: `summary` (mean/min/max occupancy, mean waiting, present, 24h+
+and stretcher stay over the window), `profile` (the same per hour, weekday+hour
+or day, each with its `samples` count) and `latest` (the most recent snapshot vs
+the mean at the same hour: `deltaFromTypicalPct`). All of it is **derived** from
+MSSS's published counts. The history only goes back to when the archive started
+(`window.archiveStart`). Full contract:
+[`.agents/skills/msss-urgences/references/cli-reference.md`](.agents/skills/msss-urgences/references/cli-reference.md#urgences-historique-history).
+
+The API is plain static JSON (schema 1): `api/v1/index.json` lists the months,
+and `api/v1/urgences/<YYYY-MM>.json` holds every snapshot of a month per
+facility (fields listed in the file). A month is `complete` once a later month
+has data, and never changes after that.
+
 ### `regions` — the shared region list
 
 Every MSSS dataset spells regions differently (`06`, `RSS06`, RTS `061`–`065`,
@@ -359,6 +408,8 @@ src/
     jsonCache.ts        # generic TTL'd JSON cache (urgences-cumulatif; atomic write, graceful degrade)
     parseChirurgies.ts  # surgical-waitlist CSV -> rows (header-validated; csv-parse)
     chirurgiesCache.ts  # parsed-history cache (chirurgies; daily TTL, graceful degrade)
+    history.ts          # history API schema v1 + pure builder (archived snapshots -> monthly JSON)
+    historyBuild.ts     # reads every archived version from git, writes the Pages site
     regions.ts          # shared RSS region registry: --region resolution + dataset code normalisation
     baseline.ts         # urgences --baseline: join hourly facilities with cumulative rows by permit
     errors.ts    # FetchError / ParseError -> exit codes
@@ -367,6 +418,7 @@ src/
     cliniques.ts         # orchestrate fetch/cache/parse/filter/assemble clinics report
     urgencesCumulatif.ts # orchestrate fetch/cache/parse/filter/compare cumulative report
     chirurgies.ts        # orchestrate fetch/cache/parse/filter/derive the waitlist report
+    urgencesHistorique.ts # load the history API (cached), filter, aggregate by hour/weekday/day
   cli.ts         # arg parsing, multi-command dispatch, JSON/table output
 test/
   fixtures/urgences_nbpers.csv   # a real saved file -> deterministic urgences tests
@@ -386,7 +438,8 @@ test/
 .agents/skills/msss-urgences-chirurgies/references/cli-reference.md # chirurgies CLI/contract reference
 scripts/validate-skills.py   # Agent Skills spec conformance validator (frontmatter + structure + references)
 scripts/archive-sources.sh   # scheduled job: snapshot MSSS CSVs into archive/, commit + push to main
-.github/workflows/archive-msss.yml  # runs the archive job every 15 minutes (GitHub Actions)
+scripts/build-api.ts         # builds the static history API (site/) from archive/'s git history
+.github/workflows/archive-msss.yml  # archive job every 15 minutes, then the Pages deploy when it changed
 archive/                     # raw MSSS CSVs, byte for byte; git history = every version
 docs/archive-job.md          # archive job setup, credentials, branch protection, cron fallback
 ```
@@ -418,6 +471,13 @@ so they are fully deterministic and offline. The opt-in live smoke test
 early warning if MSSS changes their file. Set `MSSS_URGENCES_FIXTURE` to make
 the CLI itself read a local file instead of the network.
 
+Build the history API locally and query it offline:
+
+```bash
+npx tsx scripts/build-api.ts site     # from this clone's archive/ history
+MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --region montreal --table
+```
+
 `test/archive.test.ts` drives the archive job end to end against a throwaway
 bare repo, with `file://` sources (needs `bash`, `git` and `curl`; no network).
 
@@ -442,6 +502,11 @@ downloads both files and commits them to [`archive/`](archive/README.md) on
 - **Rebased onto the latest `origin/main` before each push**, never
   force-pushed. A failed fetch or push never leaves the checkout in a state that
   blocks the next run.
+
+When the archive changes, the same workflow rebuilds the
+[history API](#urgences-historique--er-occupancy-history-archived-hourly-snapshots)
+from it (`scripts/build-api.ts`) and deploys it to GitHub Pages; nothing derived
+is committed.
 
 `cliniques` and `chirurgies` aren't archived: MSSS already ships their full
 history in the file itself. Setup, credentials, branch protection and running it

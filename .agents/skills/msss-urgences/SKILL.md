@@ -51,6 +51,9 @@ msss-urgences urgences --available-only --json
 
 # "Is it worse than usual?" — add each hospital's fiscal-year-to-date baseline:
 msss-urgences urgences --region montreal --baseline --json
+
+# "When is it usually least busy?" — occupancy history from the archived hourly snapshots:
+msss-urgences urgences-historique --id <permit> --by weekday-hour --days 28 --json
 ```
 
 `--region` takes a name, an alias or an RSS code (`montreal`, `mtl`, `06`) and
@@ -110,6 +113,24 @@ For a general ER-occupancy question, apply these rules:
 9. `baseline.pecDelayHours` and `baseline.stretcherOver24hPct` are context only
    ("this ER usually takes ~2 h to see a physician"); they have no live
    counterpart to subtract.
+
+**With `urgences-historique`** ("when is it usually calm?", "is now unusual?"):
+
+10. **Best time to go = the slots with the lowest `occupancyPctMean`** in
+    `profile` (`--by weekday-hour` for a weekday-specific answer, `--by hour`
+    for a general one). Name two or three calm slots, not just one, and give
+    their `occupancyPctMax` too: a slot that is calm on average but sometimes
+    packed is a weaker recommendation.
+11. **Check the sample size before trusting a slot.** Each profile row has
+    `samples`; with fewer than ~3 per slot (a short `--days`, or an archive that
+    started recently: `window.archiveStart`), say the history is still thin.
+12. **"Is now unusual?" = `latest.deltaFromTypicalPct`.** Treat roughly ±10
+    points as normal; +20 or more is "busier than usual for this hour"; −20 or
+    less is "quieter than usual". `latest.dataDate` is the archive's latest
+    snapshot, which can lag the live file by up to an hour; for "right now",
+    pair it with a live `urgences` call.
+13. Hours are **Québec local time** (MSSS's `Mise_a_jour`). Say "around 15h",
+    not "at 15:00 exactly": a snapshot stands for that hour.
 
 More generally: lower occupancy and lower long-stay counts are better; always
 give the reader the regional average as context so a percentage means something.

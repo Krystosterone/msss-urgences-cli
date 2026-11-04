@@ -5,6 +5,15 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add `urgences-historique`: ER occupancy history from the archived hourly
+  snapshots, by `hour`, `weekday-hour` or `day` over `--days` (default 28),
+  with each facility's latest snapshot vs its typical level at that hour
+  (`latest.deltaFromTypicalPct`). Reads a static JSON API (schema 1:
+  `api/v1/index.json`, `api/v1/urgences/<YYYY-MM>.json`) that the
+  `archive-msss` workflow builds from `archive/`'s git history
+  (`scripts/build-api.ts`) and deploys to GitHub Pages whenever the archive
+  changes. Complete months are cached indefinitely. `msss-urgences` skill:
+  best-time and now-vs-typical rules.
 - Add a scheduled raw-data archive: `scripts/archive-sources.sh`, run every 15
   minutes by the `archive-msss` GitHub Actions workflow, commits the MSSS
   `urgences` (hourly) and `urgences-cumulatif` (per fiscal period) CSVs to

@@ -8,7 +8,9 @@ RSS region registry behind every `--region`; `src/core/regions.ts`): `urgences` 
 Latin-1 CSV), `cliniques` (daily clinic appointment availability, UTF-8/BOM
 CSV), `urgences-cumulatif` (fiscal-year-to-date ER indicators and
 year-over-year trends, UTF-8/BOM CSV updated each fiscal period) and
-`chirurgies` (surgical waitlist per fiscal period, UTF-8/BOM CSV). History: formerly served by `index-sante-cli` (which scraped the
+`chirurgies` (surgical waitlist per fiscal period, UTF-8/BOM CSV), plus
+`urgences-historique` (ER occupancy history by hour / weekday+hour / day, read
+from the static history API that the archive job deploys to GitHub Pages). History: formerly served by `index-sante-cli` (which scraped the
 republisher indexsante.ca).
 
 ## Run
@@ -23,6 +25,7 @@ msss-urgences urgences-cumulatif --region montreal --json
 msss-urgences chirurgies --region montreal --json
 msss-urgences urgences --region 06 --baseline --json   # live ER joined with fiscal-year-to-date values
 msss-urgences regions --json                           # region codes/aliases accepted by --region
+msss-urgences urgences-historique --region 06 --by weekday-hour --json  # history from the archived snapshots
 ```
 
 During development, skip the build and run TypeScript directly:
@@ -54,7 +57,9 @@ To force a live fetch past the cache, add `--refresh` to any command (e.g.
 
 See `.env.example`. Slots: `MSSS_URGENCES_CACHE_DIR` (default
 `~/.cache/msss-urgences`); `MSSS_URGENCES_BASELINE_FIXTURE` (local cumulative
-CSV for `urgences --baseline`, offline runs only). No secrets.
+CSV for `urgences --baseline`, offline runs only); `MSSS_URGENCES_API_URL`
+(history API base for `urgences-historique`); `MSSS_URGENCES_API_FIXTURE` (local
+API directory, offline runs). No secrets.
 
 ## Scheduled job / databases
 
@@ -63,8 +68,10 @@ One scheduled job, no databases. `.github/workflows/archive-msss.yml` runs
 computer is the documented fallback). It downloads the `urgences` and
 `urgences-cumulatif` CSVs, stores them byte for byte in `archive/`, and commits
 and pushes to `main` only when bytes change. It rebases before pushing and never
-force-pushes. Setup and credentials: `docs/archive-job.md`. Consequences for
-agents:
+force-pushes. When the archive changed, a second job builds the static history
+API from `archive/`'s git history (`scripts/build-api.ts`) and deploys it to
+GitHub Pages; the API is never committed. Setup and credentials:
+`docs/archive-job.md`. Consequences for agents:
 
 - `main` moves up to every hour. Before pushing to `main`, `git pull --rebase`.
 - Never edit, re-encode or reformat files under `archive/`. They must stay
@@ -72,7 +79,9 @@ agents:
   converting newlines). Don't add derived data there.
 - Code changes never go in `archive/`; data commits never touch anything else.
 - `git log -- . ':(exclude)archive/'` shows history without the data commits.
-- Test the job offline with `node --import tsx --test test/archive.test.ts`.
+- Test the job offline with `node --import tsx --test test/archive.test.ts`;
+  the history API and command with `test/history.test.ts`. Build the API
+  locally with `npx tsx scripts/build-api.ts site` (output is gitignored).
   Don't run the script in a working copy: it resets the clone it runs in, and
   refuses to unless `git config msss-archive.dedicated true`.
 

@@ -6,6 +6,9 @@ published version in git history.
 
 - **Code:** [`scripts/archive-sources.sh`](../scripts/archive-sources.sh) (bash + git + curl; no Node).
 - **Scheduler:** [`.github/workflows/archive-msss.yml`](../.github/workflows/archive-msss.yml) (GitHub Actions).
+  Its second job, `pages`, rebuilds the static history API from the archive and
+  deploys it to GitHub Pages when the archive changed (see
+  [History API (GitHub Pages)](#history-api-github-pages)).
   It can also run from cron on any computer (see [Running from another computer](#running-from-another-computer-instead)).
 - **Sources:** `urgences` (hourly) and `urgences-cumulatif` (each fiscal period).
   `cliniques` and `chirurgies` aren't archived, because MSSS already publishes
@@ -56,13 +59,18 @@ Nothing to install, and no secret to create.
    default branch.
 3. **Check Actions is allowed** (Settings → Actions → General → "Allow all
    actions…", or at least actions by GitHub, for `actions/checkout`).
-4. **Trigger the first run by hand:** Actions → `archive-msss` → *Run
-   workflow*. The first run commits both CSVs. After that, a run commits only
-   when MSSS publishes something new.
+4. **Turn on GitHub Pages:** Settings → Pages → *Build and deployment* →
+   Source: **GitHub Actions**. (Do this before step 5, or that run's `pages`
+   job fails with "Get Pages site failed".)
+5. **Trigger the first run by hand:** Actions → `archive-msss` → *Run
+   workflow*. The first run commits both CSVs and deploys the history API to
+   `https://krystosterone.github.io/msss-urgences-cli/`. After that, a run
+   commits only when MSSS publishes something new, and redeploys only then.
 
 **Credential.** The job uses the workflow's built-in `GITHUB_TOKEN`, scoped to
-this repository and valid only for the run. The workflow requests the minimum
-it needs: `permissions: contents: write`. If the repo default (Settings →
+this repository and valid only for the run. Each job requests only what it
+needs: `archive` gets `contents: write` (to push), and `pages` gets
+`contents: read`, `pages: write` and `id-token: write` (to deploy to Pages). If the repo default (Settings →
 Actions → General → Workflow permissions) is "Read repository contents", that's
 fine: the workflow's own `permissions:` block grants write for this workflow
 only.
@@ -128,6 +136,41 @@ GitHub disables scheduled workflows in a public repo after 60 days without
 repository activity. The job's own commits should count as activity, but if
 MSSS stopped publishing for two months, re-enable the workflow from the Actions
 tab.
+
+## History API (GitHub Pages)
+
+`scripts/build-api.ts` reads every version of the urgences CSV from
+`archive/`'s git history and writes a static site. It's never committed: the
+`pages` job uploads it as the Pages artifact.
+
+```
+index.html                       landing page
+api/v1/index.json                months available, snapshot range, build commit
+api/v1/urgences/<YYYY-MM>.json   every snapshot of the month, per facility
+```
+
+`msss-urgences urgences-historique` reads it (see the README). A month is
+`complete` once a later month has data, and clients cache complete months
+indefinitely. The `pages` job runs when the archive job pushed, on manual runs,
+and on pushes to `main` that change the builder. A failed deploy is retried
+automatically by the next data commit, within the hour.
+
+To build and query it locally:
+
+```bash
+npx tsx scripts/build-api.ts site
+MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --table
+```
+
+Free-tier limits: a month of hourly snapshots is about 4 MB of JSON (served
+gzipped). GitHub Pages' soft limits (1 GB site, 100 GB/month bandwidth) leave
+years of headroom. With a custom Actions workflow, Pages' 10-builds-per-hour
+limit doesn't apply.
+
+The deploy is part of the Actions workflow. If you run the archive job from
+cron on another computer instead, the API only updates when the workflow runs
+(by hand, or on a builder change), so keep Actions as the scheduler if you want
+the API to stay current.
 
 ## Running from another computer instead
 

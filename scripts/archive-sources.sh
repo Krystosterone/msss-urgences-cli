@@ -28,6 +28,7 @@
 #   ARCHIVE_URGENCES_URL, ARCHIVE_URGENCES_CUMULATIF_URL
 #                       override a source URL (tests use file:// URLs)
 #   ARCHIVE_PUSH_ATTEMPTS  push attempts before giving up  (default: 4)
+#   GITHUB_OUTPUT       set by GitHub Actions: the script appends pushed=true|false
 #
 # Exit: 0 = every source fetched and everything pushed (or nothing to push)
 #       1 = a source failed to download/validate, or the push failed
@@ -84,6 +85,7 @@ main() {
   trap 'rm -rf "$TMP"' EXIT
 
   local status=0
+  PUSHED=false
   recover_checkout
   sync_with_upstream || status=1
 
@@ -106,6 +108,9 @@ main() {
     log "nothing to push"
   else
     push_with_rebase || status=1
+  fi
+  if [ -n "${GITHUB_OUTPUT:-}" ]; then
+    echo "pushed=$PUSHED" >>"$GITHUB_OUTPUT"
   fi
   log "done (exit $status)"
   exit "$status"
@@ -226,6 +231,7 @@ push_with_rebase() {
       fi
       if git push -q "$REMOTE" "HEAD:refs/heads/$BRANCH"; then
         log "pushed $(git rev-parse --short HEAD) to $REMOTE/$BRANCH"
+        PUSHED=true
         return 0
       fi
     fi

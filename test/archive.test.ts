@@ -1,6 +1,7 @@
 // Drives scripts/archive-sources.sh end to end against a throwaway bare
-// "origin" repo, with the MSSS sources served from file:// URLs (the real
-// fixtures: Latin-1 / UTF-8+BOM, CRLF). No network.
+// "origin" repo, with the MSSS sources served from file:// URLs (the saved
+// fixtures: CRLF line endings, accented bytes, and a UTF-8 BOM for cumulatif).
+// No network.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -238,6 +239,19 @@ test('refuses to run in a clone that has not opted in (exit 2)', { skip }, () =>
     assert.equal(r.status, 2, r.log);
     assert.match(r.log, /refusing to run/);
     assert.equal(count(s.origin), 1);
+  } finally {
+    s.cleanup();
+  }
+});
+
+test('reports pushed=true|false to GitHub Actions via $GITHUB_OUTPUT', { skip }, () => {
+  const s = sandbox();
+  try {
+    const out = join(s.dir, 'gh-output');
+    writeFileSync(out, '');
+    assert.equal(s.run({ GITHUB_OUTPUT: out }).status, 0);
+    assert.equal(s.run({ GITHUB_OUTPUT: out }).status, 0);
+    assert.equal(readFileSync(out, 'utf8'), 'pushed=true\npushed=false\n');
   } finally {
     s.cleanup();
   }

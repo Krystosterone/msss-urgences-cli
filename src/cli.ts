@@ -8,6 +8,15 @@ import {
   type UrgencesCumulatifFilters,
 } from './tools/urgencesCumulatif';
 import { fetchChirurgiesReport, type ChirurgiesFilters } from './tools/chirurgies';
+import {
+  fetchUrgencesHistoriqueReport,
+  HISTORY_DEFAULT_DAYS,
+  HISTORY_DEFAULT_TTL_MINUTES,
+  HISTORY_GROUP_BY,
+  type HistoryGroupBy,
+  type UrgencesHistoriqueFilters,
+  type UrgencesHistoriqueReport,
+} from './tools/urgencesHistorique';
 import { CHIRURGIES_DEFAULT_TTL_MINUTES } from './core/chirurgiesCache';
 import { FetchError, ParseError, UsageError } from './core/errors';
 import { REGIONS, datasetCodes, resolveRegion, type RssRegion } from './core/regions';
@@ -32,6 +41,9 @@ Commands:
               Fiscal-year-to-date ER indicators + year-over-year trends
               (MSSS cumulative CSV, updated each fiscal period)
   chirurgies  Surgical waitlist by region, specialty and wait time (MSSS, per fiscal period)
+  urgences-historique
+              ER occupancy history from the archived hourly snapshots: typical
+              level by hour / weekday+hour / day, and now vs typical
   regions     The 18 Québec health regions (RSS): codes, names and accepted
               --region spellings, shared by every command (offline)
 
@@ -406,6 +418,84 @@ function formatChirurgiesTable(report: ChirurgiesReport): string {
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
+const HISTORIQUE_HELP = `msss-urgences urgences-historique — ER occupancy history (archived hourly snapshots)
+
+Reads the static history API built from the hourly MSSS ER snapshots archived in
+this repo (archive/), served by GitHub Pages. The window ends at the latest
+archived snapshot; hours are Québec local time (MSSS's Mise_a_jour). Every
+figure is a DERIVED mean/min/max over the snapshots in the window.
+
+Usage:
+  msss-urgences urgences-historique [options]
+
+Options:
+  --region <name|code> Filter to a region (name, alias or RSS code), e.g. "montreal", "06"
+  --id <n[,n...]>      Filter to facility id(s) (MSSS permit number); repeatable or comma-separated
+  --search <text>      Filter facilities by name (accent-insensitive substring)
+  --days <n>           Window length in days, ending at the latest snapshot (default ${HISTORY_DEFAULT_DAYS})
+  --by <grouping>      Profile grouping: hour (default), weekday-hour, or day
+  --api <url>          History API base (default $MSSS_URGENCES_API_URL, else
+                       https://krystosterone.github.io/msss-urgences-cli/api/v1)
+  --refresh            Re-fetch the index and the current month (complete months stay cached)
+  --ttl <minutes>      Cache TTL for the index and the current month (default ${HISTORY_DEFAULT_TTL_MINUTES})
+  --json               Output JSON (default when piped)
+  --table              Output a human-readable table (default on a TTY)
+  --fixture <dir>      Read a local API directory (with index.json) instead of the network
+  -h, --help           Show this help
+
+Examples:
+  msss-urgences urgences-historique --id 51222800 --by weekday-hour --json
+  msss-urgences urgences-historique --region montreal --days 7 --table
+  msss-urgences urgences-historique --search "sainte-justine" --by day --days 90 --json
+`;
+
+function profileLabel(row: UrgencesHistoriqueReport['facilities'][number]['profile'][number]): string {
+  if (row.date !== undefined) return row.date;
+  const hour = `${String(row.hour).padStart(2, '0')}h`;
+  return row.weekdayName ? `${row.weekdayName.slice(0, 3)} ${hour}` : hour;
+}
+
+/** Render a history report as one block per facility. */
+export function formatHistoriqueTable(report: UrgencesHistoriqueReport): string {
+  const w = report.window;
+  const head =
+    `ER history · ${w.from} → ${w.to} (${w.days} days, ${w.snapshots} snapshots` +
+    `${w.archiveStart && w.archiveStart > w.from ? `; archive starts ${w.archiveStart}` : ''}) · by ${report.groupBy}`;
+  if (report.facilities.length === 0) return `${head}\n\nNo facilities matched the filters.`;
+  const blocks = report.facilities.map((f) => {
+    const s = f.summary;
+    const l = f.latest;
+    const lines = [
+      `${f.name} (${f.id}) — ${f.region}`,
+      `  ${s.samples} samples · occupancy avg ${fmtCell(s.occupancyPctMean, '%')} ` +
+        `(min ${fmtCell(s.occupancyPctMin, '%')}, max ${fmtCell(s.occupancyPctMax, '%')}) · ` +
+        `waiting avg ${fmtCell(s.waitingForCareMean)} · present avg ${fmtCell(s.totalPresentMean)}`,
+    ];
+    if (l) {
+      lines.push(
+        `  latest ${l.dataDate}: ${fmtCell(l.occupancyPct, '%')} vs typical ${fmtCell(l.typicalOccupancyPct, '%')} ` +
+          `at this hour (${fmtDelta(l.deltaFromTypicalPct)}) · same weekday ${fmtCell(l.typicalOccupancyPctSameWeekday, '%')}`,
+      );
+    }
+    if (f.profile.length > 0) {
+      const rows = f.profile.map((r) => [
+        profileLabel(r),
+        String(r.samples),
+        fmtCell(r.occupancyPctMean, '%'),
+        fmtCell(r.occupancyPctMax, '%'),
+        fmtCell(r.waitingForCareMean),
+        fmtCell(r.totalPresentMean),
+        fmtCell(r.over24hMean),
+      ]);
+      const grid = renderGrid([['SLOT', 'N', 'OCC AVG', 'OCC MAX', 'WAIT AVG', 'PRESENT AVG', '>24h AVG'], ...rows]);
+      lines.push(grid.replace(/^/gm, '  '));
+    }
+    return lines.join('\n');
+  });
+  const meta = `source: ${report.source} · built ${report.generatedAt} · ${report.cached ? 'cached' : 'live'}`;
+  return `${head}\n\n${blocks.join('\n\n')}\n\n${meta}`;
+}
+
 function resolveFormat(values: Record<string, unknown>): 'json' | 'table' {
   if (values.table === true) return 'table';
   if (values.json === true) return 'json';
@@ -431,6 +521,9 @@ function parseCli(args: string[]): { values: Record<string, unknown>; positional
       history: { type: 'boolean' },
       specialty: { type: 'string' },
       period: { type: 'string' },
+      days: { type: 'string' },
+      by: { type: 'string' },
+      api: { type: 'string' },
       refresh: { type: 'boolean' },
       ttl: { type: 'string' },
       json: { type: 'boolean' },
@@ -672,6 +765,73 @@ async function runChirurgies(values: Record<string, unknown>, positionals: strin
   }
 }
 
+async function runUrgencesHistorique(values: Record<string, unknown>, positionals: string[]): Promise<number> {
+  const sub = positionals[1];
+  if (values.help === true || sub === '--help' || sub === '-h') {
+    process.stdout.write(HISTORIQUE_HELP);
+    return 0;
+  }
+  if (sub !== undefined) {
+    process.stderr.write(`Unexpected argument to urgences-historique: ${sub}\n\n${HISTORIQUE_HELP}`);
+    return 2;
+  }
+  const ttlMinutes = parseTtl(values, HISTORY_DEFAULT_TTL_MINUTES);
+  if (ttlMinutes === null) {
+    process.stderr.write(`--ttl must be a positive number of minutes.\n`);
+    return 2;
+  }
+  let days = HISTORY_DEFAULT_DAYS;
+  if (typeof values.days === 'string') {
+    days = Number(values.days);
+    if (!/^\d+$/.test(values.days) || days < 1 || days > 3660) {
+      process.stderr.write(`--days must be a whole number of days between 1 and 3660 (got "${values.days}").\n`);
+      return 2;
+    }
+  }
+  let groupBy: HistoryGroupBy = 'hour';
+  if (typeof values.by === 'string') {
+    if (!(HISTORY_GROUP_BY as readonly string[]).includes(values.by)) {
+      process.stderr.write(`--by must be one of: ${HISTORY_GROUP_BY.join(', ')} (got "${values.by}").\n`);
+      return 2;
+    }
+    groupBy = values.by as HistoryGroupBy;
+  }
+  const filters: UrgencesHistoriqueFilters = {};
+  if (typeof values.region === 'string') filters.region = values.region;
+  const ids = parseIdList(values.id as string | string[] | undefined);
+  if (ids) filters.ids = ids;
+  if (typeof values.search === 'string' && values.search !== '') filters.search = values.search;
+  try {
+    const report = await fetchUrgencesHistoriqueReport({
+      filters,
+      days,
+      groupBy,
+      api: typeof values.api === 'string' ? values.api : undefined,
+      fixture: typeof values.fixture === 'string' ? values.fixture : undefined,
+      cache: { ttlMinutes, refresh: values.refresh === true },
+    });
+    const output =
+      resolveFormat(values) === 'json' ? JSON.stringify(report, null, 2) : formatHistoriqueTable(report);
+    process.stdout.write(`${output}\n`);
+    return 0;
+  } catch (err) {
+    if (err instanceof UsageError) {
+      process.stderr.write(`usage error: ${err.message}\n`);
+      return 2;
+    }
+    if (err instanceof FetchError) {
+      process.stderr.write(`fetch error: ${err.message}\n`);
+      return 1;
+    }
+    if (err instanceof ParseError) {
+      process.stderr.write(`parse error: ${err.message}\n`);
+      return 2;
+    }
+    process.stderr.write(`error: ${(err as Error).message}\n`);
+    return 1;
+  }
+}
+
 function runRegions(values: Record<string, unknown>, positionals: string[]): number {
   const sub = positionals[1];
   if (values.help === true || sub === '--help' || sub === '-h') {
@@ -731,6 +891,7 @@ export async function main(argv: string[]): Promise<number> {
   if (command === 'urgences-cumulatif') return runUrgencesCumulatif(values, positionals);
   if (command === 'chirurgies') return runChirurgies(values, positionals);
   if (command === 'regions') return runRegions(values, positionals);
+  if (command === 'urgences-historique') return runUrgencesHistorique(values, positionals);
   process.stderr.write(`Unknown command: ${command}\n\n${HELP}`);
   return 2;
 }
