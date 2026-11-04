@@ -5,6 +5,10 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add CI (`.github/workflows/ci.yml`) on pull requests and code pushes to
+  `main`, skipping `archive/`-only changes: type-check, build and the offline
+  test suite on Node 18, 20, 22 and 24, plus skills validation, `shellcheck`
+  and `actionlint`. `archive-sources.sh` is now shellcheck-clean.
 - Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
   config) and the `.gitignore` entry for generated `openspec-*` skills.
 - Rewrite the README agents first: what the repo is, which skill answers which

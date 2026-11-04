@@ -55,6 +55,20 @@ with `NODE_USE_ENV_PROXY=1` (Node ≥ 22.21).
 To force a live fetch past the cache, add `--refresh` to any command (e.g.
 `msss-urgences urgences-cumulatif --refresh`).
 
+## CI
+
+`.github/workflows/ci.yml` runs on every pull request and every code push to
+`main` (changes only under `archive/` are skipped):
+
+- `test`: `npm ci`, `npm run build` (type-check) and `npm test` on Node 18, 20,
+  22 and 24, since `package.json` declares `node >= 18`.
+- `lint`: `python3 scripts/validate-skills.py`, `shellcheck` on the shell
+  scripts, and `actionlint` on the workflows.
+
+Run the same checks locally before pushing. The lint tools install with
+`pip install shellcheck-py actionlint-py`. Keep CI offline: live tests stay
+behind `RUN_LIVE=1`. Actions is free only while the repo is public.
+
 ## Env
 
 See `.env.example`. Slots: `MSSS_URGENCES_CACHE_DIR` (default

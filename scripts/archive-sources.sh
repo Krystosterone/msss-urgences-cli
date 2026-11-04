@@ -242,4 +242,7 @@ push_with_rebase() {
   return 1
 }
 
-main "$@"; exit $?
+# main always exits itself; the trailing exit is a backstop so bash never reads
+# past this line of a script file that git may have just rewritten.
+# shellcheck disable=SC2317
+{ main "$@"; exit $?; }

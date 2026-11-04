@@ -111,8 +111,14 @@ the rule lets through:
    branch protection has no way to exempt a deploy key.
 
 Pushes made with a deploy key, unlike `GITHUB_TOKEN` pushes, *do* trigger other
-workflows. Give any push-triggered CI `paths-ignore: ['archive/**']`, or it
-will run on every data commit.
+workflows. [`ci.yml`](../.github/workflows/ci.yml) already ignores
+`archive/**`; give any other push-triggered workflow the same `paths-ignore`, or
+it will run on every data commit.
+
+If the ruleset also **requires the `ci` checks**, the bot's direct pushes aren't
+affected (deploy keys bypass the ruleset). A PR that touches only `archive/`
+would never get those checks, though, because CI skips it. None is expected,
+since data only arrives by the bot's direct pushes.
 
 ### Living with an hourly bot on `main`
 
@@ -124,8 +130,8 @@ will run on every data commit.
 - **Clone size:** urgences adds an estimated 35–50 MB of history a year;
   cumulatif about 1 MB. To clone the code without old data versions:
   `git clone --filter=blob:none …`.
-- **Future CI:** add `paths-ignore: ['archive/**']` to push-triggered
-  workflows.
+- **CI:** `ci.yml` skips changes confined to `archive/`. Give any new
+  push-triggered workflow `paths-ignore: ['archive/**']` too.
 
 ### Monitoring
 
