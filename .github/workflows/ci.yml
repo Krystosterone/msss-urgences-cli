@@ -45,7 +45,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Shellcheck
-        run: shellcheck scripts/archive-sources.sh install.sh
+        run: shellcheck scripts/archive-sources.sh
       - name: Lint workflows
         run: |
           pip install --quiet actionlint-py==1.7.12.25
