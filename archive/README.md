@@ -1,8 +1,9 @@
 # MSSS open-data archive
 
 Raw snapshots of the MSSS open-data CSVs, committed by
-[`scripts/archive-sources.sh`](../scripts/archive-sources.sh) (run every 15
-minutes by [`.github/workflows/archive-msss.yml`](../.github/workflows/archive-msss.yml)).
+[`scripts/archive-sources.sh`](../scripts/archive-sources.sh), which runs every
+15 minutes from cron on a maintainer's computer
+([setup](../docs/archive-job.md)).
 Every file is stored **byte for byte as MSSS serves it**: no re-encoding, no
 reformatting, no newline conversion (see [`.gitattributes`](../.gitattributes)).
 A file is committed only when its bytes change, so **each commit touching a file
@@ -20,7 +21,7 @@ every fiscal period since 2019-20 P12).
 
 ## History API
 
-You don't need git to use the history: the `archive-msss` workflow builds a
+You don't need git to use the history: the `pages` workflow builds a
 static JSON API from these files and serves it on GitHub Pages at
 `https://krystosterone.github.io/msss-urgences-cli/api/v1/`. That's what
 `msss-urgences urgences-historique` reads. See

@@ -1,0 +1,53 @@
+# Builds the static history API from archive/'s git history and deploys it to
+# GitHub Pages. Never contacts MSSS (MSSS refuses GitHub's runners): the
+# archive is fetched and pushed by a computer running
+# scripts/archive-sources.sh (docs/archive-job.md). Its pushes, made with a
+# deploy key, trigger this workflow.
+name: pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'archive/urgences/**'
+      - 'src/core/history.ts'
+      - 'src/core/historyBuild.ts'
+      - 'src/core/parse.ts'
+      - 'scripts/build-api.ts'
+      - 'package-lock.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # the builder reads every archived version
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build the history API
+        run: npx tsx scripts/build-api.ts site
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v5

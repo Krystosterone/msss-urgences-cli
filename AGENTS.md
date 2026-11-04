@@ -79,15 +79,23 @@ API directory, offline runs). No secrets.
 
 ## Scheduled job / databases
 
-One scheduled job, no databases. `.github/workflows/archive-msss.yml` runs
-`scripts/archive-sources.sh` every 15 minutes (GitHub Actions; cron on another
-computer is the documented fallback). It downloads the `urgences` and
-`urgences-cumulatif` CSVs, stores them byte for byte in `archive/`, and commits
-and pushes to `main` only when bytes change. It rebases before pushing and never
-force-pushes. When the archive changed, a second job builds the static history
-API from `archive/`'s git history (`scripts/build-api.ts`) and deploys it to
-GitHub Pages; the API is never committed. Setup and credentials:
-`docs/archive-job.md`. Consequences for agents:
+One scheduled job, no databases. `scripts/archive-sources.sh` runs from cron
+every 15 minutes on a maintainer's computer, **not** on GitHub Actions (MSSS
+answers GitHub's runners with HTTP 403; don't try to get around that). It
+downloads the `urgences` and `urgences-cumulatif` CSVs, stores them byte for
+byte in `archive/`, and commits and pushes to `main` (deploy key) only when
+bytes change. It rebases before pushing and never force-pushes.
+
+On GitHub, nothing fetches from MSSS:
+
+- `.github/workflows/pages.yml` builds the static history API from `archive/`'s
+  git history (`scripts/build-api.ts`) and deploys it to GitHub Pages on each
+  push that changes `archive/urgences/` or the builder. The API is never
+  committed.
+- `.github/workflows/archive-freshness.yml` fails every 6 hours while no new
+  version has arrived for 6 hours.
+
+Setup and credentials: `docs/archive-job.md`. Consequences for agents:
 
 - `main` moves up to every hour. Before pushing to `main`, `git pull --rebase`.
 - Never edit, re-encode or reformat files under `archive/`. They must stay
@@ -101,8 +109,9 @@ GitHub Pages; the API is never committed. Setup and credentials:
   Don't run the script in a working copy: it resets the clone it runs in, and
   refuses to unless `git config msss-archive.dedicated true`.
 
-`manifest.yaml` declares no cron jobs for install-repo.sh to install; the
-schedule lives in GitHub Actions.
+`manifest.yaml` declares no cron jobs for install-repo.sh to install: the
+archive job runs on one designated computer, set up by hand
+(`docs/archive-job.md`), not on every install.
 
 ## Docs and versioning
 

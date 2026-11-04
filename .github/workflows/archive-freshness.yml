@@ -1,0 +1,39 @@
+# Alerts (a failed run, so GitHub emails you) when the archive stops moving:
+# the computer running scripts/archive-sources.sh is off, offline, or its
+# pushes are failing. Reads git only; never contacts MSSS.
+name: archive-freshness
+
+on:
+  schedule:
+    - cron: '17 */6 * * *' # every 6 hours (UTC)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      # MSSS publishes urgences hourly; 6 h without a new version means the
+      # job (or MSSS) has stopped.
+      MAX_AGE_HOURS: 6
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - name: Latest archived urgences version
+        run: |
+          last=$(git log -1 --format=%ct -- archive/urgences/)
+          if [ -z "$last" ]; then
+            echo "::notice::archive/urgences has no commits yet; nothing to check until the job's first run."
+            exit 0
+          fi
+          age_h=$(( ($(date +%s) - last) / 3600 ))
+          echo "Last archived version: $(git log -1 --format='%h %cI' -- archive/urgences/) (${age_h} h ago)"
+          if [ "$age_h" -ge "$MAX_AGE_HOURS" ]; then
+            echo "::error::No new urgences version for ${age_h} h (limit ${MAX_AGE_HOURS} h). Check the computer running scripts/archive-sources.sh (see docs/archive-job.md, Monitoring)."
+            exit 1
+          fi

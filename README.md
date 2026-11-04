@@ -87,10 +87,12 @@ Results are cached in `~/.cache/msss-urgences` (override with
 
 ## Data archive and history API
 
-MSSS overwrites the hourly ER file every hour. A scheduled GitHub Actions job
-commits each new version, byte for byte, to [`archive/`](archive/README.md) on
-`main` (along with each new `urgences-cumulatif` period). Then it publishes a
-static JSON history API on GitHub Pages, which `urgences-historique` reads.
+MSSS overwrites the hourly ER file every hour. A job running from cron on a
+maintainer's computer commits each new version, byte for byte, to
+[`archive/`](archive/README.md) on `main` (along with each new
+`urgences-cumulatif` period). It can't run on GitHub Actions, because MSSS
+refuses GitHub's runners. Each data push then rebuilds a static JSON history
+API on GitHub Pages, which `urgences-historique` reads.
 
 - What's archived and how to read old versions: [`archive/README.md`](archive/README.md).
 - Setup, credentials and operations: [`docs/archive-job.md`](docs/archive-job.md).
