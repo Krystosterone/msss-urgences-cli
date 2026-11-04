@@ -315,3 +315,148 @@ export interface CumulatifMissing {
   /** Fiscal years in which the entity does appear, newest first. */
   fiscalYears: string[];
 }
+
+/**
+ * Surgical-waitlist specialties, in source column order. `column` is the CSV
+ * header as published in `Chirurgie_ListeAttente.csv`; `key` is the stable
+ * contract key; `label` is the human (French) name.
+ */
+export const CHIRURGIE_SPECIALTIES = [
+  { key: 'chirurgie_generale', column: 'Chirurgie_generale', label: 'Chirurgie générale' },
+  { key: 'chirurgie_orthopedique', column: 'Chirurgie_orthopedique', label: 'Chirurgie orthopédique' },
+  { key: 'chirurgie_plastique', column: 'Chirurgie_plastique', label: 'Chirurgie plastique' },
+  { key: 'chirurgie_vasculaire', column: 'Chirurgie_vasculaire', label: 'Chirurgie vasculaire' },
+  { key: 'neurochirurgie', column: 'Neurochirurgie', label: 'Neurochirurgie' },
+  { key: 'obstetrique_gynecologie', column: 'Obstetrique_et_gynecologie', label: 'Obstétrique et gynécologie' },
+  { key: 'ophtalmologie', column: 'Ophtalmologie', label: 'Ophtalmologie' },
+  { key: 'orl', column: 'ORL_chirurgie_cervico_faciale', label: 'ORL / chirurgie cervico-faciale' },
+  { key: 'urologie', column: 'Urologie', label: 'Urologie' },
+  { key: 'autres', column: 'Autres', label: 'Autres (non chirurgical, anesthésie générale)' },
+] as const;
+
+export type ChirurgieSpecialtyKey = (typeof CHIRURGIE_SPECIALTIES)[number]['key'];
+
+/**
+ * Wait-time bands (time since the surgeon's decision to operate), in order.
+ * `label` is the `Delais_d'attente` value exactly as published.
+ */
+export const CHIRURGIE_WAIT_BANDS = [
+  { key: 'under6m', label: '0 à 6 mois' },
+  { key: 'from6to12m', label: '6 à 12 mois' },
+  { key: 'over12m', label: "Plus d'1 an" },
+] as const;
+
+export type ChirurgieWaitBandKey = (typeof CHIRURGIE_WAIT_BANDS)[number]['key'];
+
+/**
+ * Socio-sanitary regions (RSS), from the reference table in the dataset's
+ * methodology notes (listevariables_notesmetho_chirurgie_listeattente.pdf).
+ */
+export const RSS_REGIONS: Readonly<Record<string, string>> = {
+  RSS01: 'Bas-Saint-Laurent',
+  RSS02: 'Saguenay - Lac-Saint-Jean',
+  RSS03: 'Capitale-Nationale',
+  RSS04: 'Mauricie et Centre-du-Québec',
+  RSS05: 'Estrie',
+  RSS06: 'Montréal',
+  RSS07: 'Outaouais',
+  RSS08: 'Abitibi-Témiscamingue',
+  RSS09: 'Côte-Nord',
+  RSS10: 'Nord-du-Québec',
+  RSS11: 'Gaspésie - Îles-de-la-Madeleine',
+  RSS12: 'Chaudière-Appalaches',
+  RSS13: 'Laval',
+  RSS14: 'Lanaudière',
+  RSS15: 'Laurentides',
+  RSS16: 'Montérégie',
+};
+
+/** One parsed CSV row: a (period, wait band, region) cell group, verbatim. */
+export interface ChirurgieRow {
+  /** `PeriodeAttente`, e.g. "2627-P04" (fiscal 2026-2027, period 4). */
+  period: string;
+  band: ChirurgieWaitBandKey;
+  /** `Region`, e.g. "RSS06". */
+  regionCode: string;
+  /** Per-specialty counts; null = blank cell (not published). */
+  counts: Record<ChirurgieSpecialtyKey, number | null>;
+  /** The published `Total` column for this row; null when blank. */
+  total: number | null;
+}
+
+/** Patients waiting per wait band. null = not published (blank cell or no row). */
+export interface ChirurgieWaitBands {
+  under6m: number | null;
+  from6to12m: number | null;
+  over12m: number | null;
+}
+
+/** Waitlist for one specialty (or the all-specialty total) in one region. */
+export interface ChirurgieWaitlist {
+  /** Specialty key, or "total" for the published all-specialty `Total` column. */
+  key: ChirurgieSpecialtyKey | 'total';
+  label: string;
+  /** Patients waiting per band, verbatim from the CSV. */
+  waiting: ChirurgieWaitBands;
+  /** DERIVED: sum of non-null bands. */
+  total: number;
+  /** DERIVED: from6to12m + over12m (null bands count as 0). */
+  over6m: number;
+  /** DERIVED: over6m / total as an integer %, null when total is 0. */
+  pctOver6m: number | null;
+  /** DERIVED: over12m / total as an integer %, null when total is 0. */
+  pctOver12m: number | null;
+}
+
+/** One region's surgical waitlist for the reported period. */
+export interface ChirurgieRegion {
+  /** RSS code, e.g. "RSS06"; null for the DERIVED province-wide aggregate. */
+  code: string | null;
+  name: string;
+  /** ASCII slug, e.g. "montreal". */
+  slug: string;
+  /** All specialties combined (from the published `Total` column). */
+  overall: ChirurgieWaitlist;
+  specialties: ChirurgieWaitlist[];
+  /** DERIVED: overall.total in the previous period; null when absent. */
+  previousPeriodTotal: number | null;
+  /** DERIVED: overall.total − previousPeriodTotal; null when not comparable. */
+  deltaFromPreviousPeriod: number | null;
+}
+
+/** Fiscal period decoded from a "YYZZ-Pnn" code. */
+export interface ChirurgiePeriod {
+  /** As published, e.g. "2627-P04". */
+  code: string;
+  /** e.g. "2026-2027" (April → March). */
+  fiscalYear: string;
+  /** 1..13 (13 four-week periods per fiscal year). */
+  number: number;
+}
+
+/** Top-level report emitted by the `chirurgies` tool. */
+export interface ChirurgiesReport {
+  /** Source URL the data was fetched from. */
+  source: string;
+  /** ISO-8601 timestamp stamped when the report was produced. */
+  fetchedAt: string;
+  /** The period code the report is for (the requested one, or the latest present). */
+  dataDate: string;
+  period: ChirurgiePeriod;
+  /** The period immediately before `dataDate` in the source; null for the oldest. */
+  previousPeriod: string | null;
+  /** True when this report was served from the local cache, false on a live fetch. */
+  cached: boolean;
+  /** Cache-freshness: age of the served data in minutes. */
+  cacheAgeMinutes: number;
+  /** Distinct periods present in the source (newest first). */
+  availablePeriods: string[];
+  /** RSS regions from the reference table with no rows at all in this period. */
+  missingRegions: string[];
+  /**
+   * DERIVED: sum over every region present in this period (ignores --region,
+   * honours --specialty). Excludes `missingRegions`.
+   */
+  province: ChirurgieRegion;
+  regions: ChirurgieRegion[];
+}

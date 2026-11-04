@@ -5,6 +5,16 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add `chirurgies` tool + `msss-urgences-chirurgies` skill: the surgical
+  waitlist from the MSSS `Chirurgie_ListeAttente.csv` (UTF-8/BOM; 13 updates a
+  year; history since 1920-P12), by region (RSS), specialty and wait band
+  (0–6 months, 6–12 months, over 1 year). Filters: `--region` (name or RSS code),
+  `--specialty`, `--period`. Derived figures: totals, % over 6/12 months, delta
+  vs the previous period, and a province-wide sum that reports `missingRegions`
+  instead of silently excluding them. Unknown period/specialty → exit 2
+  (`UsageError`).
+  Reuses the shared `fetchUtf8Csv` and `jsonCache` helpers.
+- README roadmap: `chirurgies` flipped to shipped.
 - Add `urgences-cumulatif` tool + `msss-urgences-cumulatif` skill:
   fiscal-year-to-date ER indicators (visits, length of stay, delay to
   physician, 24h/48h stretcher stays, 75+ and mental-health counts) per

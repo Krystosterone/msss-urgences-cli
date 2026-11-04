@@ -7,10 +7,13 @@ import {
   DEFAULT_TTL_MINUTES as CUMULATIF_DEFAULT_TTL,
   type UrgencesCumulatifFilters,
 } from './tools/urgencesCumulatif';
+import { fetchChirurgiesReport, type ChirurgiesFilters } from './tools/chirurgies';
+import { CHIRURGIES_DEFAULT_TTL_MINUTES } from './core/chirurgiesCache';
 import { FetchError, ParseError, UsageError } from './core/errors';
 import type { Facility, Region, UrgencesReport } from './core/types';
 import type { Clinic, CliniquesReport } from './core/types';
-import { CLINIQUE_BAND_KEYS, CUMULATIF_LEVELS } from './core/types';
+import { CLINIQUE_BAND_KEYS, CUMULATIF_LEVELS, CHIRURGIE_SPECIALTIES } from './core/types';
+import type { ChirurgieRegion, ChirurgiesReport, ChirurgieWaitlist } from './core/types';
 import type { CumulatifEntry, CumulatifLevel, UrgencesCumulatifReport } from './core/types';
 
 declare const require: ((id: string) => { version: string }) & { main?: NodeJS.Module };
@@ -27,6 +30,7 @@ Commands:
   urgences-cumulatif
               Fiscal-year-to-date ER indicators + year-over-year trends
               (MSSS cumulative CSV, updated each fiscal period)
+  chirurgies  Surgical waitlist by region, specialty and wait time (MSSS, per fiscal period)
 
 Global options:
   -h, --help      Show this help
@@ -109,6 +113,33 @@ Examples:
   msss-urgences urgences-cumulatif --region montreal --table
   msss-urgences urgences-cumulatif --id 51222800,51223279 --history --json
   msss-urgences urgences-cumulatif --level province,region --json
+`;
+
+const CHIRURGIES_HELP = `msss-urgences chirurgies — surgical waitlist (MSSS, updated each fiscal period)
+
+Patients waiting for an operating-room intervention, by region (RSS), specialty
+and wait time since the decision to operate (0-6 months, 6-12 months, >1 year).
+
+Usage:
+  msss-urgences chirurgies [options]
+
+Options:
+  --region <name|code> Filter to a region by name (accent-insensitive) or RSS code ("RSS06", "06")
+  --specialty <name>   Filter to specialties by name (accent-insensitive substring), e.g. "ortho"
+  --period <YYZZ-Pnn>  Fiscal period to report, e.g. "2627-P04" (default: the latest in the source)
+  --refresh            Force a fresh fetch, ignoring the local cache
+  --ttl <minutes>      Cache TTL (default ${CHIRURGIES_DEFAULT_TTL_MINUTES}; the source updates ~every 4 weeks)
+  --json               Output JSON (default when piped)
+  --table              Output a human-readable table (default on a TTY)
+  --fixture <path>     Read a local CSV instead of the network (deterministic offline run)
+  -h, --help           Show this help
+
+Specialties: ${CHIRURGIE_SPECIALTIES.map((s) => s.key).join(', ')}
+
+Examples:
+  msss-urgences chirurgies --region montreal --table
+  msss-urgences chirurgies --specialty ortho --json
+  msss-urgences chirurgies --region RSS03 --period 2627-P01 --json
 `;
 
 /** Parse `--id` values (repeated flags and/or comma lists) into non-empty strings. */
@@ -278,6 +309,45 @@ function formatCliniquesTable(report: CliniquesReport): string {
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
+function fmtWaitRow(w: ChirurgieWaitlist): string[] {
+  return [
+    fmtCell(w.waiting.under6m),
+    fmtCell(w.waiting.from6to12m),
+    fmtCell(w.waiting.over12m),
+    String(w.total),
+    fmtCell(w.pctOver6m, '%'),
+    fmtCell(w.pctOver12m, '%'),
+    w.label,
+  ];
+}
+
+function chirurgiesBlock(r: ChirurgieRegion, previousPeriod: string | null, showOverall: boolean): string {
+  const delta =
+    r.deltaFromPreviousPeriod === null ? '' : ` · ${fmtDelta(r.deltaFromPreviousPeriod)} vs ${previousPeriod}`;
+  const title = `${r.name}${r.code ? ` (${r.code})` : ' (derived)'} — ${r.overall.total} waiting${delta}`;
+  const header = ['0-6m', '6-12m', '>12m', 'TOTAL', '%>6m', '%>12m', 'SPECIALTY'];
+  const rows = r.specialties.map(fmtWaitRow);
+  if (showOverall) rows.push(fmtWaitRow(r.overall));
+  return `${title}\n${renderGrid([header, ...rows])}`;
+}
+
+/** Render a surgical-waitlist report as aligned human-readable tables. */
+function formatChirurgiesTable(report: ChirurgiesReport): string {
+  // The overall row only adds information when every specialty is listed.
+  const showOverall = report.province.specialties.length === CHIRURGIE_SPECIALTIES.length;
+  const blocks = report.regions.map((r) => chirurgiesBlock(r, report.previousPeriod, showOverall));
+  if (blocks.length === 0) blocks.push('No regions matched the filters.');
+  blocks.push(chirurgiesBlock(report.province, report.previousPeriod, showOverall));
+  const p = report.period;
+  const missing = report.missingRegions.length
+    ? `\nmissing from this period (not in province total): ${report.missingRegions.join(', ')}`
+    : '';
+  const meta =
+    `source: ${report.source}\nperiod: ${p.code} (fiscal ${p.fiscalYear}, P${p.number}) · ` +
+    `${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}${missing}`;
+  return `${blocks.join('\n\n')}\n\n${meta}`;
+}
+
 function resolveFormat(values: Record<string, unknown>): 'json' | 'table' {
   if (values.table === true) return 'table';
   if (values.json === true) return 'json';
@@ -299,6 +369,8 @@ function parseCli(args: string[]): { values: Record<string, unknown>; positional
       compare: { type: 'string' },
       level: { type: 'string' },
       history: { type: 'boolean' },
+      specialty: { type: 'string' },
+      period: { type: 'string' },
       refresh: { type: 'boolean' },
       ttl: { type: 'string' },
       json: { type: 'boolean' },
@@ -482,6 +554,62 @@ async function runUrgencesCumulatif(values: Record<string, unknown>, positionals
   }
 }
 
+async function runChirurgies(values: Record<string, unknown>, positionals: string[]): Promise<number> {
+  const sub = positionals[1];
+  if (values.help === true || sub === '--help' || sub === '-h') {
+    process.stdout.write(CHIRURGIES_HELP);
+    return 0;
+  }
+  if (sub !== undefined) {
+    process.stderr.write(`Unexpected argument to chirurgies: ${sub}\n\n${CHIRURGIES_HELP}`);
+    return 2;
+  }
+  const ttlMinutes = parseTtl(values, CHIRURGIES_DEFAULT_TTL_MINUTES);
+  if (ttlMinutes === null) {
+    process.stderr.write(`--ttl must be a positive number of minutes.\n`);
+    return 2;
+  }
+  const filters: ChirurgiesFilters = {};
+  if (typeof values.region === 'string' && values.region !== '') filters.region = values.region;
+  if (typeof values.specialty === 'string' && values.specialty !== '') filters.specialty = values.specialty;
+  if (typeof values.period === 'string') {
+    const period = values.period.trim().toUpperCase();
+    const m = /^(\d{2})(\d{2})-P(\d{2})$/.exec(period);
+    const valid = m !== null && (Number(m[1]) + 1) % 100 === Number(m[2]) && Number(m[3]) >= 1 && Number(m[3]) <= 13;
+    if (!valid) {
+      process.stderr.write(`--period must be a fiscal period like "2627-P04" (P01-P13; got "${values.period}").\n`);
+      return 2;
+    }
+    filters.period = period;
+  }
+  try {
+    const report = await fetchChirurgiesReport({
+      filters,
+      cache: { ttlMinutes, refresh: values.refresh === true },
+      fixture: typeof values.fixture === 'string' ? values.fixture : undefined,
+    });
+    const output =
+      resolveFormat(values) === 'json' ? JSON.stringify(report, null, 2) : formatChirurgiesTable(report);
+    process.stdout.write(`${output}\n`);
+    return 0;
+  } catch (err) {
+    if (err instanceof UsageError) {
+      process.stderr.write(`usage error: ${err.message}\n`);
+      return 2;
+    }
+    if (err instanceof FetchError) {
+      process.stderr.write(`fetch error: ${err.message}\n`);
+      return 1;
+    }
+    if (err instanceof ParseError) {
+      process.stderr.write(`parse error: ${err.message}\n`);
+      return 2;
+    }
+    process.stderr.write(`error: ${(err as Error).message}\n`);
+    return 1;
+  }
+}
+
 export async function main(argv: string[]): Promise<number> {
   let values: Record<string, unknown>;
   let positionals: string[];
@@ -509,6 +637,7 @@ export async function main(argv: string[]): Promise<number> {
   if (command === 'urgences') return runUrgences(values, positionals);
   if (command === 'cliniques') return runCliniques(values, positionals);
   if (command === 'urgences-cumulatif') return runUrgencesCumulatif(values, positionals);
+  if (command === 'chirurgies') return runChirurgies(values, positionals);
   process.stderr.write(`Unknown command: ${command}\n\n${HELP}`);
   return 2;
 }
