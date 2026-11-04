@@ -5,6 +5,8 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
+  config) and the `.gitignore` entry for generated `openspec-*` skills.
 - Rewrite the README agents first: what the repo is, which skill answers which
   question, how to call the CLI (`--json`, ids, `--region`, freshness, `null`,
   exit codes), install, and a one-line-per-command overview with its MSSS
