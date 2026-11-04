@@ -5,6 +5,18 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add `chirurgies` tool + `msss-urgences-chirurgies` skill: the surgical
+  waitlist from the MSSS `Chirurgie_ListeAttente.csv` (UTF-8/BOM; 13 updates a
+  year; history since 1920-P12), by region (RSS), specialty and wait band
+  (0–6 months, 6–12 months, over 1 year). Filters: `--region` (name or RSS code),
+  `--specialty`, `--period`. Derived figures: totals, % over 6/12 months, delta
+  vs the previous period, and a province-wide sum that reports `missingRegions`
+  instead of silently excluding them. Unknown period/specialty → exit 2
+  (`UsageError`).
+- Share the UTF-8/BOM fetch between `cliniques` and `chirurgies`
+  (`fetchUtf8Csv`); `cliniques` behaviour unchanged.
+- README roadmap: `chirurgies` flipped to shipped.
+
 - Add `cliniques` tool + `msss-urgences-cliniques` skill: daily clinic
   appointment availability from the MSSS `rdvoffert_DOuv.csv` daily CSV
   (UTF-8/BOM; per-time-band offered slots; region/search/date filters);

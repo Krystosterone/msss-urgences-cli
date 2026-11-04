@@ -13,3 +13,11 @@ export const MSSS_CLINIQUES_URL =
 /** Fallback if the canonical path moves: the open-data catalogue dataset page. */
 export const MSSS_CLINIQUES_BACKUP_URL =
   'https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique';
+
+/** Canonical MSSS surgical-waitlist CSV (updated each fiscal period, 13×/year). */
+export const MSSS_CHIRURGIES_URL =
+  'https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv';
+
+/** Fallback if the canonical path moves: the open-data catalogue dataset page. */
+export const MSSS_CHIRURGIES_BACKUP_URL =
+  'https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente';

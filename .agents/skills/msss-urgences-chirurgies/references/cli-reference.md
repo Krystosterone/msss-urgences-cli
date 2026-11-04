@@ -1,0 +1,84 @@
+# msss-urgences chirurgies CLI reference
+
+Loaded on demand from SKILL.md when you need the exact command contract or a
+field meaning. The skill body owns the interpretation.
+
+## Invocation
+
+```bash
+msss-urgences chirurgies [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--region <name\|code>` | Region by name/slug (accent-insensitive substring) or RSS code: `RSS06`, `06`, `6` |
+| `--specialty <name>` | Specialties by label or key (accent-insensitive substring), e.g. `ortho`, `gynécologie`. `chirurgie` matches six of them |
+| `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04`; default = latest in the source |
+| `--refresh` | Force a fresh fetch, ignoring the local cache |
+| `--ttl <minutes>` | Cache TTL (default 1440) |
+| `--json` | JSON output (default when piped) |
+| `--table` | Human-readable table (default on a TTY) |
+| `--fixture <path>` | Read a local CSV instead of the network (deterministic offline run) |
+| `-h, --help` | Command help |
+
+Specialty keys: `chirurgie_generale`, `chirurgie_orthopedique`,
+`chirurgie_plastique`, `chirurgie_vasculaire`, `neurochirurgie`,
+`obstetrique_gynecologie`, `ophtalmologie`, `orl`, `urologie`, `autres`.
+
+Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or bad
+usage. Bad usage includes a malformed `--period`, a period absent from the
+source (the message lists the latest ones), and an unknown `--specialty` (the
+message lists the keys). A `--region` that matches nothing is **not** an
+error: `regions` comes back empty.
+
+## Source
+
+- Canonical URL: `https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv`
+- Dataset page: [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente)
+- Encoding: UTF-8 **with BOM**, comma-separated, CRLF.
+- Shape: one row per (`PeriodeAttente` × `Delais_d'attente` × `Region`), with one
+  count column per specialty plus `Total`. History starts at `1920-P12`
+  (February 2020).
+- Cadence: once per **fiscal period**, 13 per year (April → March).
+  `2627-P04` = period 4 of fiscal year 2026-2027.
+
+## Output (data contract)
+
+Top level: `source`, `fetchedAt`, `dataDate` (period code), `period`
+(`code`, `fiscalYear`, `number`), `previousPeriod`, `cached`,
+`cacheAgeMinutes`, `availablePeriods` (newest first), `missingRegions`,
+`province`, `regions[]`.
+
+Each region (and `province`):
+
+| Field | Meaning |
+|-------|---------|
+| `code` | RSS code (`RSS06`); `null` for `province` |
+| `name` / `slug` | Name from the methodology notes' RSS reference table / ASCII slug |
+| `overall` | All specialties combined, from the published `Total` column |
+| `specialties[]` | One waitlist per specialty (narrowed by `--specialty`) |
+| `previousPeriodTotal` | DERIVED: `overall.total` in `previousPeriod`; `null` if the region was absent |
+| `deltaFromPreviousPeriod` | DERIVED: `overall.total − previousPeriodTotal` |
+
+Each waitlist (`overall`, `specialties[]`):
+
+| Field | Meaning |
+|-------|---------|
+| `key` / `label` | Specialty key (or `total`) / French label |
+| `waiting.under6m` / `from6to12m` / `over12m` | Patients waiting, verbatim; `null` = not published |
+| `total` | DERIVED: sum of non-null bands |
+| `over6m` | DERIVED: `from6to12m + over12m` |
+| `pctOver6m` / `pctOver12m` | DERIVED: integer % of `total`; `null` when `total` is 0 |
+
+`province` is DERIVED by summing the regions present in the period. It ignores
+`--region` and honours `--specialty`. It **excludes `missingRegions`**, and its
+delta is `null` when the previous period covers a different set of regions.
+
+## Freshness & cache
+
+- The whole history (~4k rows, ~250 KB) is parsed once and cached as JSON
+  (`chirurgies-waitlist.json`) under `MSSS_URGENCES_CACHE_DIR` (default
+  `~/.cache/msss-urgences`). Every `--period` is then served from that one cache.
+- Default TTL 24h. The source changes about every 4 weeks, on no fixed day.
+  `--refresh` forces a fetch.
+- A corrupt cache file prints one warning and falls back to a live fetch.

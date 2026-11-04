@@ -21,3 +21,12 @@ export class ParseError extends Error {
     this.name = 'ParseError';
   }
 }
+
+/** A request the data cannot satisfy (e.g. an unknown period or specialty) → exit 2. */
+export class UsageError extends Error {
+  readonly exitCode = 2;
+  constructor(message: string) {
+    super(message);
+    this.name = 'UsageError';
+  }
+}

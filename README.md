@@ -34,7 +34,7 @@ During development you can skip the build and run the TypeScript directly:
 
 ### Link the skill
 
-The opinions/prose layer lives in three skills under `.agents/skills/`:
+The opinions/prose layer lives in four skills under `.agents/skills/`:
 
 - **`msss-urgences`** — generic ER: any ER or region ("how busy is Verdun?", "which
   Montréal hospital has the shortest wait?").
@@ -42,6 +42,8 @@ The opinions/prose layer lives in three skills under `.agents/skills/`:
   vs Montreal Children's), with hardcoded ranking rules.
 - **`msss-urgences-cliniques`** — daily clinic appointment availability, routing
   to primary care instead of the ER when capacity exists.
+- **`msss-urgences-chirurgies`** — elective-surgery waitlists by region,
+  specialty and wait time, with the caveats on what the numbers mean.
 
 Agents that follow the Agent Skills standard (Pi, Codex) discover `.agents/skills/`
 automatically after trusting the project once; Hermes uses
@@ -117,6 +119,49 @@ msss-urgences cliniques --region bas-saint-laurent --date 2026-08-19 --table
 msss-urgences cliniques --rls "Champlain" --json
 ```
 
+### `chirurgies` — surgical waitlist (each fiscal period)
+
+Patients waiting for an operating-room intervention, by region (RSS), specialty
+and time since the decision to operate (0–6 months, 6–12 months, over 1 year),
+from [`Chirurgie_ListeAttente.csv`](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente)
+(UTF-8/BOM, 13 updates a year, history since `1920-P12`).
+
+```bash
+msss-urgences chirurgies [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--region <name\|code>` | Region by name (accent-insensitive substring) or RSS code (`RSS06`, `06`, `6`) |
+| `--specialty <name>` | Specialties by name (accent-insensitive substring), e.g. `ortho` |
+| `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04` (default: latest in the source) |
+| `--refresh` | Force a fresh fetch |
+| `--ttl <minutes>` | Cache TTL in minutes (default 1440) |
+| `--json` | JSON output (default when piped) |
+| `--table` | Human-readable table (default on a TTY) |
+| `--fixture <path>` | Read a local CSV instead of the network (deterministic offline run) |
+| `-h, --help` | Show chirurgies help |
+
+```bash
+# Every region + the derived province total, latest period
+msss-urgences chirurgies --table
+
+# Orthopedic surgery in Montréal
+msss-urgences chirurgies --region montreal --specialty ortho --json
+
+# Capitale-Nationale in an earlier period (for a trend)
+msss-urgences chirurgies --region RSS03 --period 2627-P01 --json
+```
+
+Each region carries `overall` and per-specialty waitlists. Each has the verbatim
+`waiting.{under6m, from6to12m, over12m}` counts plus the derived `total`,
+`over6m`, `pctOver6m` and `pctOver12m`. Regions also get a derived
+`deltaFromPreviousPeriod`. `province` is a derived sum of the regions present.
+`missingRegions` lists the RSS regions with no rows in that period (RSS04 is
+absent from 2627-P02 onward), which the province total therefore excludes. A
+blank source cell is `null`, never `0`. The full contract is in
+[`.agents/skills/msss-urgences-chirurgies/references/cli-reference.md`](.agents/skills/msss-urgences-chirurgies/references/cli-reference.md).
+
 Exit codes: `0` success · `1` network/HTTP error · `2` page structure changed or bad usage.
 
 ## Output (data contract)
@@ -186,14 +231,18 @@ src/
     fetchCliniques.ts   # plain fetch() + UTF-8/BOM strip (cliniques)
     parseCliniques.ts   # daily clinic CSV -> Clinic[] (iface; csv-parse)
     cliniquesCache.ts   # parsed-slice cache (cliniques; daily TTL, graceful degrade)
+    parseChirurgies.ts  # surgical-waitlist CSV -> rows (header-validated; csv-parse)
+    chirurgiesCache.ts  # parsed-history cache (chirurgies; daily TTL, graceful degrade)
     errors.ts    # FetchError / ParseError -> exit codes
   tools/
     urgences.ts          # orchestrate fetch/cache/parse/derive/filter/assemble report
     cliniques.ts         # orchestrate fetch/cache/parse/filter/assemble clinics report
+    chirurgies.ts        # orchestrate fetch/cache/parse/filter/derive the waitlist report
   cli.ts         # arg parsing, multi-command dispatch, JSON/table output
 test/
   fixtures/urgences_nbpers.csv   # a real saved file -> deterministic urgences tests
   fixtures/rdvoffert_DOuv.csv    # a real saved file -> deterministic cliniques tests
+  fixtures/Chirurgie_ListeAttente.csv  # real file, periods 2627-P01..P04 -> chirurgies tests
   *.test.ts
 .agents/skills/msss-urgences/SKILL.md            # generic ER opinions/prose layer (agent skill)
 .agents/skills/msss-urgences/references/cli-reference.md    # on-demand CLI/contract reference
@@ -201,6 +250,8 @@ test/
 .agents/skills/msss-urgences-children/references/cli-reference.md  # pediatric CLI/contract reference
 .agents/skills/msss-urgences-cliniques/SKILL.md  # clinic-availability routing opinions/prose layer
 .agents/skills/msss-urgences-cliniques/references/cli-reference.md  # cliniques CLI/contract reference
+.agents/skills/msss-urgences-chirurgies/SKILL.md # surgical-waitlist interpretation layer
+.agents/skills/msss-urgences-chirurgies/references/cli-reference.md # chirurgies CLI/contract reference
 scripts/validate-skills.py   # Agent Skills spec conformance validator (frontmatter + structure + references)
 ```
 
@@ -241,7 +292,7 @@ skill. Planned additions, all from official MSSS open-data CSVs (no scraping):
 |------|---------|---------|--------|
 | `urgences` | [Fichier horaire de la situation à l'urgence](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly | ✅ shipped |
 | `cliniques` | [Portrait quotidien des rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | daily | ✅ shipped |
-| `chirurgies` | [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente) | monthly/fiscal period | 🔲 backlog |
+| `chirurgies` | [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente) | fiscal period (13/yr) | ✅ shipped |
 | `urgences-cumulatif` | [Fichier cumulatif des données des urgences](https://www.donneesquebec.ca/recherche/dataset/fichier-cumulatif-des-donnees-des-urgences) | fiscal period | 🔲 backlog (trends) |
 
 `cliniques` is the priority: it is the direct counterpart to `urgences`

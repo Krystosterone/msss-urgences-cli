@@ -15,6 +15,14 @@ const TIMEOUT_MS = 20_000;
  * I/O boundary only — no parsing, no caching.
  */
 export async function fetchCliniquesCsv(url = MSSS_CLINIQUES_URL): Promise<string> {
+  return fetchUtf8Csv(url);
+}
+
+/**
+ * GET a UTF-8 CSV (BOM optional) and return it decoded with the BOM stripped.
+ * Shared by the UTF-8 tools (`cliniques`, `chirurgies`); `urgences` is Latin-1.
+ */
+export async function fetchUtf8Csv(url: string): Promise<string> {
   let res: Response;
   try {
     res = await fetch(url, {
