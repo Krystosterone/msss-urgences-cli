@@ -1,0 +1,42 @@
+# Snapshots the MSSS open-data CSVs into archive/ and pushes them to main.
+# Setup and troubleshooting: docs/archive-job.md
+name: archive-msss
+
+on:
+  schedule:
+    # Every 15 minutes, off the top of the hour (GitHub delays or drops
+    # scheduled runs under load, worst at :00). MSSS publishes urgences once an
+    # hour (~:45), so four tries an hour make missing an hour unlikely; runs
+    # with no new data commit nothing.
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: archive-msss
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          # Full commit history (for the rebase) without every past version of
+          # the archived files; git fetches blobs on demand.
+          fetch-depth: 0
+          filter: blob:none
+          # If main's branch protection blocks the default token, see
+          # docs/archive-job.md ("Branch protection"): add a deploy key here.
+          # ssh-key: ${{ secrets.ARCHIVE_DEPLOY_KEY }}
+      - name: Mark this checkout as owned by the job
+        run: git config msss-archive.dedicated true
+      - name: Archive MSSS CSVs
+        env:
+          ARCHIVE_GIT_NAME: github-actions[bot]
+          ARCHIVE_GIT_EMAIL: 41898299+github-actions[bot]@users.noreply.github.com
+        run: bash scripts/archive-sources.sh

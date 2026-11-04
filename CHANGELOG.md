@@ -5,6 +5,14 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Add a scheduled raw-data archive: `scripts/archive-sources.sh`, run every 15
+  minutes by the `archive-msss` GitHub Actions workflow, commits the MSSS
+  `urgences` (hourly) and `urgences-cumulatif` (per fiscal period) CSVs to
+  `archive/` on `main`. Byte for byte (`.gitattributes` `-text`), only when
+  bytes change, rebased before each push, never force-pushed, and self-healing
+  after a failed run. `cliniques` and `chirurgies` aren't archived, since MSSS
+  ships their full history in the file. Setup: `docs/archive-job.md`; tests:
+  `test/archive.test.ts`.
 - Add a shared region registry (`src/core/regions.ts`) of the 18 RSS regions,
   used by every command's `--region`: RSS codes in any form (`6`, `06`,
   `RSS06`), names/slugs (accent-insensitive, `St`/`Ste` expanded), aliases

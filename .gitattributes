@@ -1,0 +1,6 @@
+# archive/ holds MSSS CSVs byte for byte, exactly as served (urgences is
+# Latin-1, the others UTF-8 with a BOM; all use CRLF line endings). -text turns
+# off every newline/encoding conversion git could apply on add or checkout
+# (core.autocrlf, eol), so the stored blob is the downloaded file. Diffs still
+# work. linguist-generated folds these files in GitHub diffs and stats.
+archive/** -text linguist-generated

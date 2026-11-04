@@ -13,6 +13,11 @@ publishes them, plus objective derived metrics. Opinions — rankings, "which
 hospital is better", prose summaries — live in the consumer (see
 [`.agents/skills/msss-urgences`](.agents/skills/msss-urgences/SKILL.md)), not here.
 
+The repo also keeps a **raw archive** of the MSSS files that MSSS itself
+overwrites (`urgences` hourly, `urgences-cumulatif` each fiscal period): a
+scheduled job commits each new version to [`archive/`](archive/README.md), byte
+for byte. See [Data archive](#data-archive-scheduled-job).
+
 ## Install & link
 
 ```bash
@@ -380,6 +385,10 @@ test/
 .agents/skills/msss-urgences-chirurgies/SKILL.md # surgical-waitlist interpretation layer
 .agents/skills/msss-urgences-chirurgies/references/cli-reference.md # chirurgies CLI/contract reference
 scripts/validate-skills.py   # Agent Skills spec conformance validator (frontmatter + structure + references)
+scripts/archive-sources.sh   # scheduled job: snapshot MSSS CSVs into archive/, commit + push to main
+.github/workflows/archive-msss.yml  # runs the archive job every 15 minutes (GitHub Actions)
+archive/                     # raw MSSS CSVs, byte for byte; git history = every version
+docs/archive-job.md          # archive job setup, credentials, branch protection, cron fallback
 ```
 
 Adding another tool means adding `src/tools/<name>.ts`, the matching
@@ -409,8 +418,39 @@ so they are fully deterministic and offline. The opt-in live smoke test
 early warning if MSSS changes their file. Set `MSSS_URGENCES_FIXTURE` to make
 the CLI itself read a local file instead of the network.
 
+`test/archive.test.ts` drives the archive job end to end against a throwaway
+bare repo, with `file://` sources (needs `bash`, `git` and `curl`; no network).
+
 Runtime dependencies: **`csv-parse`** only. Everything else (fetch, arg parsing
 via `node:util`, the test runner via `node:test`) is built into Node ≥ 18.
+
+## Data archive (scheduled job)
+
+MSSS overwrites the hourly `urgences` file every hour and keeps only the latest
+period in `urgences-cumulatif`, so their history is lost unless someone
+captures it. [`scripts/archive-sources.sh`](scripts/archive-sources.sh), run
+every 15 minutes by the
+[`archive-msss`](.github/workflows/archive-msss.yml) GitHub Actions workflow,
+downloads both files and commits them to [`archive/`](archive/README.md) on
+`main`:
+
+- **Byte for byte** as MSSS serves them: Latin-1 / UTF-8 with a BOM, CRLF.
+  [`.gitattributes`](.gitattributes) turns off git's newline conversion for
+  `archive/`.
+- **Only when the bytes change.** A run with no new data commits nothing, and
+  data commits touch only `archive/`.
+- **Rebased onto the latest `origin/main` before each push**, never
+  force-pushed. A failed fetch or push never leaves the checkout in a state that
+  blocks the next run.
+
+`cliniques` and `chirurgies` aren't archived: MSSS already ships their full
+history in the file itself. Setup, credentials, branch protection and running it
+from cron on another computer: [`docs/archive-job.md`](docs/archive-job.md).
+Reading past versions: [`archive/README.md`](archive/README.md).
+
+Because the bot commits to `main` up to every hour, a direct push from your
+machine may need a `git pull --rebase` first. To clone without the data history,
+use `git clone --filter=blob:none`.
 
 ## Roadmap
 

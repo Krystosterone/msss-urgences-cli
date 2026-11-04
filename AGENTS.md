@@ -56,6 +56,25 @@ See `.env.example`. Slots: `MSSS_URGENCES_CACHE_DIR` (default
 `~/.cache/msss-urgences`); `MSSS_URGENCES_BASELINE_FIXTURE` (local cumulative
 CSV for `urgences --baseline`, offline runs only). No secrets.
 
-## Cron / databases
+## Scheduled job / databases
 
-See `manifest.yaml`. No cron jobs, no databases in this repo.
+One scheduled job, no databases. `.github/workflows/archive-msss.yml` runs
+`scripts/archive-sources.sh` every 15 minutes (GitHub Actions; cron on another
+computer is the documented fallback). It downloads the `urgences` and
+`urgences-cumulatif` CSVs, stores them byte for byte in `archive/`, and commits
+and pushes to `main` only when bytes change. It rebases before pushing and never
+force-pushes. Setup and credentials: `docs/archive-job.md`. Consequences for
+agents:
+
+- `main` moves up to every hour. Before pushing to `main`, `git pull --rebase`.
+- Never edit, re-encode or reformat files under `archive/`. They must stay
+  byte-identical to what MSSS served (`.gitattributes` keeps git from
+  converting newlines). Don't add derived data there.
+- Code changes never go in `archive/`; data commits never touch anything else.
+- `git log -- . ':(exclude)archive/'` shows history without the data commits.
+- Test the job offline with `node --import tsx --test test/archive.test.ts`.
+  Don't run the script in a working copy: it resets the clone it runs in, and
+  refuses to unless `git config msss-archive.dedicated true`.
+
+`manifest.yaml` declares no cron jobs for install-repo.sh to install; the
+schedule lives in GitHub Actions.
