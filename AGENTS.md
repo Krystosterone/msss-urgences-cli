@@ -113,7 +113,7 @@ Setup and credentials: `docs/archive-job.md`. Consequences for agents:
 archive job runs on one designated computer, set up by hand
 (`docs/archive-job.md`), not on every install.
 
-## Docs and changelog
+## Docs
 
 - `README.md` is the front door, agents first: skill routing, how to call the
   CLI, a one-line-per-command overview, links. Don't put option tables, output
@@ -121,4 +121,5 @@ archive job runs on one designated computer, set up by hand
   (`src/cli.ts`), output contracts in the matching skill's
   `references/cli-reference.md`, archive/API operations in
   `docs/archive-job.md`, and anything the code already says, nowhere.
-- Record changes in `CHANGELOG.md`. There's no versioning policy.
+- No changelog and no versioning policy: the git history is the record of
+  changes.
