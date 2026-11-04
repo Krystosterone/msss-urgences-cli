@@ -22,6 +22,8 @@ do not ask the CLI to rank or judge.
 > with hardcoded ranking rules. For **clinic-availability** questions (whether
 > clinics have appointments today), use **`msss-urgences-cliniques`** — it
 > routes to primary care instead of the ER when capacity exists.
+> For **trends** (this fiscal year vs previous years: average stay, delay to
+> physician, 24h+ stretcher stays), use **`msss-urgences-cumulatif`**.
 > This generic skill is for every other ER question.
 
 ## 1. Get the data

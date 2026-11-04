@@ -26,7 +26,7 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 ## Source
 
-- Canonical URL: `https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/rdvoffert_DOuv.csv`
+- Canonical URL: `https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/rdvoffert_DOuv.csv`
 - Dataset page: [Portrait quotidien des rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique)
 - Encoding: UTF-8 **with BOM** (stripped by the CLI) — differs from `urgences`
   which is Latin-1.
