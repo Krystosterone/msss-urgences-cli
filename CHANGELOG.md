@@ -1,10 +1,11 @@
 # Changelog
 
-All notable changes to this project are documented here. This project adheres
-to [Semantic Versioning](https://semver.org).
+All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+- Drop Semantic Versioning: no versioning policy, and no rule to keep
+  `package.json`'s and the skills' `version` fields in sync.
 - Run the archive job from cron on a maintainer's computer instead of GitHub
   Actions: MSSS answers GitHub's runners with HTTP 403 (first Actions run,
   2026-11-04). `archive-msss.yml` is removed. The Pages deploy moves to its

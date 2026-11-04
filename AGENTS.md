@@ -113,7 +113,7 @@ Setup and credentials: `docs/archive-job.md`. Consequences for agents:
 archive job runs on one designated computer, set up by hand
 (`docs/archive-job.md`), not on every install.
 
-## Docs and versioning
+## Docs and changelog
 
 - `README.md` is the front door, agents first: skill routing, how to call the
   CLI, a one-line-per-command overview, links. Don't put option tables, output
@@ -121,5 +121,4 @@ archive job runs on one designated computer, set up by hand
   (`src/cli.ts`), output contracts in the matching skill's
   `references/cli-reference.md`, archive/API operations in
   `docs/archive-job.md`, and anything the code already says, nowhere.
-- Semantic Versioning; record changes in `CHANGELOG.md`. Keep `package.json`'s
-  `version` and the skills' frontmatter `version` in sync.
+- Record changes in `CHANGELOG.md`. There's no versioning policy.
