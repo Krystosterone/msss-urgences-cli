@@ -5,6 +5,8 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
+  config) and the `.gitignore` entry for generated `openspec-*` skills.
 - Add a shared region registry (`src/core/regions.ts`) of the 18 RSS regions,
   used by every command's `--region`: RSS codes in any form (`6`, `06`,
   `RSS06`), names/slugs (accent-insensitive, `St`/`Ste` expanded), aliases
