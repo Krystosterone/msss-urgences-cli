@@ -1,4 +1,0 @@
-schema: spec-driven
-created: 2026-08-23
-goal: Deterministic, cache-aware CLI that pulls Québec emergency-room data
-  directly from the MSSS hourly CSV, plus an agent skill on top

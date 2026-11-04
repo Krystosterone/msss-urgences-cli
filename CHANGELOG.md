@@ -5,6 +5,8 @@ to [Semantic Versioning](https://semver.org).
 
 ## [Unreleased]
 
+- Remove OpenSpec planning artefacts (`openspec/`: specs, changes, archive,
+  config) and the `.gitignore` entry for generated `openspec-*` skills.
 - Add a scheduled raw-data archive: `scripts/archive-sources.sh`, run every 15
   minutes by the `archive-msss` GitHub Actions workflow, commits the MSSS
   `urgences` (hourly) and `urgences-cumulatif` (per fiscal period) CSVs to
