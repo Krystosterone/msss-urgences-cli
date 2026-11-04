@@ -19,6 +19,8 @@ recommendation.
 > This skill is **specifically** for the children's-ER comparison. For any other
 > ER/region question, use the generic **`msss-urgences`** skill. For clinic
 > appointment availability, use **`msss-urgences-cliniques`**.
+> For how the two pediatric ERs have **trended** over fiscal years, use
+> **`msss-urgences-cumulatif`** (`--id 51222800,51223279 --history`).
 
 ## 1. Get the data
 

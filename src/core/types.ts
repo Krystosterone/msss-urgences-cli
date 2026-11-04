@@ -139,6 +139,184 @@ export interface CliniquesReport {
 }
 
 /**
+ * Aggregation level of a cumulative-file row. The source mixes facility rows
+ * (with a permit number) with three published aggregate rows (permit "."):
+ * "Total établissement", "Total régional" and "Total provincial".
+ */
+export type CumulatifLevel = 'facility' | 'establishment' | 'region' | 'province';
+
+/** Ordered levels (broadest first) for stable output and `--level` validation. */
+export const CUMULATIF_LEVELS = ['province', 'region', 'establishment', 'facility'] as const;
+
+/**
+ * Indicators for one row, verbatim from the cumulative CSV (cumulated from
+ * April 1 to the end of `period`). Durations are decimal HOURS. Blank cells → null.
+ */
+export interface CumulatifIndicators {
+  /** All ER visits (ambulatory + stretcher). */
+  total: {
+    /** `nb_visites_total` */
+    visits: number | null;
+    /** `nb_usagers_75ans_et_plus_total` */
+    patients75Plus: number | null;
+    /** `nb_usagers_sante_mentale_total` */
+    mentalHealth: number | null;
+    /** `dms_total` — mean length of stay, hours. */
+    dmsHours: number | null;
+    /** `nb_usagers_pec_total` — patients with a recorded prise en charge (PEC). */
+    pecCount: number | null;
+    /** `delai_pec_total` — mean delay to PEC (first physician assessment), hours. */
+    pecDelayHours: number | null;
+  };
+  /** Ambulatory (walk-in, no stretcher) visits. */
+  ambulatory: {
+    /** `nb_visites_ambulatoire` */
+    visits: number | null;
+    /** `nb_usagers_75ans_et_plus_amb` */
+    patients75Plus: number | null;
+    /** `nb_usagers_sante_mentale_amb` */
+    mentalHealth: number | null;
+    /** `dms_ambulatoire` — hours. */
+    dmsHours: number | null;
+    /** `nb_usagers_pec_ambulatoire` */
+    pecCount: number | null;
+    /** `delai_pec_ambulatoire` — hours. */
+    pecDelayHours: number | null;
+  };
+  /** Stretcher (civière) visits. */
+  stretcher: {
+    /** `nb_visites_sur_civiere` */
+    visits: number | null;
+    /** `nb_usagers_sur_civiere_plus_24h` */
+    over24h: number | null;
+    /** `nb_usagers_sur_civiere_plus_48h` */
+    over48h: number | null;
+    /** `dms_sur_civiere` — hours. */
+    dmsHours: number | null;
+    /** `nb_usagers_pec_sur_civiere` */
+    pecCount: number | null;
+    /** `delai_pec_sur_civiere` — hours. */
+    pecDelayHours: number | null;
+    /** `nb_usagers_75ans_et_plus_civ` */
+    patients75Plus: number | null;
+    /** `nb_usagers_sante_mentale_civ` */
+    mentalHealth: number | null;
+  };
+}
+
+/** DERIVED shares (percent, 1 decimal); null when the denominator is null/0. */
+export interface CumulatifDerived {
+  /** stretcher.over24h / stretcher.visits × 100 */
+  stretcherOver24hPct: number | null;
+  /** stretcher.over48h / stretcher.visits × 100 */
+  stretcherOver48hPct: number | null;
+  /** stretcher.visits / total.visits × 100 */
+  stretcherSharePct: number | null;
+}
+
+/** One parsed row of the cumulative CSV (one entity × one fiscal year). */
+export interface CumulatifRow {
+  level: CumulatifLevel;
+  /** MSSS permit number (`no_permis_installation`) for facilities; null for aggregates. */
+  id: string | null;
+  /**
+   * Stable cross-year identity: `facility:<permit>`, `establishment:<rss>:<name>`,
+   * `region:<rss>` or `province`. Used to line a row up with other fiscal years.
+   */
+  key: string;
+  /**
+   * Display name: `nom_installation` for facilities; the establishment name for
+   * establishment totals; the region name for region totals; "Total provincial".
+   */
+  name: string;
+  /** `nom_etablissement`; null for region/province totals. */
+  establishment: string | null;
+  /** `rss` code, e.g. "06" ("99" = province). */
+  regionCode: string;
+  /** `region` exactly as published (the source labels RSS 10 "Error"). */
+  regionLabel: string;
+  /** DERIVED: `regionLabel`, unless it is blank/a placeholder — then the official RSS name. */
+  regionName: string;
+  /** `annee` — fiscal year "YYYY-YYYY" (April 1 → March 31). */
+  fiscalYear: string;
+  /** `cumul_periode` — data cumulated from April 1 through this fiscal period (1–13). */
+  period: number;
+  indicators: CumulatifIndicators;
+}
+
+/** A fiscal-year snapshot of an entity (used for `previous` and `history`). */
+export interface CumulatifSnapshot {
+  fiscalYear: string;
+  period: number;
+  /** DERIVED for aggregates: facility rows under it that year; null for facilities. */
+  facilityCount: number | null;
+  indicators: CumulatifIndicators;
+  derived: CumulatifDerived;
+}
+
+/** DERIVED absolute differences (current − baseline); null when either side is null. */
+export interface CumulatifChange {
+  total: Record<keyof CumulatifIndicators['total'], number | null>;
+  ambulatory: Record<keyof CumulatifIndicators['ambulatory'], number | null>;
+  stretcher: Record<keyof CumulatifIndicators['stretcher'], number | null>;
+  /** Percentage-point differences of the derived shares. */
+  derived: Record<keyof CumulatifDerived, number | null>;
+  /** Difference in facilityCount (aggregates only) — non-zero means coverage changed. */
+  facilityCount: number | null;
+}
+
+/** One entity in the report: its selected-year values plus the year-over-year comparison. */
+export interface CumulatifEntry extends Omit<CumulatifRow, 'indicators'>, CumulatifSnapshot {
+  /** The same entity in the comparison fiscal year, or null when absent/not comparable. */
+  previous: CumulatifSnapshot | null;
+  /** DERIVED: selected minus `previous`; null when `previous` is null. */
+  change: CumulatifChange | null;
+  /** Every fiscal year present for this entity, oldest first — only with `--history`. */
+  history?: CumulatifSnapshot[];
+}
+
+/** Top-level report emitted by the `urgences-cumulatif` tool. */
+export interface UrgencesCumulatifReport {
+  /** Source URL the data was fetched from. */
+  source: string;
+  /** ISO-8601 timestamp stamped when this report was produced. */
+  fetchedAt: string;
+  /** True when served from the local cache, false on a live fetch. */
+  cached: boolean;
+  /** Cache-freshness: age of the served data in minutes. */
+  cacheAgeMinutes: number;
+  /** The fiscal year reported (requested, or the latest present). */
+  fiscalYear: string;
+  /** Latest fiscal period the selected year is cumulated through. */
+  period: number;
+  /** Baseline fiscal year for `previous`/`change`, or null when none is available. */
+  compareTo: string | null;
+  /** Distinct fiscal years present in the source, newest first. */
+  availableFiscalYears: string[];
+  /** Levels included in `entries`. */
+  levels: CumulatifLevel[];
+  entries: CumulatifEntry[];
+  /**
+   * Entities that match the filters and appear in other fiscal years but have
+   * no row in `fiscalYear` (e.g. facilities whose data is not yet validated
+   * for the current year). Their absence also lowers the aggregate totals.
+   */
+  missingFromFiscalYear: CumulatifMissing[];
+}
+
+/** An entity that matched the filters but has no row in the reported fiscal year. */
+export interface CumulatifMissing {
+  level: CumulatifLevel;
+  id: string | null;
+  key: string;
+  name: string;
+  regionCode: string;
+  regionName: string;
+  /** Fiscal years in which the entity does appear, newest first. */
+  fiscalYears: string[];
+}
+
+/**
  * Surgical-waitlist specialties, in source column order. `column` is the CSV
  * header as published in `Chirurgie_ListeAttente.csv`; `key` is the stable
  * contract key; `label` is the human (French) name.

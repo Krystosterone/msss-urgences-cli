@@ -33,7 +33,7 @@ error: `regions` comes back empty.
 
 ## Source
 
-- Canonical URL: `https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv`
+- Canonical URL: `https://msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv`
 - Dataset page: [Chirurgies — Portrait de la liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente)
 - Encoding: UTF-8 **with BOM**, comma-separated, CRLF.
 - Shape: one row per (`PeriodeAttente` × `Delais_d'attente` × `Region`), with one

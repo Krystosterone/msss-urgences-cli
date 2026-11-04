@@ -2,8 +2,8 @@
 
 ## Verified source facts (checked live 2026-11-04)
 
-- **URL:** `https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv`.
-  `www.` currently 301s to the bare `msss.gouv.qc.ca` host, and `fetch` follows it.
+- **URL:** `https://msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv`
+  (bare host, like every MSSS URL in `source.ts`; `www.` 301s here).
 - **Catalogue:** donneesquebec dataset `c41ca40b-ff3a-4d95-9613-b2571dcdeaba`,
   resource `7c83f4be-…` (DataStore active, mirrors the same columns), with
   `update_frequency: monthly`. In practice it updates each fiscal period, 13 per year.

@@ -1,9 +1,9 @@
 ## 1. Data layer
 
 - [x] 1.1 `src/core/source.ts` — `MSSS_CHIRURGIES_URL` + catalogue fallback
-- [x] 1.2 `src/core/fetchCliniques.ts` — extract shared `fetchUtf8Csv` (UTF-8, BOM strip); `cliniques` unchanged
+- [x] 1.2 Reuse the shared `fetchUtf8Csv` (`src/core/fetchUtf8.ts`) for the UTF-8/BOM download
 - [x] 1.3 `src/core/parseChirurgies.ts` — header-validated parse with PDF-name aliases; strict bands/codes/counts
-- [x] 1.4 `src/core/chirurgiesCache.ts` — whole-history parsed cache, 24h TTL, graceful degrade
+- [x] 1.4 `src/core/chirurgiesCache.ts` — whole-history parsed cache on the shared `jsonCache`, 24h TTL, graceful degrade
 - [x] 1.5 `src/core/types.ts` — specialties, wait bands, RSS reference table, report contract
 
 ## 2. CLI tool
@@ -21,7 +21,7 @@
 ## 4. Skill
 
 - [x] 4.1 `.agents/skills/msss-urgences-chirurgies/SKILL.md` + `references/cli-reference.md`; pointer from `msss-urgences`
-- [x] 4.2 `scripts/validate-skills.py` green across the four skills
+- [x] 4.2 `scripts/validate-skills.py` green across the five skills
 
 ## 5. Docs
 

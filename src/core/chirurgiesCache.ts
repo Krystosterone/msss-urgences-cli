@@ -1,6 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync, renameSync } from 'node:fs';
-import { join } from 'node:path';
-import { cacheDir, type CacheConfig } from './cache';
+import { readJsonCache, writeJsonCache, type CacheConfig } from './jsonCache';
 import type { ChirurgieRow } from './types';
 
 export type { CacheConfig };
@@ -12,78 +10,28 @@ export type { CacheConfig };
  */
 export const CHIRURGIES_DEFAULT_TTL_MINUTES = 24 * 60;
 
-function cacheFilePath(dir: string): string {
-  return join(dir, 'chirurgies-waitlist.json');
-}
+const CACHE_FILE = 'chirurgies-waitlist.json';
 
-/** The cached entry: every parsed row (the whole history is small) plus write time. */
-export interface ChirurgiesCacheEntry {
+/** The cached payload: every parsed row (the whole history is small) + periods. */
+export interface ChirurgiesPayload {
   rows: ChirurgieRow[];
   periods: string[];
-  storedAt: string; // ISO-8601 when this cache file was written
 }
 
-/** Emit a one-line warning to stderr when the cache is present-but-unusable. */
-function warnCache(reason: string): void {
-  try {
-    process.stderr.write(`msss-urgences: warning — ${reason}; using a live fetch instead\n`);
-  } catch {
-    /* never let logging break the CLI */
-  }
+function isPayload(p: unknown): p is ChirurgiesPayload {
+  const v = p as Partial<ChirurgiesPayload> | null;
+  return (
+    !!v && Array.isArray(v.rows) && Array.isArray(v.periods) && v.rows.length > 0 && v.periods.length > 0
+  );
 }
 
-/**
- * Read a fresh-enough parsed waitlist from the cache, else null. Corrupt or
- * unreadable cache files never throw — they degrade to a fresh fetch.
- */
-export function readChirurgiesCache(cfg: CacheConfig = {}): ChirurgiesCacheEntry | null {
-  let raw: string;
-  try {
-    raw = readFileSync(cacheFilePath(cacheDir(cfg)), 'utf8');
-  } catch {
-    return null; // no cache file yet — a clean miss
-  }
-  try {
-    const entry = JSON.parse(raw) as ChirurgiesCacheEntry;
-    if (
-      !Array.isArray(entry?.rows) ||
-      !Array.isArray(entry.periods) ||
-      entry.rows.length === 0 ||
-      entry.periods.length === 0 ||
-      typeof entry.storedAt !== 'string'
-    ) {
-      warnCache('corrupt cache entry');
-      return null;
-    }
-    const ageMinutes = (Date.now() - Date.parse(entry.storedAt)) / 60_000;
-    if (!Number.isFinite(ageMinutes)) {
-      warnCache('unreadable cache entry (invalid storedAt)');
-      return null;
-    }
-    if (cfg.refresh) return null;
-    if (ageMinutes > (cfg.ttlMinutes ?? CHIRURGIES_DEFAULT_TTL_MINUTES)) return null;
-    return entry;
-  } catch {
-    warnCache('unreadable cache file');
-    return null;
-  }
+/** Read a fresh-enough parsed waitlist, else null (corrupt cache → warning + miss). */
+export function readChirurgiesCache(cfg: CacheConfig = {}): (ChirurgiesPayload & { storedAt: string }) | null {
+  const entry = readJsonCache(CACHE_FILE, cfg, CHIRURGIES_DEFAULT_TTL_MINUTES, isPayload);
+  return entry ? { ...entry.payload, storedAt: entry.storedAt } : null;
 }
 
 /** Atomically write the parsed waitlist to the cache. Best-effort: never throws. */
 export function writeChirurgiesCache(rows: ChirurgieRow[], periods: string[], cfg: CacheConfig = {}): void {
-  try {
-    const dir = cacheDir(cfg);
-    mkdirSync(dir, { recursive: true });
-    const entry: ChirurgiesCacheEntry = { rows, periods, storedAt: new Date().toISOString() };
-    const file = cacheFilePath(dir);
-    const tmp = `${file}.tmp-${process.pid}`;
-    writeFileSync(tmp, JSON.stringify(entry));
-    try {
-      renameSync(tmp, file); // atomic replace
-    } catch {
-      writeFileSync(file, JSON.stringify(entry));
-    }
-  } catch {
-    /* best-effort */
-  }
+  writeJsonCache<ChirurgiesPayload>(CACHE_FILE, { rows, periods }, cfg);
 }

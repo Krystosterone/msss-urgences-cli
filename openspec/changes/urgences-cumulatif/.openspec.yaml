@@ -1,0 +1,5 @@
+schema: spec-driven
+created: 2026-11-04
+goal: Extend msss-urgences-cli with an urgences-cumulatif subcommand that
+  surfaces fiscal-year-to-date ER indicators and like-for-like year-over-year
+  trends so the skills can answer "is this ER getting better or worse?".

@@ -12,7 +12,7 @@ once per fiscal period. The README roadmap lists it as the next backlog tool.
 The `msss-urgences` CLI gains a `chirurgies` subcommand:
 
 - **Fetches** `Chirurgie_ListeAttente.csv` over plain HTTPS (no scraping), using
-  the same UTF-8/BOM decode as `cliniques` (now shared as `fetchUtf8Csv`).
+  the shared UTF-8/BOM fetcher (`fetchUtf8Csv`).
 - **Parses** the wide CSV (one row per period × wait band × region, one column
   per specialty) with header validation. The 2021 methodology-PDF spellings are
   accepted as column aliases.
@@ -45,8 +45,8 @@ lead with the long-wait share, compare by percentage, and state the limits.
 ## Impact
 
 - **Repo:** `src/core/{parseChirurgies,chirurgiesCache}.ts`,
-  `src/tools/chirurgies.ts`, a `cli.ts` dispatch branch, a `UsageError` in
-  `errors.ts`, and `fetchUtf8Csv` extracted in `fetchCliniques.ts`.
+  `src/tools/chirurgies.ts`, and a `cli.ts` dispatch branch. It reuses the shared
+  `fetchUtf8.ts`, `jsonCache.ts` and `UsageError`.
 - **Tests:** `test/fixtures/Chirurgie_ListeAttente.csv` (real file, sliced), plus
   `test/{parseChirurgies,chirurgies,chirurgiesLive}.test.ts`.
 - **Runtime deps:** unchanged (`csv-parse`; Node ≥ 18).

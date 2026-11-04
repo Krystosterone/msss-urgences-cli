@@ -3,7 +3,7 @@
  *
  *   0  success
  *   1  network / HTTP error (FetchError)
- *   2  structure changed or bad usage (ParseError)
+ *   2  structure changed or bad usage (ParseError / UsageError)
  */
 
 export class FetchError extends Error {
@@ -22,7 +22,7 @@ export class ParseError extends Error {
   }
 }
 
-/** A request the data cannot satisfy (e.g. an unknown period or specialty) → exit 2. */
+/** Bad usage detected after argument parsing (e.g. a fiscal year not in the source). */
 export class UsageError extends Error {
   readonly exitCode = 2;
   constructor(message: string) {

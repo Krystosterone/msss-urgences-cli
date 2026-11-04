@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises';
-import { fetchUtf8Csv } from '../core/fetchCliniques';
+import { fetchUtf8Csv } from '../core/fetchUtf8';
 import { parseChirurgies } from '../core/parseChirurgies';
 import { readChirurgiesCache, writeChirurgiesCache, type CacheConfig } from '../core/chirurgiesCache';
 import { slugify } from '../core/parse';
