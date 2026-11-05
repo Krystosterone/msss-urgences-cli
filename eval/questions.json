@@ -20,7 +20,12 @@
         "\\bperiod \\d+",
         "\\b\\d{4}-P\\d{2}\\b",
         "\\b20\\d\\d-(20)?\\d\\d\\b",
-        "\\b(January|February|March|April|May|June|July|August|September|October|November|December) (\\d{1,2}(–\\d{1,2})?, )?20\\d\\d\\b"
+        "\\b(January|February|March|April|May|June|July|August|September|October|November|December) (\\d{1,2}(–\\d{1,2})?, )?20\\d\\d\\b",
+        "\\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\\.? \\d{1,2}\\b",
+        "\\b(published|extracted|updated|as of|readings?|snapshot)\\b[^.\\n]{0,40}\\b\\d{1,2}:\\d{2}\\b",
+        "\\b\\d{1,2}:\\d{2}\\b[^.\\n]{0,15}\\b(this morning|today|tonight)\\b",
+        "\\bat \\d{1,2}:\\d{2}\\b",
+        "\\b\\d{1,2}:\\d{2}[–-]\\d{1,2}:\\d{2}\\b"
       ]
     }
   ],

@@ -381,6 +381,101 @@
           "notes": "Same reading as the skills answer, plus the past-day range."
         }
       }
+    },
+    "baseline-web": {
+      "description": "Second round (snapshot 2026-11-05T08-45): a fresh agent with web search and page access (curl; WebFetch stayed blocked), no repo, no CLI. It reached Index Santé, Québec.ca, Doctr and the MSSS CSVs. Q01 asked as 'for a Thursday morning'.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 1,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Current figures match the MSSS snapshot exactly; fiscal-year norms computed from the MSSS cumulative CSV. 'Typical' comes from Doctr, whose averaging window is undocumented."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Full side-by-side with Québec.ca's estimated non-priority waits. Calls the waiting count 'the closest live clue to the queue', which MSSS's own notes caution against."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Safety first and thorough red flags; 'posted waits are for non-priority cases and won't apply to your child'."
+        },
+        "Q04": {
+          "correct": 1,
+          "grounded": 1,
+          "fresh": 1,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Addresses, phone numbers and hours from undated Doctr listings, with 'call before you go'. Automated S7 flag dismissed: directory details, not data presented as current."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 1,
+          "fresh": 1,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Right call, red flags, 811. 'Would likely face a long wait' is a generic expectation."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 1,
+          "useful": 2,
+          "notes": "Quotes Québec.ca's official estimated non-priority waits per ER, which the MSSS open data doesn't carry. Ends with 'Best bet: the Jewish General, roughly 2 hours': a pick and a personal wait, attributed and caveated, so borderline rather than critical."
+        },
+        "Q07": {
+          "correct": 1,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Downloaded the MSSS cumulative CSV and got the same series as the CLI, but called 2026-2027 'worse than last year' without noticing it covers 17 Montréal ERs against 21."
+        },
+        "Q08": {
+          "correct": 1,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Longer history than the skills (back to 2020), from the MSSS CSV. Its 2026 Québec totals omit Mauricie et Centre-du-Québec without saying so, overstating the drop."
+        },
+        "Q09": {
+          "correct": 1,
+          "grounded": 1,
+          "fresh": 1,
+          "uncertain": 1,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Answers with Doctr's hour-of-day and weekday averages, which the archive can't match yet. Method and window undocumented, which it says."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same reading as the data: stretcher stay +33% and walk-in +34% against the year, plus Québec.ca's estimated wait."
+        }
+      }
     }
   }
 }
