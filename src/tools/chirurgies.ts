@@ -208,7 +208,7 @@ async function loadFresh(
   fixture: string | undefined,
   cache: CacheConfig,
 ): Promise<{ rows: ChirurgieRow[]; periods: string[] }> {
-  const fp = fixture ?? process.env.MSSS_URGENCES_FIXTURE;
+  const fp = fixture ?? process.env.QUEBEC_SANTE_FIXTURE;
   const text = fp ? await readFile(fp, 'utf8') : await fetchUtf8Csv(SOURCE_URL);
   const parsed = parseChirurgies(text);
   writeChirurgiesCache(parsed.rows, parsed.periods, cache);

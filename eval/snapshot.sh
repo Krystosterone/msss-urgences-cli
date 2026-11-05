@@ -23,15 +23,15 @@ git show "$rev:archive/urgences-cumulatif/Donnees_cumulatives_Urgence.csv" >"$tm
 git worktree add --quiet --detach "$tmp/wt" "$rev"
 npx tsx scripts/build-api.ts "$tmp/site" "$tmp/wt" 2>"$tmp/build-api.log"
 
-export MSSS_URGENCES_CACHE_DIR="$tmp/cache"
+export QUEBEC_SANTE_CACHE_DIR="$tmp/cache"
 cli() { node dist/cli.js "$@"; }
 H=(--fixture "$tmp/site/api/v1")
 C=(--fixture "$tmp/cumulatif.csv")
 
-MSSS_URGENCES_FIXTURE="$tmp/urgences.csv" \
+QUEBEC_SANTE_FIXTURE="$tmp/urgences.csv" \
   cli urgences --region montreal --baseline --baseline-fixture "$tmp/cumulatif.csv" --json \
   >"$out/urgences-montreal-baseline.json"
-MSSS_URGENCES_FIXTURE="$tmp/urgences.csv" cli urgences --json >"$out/urgences-all.json"
+QUEBEC_SANTE_FIXTURE="$tmp/urgences.csv" cli urgences --json >"$out/urgences-all.json"
 cli urgences-historique "${H[@]}" --id 51222800,51223279,51218097,12934659 --by hour --json \
   >"$out/historique-by-hour.json"
 cli urgences-cumulatif "${C[@]}" --level province,region --history --json >"$out/cumulatif-regions.json"

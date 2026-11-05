@@ -1,4 +1,4 @@
-# msss-urgences CLI reference
+# quebec-sante CLI reference
 
 Loaded on demand from SKILL.md when you need the exact command contract or a
 field meaning. Keep this file why-what — the skill body owns the opinions.
@@ -6,17 +6,17 @@ field meaning. Keep this file why-what — the skill body owns the opinions.
 ## Invocation
 
 ```bash
-msss-urgences urgences [options]
+quebec-sante urgences [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Filter to a region: name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `06`, `RSS06`). Same spellings in every command; list them with `msss-urgences regions` |
+| `--region <name\|code>` | Filter to a region: name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `06`, `RSS06`). Same spellings in every command; list them with `quebec-sante regions` |
 | `--id <n[,n...]>` | Filter to facility id(s) (MSSS permit number); repeatable or comma-separated. Explicit ids override `--available-only` |
 | `--search <text>` | Filter facilities by name (accent-insensitive substring) |
 | `--available-only` | Only facilities currently reporting live data |
 | `--baseline` | Join each facility with its fiscal-year-to-date values from the cumulative ER file (by permit number) — adds `baseline` / `vsBaseline` |
-| `--baseline-fixture <path>` | Read a local cumulative CSV for `--baseline` (offline; env `MSSS_URGENCES_BASELINE_FIXTURE` also works) |
+| `--baseline-fixture <path>` | Read a local cumulative CSV for `--baseline` (offline; env `QUEBEC_SANTE_BASELINE_FIXTURE` also works) |
 | `--refresh` | Force a fresh fetch, ignoring the local cache (both files with `--baseline`) |
 | `--ttl <minutes>` | Cache TTL in minutes (default 30) |
 | `--json` | JSON output (default when piped) |
@@ -101,7 +101,7 @@ returned, every `baseline` is null, exit code stays `0`.
 ## `urgences-historique` (history)
 
 ```bash
-msss-urgences urgences-historique [--region R] [--id N,...] [--search T]
+quebec-sante urgences-historique [--region R] [--id N,...] [--search T]
   [--days 28] [--by hour|weekday-hour|day] [--api URL] [--refresh] [--ttl 30]
   [--json|--table] [--fixture DIR]
 ```
@@ -109,7 +109,7 @@ msss-urgences urgences-historique [--region R] [--id N,...] [--search T]
 Reads the static history API built from the hourly snapshots archived in the
 repo (`archive/`), served by GitHub Pages at
 `https://krystosterone.github.io/quebec-sante-cli/api/v1` (override with
-`--api` or `MSSS_URGENCES_API_URL`). The window is the `--days` before the
+`--api` or `QUEBEC_SANTE_API_URL`). The window is the `--days` before the
 **latest archived snapshot**, not the wall clock. Every number is DERIVED from
 the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
@@ -154,9 +154,9 @@ the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 ## Regions
 
-`msss-urgences regions --json` lists the 18 RSS regions (`code`, `name`, `slug`,
+`quebec-sante regions --json` lists the 18 RSS regions (`code`, `name`, `slug`,
 `aliases`, and `datasetCodes` — how each dataset writes the code).
-`msss-urgences regions --region <input>` shows what an input resolves to, exit
+`quebec-sante regions --region <input>` shows what an input resolves to, exit
 `2` if it names no region or several (e.g. `mont`). Static, no network.
 
 ## Freshness & cache

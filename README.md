@@ -28,16 +28,16 @@ benchmark questions and the checks answers are graded against.
 
 | The question | Skill | Command it runs |
 |--------------|-------|-----------------|
-| How busy is this ER or region? How do ERs compare? When is it usually calmer? Is it worse than usual? | [`msss-urgences`](.agents/skills/msss-urgences/SKILL.md) | `urgences`, `urgences-historique` |
-| How do Sainte-Justine and the Montreal Children's compare right now? | [`msss-urgences-children`](.agents/skills/msss-urgences-children/SKILL.md) | `urgences --id 51222800,51223279` |
-| Which clinics near me usually offer appointments, and when? | [`msss-urgences-cliniques`](.agents/skills/msss-urgences-cliniques/SKILL.md) | `cliniques` |
-| How is this ER doing this fiscal year, compared with last year? | [`msss-urgences-cumulatif`](.agents/skills/msss-urgences-cumulatif/SKILL.md) | `urgences-cumulatif` |
-| How long are surgery waitlists? | [`msss-urgences-chirurgies`](.agents/skills/msss-urgences-chirurgies/SKILL.md) | `chirurgies` |
+| How busy is this ER or region? How do ERs compare? When is it usually calmer? Is it worse than usual? | [`quebec-sante-urgences`](.agents/skills/quebec-sante-urgences/SKILL.md) | `urgences`, `urgences-historique` |
+| How do Sainte-Justine and the Montreal Children's compare right now? | [`quebec-sante-urgences-children`](.agents/skills/quebec-sante-urgences-children/SKILL.md) | `urgences --id 51222800,51223279` |
+| Which clinics near me usually offer appointments, and when? | [`quebec-sante-cliniques`](.agents/skills/quebec-sante-cliniques/SKILL.md) | `cliniques` |
+| How is this ER doing this fiscal year, compared with last year? | [`quebec-sante-urgences-cumulatif`](.agents/skills/quebec-sante-urgences-cumulatif/SKILL.md) | `urgences-cumulatif` |
+| How long are surgery waitlists? | [`quebec-sante-chirurgies`](.agents/skills/quebec-sante-chirurgies/SKILL.md) | `chirurgies` |
 
 Tools that follow the Agent Skills standard (Pi, Codex) discover
 `.agents/skills/` once the project is trusted. For Hermes, run
 `hermes skills trust <repo>`. There's nothing to copy or symlink. The skills
-call the `msss-urgences` binary, so install and link it first (below).
+call the `quebec-sante` binary, so install and link it first (below).
 
 ### Calling the CLI
 
@@ -46,7 +46,7 @@ call the `msss-urgences` binary, so install and link it first (below).
   aren't.
 - **`--region`** takes an RSS code, a name or an alias (`06`, `montreal`,
   `mtl`) and means the same region in every command.
-  `msss-urgences regions --json` lists every accepted spelling.
+  `quebec-sante regions --json` lists every accepted spelling.
 - **Freshness:** `dataDate` is MSSS's own update time; `cached` and
   `cacheAgeMinutes` describe the local cache. `--refresh` forces a fetch.
 - **`null` means not published.** It never means zero. In `urgences`,
@@ -61,15 +61,15 @@ Node ≥ 18.
 ```bash
 npm install
 npm run build
-npm link                 # puts `msss-urgences` on PATH; undo: npm unlink -g quebec-sante-cli
-msss-urgences --version
+npm link                 # puts `quebec-sante` on PATH; undo: npm unlink -g quebec-sante-cli
+quebec-sante --version
 ```
 
 Without linking, run `node dist/cli.js` from the repo root.
 
 ## CLI
 
-`msss-urgences <command> --help` lists every option.
+`quebec-sante <command> --help` lists every option.
 
 | Command | What it returns | MSSS source | Updated |
 |---------|-----------------|-------------|---------|
@@ -81,15 +81,15 @@ Without linking, run `node dist/cli.js` from the repo root.
 | `regions` | The 18 health regions (RSS) and the spellings `--region` accepts. | built in | — |
 
 ```bash
-msss-urgences urgences --region montreal --table
-msss-urgences urgences --id 51222800 --baseline --json
-msss-urgences urgences-historique --id 51222800 --by weekday-hour --json
-msss-urgences cliniques --region montreal --json
-msss-urgences chirurgies --region montreal --specialty ortho --json
+quebec-sante urgences --region montreal --table
+quebec-sante urgences --id 51222800 --baseline --json
+quebec-sante urgences-historique --id 51222800 --by weekday-hour --json
+quebec-sante cliniques --region montreal --json
+quebec-sante chirurgies --region montreal --specialty ortho --json
 ```
 
-Results are cached in `~/.cache/msss-urgences` (override with
-`MSSS_URGENCES_CACHE_DIR`). The cache lasts 30 minutes for the hourly data and
+Results are cached in `~/.cache/quebec-sante` (override with
+`QUEBEC_SANTE_CACHE_DIR`). The cache lasts 30 minutes for the hourly data and
 24 hours for the rest.
 
 ## Data archive and history API

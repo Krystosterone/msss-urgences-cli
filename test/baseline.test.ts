@@ -119,8 +119,8 @@ test('CLI: --baseline --table adds DMS columns and a baseline footer', async () 
 
 test('CLI: --baseline --json emits baseline fields; env fixture is not used for the baseline', async () => {
   const { stdout, code } = await runCli(['urgences', '--id', '51222800', '--baseline', '--json'], {
-    MSSS_URGENCES_FIXTURE: URG,
-    MSSS_URGENCES_BASELINE_FIXTURE: CUM,
+    QUEBEC_SANTE_FIXTURE: URG,
+    QUEBEC_SANTE_BASELINE_FIXTURE: CUM,
   });
   assert.equal(code, 0);
   const r = JSON.parse(stdout);
@@ -133,7 +133,7 @@ function runCli(args: string[], env: Record<string, string> = {}): Promise<{ std
   return new Promise((resolve) => {
     const p: ChildProcess = spawn('node', ['--import', 'tsx', 'src/cli.ts', ...args], {
       cwd: process.cwd(),
-      env: { ...process.env, MSSS_URGENCES_CACHE_DIR: `${CACHE.dir}-cli-${Math.random()}`, ...env },
+      env: { ...process.env, QUEBEC_SANTE_CACHE_DIR: `${CACHE.dir}-cli-${Math.random()}`, ...env },
     });
     let stdout = '';
     let stderr = '';

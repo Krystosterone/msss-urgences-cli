@@ -59,12 +59,12 @@ test('refresh forces a miss even when cache is fresh', () => {
 });
 
 test('cacheDir honours the env var', () => {
-  const prev = process.env.MSSS_URGENCES_CACHE_DIR;
-  process.env.MSSS_URGENCES_CACHE_DIR = '/custom/cache';
+  const prev = process.env.QUEBEC_SANTE_CACHE_DIR;
+  process.env.QUEBEC_SANTE_CACHE_DIR = '/custom/cache';
   try {
     assert.equal(cacheDir(), '/custom/cache');
   } finally {
-    if (prev === undefined) delete process.env.MSSS_URGENCES_CACHE_DIR;
-    else process.env.MSSS_URGENCES_CACHE_DIR = prev;
+    if (prev === undefined) delete process.env.QUEBEC_SANTE_CACHE_DIR;
+    else process.env.QUEBEC_SANTE_CACHE_DIR = prev;
   }
 });

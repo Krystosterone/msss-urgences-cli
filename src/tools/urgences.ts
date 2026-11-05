@@ -77,7 +77,7 @@ export async function fetchUrgencesReport(opts: {
   /**
    * Join each facility with its fiscal-year-to-date values from the cumulative
    * ER file. `fixture` reads that file locally (default:
-   * $MSSS_URGENCES_BASELINE_FIXTURE, else the network). The cumulative file
+   * $QUEBEC_SANTE_BASELINE_FIXTURE, else the network). The cumulative file
    * keeps its own 24 h cache; `cache.refresh` refreshes it too.
    */
   baseline?: boolean | { fixture?: string };
@@ -111,7 +111,7 @@ async function withBaseline(
   try {
     const data = await loadCumulatifRows({
       cache,
-      fixture: fixture ?? process.env.MSSS_URGENCES_BASELINE_FIXTURE ?? null,
+      fixture: fixture ?? process.env.QUEBEC_SANTE_BASELINE_FIXTURE ?? null,
     });
     const fiscalYear = data.fiscalYears[0]!;
     const index = buildBaselineIndex(data.rows, fiscalYear);
@@ -128,7 +128,7 @@ async function withBaseline(
   } catch (err) {
     const joined = attachBaseline(report.regions, null);
     try {
-      process.stderr.write(`msss-urgences: warning — baseline unavailable (${(err as Error).message}); live data only\n`);
+      process.stderr.write(`quebec-sante: warning — baseline unavailable (${(err as Error).message}); live data only\n`);
     } catch {
       /* never let logging break the CLI */
     }
@@ -168,7 +168,7 @@ async function fetchLiveReport(opts: {
   }
 
   // Live fetch, or a deterministic fixture when provided / env-forced.
-  const fixture = opts.fixture ?? process.env.MSSS_URGENCES_FIXTURE;
+  const fixture = opts.fixture ?? process.env.QUEBEC_SANTE_FIXTURE;
   const text = fixture ? await readFile(fixture, 'utf8') : await fetchUrgencesCsv();
 
   const { regions, dataDate, extractedAt, province } = parseUrgences(text);

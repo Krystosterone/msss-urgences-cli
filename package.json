@@ -4,7 +4,7 @@
   "description": "Deterministic CLI for Québec health-services open data from MSSS: ER occupancy and history, clinic appointment availability, fiscal-year ER indicators and surgical waitlists",
   "type": "commonjs",
   "bin": {
-    "msss-urgences": "dist/cli.js"
+    "quebec-sante": "dist/cli.js"
   },
   "files": [
     "dist"

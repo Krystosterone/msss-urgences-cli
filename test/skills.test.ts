@@ -11,11 +11,11 @@ const read = (...p: string[]): string => readFileSync(join(ROOT, ...p), 'utf8');
 
 test('there are five skills, each with frontmatter, a CLI reference and the answer standard', () => {
   assert.deepEqual(SKILLS.sort(), [
-    'msss-urgences',
-    'msss-urgences-children',
-    'msss-urgences-chirurgies',
-    'msss-urgences-cliniques',
-    'msss-urgences-cumulatif',
+    'quebec-sante-chirurgies',
+    'quebec-sante-cliniques',
+    'quebec-sante-urgences',
+    'quebec-sante-urgences-children',
+    'quebec-sante-urgences-cumulatif',
   ]);
   for (const s of SKILLS) {
     const body = read(s, 'SKILL.md');
@@ -26,7 +26,7 @@ test('there are five skills, each with frontmatter, a CLI reference and the answ
 });
 
 test('every skill carries the same answer standard', () => {
-  const canonical = read('msss-urgences', 'references', 'answer-standard.md');
+  const canonical = read('quebec-sante-urgences', 'references', 'answer-standard.md');
   for (const s of SKILLS) {
     assert.equal(read(s, 'references', 'answer-standard.md'), canonical, `${s}: answer-standard.md differs`);
   }
@@ -66,12 +66,12 @@ test('no skill file contains a rule the M0 audit removed', () => {
 });
 
 test('ER skills put the emergency step and the triage caveat in the body', () => {
-  for (const s of ['msss-urgences', 'msss-urgences-children']) {
+  for (const s of ['quebec-sante-urgences', 'quebec-sante-urgences-children']) {
     const body = read(s, 'SKILL.md');
     assert.match(body, /911/, `${s}: 911`);
     assert.match(body, /triage/i, `${s}: triage`);
   }
-  const clinics = read('msss-urgences-cliniques', 'SKILL.md');
+  const clinics = read('quebec-sante-cliniques', 'SKILL.md');
   assert.match(clinics, /weekly/i, 'cliniques: says the file is weekly');
   assert.match(clinics, /never decides between a clinic and the ER/i, 'cliniques: no ER routing');
 });

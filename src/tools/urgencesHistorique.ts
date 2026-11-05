@@ -337,7 +337,7 @@ export async function fetchUrgencesHistoriqueReport(opts: {
   filters?: UrgencesHistoriqueFilters;
   days?: number;
   groupBy?: HistoryGroupBy;
-  /** API base URL (default $MSSS_URGENCES_API_URL, else the GitHub Pages API). */
+  /** API base URL (default $QUEBEC_SANTE_API_URL, else the GitHub Pages API). */
   api?: string;
   /** Read a local API directory (containing index.json) instead of the network. */
   fixture?: string;
@@ -346,8 +346,8 @@ export async function fetchUrgencesHistoriqueReport(opts: {
   const days = opts.days ?? HISTORY_DEFAULT_DAYS;
   const groupBy = opts.groupBy ?? 'hour';
   if (!Number.isInteger(days) || days < 1) throw new UsageError('--days must be a positive whole number');
-  const api = opts.api ?? process.env.MSSS_URGENCES_API_URL ?? DEFAULT_HISTORY_API_URL;
-  const fixtureDir = opts.fixture ?? process.env.MSSS_URGENCES_API_FIXTURE;
+  const api = opts.api ?? process.env.QUEBEC_SANTE_API_URL ?? DEFAULT_HISTORY_API_URL;
+  const fixtureDir = opts.fixture ?? process.env.QUEBEC_SANTE_API_FIXTURE;
   const cache = opts.cache ?? {};
   const ttl = cache.ttlMinutes ?? HISTORY_DEFAULT_TTL_MINUTES;
   const load: LoadOpts = { api, fixtureDir, cache };

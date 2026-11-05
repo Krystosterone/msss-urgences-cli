@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { homedir } from 'node:os';
 
 export interface CacheConfig {
-  /** Cache directory. Defaults to $MSSS_URGENCES_CACHE_DIR or ~/.cache/msss-urgences. */
+  /** Cache directory. Defaults to $QUEBEC_SANTE_CACHE_DIR or ~/.cache/quebec-sante. */
   dir?: string;
   /** Max age in minutes before a cached entry is treated as stale. */
   ttlMinutes?: number;
@@ -19,7 +19,7 @@ export interface JsonCacheEntry<T> {
 
 /** Resolve the cache directory from env or config (shared by every tool). */
 export function cacheDir(cfg: CacheConfig = {}): string {
-  return cfg.dir ?? process.env.MSSS_URGENCES_CACHE_DIR ?? join(homedir(), '.cache', 'msss-urgences');
+  return cfg.dir ?? process.env.QUEBEC_SANTE_CACHE_DIR ?? join(homedir(), '.cache', 'quebec-sante');
 }
 
 /**
@@ -85,7 +85,7 @@ export function writeJsonCache<T>(file: string, payload: T, cfg: CacheConfig = {
 
 function warnCache(reason: string): void {
   try {
-    process.stderr.write(`msss-urgences: warning — ${reason}; using a live fetch instead\n`);
+    process.stderr.write(`quebec-sante: warning — ${reason}; using a live fetch instead\n`);
   } catch {
     /* never let logging break the CLI */
   }

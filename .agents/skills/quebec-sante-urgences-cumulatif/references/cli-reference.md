@@ -1,4 +1,4 @@
-# msss-urgences urgences-cumulatif CLI reference
+# quebec-sante urgences-cumulatif CLI reference
 
 Loaded on demand from SKILL.md when you need the exact command contract or a
 field meaning. The skill body owns the interpretation.
@@ -6,12 +6,12 @@ field meaning. The skill body owns the interpretation.
 ## Invocation
 
 ```bash
-msss-urgences urgences-cumulatif [options]
+quebec-sante urgences-cumulatif [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `6`, `06`, `RSS06`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`msss-urgences regions` lists them) |
+| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `mtl`, `6`, `06`, `RSS06`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`quebec-sante regions` lists them) |
 | `--id <n[,n...]>` | Facility permit number(s); repeatable or comma-separated (facility rows only) |
 | `--search <text>` | Entry name, accent-insensitive substring (facility, establishment or region name per level) |
 | `--year <YYYY-YYYY>` | Fiscal year to report; default = latest in the source |
@@ -79,6 +79,6 @@ each establishment total followed by its facilities.
 ## Freshness & cache
 
 - The parsed rows (all years) are cached as `urgences-cumulatif-rows.json` under
-  `MSSS_URGENCES_CACHE_DIR` (default `~/.cache/msss-urgences`).
+  `QUEBEC_SANTE_CACHE_DIR` (default `~/.cache/quebec-sante`).
 - Default TTL 24 h — the file changes every ~4 weeks, so a new period is picked
   up within a day of publication; `--refresh` forces a fetch.

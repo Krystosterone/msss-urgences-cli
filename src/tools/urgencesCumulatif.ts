@@ -121,7 +121,7 @@ export async function fetchUrgencesCumulatifReport(opts: {
 
   const { rows, fiscalYears, cached, cacheAgeMinutes } = await loadCumulatifRows({
     cache,
-    fixture: opts.fixture ?? process.env.MSSS_URGENCES_FIXTURE ?? null,
+    fixture: opts.fixture ?? process.env.QUEBEC_SANTE_FIXTURE ?? null,
   });
 
   const fiscalYear = filters.year ?? fiscalYears[0]!;
