@@ -69,8 +69,9 @@ export const RSS_NAMES: Readonly<Record<string, string>> = {
 
 const PLACEHOLDER_LABELS = new Set(['', 'error', 'erreur', '.', '--']);
 
+/** Collapse whitespace, trim, and compose accents (NFC), as the other parsers do. */
 function clean(text: string | undefined): string {
-  return (text ?? '').replace(/\s+/g, ' ').trim();
+  return (text ?? '').normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /** Parse a numeric cell; blank / "--" / "." → null. */

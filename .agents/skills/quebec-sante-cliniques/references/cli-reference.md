@@ -55,7 +55,7 @@ Each `clinic`:
 | `regionCode` / `regionName` | RTS region code / display name |
 | `rssCode` | DERIVED: the two-digit RSS region the RTS belongs to (`061` → `06`) — the same code as `urgences` `regionCode`, for joining |
 | `rlsCode` / `rlsName` | Local service network (RLS) code / name |
-| `name` | Clinic name (`clinique_nom_groupe`), verbatim. MSSS mixes composed and decomposed accents (`médicale` can arrive as `me` + U+0301): match names with `--search`, which normalizes, or compare in NFC |
+| `name` | Clinic name (`clinique_nom_groupe`), verbatim except that accents are composed (Unicode NFC): MSSS mixes composed and decomposed forms (`médicale` can arrive as `me` + U+0301), so names compare and count as plain text. `--search` also ignores accents |
 | `professionGroup` | `Médecin` (physicians and residents) / `Infirmière` (nurses and specialized nurse practitioners) |
 | `slots.6h_9h … slots.21h_6h` | Appointments offered per band of scheduled time (`null` = no offers) |
 | `totalOffered` | DERIVED: sum of non-null slots across all bands |
