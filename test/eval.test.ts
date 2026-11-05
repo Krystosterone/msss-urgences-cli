@@ -75,9 +75,10 @@ test('detectors catch the pre-M0 phrasings and spare their negations', () => {
   assert.deepEqual(codes("These counts don't predict how long you'd wait."), []);
   assert.deepEqual(codes('These are appointments offered a week ago, not openings now.'), []);
   assert.deepEqual(codes("No one can tell you which ER will see you fastest."), []);
+  assert.deepEqual(codes("An available appointment wouldn't mean you can skip the ER."), []);
 });
 
-for (const system of ['skills', 'skills-independent', 'skills-run2']) {
+for (const system of loadQuestions().mustPass) {
   test(`the M0 ${system} answers: ten answers, every claim holds, zero critical failures`, () => {
     const { grades, passed, strict } = gradeSystem(join('eval', 'answers', system));
     assert.equal(strict, true);
