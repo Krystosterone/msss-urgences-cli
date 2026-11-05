@@ -1,6 +1,6 @@
 {
   "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/Releve_horaire_urgences_7jours_nbpers.csv",
-  "fetchedAt": "2026-11-05T14:10:51.317Z",
+  "fetchedAt": "2026-11-05T14:35:57.008Z",
   "dataDate": "2026-11-05T08:45",
   "extractedAt": "2026-11-05T08:00",
   "cached": false,
@@ -674,9 +674,35 @@
           "vsBaseline": null
         }
       ],
-      "averageOccupancyPct": 152
+      "averageOccupancyPct": 152,
+      "total": {
+        "stretchersFunctional": 473,
+        "stretchersOccupied": 763,
+        "over24h": 272,
+        "over48h": 122,
+        "totalPresent": 1073,
+        "waitingForCare": 236,
+        "dmsStretcher": 24.7766631578947,
+        "dmsAmbulatory": 7.05720051249199,
+        "dmsStretcherDisplay": "24:46",
+        "dmsAmbulatoryDisplay": "7:03",
+        "occupancyPct": 161
+      }
     }
   ],
+  "province": {
+    "stretchersFunctional": 1763,
+    "stretchersOccupied": 2288,
+    "over24h": 580,
+    "over48h": 188,
+    "totalPresent": 3633,
+    "waitingForCare": 1032,
+    "dmsStretcher": 21.2207724676886,
+    "dmsAmbulatory": 5.91013278253171,
+    "dmsStretcherDisplay": "21:13",
+    "dmsAmbulatoryDisplay": "5:54",
+    "occupancyPct": 130
+  },
   "baseline": {
     "status": "ok",
     "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/Donnees_cumulatives_Urgence.csv",

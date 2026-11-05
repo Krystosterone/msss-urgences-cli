@@ -1,6 +1,6 @@
 {
   "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/Releve_horaire_urgences_7jours_nbpers.csv",
-  "fetchedAt": "2026-11-05T14:10:51.432Z",
+  "fetchedAt": "2026-11-05T14:35:57.139Z",
   "dataDate": "2026-11-05T08:45",
   "extractedAt": "2026-11-05T08:00",
   "cached": true,
@@ -164,7 +164,20 @@
           "deltaFromRegionAvgPct": -68
         }
       ],
-      "averageOccupancyPct": 68
+      "averageOccupancyPct": 68,
+      "total": {
+        "stretchersFunctional": 52,
+        "stretchersOccupied": 43,
+        "over24h": 3,
+        "over48h": 1,
+        "totalPresent": 84,
+        "waitingForCare": 31,
+        "dmsStretcher": 8.61747252747252,
+        "dmsAmbulatory": 3.6207619047619,
+        "dmsStretcherDisplay": "8:37",
+        "dmsAmbulatoryDisplay": "3:37",
+        "occupancyPct": 83
+      }
     },
     {
       "name": "Saguenay-Lac-Saint-Jean",
@@ -286,7 +299,20 @@
           "deltaFromRegionAvgPct": 15
         }
       ],
-      "averageOccupancyPct": 70
+      "averageOccupancyPct": 70,
+      "total": {
+        "stretchersFunctional": 104,
+        "stretchersOccupied": 81,
+        "over24h": 3,
+        "over48h": 0,
+        "totalPresent": 144,
+        "waitingForCare": 46,
+        "dmsStretcher": 13.7444705882353,
+        "dmsAmbulatory": 4.55973474801061,
+        "dmsStretcherDisplay": "13:44",
+        "dmsAmbulatoryDisplay": "4:33",
+        "occupancyPct": 78
+      }
     },
     {
       "name": "Capitale-Nationale",
@@ -522,7 +548,20 @@
           "deltaFromRegionAvgPct": -64
         }
       ],
-      "averageOccupancyPct": 64
+      "averageOccupancyPct": 64,
+      "total": {
+        "stretchersFunctional": 218,
+        "stretchersOccupied": 208,
+        "over24h": 28,
+        "over48h": 6,
+        "totalPresent": 335,
+        "waitingForCare": 64,
+        "dmsStretcher": 14.8605034324942,
+        "dmsAmbulatory": 4.17230964467005,
+        "dmsStretcherDisplay": "14:51",
+        "dmsAmbulatoryDisplay": "4:10",
+        "occupancyPct": 95
+      }
     },
     {
       "name": "Mauricie et Centre-du-Québec",
@@ -682,7 +721,20 @@
           "deltaFromRegionAvgPct": null
         }
       ],
-      "averageOccupancyPct": null
+      "averageOccupancyPct": null,
+      "total": {
+        "stretchersFunctional": null,
+        "stretchersOccupied": null,
+        "over24h": null,
+        "over48h": null,
+        "totalPresent": null,
+        "waitingForCare": null,
+        "dmsStretcher": null,
+        "dmsAmbulatory": null,
+        "dmsStretcherDisplay": null,
+        "dmsAmbulatoryDisplay": null,
+        "occupancyPct": null
+      }
     },
     {
       "name": "Estrie",
@@ -842,7 +894,20 @@
           "deltaFromRegionAvgPct": -90
         }
       ],
-      "averageOccupancyPct": 90
+      "averageOccupancyPct": 90,
+      "total": {
+        "stretchersFunctional": 145,
+        "stretchersOccupied": 167,
+        "over24h": 32,
+        "over48h": 3,
+        "totalPresent": 279,
+        "waitingForCare": 101,
+        "dmsStretcher": 16.743164556962,
+        "dmsAmbulatory": 6.53615384615384,
+        "dmsStretcherDisplay": "16:44",
+        "dmsAmbulatoryDisplay": "6:32",
+        "occupancyPct": 115
+      }
     },
     {
       "name": "Montréal",
@@ -1249,7 +1314,20 @@
           "deltaFromRegionAvgPct": null
         }
       ],
-      "averageOccupancyPct": 152
+      "averageOccupancyPct": 152,
+      "total": {
+        "stretchersFunctional": 473,
+        "stretchersOccupied": 763,
+        "over24h": 272,
+        "over48h": 122,
+        "totalPresent": 1073,
+        "waitingForCare": 236,
+        "dmsStretcher": 24.7766631578947,
+        "dmsAmbulatory": 7.05720051249199,
+        "dmsStretcherDisplay": "24:46",
+        "dmsAmbulatoryDisplay": "7:03",
+        "occupancyPct": 161
+      }
     },
     {
       "name": "Outaouais",
@@ -1409,7 +1487,20 @@
           "deltaFromRegionAvgPct": -88
         }
       ],
-      "averageOccupancyPct": 88
+      "averageOccupancyPct": 88,
+      "total": {
+        "stretchersFunctional": 83,
+        "stretchersOccupied": 116,
+        "over24h": 24,
+        "over48h": 5,
+        "totalPresent": 205,
+        "waitingForCare": 95,
+        "dmsStretcher": 19.1554929577464,
+        "dmsAmbulatory": 6.35024767801857,
+        "dmsStretcherDisplay": "19:09",
+        "dmsAmbulatoryDisplay": "6:21",
+        "occupancyPct": 140
+      }
     },
     {
       "name": "Abitibi-Témiscamingue",
@@ -1531,7 +1622,20 @@
           "deltaFromRegionAvgPct": 52
         }
       ],
-      "averageOccupancyPct": 68
+      "averageOccupancyPct": 68,
+      "total": {
+        "stretchersFunctional": 37,
+        "stretchersOccupied": 29,
+        "over24h": 1,
+        "over48h": 0,
+        "totalPresent": 80,
+        "waitingForCare": 36,
+        "dmsStretcher": 13.5509722222222,
+        "dmsAmbulatory": 5.55198412698412,
+        "dmsStretcherDisplay": "13:33",
+        "dmsAmbulatoryDisplay": "5:33",
+        "occupancyPct": 78
+      }
     },
     {
       "name": "Côte-Nord",
@@ -1691,7 +1795,20 @@
           "deltaFromRegionAvgPct": -88
         }
       ],
-      "averageOccupancyPct": 88
+      "averageOccupancyPct": 88,
+      "total": {
+        "stretchersFunctional": 41,
+        "stretchersOccupied": 45,
+        "over24h": 18,
+        "over48h": 11,
+        "totalPresent": 85,
+        "waitingForCare": 28,
+        "dmsStretcher": 13.6120895522388,
+        "dmsAmbulatory": 5.19368421052631,
+        "dmsStretcherDisplay": "13:36",
+        "dmsAmbulatoryDisplay": "5:11",
+        "occupancyPct": 110
+      }
     },
     {
       "name": "Nord-du-Québec",
@@ -1794,7 +1911,20 @@
           "deltaFromRegionAvgPct": -37
         }
       ],
-      "averageOccupancyPct": 37
+      "averageOccupancyPct": 37,
+      "total": {
+        "stretchersFunctional": 11,
+        "stretchersOccupied": 6,
+        "over24h": 0,
+        "over48h": 0,
+        "totalPresent": 12,
+        "waitingForCare": 1,
+        "dmsStretcher": 20.4436363636363,
+        "dmsAmbulatory": 1.6140625,
+        "dmsStretcherDisplay": "20:26",
+        "dmsAmbulatoryDisplay": "1:36",
+        "occupancyPct": 55
+      }
     },
     {
       "name": "Gaspésie-Îles-de-la-Madeleine",
@@ -1954,7 +2084,20 @@
           "deltaFromRegionAvgPct": 32
         }
       ],
-      "averageOccupancyPct": 51
+      "averageOccupancyPct": 51,
+      "total": {
+        "stretchersFunctional": 44,
+        "stretchersOccupied": 28,
+        "over24h": 6,
+        "over48h": 2,
+        "totalPresent": 57,
+        "waitingForCare": 15,
+        "dmsStretcher": 10.9454385964912,
+        "dmsAmbulatory": 3.60247524752475,
+        "dmsStretcherDisplay": "10:56",
+        "dmsAmbulatoryDisplay": "3:36",
+        "occupancyPct": 64
+      }
     },
     {
       "name": "Chaudière-Appalaches",
@@ -2057,7 +2200,20 @@
           "deltaFromRegionAvgPct": 10
         }
       ],
-      "averageOccupancyPct": 143
+      "averageOccupancyPct": 143,
+      "total": {
+        "stretchersFunctional": 89,
+        "stretchersOccupied": 133,
+        "over24h": 26,
+        "over48h": 6,
+        "totalPresent": 204,
+        "waitingForCare": 43,
+        "dmsStretcher": 20.5292356687898,
+        "dmsAmbulatory": 4.3695238095238,
+        "dmsStretcherDisplay": "20:31",
+        "dmsAmbulatoryDisplay": "4:22",
+        "occupancyPct": 149
+      }
     },
     {
       "name": "Laval",
@@ -2084,7 +2240,20 @@
           "deltaFromRegionAvgPct": 0
         }
       ],
-      "averageOccupancyPct": 178
+      "averageOccupancyPct": 178,
+      "total": {
+        "stretchersFunctional": 49,
+        "stretchersOccupied": 87,
+        "over24h": 15,
+        "over48h": 1,
+        "totalPresent": 139,
+        "waitingForCare": 43,
+        "dmsStretcher": 21.95,
+        "dmsAmbulatory": 5.49,
+        "dmsStretcherDisplay": "21:57",
+        "dmsAmbulatoryDisplay": "5:29",
+        "occupancyPct": 178
+      }
     },
     {
       "name": "Lanaudière",
@@ -2130,7 +2299,20 @@
           "deltaFromRegionAvgPct": 17
         }
       ],
-      "averageOccupancyPct": 126
+      "averageOccupancyPct": 126,
+      "total": {
+        "stretchersFunctional": 89,
+        "stretchersOccupied": 111,
+        "over24h": 20,
+        "over48h": 1,
+        "totalPresent": 196,
+        "waitingForCare": 68,
+        "dmsStretcher": 17.3594078947368,
+        "dmsAmbulatory": 6.115,
+        "dmsStretcherDisplay": "17:21",
+        "dmsAmbulatoryDisplay": "6:06",
+        "occupancyPct": 125
+      }
     },
     {
       "name": "Laurentides",
@@ -2252,7 +2434,20 @@
           "deltaFromRegionAvgPct": -11
         }
       ],
-      "averageOccupancyPct": 150
+      "averageOccupancyPct": 150,
+      "total": {
+        "stretchersFunctional": 121,
+        "stretchersOccupied": 175,
+        "over24h": 35,
+        "over48h": 3,
+        "totalPresent": 258,
+        "waitingForCare": 67,
+        "dmsStretcher": 25.9866233766233,
+        "dmsAmbulatory": 7.10595744680851,
+        "dmsStretcherDisplay": "25:59",
+        "dmsAmbulatoryDisplay": "7:06",
+        "occupancyPct": 145
+      }
     },
     {
       "name": "Montérégie",
@@ -2412,7 +2607,33 @@
           "deltaFromRegionAvgPct": -3
         }
       ],
-      "averageOccupancyPct": 133
+      "averageOccupancyPct": 133,
+      "total": {
+        "stretchersFunctional": 207,
+        "stretchersOccupied": 296,
+        "over24h": 97,
+        "over48h": 27,
+        "totalPresent": 482,
+        "waitingForCare": 158,
+        "dmsStretcher": 23.7287865168539,
+        "dmsAmbulatory": 4.90689167974882,
+        "dmsStretcherDisplay": "23:43",
+        "dmsAmbulatoryDisplay": "4:54",
+        "occupancyPct": 143
+      }
     }
-  ]
+  ],
+  "province": {
+    "stretchersFunctional": 1763,
+    "stretchersOccupied": 2288,
+    "over24h": 580,
+    "over48h": 188,
+    "totalPresent": 3633,
+    "waitingForCare": 1032,
+    "dmsStretcher": 21.2207724676886,
+    "dmsAmbulatory": 5.91013278253171,
+    "dmsStretcherDisplay": "21:13",
+    "dmsAmbulatoryDisplay": "5:54",
+    "occupancyPct": 130
+  }
 }
