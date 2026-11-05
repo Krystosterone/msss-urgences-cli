@@ -86,7 +86,7 @@ aren't prevented). No Node needed.
 **One-time setup** (a dedicated clone, which the job resets):
 
 ```bash
-git clone git@github.com:Krystosterone/msss-urgences-cli.git ~/msss-archive
+git clone git@github.com:Krystosterone/quebec-sante-cli.git ~/msss-archive
 cd ~/msss-archive
 git config core.sshCommand "ssh -i ~/.ssh/msss_archive_key -o IdentitiesOnly=yes"
 git config msss-archive.dedicated true
@@ -94,7 +94,7 @@ bash scripts/archive-sources.sh     # first run: commits both CSVs, pushes
 ```
 
 That first push triggers `pages.yml`, which publishes the history API at
-`https://krystosterone.github.io/msss-urgences-cli/`.
+`https://krystosterone.github.io/quebec-sante-cli/`.
 
 **Schedule line** (`crontab -e`; the job logs in UTC, so cron's time zone
 doesn't matter):

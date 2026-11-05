@@ -3,7 +3,7 @@
  * archived snapshots of the hourly ER CSV into monthly documents.
  *
  * Layout, served from GitHub Pages under <base> (e.g.
- * https://krystosterone.github.io/msss-urgences-cli/api/v1):
+ * https://krystosterone.github.io/quebec-sante-cli/api/v1):
  *
  *   <base>/index.json                  HistoryIndex: what exists
  *   <base>/urgences/<YYYY-MM>.json     UrgencesHistoryMonth: every snapshot of a month
@@ -18,7 +18,7 @@ import { MSSS_URGENCES_URL } from './source';
 export const HISTORY_SCHEMA = 1;
 
 /** Default public API base (GitHub Pages of this repo). Override with MSSS_URGENCES_API_URL or --api. */
-export const DEFAULT_HISTORY_API_URL = 'https://krystosterone.github.io/msss-urgences-cli/api/v1';
+export const DEFAULT_HISTORY_API_URL = 'https://krystosterone.github.io/quebec-sante-cli/api/v1';
 
 /** Per-snapshot values, in this order (verbatim from the CSV; null when blank). */
 export const HISTORY_FIELDS = [

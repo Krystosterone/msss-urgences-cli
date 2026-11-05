@@ -119,7 +119,7 @@ async function fetchJson(url: string): Promise<unknown> {
   let res: Response;
   try {
     res = await fetch(url, {
-      headers: { 'user-agent': 'msss-urgences-cli (+open-data; history API client)' },
+      headers: { 'user-agent': 'quebec-sante-cli (+open-data; history API client)' },
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
   } catch (err) {

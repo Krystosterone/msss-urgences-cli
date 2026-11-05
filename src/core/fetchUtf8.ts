@@ -14,7 +14,7 @@ export async function fetchUtf8Csv(url: string): Promise<string> {
   let res: Response;
   try {
     res = await fetch(url, {
-      headers: { 'user-agent': 'msss-urgences-cli/0.1 (+open-data; deterministic CLI)' },
+      headers: { 'user-agent': 'quebec-sante-cli/0.1 (+open-data; deterministic CLI)' },
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
   } catch (err) {

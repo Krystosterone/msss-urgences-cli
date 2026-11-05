@@ -66,7 +66,7 @@ const LANDING = (index: HistoryIndex) => `<!doctype html>
 <body>
 <h1>MSSS urgences history API</h1>
 <p>Static JSON built from the hourly snapshots of the MSSS emergency-room file
-archived in <a href="https://github.com/Krystosterone/msss-urgences-cli/tree/main/archive">msss-urgences-cli/archive</a>.
+archived in <a href="https://github.com/Krystosterone/quebec-sante-cli/tree/main/archive">quebec-sante-cli/archive</a>.
 Used by <code>msss-urgences urgences-historique</code>.</p>
 <ul>
   <li><a href="api/v1/index.json"><code>api/v1/index.json</code></a>: the months available</li>
