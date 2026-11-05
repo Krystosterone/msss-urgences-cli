@@ -25,9 +25,19 @@ import type { Clinic, CliniquesReport } from './core/types';
 import { CLINIQUE_BAND_KEYS, CUMULATIF_LEVELS, CHIRURGIE_SPECIALTIES } from './core/types';
 import type { ChirurgieRegion, ChirurgiesReport, ChirurgieWaitlist } from './core/types';
 import type { CumulatifEntry, CumulatifLevel, UrgencesCumulatifReport } from './core/types';
+import { formatVersion, type BuildInfo } from './core/version';
 
-declare const require: ((id: string) => { version: string }) & { main?: NodeJS.Module };
-const VERSION: string = require('../package.json').version;
+declare const require: ((id: string) => unknown) & { main?: NodeJS.Module };
+const VERSION: string = formatVersion((require('../package.json') as { version: string }).version, readBuildInfo());
+
+/** dist/build-info.json, written by `npm run build`; absent under `npm run dev`. */
+function readBuildInfo(): BuildInfo | undefined {
+  try {
+    return require('./build-info.json') as BuildInfo;
+  } catch {
+    return undefined;
+  }
+}
 
 const HELP = `quebec-sante — deterministic data from MSSS open-data CSVs
 
@@ -50,7 +60,7 @@ Commands:
 
 Global options:
   -h, --help      Show this help
-  -v, --version   Show version
+  -v, --version   Show version and the code commit it was built from
 
 Run "quebec-sante <command> --help" for command options.
 `;
