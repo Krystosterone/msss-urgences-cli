@@ -86,3 +86,7 @@ test('an unexpected fiscal-year format fails loudly with ParseError', () => {
 test('header-only CSV fails with ParseError', () => {
   assert.throws(() => parseCumulatif(csv.split('\r\n')[0]! + '\r\n'), ParseError);
 });
+
+test('decomposed accents parse the same as composed ones', () => {
+  assert.deepEqual(parseCumulatif(csv.normalize('NFD')), parseCumulatif(csv));
+});

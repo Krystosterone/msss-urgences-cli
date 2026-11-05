@@ -39,9 +39,15 @@ interface RawRow {
   _21h_6h: string;
 }
 
-/** Collapse whitespace and trim. */
+/**
+ * Collapse whitespace, trim, and compose accents (NFC). The clinic file mixes
+ * composed and decomposed accents, even within one name ("Clinique médicale
+ * Désy" decomposes the first é, not the second), so without NFC a name doesn't
+ * match the same text typed or quoted elsewhere, and one clinic published both
+ * ways would count as two.
+ */
 function clean(text: string): string {
-  return text.replace(/\s+/g, ' ').trim();
+  return text.normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /** Parse a numeric cell; blank / "--" / "." -> null. */

@@ -58,3 +58,8 @@ test('an unknown wait band throws ParseError', () => {
 test('a non-numeric count throws ParseError', () => {
   assert.throws(() => parseChirurgies(RAW.replace(',28454\r\n', ',28 454x\r\n')), /non-numeric/i);
 });
+
+test('decomposed accents parse the same as composed ones (wait band labels included)', () => {
+  // "0 à 6 mois" with a decomposed à would otherwise be an unknown wait band.
+  assert.deepEqual(parseChirurgies(RAW.normalize('NFD')), parseChirurgies(RAW));
+});

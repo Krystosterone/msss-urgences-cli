@@ -105,3 +105,7 @@ test('MSSS aggregate rows: Total régional per region and Ensemble du Québec', 
   );
   assert.equal(province!.occupancyPct, null, 'parse leaves the derivation to derive.ts');
 });
+
+test('decomposed accents parse the same as composed ones', () => {
+  assert.deepEqual(parseUrgences(FIXTURE.normalize('NFD')), parseUrgences(FIXTURE));
+});

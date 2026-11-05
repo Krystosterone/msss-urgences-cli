@@ -19,9 +19,9 @@ const COLUMN_ALIASES = {
 const PERIOD_RE = /^\d{4}-P\d{2}$/;
 const REGION_RE = /^RSS\d{2}$/;
 
-/** Collapse whitespace and trim. */
+/** Collapse whitespace, trim, and compose accents (NFC), so "0 à 6 mois" matches either way. */
 function clean(text: string | undefined): string {
-  return (text ?? '').replace(/\s+/g, ' ').trim();
+  return (text ?? '').normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /** Parse a count cell; blank -> null (not published). Non-numeric -> ParseError. */

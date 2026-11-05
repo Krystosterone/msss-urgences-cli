@@ -63,3 +63,27 @@ test('structure change throws ParseError', () => {
     .replace(/^\uFEFF/, '');
   assert.throws(() => parseCliniques(broken), /missing column/i);
 });
+
+// MSSS's clinic file mixes composed and decomposed accents, even within one
+// name: "Clinique médicale Désy" arrives with the first é decomposed
+// (e + U+0301) and the second composed (U+00E9).
+test('names are emitted in NFC, whatever form the file uses', () => {
+  const header = csv.slice(0, csv.indexOf('\n') + 1);
+  const row = (name: string) =>
+    `2026-10-27,0611,RTS de l'Ouest-de-l'Île-de-Montréal,06111,RLS de Montréal,${name},Médecin,1,2,,,,\n`;
+  const mixed = 'Clinique médicale Désy';
+  const composed = 'Clinique médicale Désy';
+  const { clinics } = parseCliniques(header + row(mixed) + row(composed));
+  assert.equal(clinics.length, 2);
+  for (const c of clinics) {
+    assert.equal(c.name, composed);
+    assert.equal(c.regionName, "RTS de l'Ouest-de-l'Île-de-Montréal");
+    assert.equal(c.rlsName, 'RLS de Montréal');
+    assert.equal(c.professionGroup, 'Médecin');
+  }
+  assert.equal(new Set(clinics.map((c) => c.name)).size, 1);
+});
+
+test('a fully decomposed file parses to the same clinics as the original', () => {
+  assert.deepEqual(parseCliniques(csv.normalize('NFD')), parseCliniques(csv));
+});

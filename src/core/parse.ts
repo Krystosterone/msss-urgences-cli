@@ -28,9 +28,13 @@ type HeaderName = (typeof REQUIRED_HEADERS)[number];
 /** The published header uses "_Mise_a_jour" (a leading space). Expose the tidy name. */
 const MISE_A_JOUR_HEADER = '_Mise_a_jour' as const;
 
-/** Collapse whitespace and trim (Latin-1 CSV sometimes pads cells). */
+/**
+ * Collapse whitespace, trim (Latin-1 CSV sometimes pads cells), and compose
+ * accents (NFC), as the other parsers do. Latin-1 can't carry a decomposed
+ * accent today; this keeps names NFC if the file ever moves to UTF-8.
+ */
 function clean(text: string): string {
-  return text.replace(/\s+/g, ' ').trim();
+  return text.normalize('NFC').replace(/\s+/g, ' ').trim();
 }
 
 /** Parse a numeric cell; blank / "--" / non-numeric -> null. */
