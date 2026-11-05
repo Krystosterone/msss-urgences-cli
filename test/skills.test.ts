@@ -1,45 +1,78 @@
-// The agent skills: one shared answer standard, and none of the unsafe rules
-// the M0 audit removed (docs/m0-benchmark.md). Offline, reads files only.
+// The agent skill: one entry point, one answer standard, every module and CLI
+// reference reachable, and none of the unsafe rules the M0 audit removed
+// (docs/m0-benchmark.md). Offline, reads files only.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
 
 const ROOT = '.agents/skills';
-const SKILLS = readdirSync(ROOT).filter((d) => existsSync(join(ROOT, d, 'SKILL.md')));
-const read = (...p: string[]): string => readFileSync(join(ROOT, ...p), 'utf8');
+const SKILL = join(ROOT, 'quebec-sante');
+const REFS = join(SKILL, 'references');
+const read = (...p: string[]): string => readFileSync(join(SKILL, ...p), 'utf8');
 
-test('there are five skills, each with frontmatter, a CLI reference and the answer standard', () => {
-  assert.deepEqual(SKILLS.sort(), [
-    'quebec-sante-chirurgies',
-    'quebec-sante-cliniques',
-    'quebec-sante-urgences',
-    'quebec-sante-urgences-children',
-    'quebec-sante-urgences-cumulatif',
-  ]);
-  for (const s of SKILLS) {
-    const body = read(s, 'SKILL.md');
-    assert.match(body, new RegExp(`^---\\nname: ${s}\\ndescription: .+\\n`), `${s}: frontmatter`);
-    assert.ok(existsSync(join(ROOT, s, 'references', 'cli-reference.md')), `${s}: cli-reference.md`);
-    assert.ok(body.includes('(references/answer-standard.md)'), `${s}: SKILL.md links the answer standard`);
+const MODULES = ['urgences', 'urgences-children', 'urgences-cumulatif', 'cliniques', 'chirurgies'];
+const CLI_REFS = ['cli-urgences', 'cli-urgences-cumulatif', 'cli-cliniques', 'cli-chirurgies'];
+
+/** Relative links to local Markdown files: `[text](path.md)`. */
+const localLinks = (text: string): string[] =>
+  [...text.matchAll(/\]\(([^)#\s]+\.md)(#[^)]*)?\)/g)].map((m) => m[1]).filter((p) => !/^[a-z]+:/.test(p));
+
+test('there is one skill, quebec-sante, with valid frontmatter', () => {
+  const skills = readdirSync(ROOT).filter((d) => existsSync(join(ROOT, d, 'SKILL.md')));
+  assert.deepEqual(skills, ['quebec-sante']);
+  const body = read('SKILL.md');
+  const fm = body.match(/^---\nname: quebec-sante\ndescription: (.+)\n/);
+  assert.ok(fm, 'frontmatter: name, then description');
+  assert.ok(fm[1].length <= 1024, `description is ${fm[1].length} chars; the Agent Skills limit is 1024`);
+});
+
+test('the skill holds exactly the expected modules and CLI references', () => {
+  const files = readdirSync(REFS).sort();
+  assert.deepEqual(files, ['answer-standard', ...MODULES, ...CLI_REFS].map((f) => `${f}.md`).sort());
+});
+
+test('SKILL.md routes to the answer standard, every module and every CLI reference', () => {
+  const body = read('SKILL.md');
+  for (const f of ['answer-standard', ...MODULES, ...CLI_REFS]) {
+    assert.ok(body.includes(`(references/${f}.md)`), `SKILL.md links references/${f}.md`);
   }
 });
 
-test('every skill carries the same answer standard', () => {
-  const canonical = read('quebec-sante-urgences', 'references', 'answer-standard.md');
-  for (const s of SKILLS) {
-    assert.equal(read(s, 'references', 'answer-standard.md'), canonical, `${s}: answer-standard.md differs`);
+test('every module applies the answer standard, and every local link resolves', () => {
+  for (const m of MODULES) {
+    assert.ok(read('references', `${m}.md`).includes('(answer-standard.md)'), `${m}.md links the answer standard`);
   }
+  for (const f of ['SKILL.md', ...readdirSync(REFS).map((r) => join('references', r))]) {
+    for (const link of localLinks(read(f))) {
+      const target = join(SKILL, dirname(f), link);
+      assert.ok(existsSync(target), `${f}: link ${link} resolves`);
+    }
+  }
+});
+
+test('the answer standard exists once and keeps its rules', () => {
+  const copies: string[] = [];
+  const walk = (dir: string): void => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.isDirectory()) walk(join(dir, e.name));
+      else if (e.name === 'answer-standard.md') copies.push(join(dir, e.name));
+    }
+  };
+  walk(ROOT);
+  assert.deepEqual(copies, [join(REFS, 'answer-standard.md')]);
+  const standard = read('references', 'answer-standard.md');
   for (const code of ['S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7']) {
-    assert.ok(canonical.includes(`| ${code} |`), `answer standard lists ${code}`);
+    assert.ok(standard.includes(`| ${code} |`), `answer standard lists ${code}`);
   }
-  for (const must of ['911', 'Info-Santé 811', 'not a wait time', 'weekly']) {
-    assert.ok(canonical.includes(must), `answer standard says "${must}"`);
+  for (const must of ['911', 'Info-Santé 811', 'not a wait time', 'weekly', 'quebec.ca/SituationUrgences']) {
+    assert.ok(standard.includes(must), `answer standard says "${must}"`);
   }
 });
 
-// Rules and phrasings the M0 audit removed. A skill that brings one back
-// should fail here before it reaches an answer.
+// Rules and phrasings the M0 audit removed. A skill file that brings one back
+// should fail here before it reaches an answer. (The answer standard names
+// some of them only to forbid them, so it isn't scanned.)
 const BANNED: Array<[RegExp, string]> = [
   [/rank sainte-justine/i, 'hardcoded pediatric ranking'],
   [/hardcoded (pediatric )?ranking/i, 'hardcoded ranking'],
@@ -55,23 +88,25 @@ const BANNED: Array<[RegExp, string]> = [
 ];
 
 test('no skill file contains a rule the M0 audit removed', () => {
-  for (const s of SKILLS) {
-    for (const f of ['SKILL.md', join('references', 'cli-reference.md')]) {
-      const text = read(s, f);
-      for (const [re, why] of BANNED) {
-        assert.ok(!re.test(text), `${s}/${f}: ${why} (${re})`);
-      }
+  const files = ['SKILL.md', ...[...MODULES, ...CLI_REFS].map((f) => join('references', `${f}.md`))];
+  for (const f of files) {
+    const text = read(f);
+    for (const [re, why] of BANNED) {
+      assert.ok(!re.test(text), `${f}: ${why} (${re})`);
     }
   }
 });
 
-test('ER skills put the emergency step and the triage caveat in the body', () => {
-  for (const s of ['quebec-sante-urgences', 'quebec-sante-urgences-children']) {
-    const body = read(s, 'SKILL.md');
-    assert.match(body, /911/, `${s}: 911`);
-    assert.match(body, /triage/i, `${s}: triage`);
+test('the entry point and the ER modules put the emergency step and the triage caveat up front', () => {
+  for (const f of ['SKILL.md', 'references/urgences.md', 'references/urgences-children.md']) {
+    const body = read(f);
+    assert.match(body, /911/, `${f}: 911`);
+    assert.match(body, /triage/i, `${f}: triage`);
   }
-  const clinics = read('quebec-sante-cliniques', 'SKILL.md');
+  const entry = read('SKILL.md');
+  assert.match(entry, /never predicts a personal wait time/i, 'SKILL.md description: no wait prediction');
+  assert.match(entry, /never decides between a clinic and the ER/i, 'SKILL.md: no clinic/ER routing');
+  const clinics = read('references', 'cliniques.md');
   assert.match(clinics, /weekly/i, 'cliniques: says the file is weekly');
   assert.match(clinics, /never decides between a clinic and the ER/i, 'cliniques: no ER routing');
 });

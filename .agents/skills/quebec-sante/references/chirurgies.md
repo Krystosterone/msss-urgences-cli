@@ -1,37 +1,24 @@
----
-name: quebec-sante-chirurgies
-description: Report Québec surgical waitlists (patients waiting for an operating-room intervention) by region, specialty and wait time via the deterministic quebec-sante chirurgies CLI, and explain what the numbers do and do not mean. Use when asked how long the surgery waitlist is, how many people wait over 6 months or a year, how a region or specialty compares, or whether the list is growing.
-version: 0.1.0
-author: Krystian
-license: MIT
----
+# Module: surgical waitlists (`chirurgies`)
 
-# quebec-sante-chirurgies
-
-Describe the province's elective-surgery waitlist using the MSSS
+The province's elective-surgery waitlist from the MSSS
 `Chirurgie_ListeAttente.csv` dataset: how many people are waiting, for which
 specialty, in which region, and for how long since the surgeon decided to
 operate.
 
-**The seam:** the `quebec-sante chirurgies` CLI is a deterministic *facts
-machine*. It returns waitlist counts exactly as MSSS publishes them, plus a few
+The CLI returns waitlist counts exactly as MSSS publishes them, plus a few
 objective derived figures: totals, % waiting over 6 and 12 months, the delta
-from the previous period, and a province-wide sum. **This skill owns the
-opinions**: which figure leads, how to compare, and how to state the limits.
+from the previous period, and a province-wide sum. This module owns the
+opinions: which figure leads, how to compare, and how to state the limits.
 
-**Read [`references/answer-standard.md`](references/answer-standard.md) before
-answering.** It holds the safety, provenance, freshness and uncertainty rules
-every answer follows.
+**[`answer-standard.md`](answer-standard.md) applies to every answer.**
 
-> This is a **planning / context** tool, not a triage tool. For ER crowding,
-> use **`quebec-sante-urgences`**; for which clinics usually offer appointments,
-> **`quebec-sante-cliniques`**. Someone worried about their health while
-> waiting for surgery should contact their surgeon's office, or 811.
+> This is a **planning / context** dataset, not a triage tool. Someone worried
+> about their health while waiting for surgery should contact their surgeon's
+> office, or 811.
 
 ## 1. Get the data
 
-The CLI must be built and linked onto PATH (see **Install & link** in the repo
-README). Query with **always `--json`**:
+Query with **always `--json`**:
 
 ```bash
 # Latest period, every region (+ derived province total):
@@ -49,7 +36,7 @@ Key fields: `dataDate` / `period` (fiscal period), `previousPeriod`,
 `overall` (all specialties) and `specialties[]`. Each of those has
 `waiting.{under6m, from6to12m, over12m}`, `total`, `over6m`, `pctOver6m`,
 `pctOver12m`. Regions also carry `deltaFromPreviousPeriod`. For the full contract, exit codes and
-cache semantics, see [`references/cli-reference.md`](references/cli-reference.md).
+cache semantics, see [`cli-chirurgies.md`](cli-chirurgies.md).
 
 ## 2. Interpret (the opinions)
 

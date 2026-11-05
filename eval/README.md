@@ -86,7 +86,7 @@ what decides; it records where it overrode a flag and why.
    urgences, `--baseline` and the history replay offline from `archive/` at a
    given commit (the bytes MSSS served); cliniques and chirurgies aren't
    archived, so they're fetched live.
-2. **New answers.** Give a fresh agent the skills and the snapshot directory,
+2. **New answers.** Give a fresh agent the skill and the snapshot directory,
    not the other answers, and have it write `answers/<system>/Qnn.md` in the
    format above. Repeat a few times to measure run-to-run variation.
 3. **The baseline in a real assistant.** Ask the questions, word for word, in

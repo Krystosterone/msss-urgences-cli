@@ -2,42 +2,43 @@
 
 [![CI](https://github.com/Krystosterone/quebec-sante-cli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Krystosterone/quebec-sante-cli/actions/workflows/ci.yml?query=branch%3Amain)
 
-Québec health-services open data, built for AI agents. Agent skills answer
+Québec health-services open data, built for AI agents. An agent skill answers
 questions like *"is Sainte-Justine's ER more crowded than usual tonight?"* or
-*"which clinics near Ahuntsic offer evening appointments?"*. Behind them, a
+*"which clinics near Ahuntsic offer evening appointments?"*. Behind it, a
 deterministic CLI returns the Ministère de la Santé et des Services sociaux
 (MSSS) open-data numbers as JSON.
 
 - **The CLI states facts:** MSSS's numbers verbatim, plus objective metrics
   explicitly labelled `DERIVED`. It ranks and recommends nothing.
-- **The skills interpret:** what the numbers mean, what they can't say, and
-  how to word it for a person. They never predict a wait, and they put
+- **The skill interprets:** what the numbers mean, what they can't say, and
+  how to word it for a person. It never predicts a wait, and it puts
   emergencies (911, 811) first.
 
 ## For agents
 
-### Pick a skill
+### The skill
 
-The skills live in [`.agents/skills/`](.agents/skills/). Each `SKILL.md` says
-when to use it and how to interpret the numbers. Each
-`references/cli-reference.md` is the full output contract; load it when you
-need a field's exact meaning. Every skill also carries the same
-`references/answer-standard.md`: the safety, provenance, freshness and
+One skill, [`quebec-sante`](.agents/skills/quebec-sante/SKILL.md), answers
+every question. Its `SKILL.md` routes the question to the modules it needs, one
+per dataset, under `references/`. Each module says how to query and read its
+dataset, and each command's CLI reference (`references/cli-*.md`) is the full
+output contract; load it when you need a field's exact meaning.
+`references/answer-standard.md` holds the safety, provenance, freshness and
 uncertainty rules every answer follows. [`eval/`](eval/README.md) holds the
 benchmark questions and the checks answers are graded against.
 
-| The question | Skill | Command it runs |
-|--------------|-------|-----------------|
-| How busy is this ER or region? How do ERs compare? When is it usually calmer? Is it worse than usual? | [`quebec-sante-urgences`](.agents/skills/quebec-sante-urgences/SKILL.md) | `urgences`, `urgences-historique` |
-| How do Sainte-Justine and the Montreal Children's compare right now? | [`quebec-sante-urgences-children`](.agents/skills/quebec-sante-urgences-children/SKILL.md) | `urgences --id 51222800,51223279` |
-| Which clinics near me usually offer appointments, and when? | [`quebec-sante-cliniques`](.agents/skills/quebec-sante-cliniques/SKILL.md) | `cliniques` |
-| How is this ER doing this fiscal year, compared with last year? | [`quebec-sante-urgences-cumulatif`](.agents/skills/quebec-sante-urgences-cumulatif/SKILL.md) | `urgences-cumulatif` |
-| How long are surgery waitlists? | [`quebec-sante-chirurgies`](.agents/skills/quebec-sante-chirurgies/SKILL.md) | `chirurgies` |
+| The question | Module | Command it runs |
+|--------------|--------|-----------------|
+| How busy is this ER or region? How do ERs compare? When is it usually calmer? Is it worse than usual? | [`urgences.md`](.agents/skills/quebec-sante/references/urgences.md) | `urgences`, `urgences-historique` |
+| How do Sainte-Justine and the Montreal Children's compare right now? | [`urgences-children.md`](.agents/skills/quebec-sante/references/urgences-children.md) | `urgences --id 51222800,51223279` |
+| Which clinics near me usually offer appointments, and when? | [`cliniques.md`](.agents/skills/quebec-sante/references/cliniques.md) | `cliniques` |
+| How is this ER doing this fiscal year, compared with last year? | [`urgences-cumulatif.md`](.agents/skills/quebec-sante/references/urgences-cumulatif.md) | `urgences-cumulatif` |
+| How long are surgery waitlists? | [`chirurgies.md`](.agents/skills/quebec-sante/references/chirurgies.md) | `chirurgies` |
 
 Tools that follow the Agent Skills standard (Pi, Codex) discover
 `.agents/skills/` once the project is trusted. For Hermes, run
-`hermes skills trust <repo>`. There's nothing to copy or symlink. The skills
-call the `quebec-sante` binary, so install and link it first (below).
+`hermes skills trust <repo>`. There's nothing to copy or symlink. The skill
+calls the `quebec-sante` binary, so install and link it first (below).
 
 ### Calling the CLI
 

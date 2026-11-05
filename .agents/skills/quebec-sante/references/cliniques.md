@@ -1,24 +1,15 @@
----
-name: quebec-sante-cliniques
-description: Describe which Québec primary-care clinics usually offer appointments, by day, time band and professional (physician or nurse), from MSSS's weekly-published count of appointments offered through the provincial booking hub, via the deterministic quebec-sante cliniques CLI, and point to the routes for getting non-urgent care. Use when asked what non-urgent consultation options exist near a place, which clinics offer evening or weekend appointments, or how clinic offer varies. It cannot say whether an appointment is free today, and it never decides whether someone needs the ER.
-version: 0.1.0
-author: Krystian
-license: MIT
----
+# Module: clinic appointment offers (`cliniques`)
 
-# quebec-sante-cliniques
+Which clinics in an area have been offering appointments, and when, from
+MSSS's clinic file, and the ways of actually getting a non-urgent
+consultation.
 
-Show which clinics in an area have been offering appointments, and when, from
-MSSS's clinic file, and point the person to the ways of actually getting a
-non-urgent consultation.
-
-**The seam:** the `quebec-sante cliniques` CLI is a deterministic *facts
-machine*: offered-appointment counts per clinic and date, exactly as MSSS
-publishes them. **This skill owns the interpretation**: what those counts can
+The CLI returns offered-appointment counts per clinic and date, exactly as
+MSSS publishes them. This module owns the interpretation: what those counts can
 and can't say, and the summary.
 
-**Read [`references/answer-standard.md`](references/answer-standard.md) before
-answering.** For this skill, its key rules are:
+**[`answer-standard.md`](answer-standard.md) applies to every answer.** For
+this dataset, its key rules are:
 
 - **This is past data.** MSSS publishes the file **weekly** (Thursdays at 14h),
   up to the day before. The newest date is 1 to 8 days old. Never say a
@@ -31,13 +22,9 @@ answering.** For this skill, its key rules are:
   mean "go to the ER", and many offers don't mean the ER isn't needed. If symptoms
   could be serious, 911 or the nearest ER comes first (§1). If unsure, 811.
 
-> For ER crowding, use **`quebec-sante-urgences`** (generic) or
-> **`quebec-sante-urgences-children`** (pediatric).
-
 ## 1. Get the data
 
-The CLI must be built and linked onto PATH — see **Install & link** in the repo
-README. Query with **always `--json`**:
+Query with **always `--json`**:
 
 ```bash
 # A region (defaults to the latest date in the source):
@@ -64,7 +51,7 @@ The report has `clinics[]` (each: `name`, `regionName`, `rlsName`, `rssCode`,
 the appointments), and `availableDates` (distinct dates present, newest
 first). `null` slots = no appointments offered in that band. For the full
 command contract, field dictionary, exit codes, and cache semantics, see
-[`references/cli-reference.md`](references/cli-reference.md).
+[`cli-cliniques.md`](cli-cliniques.md).
 
 ## 2. Interpret
 
@@ -112,8 +99,3 @@ Example shape:
 
 Always state `dataDate` and that the file is weekly, so the reader knows it's
 past data.
-
-## 4. Optional: share
-
-If asked, forward the summary by email or message. This skill's job ends at the
-summary.

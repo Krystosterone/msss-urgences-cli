@@ -1,7 +1,8 @@
-# quebec-sante chirurgies CLI reference
+# `chirurgies`: CLI reference
 
-Loaded on demand from SKILL.md when you need the exact command contract or a
-field meaning. The skill body owns the interpretation.
+The output contract for [`chirurgies.md`](chirurgies.md). Load it when you
+need the exact command contract or a field meaning. The module owns the
+interpretation.
 
 ## Invocation
 

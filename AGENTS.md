@@ -49,8 +49,9 @@ npx tsx scripts/build-api.ts site && QUEBEC_SANTE_API_FIXTURE=site/api/v1 quebec
 ```
 
 Skill or answer-standard changes: `npm test` includes `test/skills.test.ts`
-(the five copies of `references/answer-standard.md` must stay identical, and
-the unsafe rules removed in M0 must not come back) and `test/eval.test.ts`
+(one skill, `.agents/skills/quebec-sante`, whose `SKILL.md` links every module
+and CLI reference; one `answer-standard.md`; and the unsafe rules removed in
+M0 must not come back) and `test/eval.test.ts`
 (the recorded benchmark answers in `eval/`, graded against a pinned snapshot;
 `npx tsx eval/grade.ts` prints the full report). See `eval/README.md`.
 

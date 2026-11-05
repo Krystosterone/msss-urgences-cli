@@ -1,39 +1,26 @@
----
-name: quebec-sante-urgences-cumulatif
-description: Explain fiscal-year-to-date Québec ER performance and year-over-year trends (visits, average length of stay, delay to physician, 24h/48h stretcher stays) for a hospital, establishment, region or the province via the deterministic quebec-sante urgences-cumulatif CLI. Use for trend or comparison questions ("is Sainte-Justine's ER doing better than last year?", "how has Montréal's stretcher stay evolved since 2021?") — not for what is happening right now.
-version: 0.1.0
-author: Krystian
-license: MIT
----
+# Module: ER trends over fiscal years (`urgences-cumulatif`)
 
-# quebec-sante-urgences-cumulatif
-
-Explain how a Québec ER (or establishment, region, the province) has performed
-**so far this fiscal year** and how that compares with previous years, from the
+How a Québec ER (or establishment, region, the province) has performed **so
+far this fiscal year** and how that compares with previous years, from the
 MSSS cumulative ER file.
 
-**The seam:** the `quebec-sante urgences-cumulatif` CLI is a deterministic
-*facts machine* — verbatim indicators per fiscal year, plus objective derived
-shares and year-over-year differences. **This skill owns the opinions**: which
+The CLI returns verbatim indicators per fiscal year, plus objective derived
+shares and year-over-year differences. This module owns the opinions: which
 direction is better, what counts as a meaningful change, and the summary.
 
-**Read [`references/answer-standard.md`](references/answer-standard.md) before
-answering.** It holds the safety, provenance, freshness and uncertainty rules
-every answer follows. For this skill: these are averages over months of
-past visits. They describe how an ER has been performing, never how long a
-visit today would take.
+**[`answer-standard.md`](answer-standard.md) applies to every answer.** For
+this dataset: these are averages over months of past visits. They describe how
+an ER has been performing, never how long a visit today would take.
 
 > This is **trend** data (cumulated over months, updated every ~4 weeks). For
-> **right-now** ER occupancy use **`quebec-sante-urgences`** (generic) or
-> **`quebec-sante-urgences-children`** (pediatric); for which clinics usually offer
-> appointments use **`quebec-sante-cliniques`**. To set *yesterday* against this fiscal year
-> ("is it worse than usual right now?"), `quebec-sante-urgences` uses
-> `quebec-sante urgences --baseline`, which joins this file to the hourly one.
+> **right-now** occupancy, see [`urgences.md`](urgences.md). To set
+> *yesterday* against this fiscal year ("is it worse than usual right now?"),
+> [`urgences.md`](urgences.md) uses `quebec-sante urgences --baseline`, which
+> joins this file to the hourly one.
 
 ## 1. Get the data
 
-The CLI must be built and linked onto PATH — see **Install & link** in the repo
-README. Always pass **`--json`**:
+Always pass **`--json`**:
 
 ```bash
 # One or more hospitals (permit numbers), with every fiscal year:
@@ -57,7 +44,7 @@ groups: `visits`, `dmsHours`, `pecDelayHours`, `over24h`, `over48h`, …),
 `derived` (`stretcherOver24hPct`, `stretcherOver48hPct`, `stretcherSharePct`),
 `previous` (same entity in `compareTo`), `change` (current − previous), and for
 aggregates `facilityCount`. For field meanings, units, ordering and exit codes,
-see [`references/cli-reference.md`](references/cli-reference.md).
+see [`cli-urgences-cumulatif.md`](cli-urgences-cumulatif.md).
 
 ## 2. Interpret (the opinions)
 
@@ -106,8 +93,3 @@ Lead with the verdict, then the numbers, then caveats. Example shape:
 > _Fiscal year 2026-2027, April 1 → period 7; MSSS cumulative file._
 
 Always state the fiscal year, the period, and the baseline year.
-
-## 4. Optional: share
-
-If asked, forward the summary by email or message. This skill's job ends at the
-summary.

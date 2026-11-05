@@ -1,7 +1,9 @@
-# quebec-sante CLI reference
+# `urgences` and `urgences-historique`: CLI reference
 
-Loaded on demand from SKILL.md when you need the exact command contract or a
-field meaning. Keep this file why-what — the skill body owns the opinions.
+The output contract for [`urgences.md`](urgences.md) and
+[`urgences-children.md`](urgences-children.md). Load it when you need the
+exact command contract or a field meaning. Keep this file why-what: the modules
+own the opinions.
 
 ## Invocation
 

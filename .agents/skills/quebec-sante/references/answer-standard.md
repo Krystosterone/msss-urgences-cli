@@ -1,9 +1,8 @@
-# Answer standard (every quebec-sante skill)
+# Answer standard (every quebec-sante answer)
 
-Every `quebec-sante-*` skill carries an identical copy of this file, and
-`test/skills.test.ts` keeps them identical. It says what an answer built on
-MSSS data must and must not do. The skill's own body says how to read its
-dataset; this file wins wherever they disagree.
+What an answer built on MSSS data must and must not do, whichever dataset it
+uses. Each module says how to read its dataset; this file wins wherever they
+disagree. `test/skills.test.ts` checks it keeps these rules.
 
 ## 1. Possible emergency: say so first
 
@@ -93,7 +92,7 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
   people waiting" is a fact. Occupancy and deltas are derived (computed by the
   CLI). "Busier than usual" is your interpretation, so phrase it as one.
 - **Quote, don't invent.** Every number comes from the CLI output. Round only
-  for readability (hours to one decimal or to h/min, as the skill says), and
+  for readability (hours to one decimal or to h/min, as the module says), and
   never show more precision than the source has. Don't fill a missing value
   from memory or the web and present it as MSSS data.
 

@@ -1,45 +1,26 @@
----
-name: quebec-sante-urgences
-description: Report live Québec emergency-room crowding (stretcher occupancy, people waiting to see a physician, 24h/48h stretcher stays) for any hospital or region via the deterministic quebec-sante CLI, compare it with the hospital's own norm and history, and explain what the numbers do and do not mean. Use when asked how busy an ER is, how ERs compare, whether it is worse than usual, or when it is usually calmer ("how busy is the ER at Verdun right now?", "which Montréal ERs are most crowded?"). It never predicts a personal wait time.
-version: 0.1.0
-author: Krystian
-license: MIT
----
+# Module: ER crowding (`urgences`, `urgences-historique`)
 
-# quebec-sante-urgences
+Live Québec ER data from the MSSS hourly open-data CSV, compared with each
+hospital's own norm (`--baseline`) and history (`urgences-historique`), for
+**any** hospital or region.
 
-Get live Québec ER data from the MSSS hourly open-data CSV and explain it in
-plain language, for **any** hospital or region.
+The CLI returns the numbers exactly as MSSS publishes them, plus objective
+derived metrics (regional average, delta-from-average). This module owns the
+interpretation: what the numbers say about crowding, what they can't say, and
+the summary. Don't ask the CLI to rank or judge.
 
-**The seam:** the `quebec-sante` CLI is a deterministic *facts machine* — it
-returns the numbers exactly as MSSS publishes them, plus objective derived
-metrics (regional average, delta-from-average). **This skill owns the
-interpretation**: what the numbers say about crowding, what they can't say, and
-the human-readable summary. Keep it that way — do not ask the CLI to rank or
-judge.
+**[`answer-standard.md`](answer-standard.md) applies to every answer.** In
+short: possible emergency → 911 / nearest ER first; occupancy is not a wait
+time; always give the data's time and source.
 
-**Read [`references/answer-standard.md`](references/answer-standard.md) before
-answering.** It holds the safety, provenance, freshness and uncertainty rules
-every answer follows. In short: possible emergency → 911 / nearest ER first;
-occupancy is not a wait time; always give the data's time and source.
-
-> For the **two pediatric ERs** (Sainte-Justine, Montreal Children's), use
-> **`quebec-sante-urgences-children`**. For **which clinics usually offer
-> appointments**, use **`quebec-sante-cliniques`** (its data is past offers,
-> not openings today).
-> For **trends** (this fiscal year vs previous years: average stay, delay to
-> physician, 24h+ stretcher stays), use **`quebec-sante-urgences-cumulatif`**. For
-> **surgical waitlists** (elective surgery, by region/specialty), use
-> **`quebec-sante-chirurgies`**.
-> This generic skill is for every other ER question.
+> Montréal's **two pediatric ERs** have their own module,
+> [`urgences-children.md`](urgences-children.md); it uses the rules below for
+> `--baseline` and the history. Fiscal-year **trends** are in
+> [`urgences-cumulatif.md`](urgences-cumulatif.md).
 
 ## 1. Get the data
 
-The CLI must be built and, ideally, linked onto your PATH — see **Install &
-link** in the repo README. Once linked you can call `quebec-sante` from
-anywhere; if it isn't linked, run `node dist/cli.js` from the repo root instead.
-
-Query it — **always use `--json`** so you parse structured data, not a table:
+Query it, **always with `--json`** so you parse structured data, not a table:
 
 ```bash
 # A specific hospital by its stable id (MSSS permit number):
@@ -73,7 +54,7 @@ its `occupancyPct`), and the report has `province` (MSSS's "Ensemble du
 Québec" row).
 `null` metrics / `available: false` mean the hospital isn't reporting right now.
 For the exact field dictionary, all CLI flags, exit codes, and cache/freshness
-semantics, see [`references/cli-reference.md`](references/cli-reference.md) — load
+semantics, see [`cli-urgences.md`](cli-urgences.md) — load
 it when you need the full contract or a field's precise meaning.
 
 ## 2. Stable hospital ids
@@ -192,8 +173,3 @@ With `--baseline`, add one line per hospital mentioned, e.g.:
 Round nothing the CLI didn't round; quote occupancy as shown. Always give the
 `dataDate` (and `extractedAt`), say if it's `cached`, and flag it when it's
 more than about 2 hours old.
-
-## 5. Optional: share
-
-If asked, forward the summary (and/or a screenshot) by email or message. That's
-an action layer on top of this skill — this skill's job ends at the summary.

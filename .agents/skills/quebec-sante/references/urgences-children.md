@@ -1,43 +1,34 @@
----
-name: quebec-sante-urgences-children
-description: Compare live crowding at Montréal's two pediatric emergency rooms (CHU Sainte-Justine and L'Hôpital de Montréal pour enfants / Montreal Children's) via the deterministic quebec-sante CLI, and explain what the numbers do and do not mean for a family. Use ONLY when the question is specifically about these children's ERs ("how busy are the children's ERs right now?", "compare Sainte-Justine and the Children's"). It never ranks them by a fixed preference and never predicts a wait.
-version: 0.1.0
-author: Krystian
-license: MIT
----
+# Module: Montréal's two pediatric ERs
 
-# quebec-sante-urgences-children
+Compare current crowding at CHU Sainte-Justine and the Montreal Children's
+from live MSSS data, for a parent who wants to understand the situation. Use
+it when the question is specifically about these two ERs.
 
-Compare current crowding at Montréal's two pediatric ERs from live MSSS data,
-for a parent who wants to understand the situation.
+The CLI returns the numbers exactly as MSSS publishes them (no rankings). This
+module owns the interpretation for the pediatric case: what each number says,
+what it can't say, and the summary. It has no preferred hospital: any ranking
+comes from the data, and the data can't say which ER will see a child sooner.
 
-**The seam:** the `quebec-sante` CLI returns the numbers exactly as MSSS
-publishes them (no rankings). **This skill owns the interpretation** for the
-pediatric case: what each number says, what it can't say, and the summary. It
-has no preferred hospital: any ranking comes from the data, and the data can't
-say which ER will see a child sooner.
-
-**Read [`references/answer-standard.md`](references/answer-standard.md) before
-answering.** Its §1 comes first whenever a child's symptoms are described: if
+**[`answer-standard.md`](answer-standard.md) applies to every answer.** Its
+§1 comes first whenever a child's symptoms are described: if
 they could be serious (very drowsy or hard to wake, trouble breathing, a
 seizure, a fever in a baby under 3 months, signs of dehydration), the answer
 starts with **911 or the nearest ER now**. Info-Santé **811** is there when
 the parent is unsure. Crowding is never a reason to drive farther or wait.
 
-> For any other ER or region question, use **`quebec-sante-urgences`**. For which
-> clinics usually offer appointments, use **`quebec-sante-cliniques`**. For
-> how the two ERs have **trended** over fiscal years, use
-> **`quebec-sante-urgences-cumulatif`** (`--id 51222800,51223279 --history`). Adding
-> `--baseline` to the query below also gives each ER's fiscal-year-to-date stay
-> (`baseline`, `vsBaseline`); read it per rules 7–10 of **`quebec-sante-urgences`**.
-> For "is it unusual right now?" or "when is it usually calmer?", also query
-> `quebec-sante urgences-historique --id 51222800,51223279 --json` and read it
-> per rules 11–14 of **`quebec-sante-urgences`**.
+> - Adding `--baseline` to the query below also gives each ER's
+>   fiscal-year-to-date stay (`baseline`, `vsBaseline`); read it per rules 7–10
+>   of [`urgences.md`](urgences.md).
+> - For "is it unusual right now?" or "when is it usually calmer?", also query
+>   `quebec-sante urgences-historique --id 51222800,51223279 --json` and read it
+>   per rules 11–14 of [`urgences.md`](urgences.md).
+> - For how the two ERs have **trended** over fiscal years, use
+>   [`urgences-cumulatif.md`](urgences-cumulatif.md) with
+>   `--id 51222800,51223279 --history`.
 
 ## 1. Get the data
 
-The CLI must be built and, ideally, linked onto your PATH — see **Install &
-link** in the repo README. Query the two pediatric ERs, **always `--json`**:
+Query the two pediatric ERs, **always `--json`**:
 
 ```bash
 quebec-sante urgences --id 51222800,51223279 --json
@@ -51,7 +42,7 @@ reporting Montréal ER, adult ones included. `null` /
 `available: false` means not reporting right now. Top level: `dataDate`
 (published) and `extractedAt` (snapshot time). For the exact command contract,
 full field dictionary, exit codes, and cache/freshness semantics, see
-[`references/cli-reference.md`](references/cli-reference.md).
+[`cli-urgences.md`](cli-urgences.md).
 
 ## 2. The two pediatric ERs (stable ids)
 
@@ -104,8 +95,3 @@ tell. Example shape (no symptoms described):
 
 Round nothing the CLI didn't round; quote occupancy as shown. Always give the
 `dataDate` / `extractedAt`, and say whether the data was `cached`.
-
-## 5. Optional: share
-
-If asked, forward the summary (and/or a screenshot) by email or message. That's
-an action layer on top of this skill — this skill's job ends at the summary.
