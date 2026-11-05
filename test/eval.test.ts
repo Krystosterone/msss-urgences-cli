@@ -54,6 +54,15 @@ test('checkClaim: text must be in the prose and the value in the snapshot', () =
   assert.match(checkClaim({ ...claim, text: '126%', value: 126 }, '126%', SNAPSHOT)!, /= 125/);
   const rounded = { ...claim, text: '8.3 h', path: 'regions[0].facilities[id=51222800].dmsStretcher', value: 8.3, round: 1 };
   assert.equal(checkClaim(rounded, 'stayed 8.3 h', SNAPSHOT), null);
+  const clinics = {
+    text: '15 clinics',
+    file: 'cliniques-ahuntsic-2026-10-28.json',
+    path: 'clinics',
+    op: 'distinct' as const,
+    of: 'name',
+    value: 15,
+  };
+  assert.equal(checkClaim(clinics, '15 clinics offered', SNAPSHOT), null, 'distinct names, not rows (21)');
 });
 
 test('unsourcedNumbers: every number needs a claim, the allow list or 911/811', () => {

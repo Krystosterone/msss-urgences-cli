@@ -83,7 +83,8 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
     published weekly.
   - `urgences-cumulatif` and `--baseline`: the fiscal year and period
     (April 1 → end of period N).
-  - `chirurgies`: the period, an end-of-period snapshot.
+  - `chirurgies`: the period, an end-of-period snapshot that can be months
+    old.
   - `urgences-historique`: the window, its snapshot count and `archiveStart`.
 - **Check freshness against the current time.** If an hourly `dataDate` is more
   than about 2 hours old, say the data may be stale. Say which date the clinic

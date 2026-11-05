@@ -16,8 +16,11 @@ export interface Claim {
   /** Expected value. With `round`, numbers compare after rounding both sides; strings exactly. */
   value: number | string | boolean | null | unknown[];
   round?: number;
-  /** `length` compares the array's length; `sum` adds up field `of` across it. */
-  op?: 'length' | 'sum';
+  /**
+   * `length` compares the array's length; `sum` adds up field `of` across it;
+   * `distinct` counts the distinct values of field `of` (in NFC).
+   */
+  op?: 'length' | 'sum' | 'distinct';
   of?: string;
 }
 
@@ -165,6 +168,8 @@ export function checkClaim(claim: Claim, prose: string, snapshotDir: string, cac
   if (claim.op) {
     if (!Array.isArray(got)) return `${claim.path} is not an array`;
     if (claim.op === 'length') got = got.length;
+    else if (claim.op === 'distinct')
+      got = new Set(got.map((el: Json) => String(resolvePath(el, claim.of ?? '')).normalize('NFC'))).size;
     else got = got.reduce((acc: number, el: Json) => acc + Number(resolvePath(el, claim.of ?? '') ?? 0), 0);
   }
   if (typeof claim.value === 'number' && typeof got === 'number') {
@@ -188,7 +193,8 @@ const ALWAYS_ALLOWED = new Set(['911', '811']);
  * list: that's what "source-grounded" means here.
  */
 export function unsourcedNumbers(answer: Answer): string[] {
-  const tokens = answer.prose.match(/\d+(?:[.,:\-–]\d+)*/g) ?? [];
+  // "24/7" is a phrase, not data.
+  const tokens = answer.prose.replace(/\b24\/7\b/g, '').match(/\d+(?:[.,:\-–]\d+)*/g) ?? [];
   const covered = (t: string): boolean =>
     ALWAYS_ALLOWED.has(t) || answer.allow.includes(t) || answer.claims.some((c) => c.text.includes(t));
   return [...new Set(tokens.filter((t) => !covered(t)))];
