@@ -129,8 +129,17 @@ export interface UrgencesReport {
   source: string;
   /** ISO-8601 timestamp stamped when the data was fetched (not cached). */
   fetchedAt: string;
-  /** The CSV's own `Mise_a_jour` data timestamp (e.g. "2026-08-23T15:45"). */
+  /**
+   * The CSV's own `Mise_a_jour`: when MSSS published it, Québec local time,
+   * hour zero-padded (e.g. "2026-08-23T15:45").
+   */
   dataDate: string;
+  /**
+   * When the snapshot was taken (`Heure_de_l'extraction_(image)` on that day,
+   * e.g. "2026-08-23T15:00"); MSSS publishes it about 45 minutes later.
+   * Null when the file doesn't say.
+   */
+  extractedAt: string | null;
   /** True when this report was served from the local cache, false on a live fetch. */
   cached: boolean;
   /** Cache-freshness: age of the served data in minutes. */

@@ -27,8 +27,11 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 ## Output (data contract)
 
-Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`),
-`cached`, `cacheAgeMinutes`, `regions[]`.
+Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`: when
+MSSS published the file, Québec local time, hour zero-padded), `extractedAt`
+(when the snapshot was taken, `Heure_de_l'extraction_(image)`, usually 45 min
+before `dataDate`; `null` if the file doesn't say), `cached`,
+`cacheAgeMinutes`, `regions[]`.
 
 Each `region`: `name`, `slug`, `regionCode`, `averageOccupancyPct`,
 `facilities[]`.
@@ -142,6 +145,6 @@ the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 - Source updates **hourly**; CLI caches locally for **30 min** by default (wall-clock TTL).
 - Repeated calls within the hour are cheap and return `cached: true`.
-- `--refresh` forces a fresh fetch. Note `dataDate` and `cached` when freshness matters.
+- `--refresh` forces a fresh fetch. Always give `dataDate` / `extractedAt`, and `cached`.
 - The `--baseline` file updates once per fiscal period (~4 weeks) and keeps its
   own 24 h cache, shared with `urgences-cumulatif`.

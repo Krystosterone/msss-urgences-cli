@@ -3,14 +3,16 @@
 [![CI](https://github.com/Krystosterone/msss-urgences-cli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Krystosterone/msss-urgences-cli/actions/workflows/ci.yml?query=branch%3Amain)
 
 Québec health-services open data, built for AI agents. Agent skills answer
-questions like *"which Montréal ER is calmest right now?"* or *"can I see a
-clinic doctor today instead?"*. Behind them, a deterministic CLI returns the
-Ministère de la Santé et des Services sociaux (MSSS) open-data numbers as JSON.
+questions like *"is Sainte-Justine's ER more crowded than usual tonight?"* or
+*"which clinics near Ahuntsic offer evening appointments?"*. Behind them, a
+deterministic CLI returns the Ministère de la Santé et des Services sociaux
+(MSSS) open-data numbers as JSON.
 
 - **The CLI states facts:** MSSS's numbers verbatim, plus objective metrics
   explicitly labelled `DERIVED`. It ranks and recommends nothing.
-- **The skills give the advice:** which hospital, whether now is a bad time,
-  how to word it for a person.
+- **The skills interpret:** what the numbers mean, what they can't say, and
+  how to word it for a person. They never predict a wait, and they put
+  emergencies (911, 811) first.
 
 ## For agents
 
@@ -19,13 +21,16 @@ Ministère de la Santé et des Services sociaux (MSSS) open-data numbers as JSON
 The skills live in [`.agents/skills/`](.agents/skills/). Each `SKILL.md` says
 when to use it and how to interpret the numbers. Each
 `references/cli-reference.md` is the full output contract; load it when you
-need a field's exact meaning.
+need a field's exact meaning. Every skill also carries the same
+`references/answer-standard.md`: the safety, provenance, freshness and
+uncertainty rules every answer follows. [`eval/`](eval/README.md) holds the
+benchmark questions and the checks answers are graded against.
 
 | The question | Skill | Command it runs |
 |--------------|-------|-----------------|
-| How busy is this ER or region? Which hospital should I go to? When is it usually calm? Is it worse than usual? | [`msss-urgences`](.agents/skills/msss-urgences/SKILL.md) | `urgences`, `urgences-historique` |
-| Sainte-Justine or the Montreal Children's, for a child? | [`msss-urgences-children`](.agents/skills/msss-urgences-children/SKILL.md) | `urgences --id 51222800,51223279` |
-| Are there clinic appointments today, instead of the ER? | [`msss-urgences-cliniques`](.agents/skills/msss-urgences-cliniques/SKILL.md) | `cliniques` |
+| How busy is this ER or region? How do ERs compare? When is it usually calmer? Is it worse than usual? | [`msss-urgences`](.agents/skills/msss-urgences/SKILL.md) | `urgences`, `urgences-historique` |
+| How do Sainte-Justine and the Montreal Children's compare right now? | [`msss-urgences-children`](.agents/skills/msss-urgences-children/SKILL.md) | `urgences --id 51222800,51223279` |
+| Which clinics near me usually offer appointments, and when? | [`msss-urgences-cliniques`](.agents/skills/msss-urgences-cliniques/SKILL.md) | `cliniques` |
 | How is this ER doing this fiscal year, compared with last year? | [`msss-urgences-cumulatif`](.agents/skills/msss-urgences-cumulatif/SKILL.md) | `urgences-cumulatif` |
 | How long are surgery waitlists? | [`msss-urgences-chirurgies`](.agents/skills/msss-urgences-chirurgies/SKILL.md) | `chirurgies` |
 
@@ -70,7 +75,7 @@ Without linking, run `node dist/cli.js` from the repo root.
 |---------|-----------------|-------------|---------|
 | `urgences` | Live ER occupancy, waiting patients, 24h/48h stretcher stays and length of stay, per hospital. `--baseline` adds the same hospital's fiscal-year-to-date values ("worse than usual?"). | [Situation à l'urgence, hourly file](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly |
 | `urgences-historique` | Occupancy history per hospital, by hour, weekday and hour, or day, plus the latest snapshot vs the typical level at that hour. | This repo's [archive](#data-archive-and-history-api) of the hourly file | as archived |
-| `cliniques` | Clinic appointments offered, per clinic and time slot. | [Rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | daily |
+| `cliniques` | Clinic appointments offered per day, per clinic and time slot (past dates, not current openings). | [Rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | weekly |
 | `urgences-cumulatif` | Fiscal-year-to-date ER indicators per hospital, region and province, with year-over-year change. | [Données cumulatives des urgences](https://www.donneesquebec.ca/recherche/dataset/fichier-cumulatif-des-donnees-des-urgences) | each fiscal period (~4 weeks) |
 | `chirurgies` | Surgical waitlist by region, specialty and wait time. | [Chirurgies, liste d'attente](https://www.donneesquebec.ca/recherche/dataset/chirurgies-portrait-de-la-liste-d-attente) | each fiscal period |
 | `regions` | The 18 health regions (RSS) and the spellings `--region` accepts. | built in | — |

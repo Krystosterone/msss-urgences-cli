@@ -32,8 +32,11 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 ## Output (data contract)
 
-Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`),
-`cached`, `cacheAgeMinutes`, `regions[]`. When filtering to the two ids, the
+Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`: when
+MSSS published the file, Québec local time, hour zero-padded), `extractedAt`
+(when the snapshot was taken, `Heure_de_l'extraction_(image)`, usually 45 min
+before `dataDate`; `null` if the file doesn't say), `cached`,
+`cacheAgeMinutes`, `regions[]`. When filtering to the two ids, the
 report contains the Montreal region; `regions[0].averageOccupancyPct` is the
 regional norm for context.
 
@@ -57,4 +60,4 @@ Each `facility` you care about:
 
 - Source updates **hourly**; CLI caches locally for **30 min** by default (wall-clock TTL).
 - Repeated calls within the hour return `cached: true`; `--refresh` forces fresh.
-- Note `dataDate` (the ministry's own `Mise_a_jour`) and `cached` when freshness matters.
+- Always give `dataDate` (the ministry's own `Mise_a_jour`) / `extractedAt`, and `cached`.

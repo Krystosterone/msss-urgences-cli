@@ -1,6 +1,6 @@
 ---
 name: msss-urgences-children
-description: Compare the two Montréal pediatric emergency rooms (CHU Sainte-Justine vs L'Hôpital de Montréal pour enfants) via the deterministic msss-urgences CLI and recommend the quieter one for a child. Use ONLY when the question is specifically about children's hospital ERs in Québec ("how busy are the children's ERs right now?", "which pediatric ER should we go to?").
+description: Compare live crowding at Montréal's two pediatric emergency rooms (CHU Sainte-Justine and L'Hôpital de Montréal pour enfants / Montreal Children's) via the deterministic msss-urgences CLI, and explain what the numbers do and do not mean for a family. Use ONLY when the question is specifically about these children's ERs ("how busy are the children's ERs right now?", "compare Sainte-Justine and the Children's"). It never ranks them by a fixed preference and never predicts a wait.
 version: 0.1.0
 author: Krystian
 license: MIT
@@ -8,21 +8,28 @@ license: MIT
 
 # msss-urgences-children
 
-Decide which of the two Québec children's emergency rooms to take a child to,
-using live MSSS data and the hardcoded pediatric ranking this skill owns.
+Compare current crowding at Montréal's two pediatric ERs from live MSSS data,
+for a parent who wants to understand the situation.
 
 **The seam:** the `msss-urgences` CLI returns the numbers exactly as MSSS
-publishes them (no rankings). **This skill owns the pediatric opinions** — which
-ER to rank first, what "good" means for a child — and turns the numbers into a
-recommendation.
+publishes them (no rankings). **This skill owns the interpretation** for the
+pediatric case: what each number says, what it can't say, and the summary. It
+has no preferred hospital: any ranking comes from the data, and the data can't
+say which ER will see a child sooner.
 
-> This skill is **specifically** for the children's-ER comparison. For any other
-> ER/region question, use the generic **`msss-urgences`** skill. For clinic
-> appointment availability, use **`msss-urgences-cliniques`**.
-> For how the two pediatric ERs have **trended** over fiscal years, use
+**Read [`references/answer-standard.md`](references/answer-standard.md) before
+answering.** Its §1 comes first whenever a child's symptoms are described: if
+they could be serious (very drowsy or hard to wake, trouble breathing, a
+seizure, a fever in a baby under 3 months, signs of dehydration), the answer
+starts with **911 or the nearest ER now**. Info-Santé **811** is there when
+the parent is unsure. Crowding is never a reason to drive farther or wait.
+
+> For any other ER or region question, use **`msss-urgences`**. For which
+> clinics usually offer appointments, use **`msss-urgences-cliniques`**. For
+> how the two ERs have **trended** over fiscal years, use
 > **`msss-urgences-cumulatif`** (`--id 51222800,51223279 --history`). Adding
 > `--baseline` to the query below also gives each ER's fiscal-year-to-date stay
-> (`baseline`, `vsBaseline`); interpret it per rules 6–9 of **`msss-urgences`**.
+> (`baseline`, `vsBaseline`); read it per rules 7–10 of **`msss-urgences`**.
 
 ## 1. Get the data
 
@@ -33,11 +40,13 @@ link** in the repo README. Query the two pediatric ERs, **always `--json`**:
 msss-urgences urgences --id 51222800,51223279 --json
 ```
 
-Each facility has: `id`, `name`, `occupancyPct`, `waitingForCare`, `over24h`,
-`over48h`, `available`, and `deltaFromRegionAvgPct`; the `regions[0]` entry has
-`averageOccupancyPct` (Montréal's average). `null` / `available: false` means
-not reporting right now. For the exact command contract, full field dictionary,
-exit codes, and cache/freshness semantics, see
+Each facility has: `id`, `name`, `occupancyPct`, `waitingForCare`,
+`totalPresent`, `over24h`, `over48h`, `available`, and `deltaFromRegionAvgPct`;
+the `regions[0]` entry has `averageOccupancyPct` (Montréal's average, over
+every reporting Montréal ER, adult ones included). `null` /
+`available: false` means not reporting right now. Top level: `dataDate`
+(published) and `extractedAt` (snapshot time). For the exact command contract,
+full field dictionary, exit codes, and cache/freshness semantics, see
 [`references/cli-reference.md`](references/cli-reference.md).
 
 ## 2. The two pediatric ERs (stable ids)
@@ -47,35 +56,48 @@ exit codes, and cache/freshness semantics, see
 | 51222800 | CHU Sainte-Justine (pediatric) |
 | 51223279 | L'Hôpital de Montréal pour enfants / Montreal Children's (pediatric, Glen site) |
 
-These are the only two dedicated pediatric ERs to compare. Always target them by
-permit id, never by name.
+These are Montréal's two dedicated pediatric ERs. Always target them by permit
+id, never by name. Other ERs also treat children: in an emergency, the nearest
+ER is the right one.
 
-## 3. Interpret (the pediatric opinions)
+## 3. Interpret
 
-Apply these rules in order:
-
-1. **Rank Sainte-Justine (51222800) first, Montreal Children's (51223279) second.**
-2. **Lower `occupancyPct` = quieter = better for a child.** Occupancy is the
-   derived occupied/functional ratio (it routinely exceeds 100% at busy ERs — not an error).
-3. **`over24h` / `over48h` of 0 is a good sign** (nobody stuck on a stretcher > 24h/48h).
-4. **Compare each to the Montréal `averageOccupancyPct`** — a large negative
-   `deltaFromRegionAvgPct` means much calmer than the regional norm.
-5. **`waitingForCare`** is the queue to be seen; weight it alongside occupancy.
+1. **No default order.** Present both side by side. Neither is "first".
+2. **`occupancyPct`** is how full the stretcher area is (occupied/functional;
+   over 100% at busy ERs is normal). Higher means more crowded. It says nothing
+   about how fast a child will be seen.
+3. **`waitingForCare`** counts children present who haven't seen a physician
+   yet, at every triage priority. It's not a place in line: the sickest
+   children are seen first. MSSS warns that a low count doesn't mean being seen
+   sooner.
+4. **`over24h` / `over48h`** count children on a stretcher for 24 h / 48 h or
+   more, mostly waiting for a bed upstairs. It's a sign of hospital strain.
+5. **`deltaFromRegionAvgPct`** compares each with the Montréal mean, which
+   mixes adult and pediatric ERs. Comparing the two pediatric ERs directly is
+   more meaningful.
 6. If a hospital is `available: false`, say its data isn't being reported.
+7. **"Which one should we go to?"** Apply §1 of the answer standard first. If
+   it isn't an emergency, mention 811 and the other §5 routes. Then give the
+   comparison as context, with the plain caveat that it can't predict who is
+   seen sooner. Don't choose for them.
 
 ## 4. Summarize for the human
 
-Lead with the recommendation, then the numbers, then context. Example shape:
+Lead with the comparison asked for, then the numbers, then what they can't
+tell. Example shape (no symptoms described):
 
-> **CHU Sainte-Justine is the quieter choice for a child right now.**
-> - Sainte-Justine: 94% occupancy, 19 waiting, 0 patients > 24h.
-> - Montreal Children's: 158% occupancy, 2 waiting, 4 patients > 24h.
-> - Montréal average is 104%. Sainte-Justine sits below it (Δ −10); Montreal
->   Children's is far above (Δ +54). Over 100% at a busy ER is normal.
-> - Sainte-Justine has more headroom and no one stuck on a stretcher > 24h.
+> **Right now the Montreal Children's ER is more crowded than Sainte-Justine's.**
+> - Sainte-Justine: 125% stretcher occupancy, 39 children waiting to see a
+>   physician, none on a stretcher for over 24 h.
+> - Montreal Children's: 175% occupancy, 27 waiting, 4 on a stretcher over 24 h.
+> - Children are seen by how urgent their condition is, not in arrival order,
+>   so these counts don't predict how long your child would wait.
+> - For advice on whether to come in at all, Info-Santé 811 answers 24/7.
+>
+> _MSSS hourly ER file, snapshot of 21:00, published 2026-11-04 21:45._
 
-Round nothing the CLI didn't round; quote occupancy as shown. Note the
-`dataDate` and whether the data was `cached` if freshness matters.
+Round nothing the CLI didn't round; quote occupancy as shown. Always give the
+`dataDate` / `extractedAt`, and say whether the data was `cached`.
 
 ## 5. Optional: share
 

@@ -19,9 +19,14 @@ objective derived figures: totals, % waiting over 6 and 12 months, the delta
 from the previous period, and a province-wide sum. **This skill owns the
 opinions**: which figure leads, how to compare, and how to state the limits.
 
-> This is a **planning / context** tool, not a triage tool. For anything urgent,
-> use **`msss-urgences`** (ER occupancy) or **`msss-urgences-cliniques`**
-> (same-day clinic capacity).
+**Read [`references/answer-standard.md`](references/answer-standard.md) before
+answering.** It holds the safety, provenance, freshness and uncertainty rules
+every answer follows.
+
+> This is a **planning / context** tool, not a triage tool. For ER crowding,
+> use **`msss-urgences`**; for which clinics usually offer appointments,
+> **`msss-urgences-cliniques`**. Someone worried about their health while
+> waiting for surgery should contact their surgeon's office, or 811.
 
 ## 1. Get the data
 

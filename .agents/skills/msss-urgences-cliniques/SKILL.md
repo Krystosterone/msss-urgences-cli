@@ -1,6 +1,6 @@
 ---
 name: msss-urgences-cliniques
-description: Check daily clinic appointment availability in Québec via the deterministic msss-urgences cliniques CLI and recommend primary care over the ER when openings exist. Use when asked whether clinics near a region have appointments today, or to route someone to a clinic instead of the emergency room.
+description: Describe which Québec primary-care clinics usually offer appointments, by day, time band and professional (physician or nurse), from MSSS's weekly-published count of appointments offered through the provincial booking hub, via the deterministic msss-urgences cliniques CLI, and point to the routes for getting non-urgent care. Use when asked what non-urgent consultation options exist near a place, which clinics offer evening or weekend appointments, or how clinic offer varies. It cannot say whether an appointment is free today, and it never decides whether someone needs the ER.
 version: 0.1.0
 author: Krystian
 license: MIT
@@ -8,17 +8,31 @@ license: MIT
 
 # msss-urgences-cliniques
 
-Find out whether primary-care clinics have same-day appointment capacity, using
-the MSSS daily clinic CSV, and route someone to a clinic instead of the ER when
-openings exist.
+Show which clinics in an area have been offering appointments, and when, from
+MSSS's clinic file, and point the person to the ways of actually getting a
+non-urgent consultation.
 
 **The seam:** the `msss-urgences cliniques` CLI is a deterministic *facts
-machine* — it returns offered-slot counts per clinic exactly as MSSS publishes
-them. **This skill owns the opinions**: what "has capacity" means, when to
-recommend a clinic over an ER, and the human-readable summary.
+machine*: offered-appointment counts per clinic and date, exactly as MSSS
+publishes them. **This skill owns the interpretation**: what those counts can
+and can't say, and the summary.
 
-> Use this skill for **clinic-availability** questions. For ER occupancy, use
-> **`msss-urgences`** (generic) or **`msss-urgences-children`** (pediatric).
+**Read [`references/answer-standard.md`](references/answer-standard.md) before
+answering.** For this skill, its key rules are:
+
+- **This is past data.** MSSS publishes the file **weekly** (Thursdays), up to
+  the day before. The newest date is usually 1 to 7 days old. Never say a
+  clinic "has appointments today" or "has capacity now".
+- **Offered isn't free or bookable.** The counts are appointments clinics
+  connected to the booking hub offered for a date. Some were booked, some are
+  reserved for the clinic's own patients, and clinics outside the hub aren't
+  counted at all.
+- **This data never decides between a clinic and the ER.** No offers doesn't
+  mean "go to the ER", and many offers don't mean the ER isn't needed. If symptoms
+  could be serious, 911 or the nearest ER comes first (§1). If unsure, 811.
+
+> For ER crowding, use **`msss-urgences`** (generic) or
+> **`msss-urgences-children`** (pediatric).
 
 ## 1. Get the data
 
@@ -26,58 +40,76 @@ The CLI must be built and linked onto PATH — see **Install & link** in the rep
 README. Query with **always `--json`**:
 
 ```bash
-# Capacity in a region (defaults to the latest date in the source):
+# A region (defaults to the latest date in the source):
 msss-urgences cliniques --region <name> --json
+
+# One local service network (RLS), e.g. a neighbourhood:
+msss-urgences cliniques --region montreal --rls ahuntsic --json
 
 # A specific clinic by name:
 msss-urgences cliniques --search <clinic> --json
 
-# A specific day:
-msss-urgences cliniques --date YYYY-MM-DD --region <name> --json
+# An earlier date, to see whether a pattern holds:
+msss-urgences cliniques --date YYYY-MM-DD --rls ahuntsic --json
 ```
 
 `--region` takes the same names and RSS codes as every other `msss-urgences`
-command (`montreal`, `06`) and covers all of that region's RTS sub-regions; to
-pair clinics with ERs in the same region, match a clinic's `rssCode` with the
-ER report's `regionCode`.
+command (`montreal`, `06`) and covers all of that region's RTS sub-regions.
+To pair clinics with ERs in the same region, match a clinic's `rssCode` with
+the ER report's `regionCode`.
 
 The report has `clinics[]` (each: `name`, `regionName`, `rlsName`, `rssCode`,
 `professionGroup`, `totalOffered`, and `slots` with six time bands
-`6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate` (the day the
-report is for), and `availableDates` (distinct dates present, newest first).
-`null` slots = no appointments offered in that band. For the full command
-contract, field dictionary, exit codes, and cache semantics, see
+`6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate` (the date of
+the appointments), and `availableDates` (distinct dates present, newest
+first). `null` slots = no appointments offered in that band. For the full
+command contract, field dictionary, exit codes, and cache semantics, see
 [`references/cli-reference.md`](references/cli-reference.md).
 
-## 2. Interpret (the routing opinions)
+## 2. Interpret
 
-1. **`totalOffered` > 0 means a clinic has capacity today** — that is the signal
-   to prefer it over an ER visit.
-2. **Larger `totalOffered` = more slots = better odds of being seen.** Prefer
-   clinics with the most open slots in the bands the person can use.
-3. **Consider the time band** a person can actually attend: someone free in the
-   morning should look at `6h_9h` / `9h_12h`; an evening-only schedule at
-   `18h_21h` / `21h_6h`. A clinic with capacity *in the usable band* beats one
-   with a higher total all in an unusable band.
-4. **`professionGroup` matters**: `Médecin` slots are physician appointments;
-   `Infirmière` slots are nursing. Note which is available.
-5. **Match the region/RLS to where the person is.** A clinic in a neighbouring
-   RLS may be closer than a nominally-in-region one; name the region.
+1. **The question this data answers:** "which clinics around here usually
+   offer appointments, and at what times?". Not "is there a slot for me now?".
+2. **Look at several dates before calling a pattern.** One day can be unusual,
+   and weekdays differ from weekends. Query 3–7 of the `availableDates`, ideally
+   including the same weekday as the person's need. Say how many dates you
+   looked at.
+3. **Time bands are the appointment's scheduled time.** A clinic that offered
+   `18h_21h` slots on most recent days is one that does evening appointments.
+   Don't call it open tonight.
+4. **`professionGroup`:** `Médecin` covers physicians and residents;
+   `Infirmière` covers nurses and specialized nurse practitioners. Say which.
+5. **More offers = a clinic that offers more appointments through the hub,**
+   not better odds for this person. Don't rank clinics as if it were.
+6. **Match the RLS to where the person is,** and name it. A clinic in a
+   neighbouring RLS may be closer.
+7. **Always add the routes to get care (answer standard §5):** 811 for advice,
+   a pharmacist, their own clinic or GMF, the GAP if they have no family
+   doctor, and the clinic's own booking system or Rendez-vous santé Québec to
+   find an actual slot.
 
 ## 3. Summarize for the human
 
-Lead with the recommendation, then the numbers, then context. Example shape:
+Lead with what the data shows, then the routes to care, then the limits.
+Example shape:
 
-> **There's clinic capacity in Montréal-Centre today — you can skip the ER.**
-> - GMF La Cité Verte: 6 slots (12h–18h), Médecin.
-> - Clinique médicale St-Laurent: 4 slots (9h–15h), Infirmière.
-> - Both are in the Montréal region; GMF La Cité Verte has the most physician
->   openings this afternoon.
+> **Several Ahuntsic and Montréal-Nord clinics regularly offer appointments,
+> including some in the evening.**
+> - On 2026-10-28, the latest date MSSS has published, 21 clinic/professional
+>   groups in the Ahuntsic – Montréal-Nord RLS offered appointments.
+>   District Médical offered 426 physician appointments, 25 between 18h and
+>   21h. Clinique médicale Désy and District Médical Junior also offered evening
+>   physician slots.
+> - To get one: book through Rendez-vous santé Québec or the clinic. Call
+>   Info-Santé 811 for advice, or ask a pharmacist. Without a family doctor,
+>   the GAP (Québec.ca or 811) can direct you.
+> - These are appointments offered a week ago, not openings now, and they
+>   include only clinics on the provincial booking hub.
+>
+> _MSSS "Rendez-vous en clinique" file, published weekly; data for 2026-10-28._
 
-If **no** clinic has capacity for the region/day, say so plainly and note the
-ER remains the option: "No clinic openings found for Montréal today — this is a
-case where the ER is the right choice." Always state `dataDate` (clinic data is
-**daily**, not real-time) so the reader knows the freshness.
+Always state `dataDate` and that the file is weekly, so the reader knows it's
+past data.
 
 ## 4. Optional: share
 
