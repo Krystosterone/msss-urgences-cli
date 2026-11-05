@@ -73,7 +73,7 @@ Without linking, run `node dist/cli.js` from the repo root.
 
 | Command | What it returns | MSSS source | Updated |
 |---------|-----------------|-------------|---------|
-| `urgences` | Live ER occupancy, waiting patients, 24h/48h stretcher stays and length of stay, per hospital. `--baseline` adds the same hospital's fiscal-year-to-date values ("worse than usual?"). | [Situation à l'urgence, hourly file](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly |
+| `urgences` | Live ER occupancy, waiting patients, 24h/48h stretcher stays and length of stay, per hospital, with MSSS's regional and province totals. `--baseline` adds the same hospital's fiscal-year-to-date values ("worse than usual?"). | [Situation à l'urgence, hourly file](https://www.donneesquebec.ca/recherche/dataset/fichier-horaire-des-donnees-de-la-situation-a-l-urgence) | hourly |
 | `urgences-historique` | Occupancy history per hospital, by hour, weekday and hour, or day, plus the latest snapshot vs the typical level at that hour. | This repo's [archive](#data-archive-and-history-api) of the hourly file | as archived |
 | `cliniques` | Clinic appointments offered per day, per clinic and time slot (past dates, not current openings). | [Rendez-vous en clinique](https://www.donneesquebec.ca/recherche/dataset/portrait-quotidien-des-rendez-vous-en-clinique) | weekly |
 | `urgences-cumulatif` | Fiscal-year-to-date ER indicators per hospital, region and province, with year-over-year change. | [Données cumulatives des urgences](https://www.donneesquebec.ca/recherche/dataset/fichier-cumulatif-des-donnees-des-urgences) | each fiscal period (~4 weeks) |

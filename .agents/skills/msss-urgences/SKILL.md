@@ -67,7 +67,10 @@ means the same region in every `msss-urgences` command; `msss-urgences regions
 
 Each facility in the JSON has an `id` (the stable MSSS permit number), `name`,
 `occupancyPct`, `totalPresent`, `waitingForCare`, `over24h`, `over48h`,
-`available`, and `deltaFromRegionAvgPct`; each region has `averageOccupancyPct`.
+`available`, and `deltaFromRegionAvgPct`; each region has `averageOccupancyPct`
+(the plain mean of its ERs) and `total` (MSSS's own "Total régional" row, with
+its `occupancyPct`), and the report has `province` (MSSS's "Ensemble du
+Québec" row).
 `null` metrics / `available: false` mean the hospital isn't reporting right now.
 For the exact field dictionary, all CLI flags, exit codes, and cache/freshness
 semantics, see [`references/cli-reference.md`](references/cli-reference.md) — load
@@ -98,9 +101,12 @@ For a general ER-occupancy question, apply these rules:
 2. **`over24h` / `over48h`** count patients on a stretcher for 24 h / 48 h or
    more right now, mostly people waiting for a hospital bed. They're a strain
    signal for the hospital, not a measure of the wait to be seen.
-3. **Compare each hospital's `occupancyPct` to its region's
-   `averageOccupancyPct`.** `deltaFromRegionAvgPct` says how much more or less
-   crowded it is than the regional mean right now. Set specialized ERs apart.
+3. **For the region as a whole, quote `region.total.occupancyPct`:** MSSS's
+   own regional rate, the one Québec.ca and Index Santé show, and `province`
+   for Québec. To place one hospital, compare its `occupancyPct` with the
+   region's `averageOccupancyPct`: `deltaFromRegionAvgPct` says how much more or
+   less crowded it is than the mean of its ERs. Name which one you quote ("the
+   Montréal rate", "the mean of Montréal's ERs"). Set specialized ERs apart.
 4. **`waitingForCare`** counts people present who haven't seen a physician yet,
    at every triage priority. Report it as a count. It's not a queue position.
 5. If a hospital is `available: false`, say its data isn't being reported right
@@ -159,7 +165,7 @@ For a general ER-occupancy question, apply these rules:
     not "at 15:00 exactly": a snapshot stands for that hour.
 
 More generally: lower occupancy and fewer long stays mean a less strained ER,
-not a faster visit. Always give the regional average as context so a
+not a faster visit. Always give the regional rate as context so a
 percentage means something.
 
 ## 4. Summarize for the human
@@ -170,7 +176,8 @@ can't tell. Example shape:
 > **Hôpital de Verdun's ER is less crowded than most of Montréal's right now.**
 > - Verdun: 104% stretcher occupancy, 6 people waiting to see a physician,
 >   2 on a stretcher for over 24 h.
-> - The Montréal mean is 144%, so Verdun sits well below it (Δ −40).
+> - Montréal's rate is 154% (MSSS's regional total); the mean of its ERs is
+>   144%, so Verdun sits well below it (Δ −40).
 > - These are counts, not wait times: patients are seen by triage priority,
 >   and MSSS warns a low count doesn't mean being seen sooner.
 >

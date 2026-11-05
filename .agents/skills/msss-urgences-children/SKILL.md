@@ -42,8 +42,9 @@ msss-urgences urgences --id 51222800,51223279 --json
 
 Each facility has: `id`, `name`, `occupancyPct`, `waitingForCare`,
 `totalPresent`, `over24h`, `over48h`, `available`, and `deltaFromRegionAvgPct`;
-the `regions[0]` entry has `averageOccupancyPct` (Montréal's average, over
-every reporting Montréal ER, adult ones included). `null` /
+the `regions[0]` entry has `total.occupancyPct` (MSSS's Montréal rate) and
+`averageOccupancyPct` (the plain mean of Montréal's ERs), both over every
+reporting Montréal ER, adult ones included. `null` /
 `available: false` means not reporting right now. Top level: `dataDate`
 (published) and `extractedAt` (snapshot time). For the exact command contract,
 full field dictionary, exit codes, and cache/freshness semantics, see

@@ -82,3 +82,26 @@ test('extractedAt: same day, previous day across midnight, null when malformed',
   assert.equal(extractionTime('25:00:00', '2026-11-04T21:45'), null);
   assert.equal(extractionTime('8:00:00', 'garbage'), null);
 });
+
+test('MSSS aggregate rows: Total régional per region and Ensemble du Québec', () => {
+  const { regions, province } = parseUrgences(FIXTURE);
+  const derived = withDerivedMetrics(regions);
+  const mtl = derived.find((r) => r.regionCode === '06')!;
+  assert.deepEqual(
+    [mtl.total!.stretchersFunctional, mtl.total!.stretchersOccupied, mtl.total!.over24h, mtl.total!.waitingForCare],
+    [473, 551, 199, 281],
+  );
+  assert.equal(mtl.total!.occupancyPct, 116, 'derived from the row: 551/473');
+  assert.equal(mtl.total!.dmsStretcherDisplay, '17:25');
+  // The regional rate weights by stretchers; the mean of facilities doesn't.
+  assert.notEqual(mtl.total!.occupancyPct, mtl.averageOccupancyPct);
+  // "pas d'information disponible" in every cell: a row of nulls, not zeros.
+  const mauricie = derived.find((r) => r.regionCode === '04')!;
+  assert.equal(mauricie.total!.stretchersFunctional, null);
+  assert.equal(mauricie.total!.occupancyPct, null);
+  assert.deepEqual(
+    [province!.stretchersFunctional, province!.stretchersOccupied, province!.over24h, province!.over48h, province!.totalPresent],
+    [1795, 1827, 550, 200, 3854],
+  );
+  assert.equal(province!.occupancyPct, null, 'parse leaves the derivation to derive.ts');
+});

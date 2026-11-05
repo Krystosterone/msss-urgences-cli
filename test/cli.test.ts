@@ -83,3 +83,16 @@ test('explicit ids override --available-only', async () => {
   const ids = report.regions.flatMap((r) => r.facilities.map((f) => f.id));
   assert.deepEqual(ids, ['51222800']);
 });
+
+test('report carries MSSS regional and province rates, whatever the filters, cached or not', async () => {
+  const cache = { dir: '/tmp/msss-cli-test-cache-totals-' + Date.now(), ttlMinutes: 30 };
+  const live = await fetchUrgencesReport({ fixture: FIXTURE, cache, filters: { ids: ['51222800'] } });
+  assert.equal(live.province!.occupancyPct, 102); // 1827 / 1795
+  assert.equal(live.regions[0]!.facilities.length, 1);
+  assert.equal(live.regions[0]!.total!.stretchersFunctional, 473, 'the whole region, not the filtered facility');
+  assert.equal(live.regions[0]!.total!.occupancyPct, 116);
+  const cached = await fetchUrgencesReport({ fixture: FIXTURE, cache, filters: { region: '06' } });
+  assert.equal(cached.cached, true);
+  assert.equal(cached.province!.occupancyPct, 102);
+  assert.equal(cached.regions[0]!.total!.occupancyPct, 116);
+});

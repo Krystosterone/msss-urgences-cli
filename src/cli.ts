@@ -251,7 +251,9 @@ export function formatTable(report: UrgencesReport): string {
   if (b) header.push('DMS', 'FY-DMS', 'ΔDMS%');
   header.push('ID', 'FACILITY');
   const blocks = report.regions.map((region) => {
-    const title = `${region.name} — avg ${fmtCell(region.averageOccupancyPct, '%')} · ${region.facilities.length} facilities`;
+    const title =
+      `${region.name} — MSSS regional rate ${fmtCell(region.total?.occupancyPct, '%')}` +
+      ` · mean of ERs ${fmtCell(region.averageOccupancyPct, '%')} · ${region.facilities.length} facilities`;
     const rows = region.facilities.map((f) => {
       const row = [
         fmtCell(f.occupancyPct, '%'),
@@ -272,7 +274,9 @@ export function formatTable(report: UrgencesReport): string {
   let meta =
     `source: ${report.source}\ndataDate: ${report.dataDate}` +
     `${report.extractedAt ? ` (snapshot taken ${report.extractedAt})` : ''}` +
-    ` · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}`;
+    ` · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}` +
+    `\nprovince (MSSS "Ensemble du Québec"): ${fmtCell(report.province?.occupancyPct, '%')} occupancy · ` +
+    `${fmtCell(report.province?.waitingForCare)} waiting · ${fmtCell(report.province?.over24h)} on a stretcher >24h`;
   if (b) {
     meta +=
       b.status === 'ok'

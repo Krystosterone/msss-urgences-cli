@@ -37,8 +37,11 @@ MSSS published the file, Québec local time, hour zero-padded), `extractedAt`
 (when the snapshot was taken, `Heure_de_l'extraction_(image)`, usually 45 min
 before `dataDate`; `null` if the file doesn't say), `cached`,
 `cacheAgeMinutes`, `regions[]`. When filtering to the two ids, the
-report contains the Montreal region; `regions[0].averageOccupancyPct` is the
-regional norm for context.
+report contains the Montreal region: `regions[0].total.occupancyPct` is
+MSSS's own Montréal rate (all its ERs, adult ones included, weighted by
+stretchers), `regions[0].averageOccupancyPct` the plain mean of its ERs, and
+top-level `province` MSSS's "Ensemble du Québec" row. See the `msss-urgences`
+CLI reference for these fields.
 
 Each `facility` you care about:
 

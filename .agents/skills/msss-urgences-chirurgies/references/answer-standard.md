@@ -66,11 +66,12 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 - **Not reporting isn't calm or closed.** `available: false` or `null` means
   MSSS has no number for it now, and some whole establishments stop reporting
   for months. Say "not reported".
-- **Regional averages are plain means** over the facilities reporting at that
-  moment, specialized ERs included, not weighted by size. MSSS's own regional
-  rate (total occupied ÷ total functional stretchers), which Québec.ca and Index
-  Santé show, can differ by several points: call the CLI's figure "the mean of
-  Montréal's ERs", not "Montréal's occupancy rate".
+- **Two regional figures, not one.** `region.total.occupancyPct` (and
+  `province.occupancyPct`) is MSSS's own rate: total occupied ÷ total
+  functional stretchers, the figure Québec.ca and Index Santé show.
+  `averageOccupancyPct` is the plain mean of the reporting ERs, specialized ones
+  included, and can differ by several points. Quote the rate for "how busy is
+  the region"; say "the mean of Montréal's ERs" when you use the mean.
 
 ## 3. Provenance and freshness, in every answer
 

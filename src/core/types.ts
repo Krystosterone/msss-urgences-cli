@@ -110,6 +110,26 @@ export interface UrgencesBaselineMeta {
   error?: string;
 }
 
+/**
+ * MSSS's own aggregate row for a region ("Total régional") or the province
+ * ("Ensemble du Québec"), verbatim, plus the occupancy derived from its
+ * stretcher counts. Null metrics = not published.
+ */
+export interface RegionTotal {
+  stretchersFunctional: number | null;
+  stretchersOccupied: number | null;
+  /** DERIVED: the row's occupied/functional as an integer % (MSSS's regional rate). */
+  occupancyPct: number | null;
+  over24h: number | null;
+  over48h: number | null;
+  totalPresent: number | null;
+  waitingForCare: number | null;
+  dmsStretcher: number | null;
+  dmsAmbulatory: number | null;
+  dmsStretcherDisplay: string | null;
+  dmsAmbulatoryDisplay: string | null;
+}
+
 /** A Québec administrative region and its facilities. */
 export interface Region {
   /** Display name from the CSV `Region` column (e.g. "Montréal"). */
@@ -121,6 +141,11 @@ export interface Region {
   facilities: Facility[];
   /** DERIVED (by core/derive): mean occupancyPct across available facilities. */
   averageOccupancyPct: number | null;
+  /**
+   * MSSS's "Total régional" row for the whole region, whatever facility
+   * filters apply. Null when the file has no such row.
+   */
+  total: RegionTotal | null;
 }
 
 /** Top-level report emitted by the `urgences` tool. */
@@ -145,6 +170,8 @@ export interface UrgencesReport {
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
   regions: Region[];
+  /** MSSS's "Ensemble du Québec" row: the province, whatever the filters. */
+  province: RegionTotal | null;
   /** Only with `--baseline`: what the facilities' `baseline` fields were joined from. */
   baseline?: UrgencesBaselineMeta;
 }

@@ -31,10 +31,26 @@ Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`: when
 MSSS published the file, Québec local time, hour zero-padded), `extractedAt`
 (when the snapshot was taken, `Heure_de_l'extraction_(image)`, usually 45 min
 before `dataDate`; `null` if the file doesn't say), `cached`,
-`cacheAgeMinutes`, `regions[]`.
+`cacheAgeMinutes`, `regions[]`, `province`.
 
-Each `region`: `name`, `slug`, `regionCode`, `averageOccupancyPct`,
+Each `region`: `name`, `slug`, `regionCode`, `averageOccupancyPct`
+(DERIVED: the plain mean of its reporting facilities' `occupancyPct`), `total`,
 `facilities[]`.
+
+`region.total` is MSSS's own "Total régional" row and top-level `province` its
+"Ensemble du Québec" row, verbatim. Both describe the whole region or province
+whatever `--id`, `--search` or `--available-only` keep, and are `null` when the
+file has no such row:
+
+| Field | Meaning |
+|-------|---------|
+| `stretchersFunctional` / `stretchersOccupied` | Region/province totals |
+| `occupancyPct` | DERIVED: occupied/functional as an integer %: MSSS's regional rate, the figure Québec.ca and Index Santé show. It weights big ERs more than `averageOccupancyPct` does, so the two differ |
+| `over24h`, `over48h`, `totalPresent`, `waitingForCare` | Region/province head counts |
+| `dmsStretcher` / `dmsAmbulatory` (+ `…Display`) | Previous-day mean stays for the region/province, decimal hours (HH:MM) |
+
+A region whose ERs aren't reporting has a `total` of `null` metrics (MSSS
+writes "pas d'information disponible"), not zeros.
 
 Each `facility`:
 

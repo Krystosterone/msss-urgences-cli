@@ -194,8 +194,11 @@ What the skills said before M0, why it wasn't supported, and what replaced it.
   is an unweighted mean of reporting ERs (152% for Montréal at 08:45 on
   2026-11-05). MSSS's own regional rate, which Québec.ca and Index Santé show,
   is total occupied ÷ total functional stretchers (763 ÷ 473 = 161%). The
-  parser drops MSSS's "Total régional" row. The answer standard now says not to
-  call the mean "Montréal's occupancy rate".
+  parser used to drop MSSS's "Total régional" and "Ensemble du Québec" rows.
+  `urgences` now returns them, verbatim, as `region.total` and `province`, each
+  with its derived `occupancyPct` (161% for Montréal and 130% for Québec on that
+  file). The skills quote that rate for a region and keep the mean for placing
+  one hospital.
 
 ## Safety, provenance, freshness and uncertainty: one standard
 
@@ -265,11 +268,9 @@ questions couldn't be exercised; a snapshot with weeks of history will.
 
 - Re-run the baseline in ChatGPT and Gemini, and repeat the skills run a few
   times to measure variation.
-- Decide whether to carry Québec.ca's official estimated non-priority wait.
-  It isn't in the open data, and taking it would mean reading an HTML page,
-  which this project has so far avoided.
-- Expose MSSS's own regional and provincial rows ("Total régional",
-  "Ensemble du Québec") next to the unweighted mean.
+- Québec.ca's official estimated non-priority wait stays out of the CLI
+  (decided after M0): it isn't in the open data. The skills point to the page
+  instead.
 - Differentiate on what the round-2 baseline got wrong: coverage gaps,
   comparable windows, sample sizes and checkable numbers. Access to the data
   is not the differentiator.
