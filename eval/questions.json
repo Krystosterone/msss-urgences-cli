@@ -6,7 +6,10 @@
     "skills-run2",
     "skills-var1",
     "skills-var2",
-    "skills-var3"
+    "skills-var3",
+    "skills-m1-run1",
+    "skills-m1-run2",
+    "skills-m1-run3"
   ],
   "provenance": [
     {
@@ -180,8 +183,8 @@
           "id": "no-er-inference",
           "description": "says no openings doesn't by itself mean the ER",
           "any": [
-            "doesn't mean",
-            "does not mean",
+            "doesn't (by itself |on its own |necessarily )?mean",
+            "does not (by itself |on its own |necessarily )?mean",
             "isn't a reason",
             "is not a reason"
           ]

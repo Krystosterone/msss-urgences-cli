@@ -96,7 +96,10 @@ For a general ER-occupancy question, apply these rules:
    Don't pick one from the numbers. First apply §1 of the answer standard. For
    a non-urgent problem, offer the §5 routes (811, pharmacist, clinic) as well.
    If they still want the comparison, give the indicators of the general ERs
-   near them and say plainly that the data can't predict who is seen sooner.
+   near them (every ER not in the answer standard's specialized list; with no
+   location given, the region's) and say plainly that the data can't predict
+   who is seen sooner. List them by name, not sorted by occupancy: for this
+   question the top of a sorted list reads as a pick.
    For "how long?", point to Québec.ca's official estimate (answer standard
    §2); never compute one.
 

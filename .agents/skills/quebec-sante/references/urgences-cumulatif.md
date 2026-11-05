@@ -69,7 +69,8 @@ see [`cli-urgences-cumulatif.md`](cli-urgences-cumulatif.md).
 6. **Check coverage before calling a trend.** If an aggregate's
    `change.facilityCount` ≠ 0, facilities joined or dropped out of the data, so
    its totals are **not comparable** — say so instead of reporting a drop or
-   surge. Likewise, list anything in `missingFromFiscalYear` ("no 2026-2027
+   surge. Its means and shares aren't comparable either: they describe a
+   different set of ERs. Likewise, list anything in `missingFromFiscalYear` ("no 2026-2027
    data yet for Hôpital Fleury") rather than implying it closed. It names
    whole entities only: to name the facilities behind a region's drop,
    compare `--region R --level facility --year` for both years. (`urgences

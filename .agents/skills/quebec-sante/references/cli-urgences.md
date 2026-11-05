@@ -114,6 +114,11 @@ repo (`archive/`), served by GitHub Pages at
 `--api` or `QUEBEC_SANTE_API_URL`). The window is the `--days` before the
 **latest archived snapshot**, not the wall clock. Every number is DERIVED from
 the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
+`--by` defaults to `hour`. `window.from` is `--days` back even when the archive
+starts later: `window.archiveStart` and `window.snapshots` say how much history
+there really is. `latest.occupancyPct` keeps 1 decimal (87.5) where live
+`urgences` rounds to a whole percent (88); for "right now", quote the live
+figure.
 
 ```jsonc
 {

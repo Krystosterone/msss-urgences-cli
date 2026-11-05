@@ -856,6 +856,291 @@
           "notes": "Same verdict as the other runs on this snapshot."
         }
       }
+    },
+    "skills-m1-run1": {
+      "description": "M1 unified skill, run 1 (snapshot 2026-11-05T08-45): a fresh agent with only the single quebec-sante skill (SKILL.md routing to modules) and the snapshot, as of the merge of the five skills. Same questions as skills-var1 to -var3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot. Points to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        }
+      }
+    },
+    "skills-m1-run2": {
+      "description": "M1 unified skill, run 2 (snapshot 2026-11-05T08-45): a fresh agent with only the single quebec-sante skill (SKILL.md routing to modules) and the snapshot, as of the merge of the five skills. Same questions as skills-var1 to -var3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot. Points to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        }
+      }
+    },
+    "skills-m1-run3": {
+      "description": "M1 unified skill, run 3 (snapshot 2026-11-05T08-45): a fresh agent with only the single quebec-sante skill (SKILL.md routing to modules) and the snapshot, as of the merge of the five skills. Same questions as skills-var1 to -var3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot. It assumes the ear pain from Q04, which this question doesn't mention; its warning signs are for ear pain."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot. Points to Québec.ca's official estimated non-priority wait. Lists the general ERs sorted by occupancy, least full first. Not a pick, but for \"where will I be seen fastest\" the top of a sorted list reads as one: urgences.md rule 6 now says to list them by name."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M0 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M0 runs on this snapshot."
+        }
+      }
     }
   }
 }

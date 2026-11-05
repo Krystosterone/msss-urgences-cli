@@ -99,11 +99,11 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 ## 4. Uncertainty
 
 - **History:** give the sample size (`samples`) for any slot you rely on, and
-  the archive start. Under about 3 samples a slot, say the history is too thin
-  to call a pattern. The same goes for `latest.typicalOccupancyPct` and
-  `deltaFromTypicalPct`: they rest on the other snapshots at that hour, so
-  count them (that hour's profile `samples` minus one) before calling "now"
-  unusual.
+  the archive start. With fewer than about 3 snapshots behind a value, say the
+  history is too thin to call a pattern. For a profile slot, that's its
+  `samples`. For `latest.typicalOccupancyPct` and `deltaFromTypicalPct`, it's
+  the *other* snapshots at that hour (that hour's profile `samples` minus
+  one), since the latest one is what they're compared against.
 - **Coverage:** state `missingRegions`, `baseline.unmatched`, a non-zero
   `change.facilityCount` or `missingFromFiscalYear` before giving a total or a
   trend.

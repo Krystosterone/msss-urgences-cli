@@ -3,7 +3,8 @@
 The M0 benchmark: ten representative questions, the criteria answers are
 graded on, a pinned copy of the data they're graded against, and recorded
 answers from each system compared. Results and the audit:
-[`docs/m0-benchmark.md`](../docs/m0-benchmark.md).
+[`docs/m0-benchmark.md`](../docs/m0-benchmark.md); M1's in
+[`docs/m1-benchmark.md`](../docs/m1-benchmark.md).
 
 ```bash
 npx tsx eval/grade.ts                       # grade every system in answers/
@@ -32,6 +33,7 @@ Systems recorded so far:
 | `skills-independent` | 2026-11-04T21-45 | The M0 skills, answered by a fresh agent that saw only the skills and the snapshot |
 | `skills-run2` | 2026-11-05T08-45 | The same, on the second snapshot |
 | `skills-var1` … `skills-var3` | 2026-11-05T08-45 | Three more fresh-agent runs of the skills, to measure run-to-run variation |
+| `skills-m1-run1` … `skills-m1-run3` | 2026-11-05T08-45 | Three fresh-agent runs of the single M1 `quebec-sante` skill ([`docs/m1-benchmark.md`](../docs/m1-benchmark.md)) |
 
 The round-2 systems were asked Q01 "for a Thursday morning", matching the
 snapshot's time.
@@ -94,4 +96,4 @@ what decides; it records where it overrode a flag and why.
    Save each answer as `answers/baseline-<assistant>/Qnn.md` (header `system:`
    to match) with its sources under a `## Sources` heading, and score it in
    `grades.json`.
-4. Run `npx tsx eval/grade.ts` and update `docs/m0-benchmark.md`.
+4. Run `npx tsx eval/grade.ts` and record the results in `docs/m1-benchmark.md`.
