@@ -2,7 +2,8 @@
   "snapshot": "2026-11-04T21-45",
   "mustPass": [
     "skills",
-    "skills-independent"
+    "skills-independent",
+    "skills-run2"
   ],
   "provenance": [
     {
@@ -61,7 +62,9 @@
             "a single",
             "one day",
             "24 snapshots",
-            "sample"
+            "sample",
+            "\\d+ snapshots",
+            "single snapshot"
           ]
         },
         {
@@ -114,7 +117,8 @@
           "any": [
             "triage",
             "most urgent",
-            "sickest"
+            "sickest",
+            "how urgent"
           ]
         },
         {
@@ -297,7 +301,8 @@
           "any": [
             "sample",
             "one day",
-            "24 snapshots"
+            "\\d+ snapshots",
+            "single snapshot"
           ]
         }
       ]

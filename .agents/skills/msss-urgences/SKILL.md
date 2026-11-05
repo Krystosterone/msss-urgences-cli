@@ -110,13 +110,17 @@ For a general ER-occupancy question, apply these rules:
    a non-urgent problem, offer the §5 routes (811, pharmacist, clinic) as well.
    If they still want the comparison, give the indicators of the general ERs
    near them and say plainly that the data can't predict who is seen sooner.
+   For "how long?", point to Québec.ca's official estimate (answer standard
+   §2); never compute one.
 
 **With `--baseline`** ("is this normal for this hospital?"):
 
 7. **`vsBaseline.dmsStretcherPct` answers "worse than usual?"** It compares
    yesterday's mean stretcher stay with the same hospital's fiscal-year-to-date
-   mean. Treat roughly **±10% as normal day-to-day noise**; **+25% or more** is
-   "noticeably longer than usual"; **−25% or less** is "unusually quick". Say
+   mean. Treat roughly **±10% as normal day-to-day noise**; +10% to +25% is
+   "somewhat longer than usual"; **+25% or more** is "noticeably longer than
+   usual"; **−25% or less** is "unusually quick" (−10% to −25%: "somewhat
+   quicker"). Say
    it is *yesterday's* stay (the CLI's `dmsStretcher` is previous-day data), not
    the stay of someone arriving now. Read `vsBaseline.dmsAmbulatoryPct` (walk-in
    patients, the waiting room) with the same thresholds, and report it
@@ -146,8 +150,9 @@ For a general ER-occupancy question, apply these rules:
     `samples`; with fewer than ~3 per slot (a short `--days`, or an archive that
     started recently: `window.archiveStart`), say the history is still thin.
 13. **"Is now unusual?" = `latest.deltaFromTypicalPct`.** Treat roughly ±10
-    points as normal; +20 or more is "busier than usual for this hour"; −20 or
-    less is "quieter than usual". `latest.dataDate` is the archive's latest
+    points as normal; +10 to +20 is "somewhat busier"; +20 or more is "busier
+    than usual for this hour"; −20 or less is "quieter than usual". Only once
+    enough other snapshots back the typical value (rule 12). `latest.dataDate` is the archive's latest
     snapshot, which can lag the live file by up to an hour; for "right now",
     pair it with a live `urgences` call.
 14. Hours are **Québec local time** (MSSS's `Mise_a_jour`). Say "around 15h",

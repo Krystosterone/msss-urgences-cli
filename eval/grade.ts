@@ -13,7 +13,7 @@ export interface Claim {
   file: string;
   /** Path into the JSON: `a.b[0].c[id=123].d`, `[k=v&k2=v2]` to select by fields. */
   path: string;
-  /** Expected value. Numbers compare after `round` decimals; strings exactly. */
+  /** Expected value. With `round`, numbers compare after rounding both sides; strings exactly. */
   value: number | string | boolean | null;
   round?: number;
   /** `length` compares the array's length; `sum` adds up field `of` across it. */
@@ -168,8 +168,11 @@ export function checkClaim(claim: Claim, prose: string, snapshotDir: string, cac
     else got = got.reduce((acc: number, el: Json) => acc + Number(resolvePath(el, claim.of ?? '') ?? 0), 0);
   }
   if (typeof claim.value === 'number' && typeof got === 'number') {
-    const g = claim.round === undefined ? got : roundTo(got, claim.round);
-    return g === claim.value ? null : `${claim.path} = ${got}, answer says ${claim.value}`;
+    // With `round`, `value` may be the rounded figure the prose shows or the raw one.
+    const ok =
+      got === claim.value ||
+      (claim.round !== undefined && roundTo(got, claim.round) === roundTo(claim.value, claim.round));
+    return ok ? null : `${claim.path} = ${got}, answer says ${claim.value}`;
   }
   return got === claim.value ? null : `${claim.path} = ${JSON.stringify(got)}, answer says ${JSON.stringify(claim.value)}`;
 }

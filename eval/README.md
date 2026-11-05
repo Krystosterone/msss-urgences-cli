@@ -21,10 +21,19 @@ node --import tsx --test test/eval.test.ts  # the same checks, as tests (part of
 | `grade.ts` | The automated checks |
 | `grades.json` | The manual scores on the six criteria, with notes |
 
-Systems recorded so far: `baseline` (a general-purpose assistant with web
-search only), `skills-before` (the skills as they were before M0),
-`skills` (the M0 skills) and `skills-independent` (the M0 skills, answered by
-a fresh agent that saw only the skills and the snapshot).
+Systems recorded so far:
+
+| System | Snapshot | What it is |
+|--------|----------|------------|
+| `baseline` | 2026-11-04T21-45 | A general-purpose assistant with web search; page fetches were blocked |
+| `baseline-web` | 2026-11-05T08-45 | The same, with live page access |
+| `skills-before` | 2026-11-04T21-45 | The skills as they were before M0, applied literally |
+| `skills` | 2026-11-04T21-45 | The M0 skills, answered by the reviewer |
+| `skills-independent` | 2026-11-04T21-45 | The M0 skills, answered by a fresh agent that saw only the skills and the snapshot |
+| `skills-run2` | 2026-11-05T08-45 | The same, on the second snapshot |
+
+The round-2 systems were asked Q01 "for a Thursday morning", matching the
+snapshot's time.
 
 ## The questions
 
@@ -52,8 +61,9 @@ Each answer is scored 0–2 on six criteria in `grades.json`:
 
 - **Claims.** An answer ends with a `## Claims` block: each claim pairs a
   piece of the prose (`text`) with the snapshot field it comes from (`file`,
-  `path`, `value`). The grader checks the text is in the answer and the value
-  is in the snapshot.
+  `path`, `value`, optional `round`). The grader checks the text is in the
+  answer and the value is in the snapshot. `[k=v]` selects an array element by
+  field, compared in Unicode NFC; dots inside the brackets are fine.
 - **Unsourced numbers.** Every number in the prose must sit inside a claim's
   text, the answer's `allow` list (like the 2 in "2-year-old") or be 911/811.
 - **Critical failures.** Pattern detectors for S1, S3, S4 and S6. S2 when a

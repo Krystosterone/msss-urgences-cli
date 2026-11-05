@@ -39,7 +39,7 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
   its medical record system.
 - Cadence: one row per clinic, professional group and **date** (since
   2024-01-01). MSSS republishes the file **weekly, Thursdays at 14h**, up to
-  the day before, so the newest date is usually 1 to 7 days old. It is never
+  the day before, so the newest date is 1 to 8 days old. It is never
   current availability.
 
 ## Output (data contract)

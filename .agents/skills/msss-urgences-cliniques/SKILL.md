@@ -20,8 +20,8 @@ and can't say, and the summary.
 **Read [`references/answer-standard.md`](references/answer-standard.md) before
 answering.** For this skill, its key rules are:
 
-- **This is past data.** MSSS publishes the file **weekly** (Thursdays), up to
-  the day before. The newest date is usually 1 to 7 days old. Never say a
+- **This is past data.** MSSS publishes the file **weekly** (Thursdays at 14h),
+  up to the day before. The newest date is 1 to 8 days old. Never say a
   clinic "has appointments today" or "has capacity now".
 - **Offered isn't free or bookable.** The counts are appointments clinics
   connected to the booking hub offered for a date. Some were booked, some are
@@ -79,6 +79,8 @@ command contract, field dictionary, exit codes, and cache semantics, see
    Don't call it open tonight.
 4. **`professionGroup`:** `Médecin` covers physicians and residents;
    `Infirmière` covers nurses and specialized nurse practitioners. Say which.
+   Each row is one clinic *and* group, so a clinic offering both appears
+   twice: count distinct `name`s when you say how many clinics.
 5. **More offers = a clinic that offers more appointments through the hub,**
    not better odds for this person. Don't rank clinics as if it were.
 6. **Match the RLS to where the person is,** and name it. A clinic in a
@@ -95,8 +97,8 @@ Example shape:
 
 > **Several Ahuntsic and Montréal-Nord clinics regularly offer appointments,
 > including some in the evening.**
-> - On 2026-10-28, the latest date MSSS has published, 21 clinic/professional
->   groups in the Ahuntsic – Montréal-Nord RLS offered appointments.
+> - On 2026-10-28, the latest date MSSS has published, 15 clinics in the
+>   Ahuntsic – Montréal-Nord RLS offered appointments.
 >   District Médical offered 426 physician appointments, 25 between 18h and
 >   21h. Clinique médicale Désy and District Médical Junior also offered evening
 >   physician slots.

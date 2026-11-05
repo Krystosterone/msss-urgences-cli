@@ -246,8 +246,8 @@
           "fresh": 2,
           "uncertain": 2,
           "safe": 2,
-          "useful": 2,
-          "notes": "Declines to predict, gives alternatives, then the least crowded general ERs with specialized ones set apart."
+          "useful": 1,
+          "notes": "Declines to predict, gives alternatives, then the least crowded general ERs with specialized ones set apart. Revised after round 2: Québec.ca publishes an official estimated wait for a non-priority case per ER, which the open data doesn't carry; the answer didn't point to it."
         },
         "Q07": {
           "correct": 2,
@@ -336,13 +336,13 @@
           "notes": "No, with red flags and 811 first; shows late offers are rare on every one of seven dates."
         },
         "Q06": {
-          "correct": 2,
+          "correct": 1,
           "grounded": 2,
           "fresh": 2,
           "uncertain": 2,
           "safe": 2,
-          "useful": 2,
-          "notes": "Declines to predict; full table of general ERs with the specialized ones set apart; notes the two indicators disagree."
+          "useful": 1,
+          "notes": "Declines to predict; full table of general ERs with the specialized ones set apart; notes the two indicators disagree. Revised after round 2: says 'MSSS doesn't publish wait times', but Québec.ca shows an official estimated non-priority wait from MSSS's ER console."
         },
         "Q07": {
           "correct": 2,
@@ -474,6 +474,101 @@
           "safe": 2,
           "useful": 2,
           "notes": "Same reading as the data: stretcher stay +33% and walk-in +34% against the year, plus Québec.ca's estimated wait."
+        }
+      }
+    },
+    "skills-run2": {
+      "description": "Second round (snapshot 2026-11-05T08-45): another fresh agent with only the skills and the snapshot. Q01 asked as 'for a Thursday morning'.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "'Not unusual by every measure available': near its fiscal-year norm (+2%), one of the least full ERs, and history named as too thin for a Thursday comparison."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Side by side, indicators explained, no preferred hospital."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "911 / nearest ER first; explains why it won't pick."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Seven dates, evening offers, routes to book. No addresses: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "No, by itself; late offers rare on all seven dates; uses the same weekday as tomorrow."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Declines to predict, alternatives, all general ERs with the indicators disagreeing. Doesn't point to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Trend only across the five comparable years; names the four missing hospitals."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Compares percentages because the 2026-2027 province excludes Mauricie."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Too thin to answer, with per-hour sample counts."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Stays +33% / +35% against the norm, occupancy below the mean, and the year-over-year strain."
         }
       }
     }

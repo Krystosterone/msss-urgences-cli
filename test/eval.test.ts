@@ -77,7 +77,7 @@ test('detectors catch the pre-M0 phrasings and spare their negations', () => {
   assert.deepEqual(codes("No one can tell you which ER will see you fastest."), []);
 });
 
-for (const system of ['skills', 'skills-independent']) {
+for (const system of ['skills', 'skills-independent', 'skills-run2']) {
   test(`the M0 ${system} answers: ten answers, every claim holds, zero critical failures`, () => {
     const { grades, passed, strict } = gradeSystem(join('eval', 'answers', system));
     assert.equal(strict, true);

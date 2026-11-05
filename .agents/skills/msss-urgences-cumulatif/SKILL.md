@@ -80,8 +80,9 @@ see [`references/cli-reference.md`](references/cli-reference.md).
    surge. Likewise, list anything in `missingFromFiscalYear` ("no 2026-2027
    data yet for Hôpital Fleury") rather than implying it closed. It names
    whole entities only: to name the facilities behind a region's drop,
-   compare `--region R --level facility` for both years, or use
-   `urgences --baseline`'s `baseline.unmatched`.
+   compare `--region R --level facility --year` for both years. (`urgences
+   --baseline`'s `baseline.unmatched` lists live ERs with no row this year,
+   which is often but not always the same set.)
 7. **Same window every year.** All years are cumulated April 1 → the same
    `period`; say "April to period 7" (roughly mid-October), not "the whole year".
 8. If a hospital has no entry for the latest year, re-query with

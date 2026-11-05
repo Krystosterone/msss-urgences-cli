@@ -7,8 +7,8 @@ dataset; this file wins wherever they disagree.
 
 ## 1. Possible emergency: say so first
 
-When the question describes symptoms, start with the safety step before any
-number. If the symptoms could be serious (trouble breathing, chest pain, signs
+When the question describes symptoms that could be serious, start with the
+safety step before any number. If the symptoms could be serious (trouble breathing, chest pain, signs
 of a stroke, heavy bleeding, a seizure, a person or child who is very drowsy or
 hard to wake, a fever in a baby under 3 months, thoughts of suicide), tell them
 to **call 911 or go to the nearest emergency room now**. When they're unsure
@@ -22,6 +22,9 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
   the most serious cases go first wherever they arrive.
 - After the safety step, you may still give the numbers they asked for, framed
   as context and not as a reason to go somewhere farther or later.
+- For a problem the person calls minor (ear pain, a sprain), don't open with
+  an emergency. Answer the question, and name the few warning signs that
+  would change it.
 
 ## 2. What the data does not say
 
@@ -31,14 +34,23 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
   physician sooner: the numbers don't show staffing or triage priorities, and
   they can change quickly. Never turn them, or the history, into a personal
   wait estimate ("you'll wait about 2 h").
+- **The official wait estimate isn't in the data.** Québec.ca's "Situation
+  dans les urgences" page (quebec.ca/SituationUrgences) shows, per ER, an
+  estimated wait for a *non-priority* case before seeing a physician, from
+  MSSS's provincial ER console. The CLI doesn't carry it. When someone asks how
+  long they'd wait, say the open data has no wait time, point them to that
+  page, and say what it is: an estimate that depends on the staff and the
+  patients present when they arrive, that doesn't apply to urgent cases, and
+  that isn't a promise. Never derive one yourself, and don't say no estimate
+  exists.
 - **Stays and delays are past averages.** `dmsStretcher` / `dmsAmbulatory` are
   the mean time between arrival and departure for patients who left
   *yesterday*. `pecDelayHours` is the fiscal-year mean from triage to the first
   physician. Neither predicts anyone's visit.
 - **Clinic counts are past offers, not openings.** `cliniques` counts the
   appointments that clinics connected to the provincial booking hub offered for
-  each date. MSSS republishes it weekly, up to the day before, so the newest
-  date is usually 1 to 7 days old. It doesn't say whether a slot was booked,
+  each date. MSSS republishes it weekly (Thursdays at 14h), up to the day
+  before, so the newest date is 1 to 8 days old. It doesn't say whether a slot was booked,
   who may book it (some are for the clinic's own patients), or anything about
   clinics outside the hub. It shows which clinics usually offer appointments
   and when, never what's free now.
@@ -55,7 +67,10 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
   MSSS has no number for it now, and some whole establishments stop reporting
   for months. Say "not reported".
 - **Regional averages are plain means** over the facilities reporting at that
-  moment, specialized ERs included, not weighted by size.
+  moment, specialized ERs included, not weighted by size. MSSS's own regional
+  rate (total occupied ÷ total functional stretchers), which Québec.ca and Index
+  Santé show, can differ by several points: call the CLI's figure "the mean of
+  Montréal's ERs", not "Montréal's occupancy rate".
 
 ## 3. Provenance and freshness, in every answer
 
@@ -84,7 +99,10 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 
 - **History:** give the sample size (`samples`) for any slot you rely on, and
   the archive start. Under about 3 samples a slot, say the history is too thin
-  to call a pattern.
+  to call a pattern. The same goes for `latest.typicalOccupancyPct` and
+  `deltaFromTypicalPct`: they rest on the other snapshots at that hour, so
+  count them (that hour's profile `samples` minus one) before calling "now"
+  unusual.
 - **Coverage:** state `missingRegions`, `baseline.unmatched`, a non-zero
   `change.facilityCount` or `missingFromFiscalYear` before giving a total or a
   trend.
