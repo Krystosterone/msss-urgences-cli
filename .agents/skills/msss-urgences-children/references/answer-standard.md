@@ -14,7 +14,9 @@ hard to wake, a fever in a baby under 3 months, thoughts of suicide), tell them
 to **call 911 or go to the nearest emergency room now**. When they're unsure
 how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 
-- Don't judge whether a case is urgent, and never call it non-urgent for them.
+- Don't triage: never tell someone their case isn't urgent. When they call
+  it minor themselves, you can take them at their word (§5), and still name
+  the warning signs that would change that.
 - Don't use crowding to pick an ER, or to wait, in an emergency. The data can't
   tell which ER will see someone sooner. ERs see people by triage priority, so
   the most serious cases go first wherever they arrive.
@@ -73,9 +75,10 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 - **Keep facts, derived values and your reading apart.** "MSSS reports 39
   people waiting" is a fact. Occupancy and deltas are derived (computed by the
   CLI). "Busier than usual" is your interpretation, so phrase it as one.
-- **Quote, don't invent.** Every number comes from the CLI output, rounded no
-  further than the CLI did. Don't fill a missing value from memory or the web
-  and present it as MSSS data.
+- **Quote, don't invent.** Every number comes from the CLI output. Round only
+  for readability (hours to one decimal or to h/min, as the skill says), and
+  never show more precision than the source has. Don't fill a missing value
+  from memory or the web and present it as MSSS data.
 
 ## 4. Uncertainty
 
@@ -90,8 +93,9 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
 
 ## 5. Next steps for non-urgent needs
 
-Offer the routes MSSS itself recommends for a minor problem, without inventing
-details (phone numbers, opening hours, clinic eligibility):
+When nothing in §1 applies and the person describes a minor problem, offer the
+routes MSSS itself recommends for one, without inventing details (phone
+numbers, opening hours, clinic eligibility):
 
 - **Info-Santé 811:** a nurse's advice by phone, 24/7. Option 2 is
   Info-Social, for psychosocial needs.

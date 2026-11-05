@@ -62,11 +62,16 @@ cache semantics, see [`references/cli-reference.md`](references/cli-reference.md
    signal.
 3. **Trend = `deltaFromPreviousPeriod`**, which is one fiscal period (~4 weeks).
    One period is noise. Before calling a trend, query 3–4 earlier `--period`
-   values and say so.
+   values and say so. A region's `deltaFromPreviousPeriod` is its
+   all-specialty total, even with `--specialty`: for one specialty, compare
+   that specialty's `total` across `--period` queries.
 4. **Read `missingRegions` before quoting the province.** `province` sums only
    the regions present. When a region is missing, say the provincial figure
    excludes it. `province.deltaFromPreviousPeriod` is `null` when the two
    periods cover different regions. Never compute your own delta across that gap.
+   The same goes across years: when one period lists a region in
+   `missingRegions` and the other doesn't, say the provincial change partly
+   reflects the missing region, or compare percentages or regions instead.
 5. **`null` means not published**, not zero. Say "not reported" instead of
    treating it as 0 people.
 6. **`autres`** = non-surgical interventions needing general anesthesia. Do not

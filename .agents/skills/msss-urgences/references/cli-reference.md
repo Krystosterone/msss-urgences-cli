@@ -123,7 +123,9 @@ the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 - `profile` keys: `hour` (0–23) for `--by hour`; `weekday` (ISO 1 = Monday …
   7 = Sunday), `weekdayName`, `hour` for `--by weekday-hour`; `date`
-  (YYYY-MM-DD) for `--by day`. Each row's `samples` is its snapshot count.
+  (YYYY-MM-DD) for `--by day`. Each row's `samples` is its snapshot count,
+  including snapshots where the facility wasn't reporting: a row can have
+  `samples: 1` and all-null values. Means ignore the nulls.
 - `latest.typicalOccupancyPct`: mean at the same hour over the rest of the
   window; `…SameWeekday`: same weekday and hour. `null` when there's no other
   sample.

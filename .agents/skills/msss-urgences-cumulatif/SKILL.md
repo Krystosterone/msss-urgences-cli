@@ -78,7 +78,10 @@ see [`references/cli-reference.md`](references/cli-reference.md).
    `change.facilityCount` ≠ 0, facilities joined or dropped out of the data, so
    its totals are **not comparable** — say so instead of reporting a drop or
    surge. Likewise, list anything in `missingFromFiscalYear` ("no 2026-2027
-   data yet for Hôpital Fleury") rather than implying it closed.
+   data yet for Hôpital Fleury") rather than implying it closed. It names
+   whole entities only: to name the facilities behind a region's drop,
+   compare `--region R --level facility` for both years, or use
+   `urgences --baseline`'s `baseline.unmatched`.
 7. **Same window every year.** All years are cumulated April 1 → the same
    `period`; say "April to period 7" (roughly mid-October), not "the whole year".
 8. If a hospital has no entry for the latest year, re-query with

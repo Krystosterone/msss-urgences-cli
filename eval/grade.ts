@@ -365,7 +365,9 @@ function main(): void {
   for (const dir of dirs) {
     const { grades, passed, strict } = gradeSystem(dir, root);
     const name = grades[0]?.system ?? dir;
-    process.stdout.write(`\n${name}${strict ? ' (must pass)' : ''}: ${passed ? 'PASS' : 'FAIL'}\n`);
+    const flagged = grades.filter((g) => g.critical.length).length;
+    const verdict = strict ? `must pass: ${passed ? 'PASS' : 'FAIL'}` : `reference: ${flagged} of ${grades.length} answers flagged`;
+    process.stdout.write(`\n${name} (${verdict})\n`);
     for (const g of grades) {
       const crit = g.critical.map((f) => f.code).join(',') || '-';
       process.stdout.write(

@@ -77,19 +77,21 @@ test('detectors catch the pre-M0 phrasings and spare their negations', () => {
   assert.deepEqual(codes("No one can tell you which ER will see you fastest."), []);
 });
 
-test('the M0 skills answers: ten answers, every claim holds, zero critical failures', () => {
-  const { grades, passed, strict } = gradeSystem(join('eval', 'answers', 'skills'));
-  assert.equal(strict, true);
-  assert.equal(grades.length, 10);
-  for (const g of grades) {
-    assert.deepEqual(g.critical, [], `${g.id}: critical`);
-    assert.deepEqual(g.claimsFailed, [], `${g.id}: claims`);
-    assert.deepEqual(g.unsourcedNumbers, [], `${g.id}: unsourced numbers`);
-    assert.deepEqual(g.requirementsMissed, [], `${g.id}: requirements`);
-    assert.ok(g.claimsChecked > 0, `${g.id}: has claims`);
-  }
-  assert.equal(passed, true);
-});
+for (const system of ['skills', 'skills-independent']) {
+  test(`the M0 ${system} answers: ten answers, every claim holds, zero critical failures`, () => {
+    const { grades, passed, strict } = gradeSystem(join('eval', 'answers', system));
+    assert.equal(strict, true);
+    assert.equal(grades.length, 10);
+    for (const g of grades) {
+      assert.deepEqual(g.critical, [], `${g.id}: critical`);
+      assert.deepEqual(g.claimsFailed, [], `${g.id}: claims`);
+      assert.deepEqual(g.unsourcedNumbers, [], `${g.id}: unsourced numbers`);
+      assert.deepEqual(g.requirementsMissed, [], `${g.id}: requirements`);
+      assert.ok(g.claimsChecked > 0, `${g.id}: has claims`);
+    }
+    assert.equal(passed, true);
+  });
+}
 
 test('the pre-M0 skills answers fail where the audit said they would', () => {
   const { grades } = gradeSystem(join('eval', 'answers', 'skills-before'));

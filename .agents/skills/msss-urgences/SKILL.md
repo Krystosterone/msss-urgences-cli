@@ -118,7 +118,9 @@ For a general ER-occupancy question, apply these rules:
    mean. Treat roughly **±10% as normal day-to-day noise**; **+25% or more** is
    "noticeably longer than usual"; **−25% or less** is "unusually quick". Say
    it is *yesterday's* stay (the CLI's `dmsStretcher` is previous-day data), not
-   the stay of someone arriving now.
+   the stay of someone arriving now. Read `vsBaseline.dmsAmbulatoryPct` (walk-in
+   patients, the waiting room) with the same thresholds, and report it
+   separately: the two can disagree.
 8. **Occupancy and the baseline answer different questions.** A hospital can be
    at 200% and still in line with its own norm (chronically full), or at 90%
    and well above it. Report both: "busy, but normal for it" vs "busier than it
