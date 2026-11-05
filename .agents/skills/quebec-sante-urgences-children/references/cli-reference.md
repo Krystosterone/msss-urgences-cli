@@ -1,4 +1,4 @@
-# msss-urgences-children CLI reference
+# quebec-sante-urgences-children CLI reference
 
 Loaded on demand from SKILL.md when you need the exact command contract or a
 field meaning. Keep this file why-what — the skill body owns the pediatric
@@ -7,7 +7,7 @@ opinions.
 ## Invocation
 
 ```bash
-msss-urgences urgences --id 51222800,51223279 --json
+quebec-sante urgences --id 51222800,51223279 --json
 ```
 
 | Option | Description |
@@ -40,7 +40,7 @@ before `dataDate`; `null` if the file doesn't say), `cached`,
 report contains the Montreal region: `regions[0].total.occupancyPct` is
 MSSS's own Montréal rate (all its ERs, adult ones included, weighted by
 stretchers), `regions[0].averageOccupancyPct` the plain mean of its ERs, and
-top-level `province` MSSS's "Ensemble du Québec" row. See the `msss-urgences`
+top-level `province` MSSS's "Ensemble du Québec" row. See the `quebec-sante-urgences`
 CLI reference for these fields.
 
 Each `facility` you care about:

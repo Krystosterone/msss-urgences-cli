@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import type { Clinic } from './types';
 
 export interface CacheConfig {
-  /** Cache directory. Defaults to $MSSS_URGENCES_CACHE_DIR or ~/.cache/msss-urgences. */
+  /** Cache directory. Defaults to $QUEBEC_SANTE_CACHE_DIR or ~/.cache/quebec-sante. */
   dir?: string;
   /** Max age in minutes before a cached slice is treated as stale. Default 24h (daily data). */
   ttlMinutes?: number;
@@ -18,8 +18,8 @@ const DEFAULT_TTL_MINUTES = 24 * 60;
 export function cacheDir(cfg: CacheConfig = {}): string {
   return (
     cfg.dir ??
-    process.env.MSSS_URGENCES_CACHE_DIR ??
-    join(homedir(), '.cache', 'msss-urgences')
+    process.env.QUEBEC_SANTE_CACHE_DIR ??
+    join(homedir(), '.cache', 'quebec-sante')
   );
 }
 
@@ -73,7 +73,7 @@ export function readCliniquesCache(cfg: CacheConfig = {}): CliniquesCacheEntry |
 /** Emit a one-line warning to stderr when the cache is present-but-unusable. */
 function warnCache(reason: string): void {
   try {
-    process.stderr.write(`msss-urgences: warning — ${reason}; using a live fetch instead\n`);
+    process.stderr.write(`quebec-sante: warning — ${reason}; using a live fetch instead\n`);
   } catch {
     /* never let logging break the CLI */
   }

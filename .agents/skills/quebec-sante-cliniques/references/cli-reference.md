@@ -1,4 +1,4 @@
-# msss-urgences cliniques CLI reference
+# quebec-sante cliniques CLI reference
 
 Loaded on demand from SKILL.md when you need the exact command contract or a
 field meaning. The skill body owns the interpretation.
@@ -6,12 +6,12 @@ field meaning. The skill body owns the interpretation.
 ## Invocation
 
 ```bash
-msss-urgences cliniques [options]
+quebec-sante cliniques [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | An RSS region by name, alias or code (`montreal`, `06`) — all of its RTS sub-regions; otherwise one RTS by code (`061`) or name substring (`Montérégie-Est`). Same spellings in every command (`msss-urgences regions` lists them) |
+| `--region <name\|code>` | An RSS region by name, alias or code (`montreal`, `06`) — all of its RTS sub-regions; otherwise one RTS by code (`061`) or name substring (`Montérégie-Est`). Same spellings in every command (`quebec-sante regions` lists them) |
 | `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
 | `--date <YYYY-MM-DD>` | The date to report; default = the latest date present in the source |
@@ -66,7 +66,7 @@ Each `clinic`:
 
 - Source is a large multi-year time-series, one row per date; the CLI caches the **parsed**
   slice (not the raw megabyte CSV), keyed on the source `date`, under
-  `MSSS_URGENCES_CACHE_DIR` (default `~/.cache/msss-urgences`).
+  `QUEBEC_SANTE_CACHE_DIR` (default `~/.cache/quebec-sante`).
 - Default TTL 24h (the dataset updates weekly); `--refresh` forces a fresh fetch.
 - The data is **past**, not real-time: always state `dataDate` and that the
   file is weekly.

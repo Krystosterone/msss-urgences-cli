@@ -22,7 +22,7 @@ test('live --baseline joins the hourly file with the cumulative file on permit n
   skip: !process.env.RUN_LIVE,
 }, async () => {
   const report = await fetchUrgencesReport({
-    cache: { dir: '/tmp/msss-urgences-baseline-live-test', refresh: true },
+    cache: { dir: '/tmp/quebec-sante-baseline-live-test', refresh: true },
     baseline: true,
   });
   assert.equal(report.baseline!.status, 'ok', report.baseline!.error);

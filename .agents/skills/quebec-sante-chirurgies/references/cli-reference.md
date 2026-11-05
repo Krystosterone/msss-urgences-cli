@@ -1,4 +1,4 @@
-# msss-urgences chirurgies CLI reference
+# quebec-sante chirurgies CLI reference
 
 Loaded on demand from SKILL.md when you need the exact command contract or a
 field meaning. The skill body owns the interpretation.
@@ -6,12 +6,12 @@ field meaning. The skill body owns the interpretation.
 ## Invocation
 
 ```bash
-msss-urgences chirurgies [options]
+quebec-sante chirurgies [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `RSS06`, `06`, `6`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`msss-urgences regions` lists them) |
+| `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `RSS06`, `06`, `6`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`quebec-sante regions` lists them) |
 | `--specialty <name>` | Specialties by label or key (accent-insensitive substring), e.g. `ortho`, `gynécologie`. `chirurgie` matches six of them |
 | `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04`; default = latest in the source |
 | `--refresh` | Force a fresh fetch, ignoring the local cache |
@@ -77,8 +77,8 @@ delta is `null` when the previous period covers a different set of regions.
 ## Freshness & cache
 
 - The whole history (~4k rows, ~250 KB) is parsed once and cached as JSON
-  (`chirurgies-waitlist.json`) under `MSSS_URGENCES_CACHE_DIR` (default
-  `~/.cache/msss-urgences`). Every `--period` is then served from that one cache.
+  (`chirurgies-waitlist.json`) under `QUEBEC_SANTE_CACHE_DIR` (default
+  `~/.cache/quebec-sante`). Every `--period` is then served from that one cache.
 - Default TTL 24h. The source changes about every 4 weeks, on no fixed day.
   `--refresh` forces a fetch.
 - A corrupt cache file prints one warning and falls back to a live fetch.

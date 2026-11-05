@@ -1,18 +1,18 @@
 ---
-name: msss-urgences-cliniques
-description: Describe which Québec primary-care clinics usually offer appointments, by day, time band and professional (physician or nurse), from MSSS's weekly-published count of appointments offered through the provincial booking hub, via the deterministic msss-urgences cliniques CLI, and point to the routes for getting non-urgent care. Use when asked what non-urgent consultation options exist near a place, which clinics offer evening or weekend appointments, or how clinic offer varies. It cannot say whether an appointment is free today, and it never decides whether someone needs the ER.
+name: quebec-sante-cliniques
+description: Describe which Québec primary-care clinics usually offer appointments, by day, time band and professional (physician or nurse), from MSSS's weekly-published count of appointments offered through the provincial booking hub, via the deterministic quebec-sante cliniques CLI, and point to the routes for getting non-urgent care. Use when asked what non-urgent consultation options exist near a place, which clinics offer evening or weekend appointments, or how clinic offer varies. It cannot say whether an appointment is free today, and it never decides whether someone needs the ER.
 version: 0.1.0
 author: Krystian
 license: MIT
 ---
 
-# msss-urgences-cliniques
+# quebec-sante-cliniques
 
 Show which clinics in an area have been offering appointments, and when, from
 MSSS's clinic file, and point the person to the ways of actually getting a
 non-urgent consultation.
 
-**The seam:** the `msss-urgences cliniques` CLI is a deterministic *facts
+**The seam:** the `quebec-sante cliniques` CLI is a deterministic *facts
 machine*: offered-appointment counts per clinic and date, exactly as MSSS
 publishes them. **This skill owns the interpretation**: what those counts can
 and can't say, and the summary.
@@ -31,8 +31,8 @@ answering.** For this skill, its key rules are:
   mean "go to the ER", and many offers don't mean the ER isn't needed. If symptoms
   could be serious, 911 or the nearest ER comes first (§1). If unsure, 811.
 
-> For ER crowding, use **`msss-urgences`** (generic) or
-> **`msss-urgences-children`** (pediatric).
+> For ER crowding, use **`quebec-sante-urgences`** (generic) or
+> **`quebec-sante-urgences-children`** (pediatric).
 
 ## 1. Get the data
 
@@ -41,19 +41,19 @@ README. Query with **always `--json`**:
 
 ```bash
 # A region (defaults to the latest date in the source):
-msss-urgences cliniques --region <name> --json
+quebec-sante cliniques --region <name> --json
 
 # One local service network (RLS), e.g. a neighbourhood:
-msss-urgences cliniques --region montreal --rls ahuntsic --json
+quebec-sante cliniques --region montreal --rls ahuntsic --json
 
 # A specific clinic by name:
-msss-urgences cliniques --search <clinic> --json
+quebec-sante cliniques --search <clinic> --json
 
 # An earlier date, to see whether a pattern holds:
-msss-urgences cliniques --date YYYY-MM-DD --rls ahuntsic --json
+quebec-sante cliniques --date YYYY-MM-DD --rls ahuntsic --json
 ```
 
-`--region` takes the same names and RSS codes as every other `msss-urgences`
+`--region` takes the same names and RSS codes as every other `quebec-sante`
 command (`montreal`, `06`) and covers all of that region's RTS sub-regions.
 To pair clinics with ERs in the same region, match a clinic's `rssCode` with
 the ER report's `regionCode`.

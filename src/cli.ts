@@ -29,10 +29,10 @@ import type { CumulatifEntry, CumulatifLevel, UrgencesCumulatifReport } from './
 declare const require: ((id: string) => { version: string }) & { main?: NodeJS.Module };
 const VERSION: string = require('../package.json').version;
 
-const HELP = `msss-urgences — deterministic data from MSSS open-data CSVs
+const HELP = `quebec-sante — deterministic data from MSSS open-data CSVs
 
 Usage:
-  msss-urgences <command> [options]
+  quebec-sante <command> [options]
 
 Commands:
   urgences    Live Québec ER occupancy/wait data (MSSS hourly CSV)
@@ -52,16 +52,16 @@ Global options:
   -h, --help      Show this help
   -v, --version   Show version
 
-Run "msss-urgences <command> --help" for command options.
+Run "quebec-sante <command> --help" for command options.
 `;
 
-const URGENCES_HELP = `msss-urgences urgences — Québec ER occupancy/wait data (MSSS hourly CSV)
+const URGENCES_HELP = `quebec-sante urgences — Québec ER occupancy/wait data (MSSS hourly CSV)
 
 Usage:
-  msss-urgences urgences [options]
+  quebec-sante urgences [options]
 
 Options:
-  --region <name|code> Filter to a region (name, alias or RSS code; see "msss-urgences regions"),
+  --region <name|code> Filter to a region (name, alias or RSS code; see "quebec-sante regions"),
                       e.g. "montreal", "06"
   --id <n[,n...]>     Filter to facility id(s) (MSSS permit number); repeatable or comma-separated
   --search <text>     Filter facilities by name (accent-insensitive substring)
@@ -78,19 +78,19 @@ Options:
   -h, --help          Show this help
 
 Examples:
-  msss-urgences urgences --region montreal --table
-  msss-urgences urgences --id 51222800,51223279 --json
-  msss-urgences urgences --region 06 --baseline --table
+  quebec-sante urgences --region montreal --table
+  quebec-sante urgences --id 51222800,51223279 --json
+  quebec-sante urgences --region 06 --baseline --table
 `;
 
-const CLINIQUES_HELP = `msss-urgences cliniques — clinic appointments offered per day and time slot (MSSS)
+const CLINIQUES_HELP = `quebec-sante cliniques — clinic appointments offered per day and time slot (MSSS)
 
 The counts are appointments clinics connected to the provincial booking hub
 offered for each past date. MSSS republishes the file weekly (Thursdays), up to
 the day before; it does not say which slots are still free, or bookable now.
 
 Usage:
-  msss-urgences cliniques [options]
+  quebec-sante cliniques [options]
 
 Options:
   --region <name|code> Filter to an RSS region (name, alias or code, e.g. "montreal", "06": all
@@ -106,11 +106,11 @@ Options:
   -h, --help          Show this help
 
 Examples:
-  msss-urgences cliniques --region montreal --table
-  msss-urgences cliniques --search "Sainte-Justine" --json
+  quebec-sante cliniques --region montreal --table
+  quebec-sante cliniques --search "Sainte-Justine" --json
 `;
 
-const CUMULATIF_HELP = `msss-urgences urgences-cumulatif — fiscal-year-to-date ER indicators and
+const CUMULATIF_HELP = `quebec-sante urgences-cumulatif — fiscal-year-to-date ER indicators and
 year-over-year trends (MSSS cumulative CSV, updated each fiscal period)
 
 Each row is cumulated from April 1 through the latest validated fiscal period;
@@ -118,7 +118,7 @@ every fiscal year in the file is cumulated through the same period, so years
 compare like-for-like.
 
 Usage:
-  msss-urgences urgences-cumulatif [options]
+  quebec-sante urgences-cumulatif [options]
 
 Options:
   --region <name|code>  Filter to a region by name, alias or RSS code, e.g. "montreal" or "06"
@@ -137,18 +137,18 @@ Options:
   -h, --help            Show this help
 
 Examples:
-  msss-urgences urgences-cumulatif --region montreal --table
-  msss-urgences urgences-cumulatif --id 51222800,51223279 --history --json
-  msss-urgences urgences-cumulatif --level province,region --json
+  quebec-sante urgences-cumulatif --region montreal --table
+  quebec-sante urgences-cumulatif --id 51222800,51223279 --history --json
+  quebec-sante urgences-cumulatif --level province,region --json
 `;
 
-const CHIRURGIES_HELP = `msss-urgences chirurgies — surgical waitlist (MSSS, updated each fiscal period)
+const CHIRURGIES_HELP = `quebec-sante chirurgies — surgical waitlist (MSSS, updated each fiscal period)
 
 Patients waiting for an operating-room intervention, by region (RSS), specialty
 and wait time since the decision to operate (0-6 months, 6-12 months, >1 year).
 
 Usage:
-  msss-urgences chirurgies [options]
+  quebec-sante chirurgies [options]
 
 Options:
   --region <name|code> Filter to a region by name, alias or RSS code ("montreal", "RSS06", "06")
@@ -164,12 +164,12 @@ Options:
 Specialties: ${CHIRURGIE_SPECIALTIES.map((s) => s.key).join(', ')}
 
 Examples:
-  msss-urgences chirurgies --region montreal --table
-  msss-urgences chirurgies --specialty ortho --json
-  msss-urgences chirurgies --region RSS03 --period 2627-P01 --json
+  quebec-sante chirurgies --region montreal --table
+  quebec-sante chirurgies --specialty ortho --json
+  quebec-sante chirurgies --region RSS03 --period 2627-P01 --json
 `;
 
-const REGIONS_HELP = `msss-urgences regions — Québec health regions (RSS) shared by every command
+const REGIONS_HELP = `quebec-sante regions — Québec health regions (RSS) shared by every command
 
 Lists the 18 régions sociosanitaires with their two-digit code, official name,
 slug and accepted aliases, plus how each dataset writes the code. Static: no
@@ -177,7 +177,7 @@ network. Every command's --region accepts any of these spellings, a 1–2 digit
 code ("6", "06", "RSS06") or an unambiguous prefix of the name ("laurent").
 
 Usage:
-  msss-urgences regions [options]
+  quebec-sante regions [options]
 
 Options:
   --region <name|code>  Show only the region this input resolves to (exit 2 if none)
@@ -186,8 +186,8 @@ Options:
   -h, --help            Show this help
 
 Examples:
-  msss-urgences regions --table
-  msss-urgences regions --region "bas-st-laurent" --json
+  quebec-sante regions --table
+  quebec-sante regions --region "bas-st-laurent" --json
 `;
 
 /** JSON shape of one `regions` entry. */
@@ -430,7 +430,7 @@ function formatChirurgiesTable(report: ChirurgiesReport): string {
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
-const HISTORIQUE_HELP = `msss-urgences urgences-historique — ER occupancy history (archived hourly snapshots)
+const HISTORIQUE_HELP = `quebec-sante urgences-historique — ER occupancy history (archived hourly snapshots)
 
 Reads the static history API built from the hourly MSSS ER snapshots archived in
 this repo (archive/), served by GitHub Pages. The window ends at the latest
@@ -438,7 +438,7 @@ archived snapshot; hours are Québec local time (MSSS's Mise_a_jour). Every
 figure is a DERIVED mean/min/max over the snapshots in the window.
 
 Usage:
-  msss-urgences urgences-historique [options]
+  quebec-sante urgences-historique [options]
 
 Options:
   --region <name|code> Filter to a region (name, alias or RSS code), e.g. "montreal", "06"
@@ -446,7 +446,7 @@ Options:
   --search <text>      Filter facilities by name (accent-insensitive substring)
   --days <n>           Window length in days, ending at the latest snapshot (default ${HISTORY_DEFAULT_DAYS})
   --by <grouping>      Profile grouping: hour (default), weekday-hour, or day
-  --api <url>          History API base (default $MSSS_URGENCES_API_URL, else
+  --api <url>          History API base (default $QUEBEC_SANTE_API_URL, else
                        https://krystosterone.github.io/quebec-sante-cli/api/v1)
   --refresh            Re-fetch the index and the current month (complete months stay cached)
   --ttl <minutes>      Cache TTL for the index and the current month (default ${HISTORY_DEFAULT_TTL_MINUTES})
@@ -456,9 +456,9 @@ Options:
   -h, --help           Show this help
 
 Examples:
-  msss-urgences urgences-historique --id 51222800 --by weekday-hour --json
-  msss-urgences urgences-historique --region montreal --days 7 --table
-  msss-urgences urgences-historique --search "sainte-justine" --by day --days 90 --json
+  quebec-sante urgences-historique --id 51222800 --by weekday-hour --json
+  quebec-sante urgences-historique --region montreal --days 7 --table
+  quebec-sante urgences-historique --search "sainte-justine" --by day --days 90 --json
 `;
 
 function profileLabel(row: UrgencesHistoriqueReport['facilities'][number]['profile'][number]): string {
@@ -860,7 +860,7 @@ function runRegions(values: Record<string, unknown>, positionals: string[]): num
     if (!r) {
       process.stderr.write(
         `usage error: "${values.region}" does not name exactly one region. ` +
-          `Run "msss-urgences regions --table" for the accepted spellings.\n`,
+          `Run "quebec-sante regions --table" for the accepted spellings.\n`,
       );
       return 2;
     }

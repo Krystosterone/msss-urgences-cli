@@ -1,17 +1,17 @@
 ---
-name: msss-urgences
-description: Report live Québec emergency-room crowding (stretcher occupancy, people waiting to see a physician, 24h/48h stretcher stays) for any hospital or region via the deterministic msss-urgences CLI, compare it with the hospital's own norm and history, and explain what the numbers do and do not mean. Use when asked how busy an ER is, how ERs compare, whether it is worse than usual, or when it is usually calmer ("how busy is the ER at Verdun right now?", "which Montréal ERs are most crowded?"). It never predicts a personal wait time.
+name: quebec-sante-urgences
+description: Report live Québec emergency-room crowding (stretcher occupancy, people waiting to see a physician, 24h/48h stretcher stays) for any hospital or region via the deterministic quebec-sante CLI, compare it with the hospital's own norm and history, and explain what the numbers do and do not mean. Use when asked how busy an ER is, how ERs compare, whether it is worse than usual, or when it is usually calmer ("how busy is the ER at Verdun right now?", "which Montréal ERs are most crowded?"). It never predicts a personal wait time.
 version: 0.1.0
 author: Krystian
 license: MIT
 ---
 
-# msss-urgences
+# quebec-sante-urgences
 
 Get live Québec ER data from the MSSS hourly open-data CSV and explain it in
 plain language, for **any** hospital or region.
 
-**The seam:** the `msss-urgences` CLI is a deterministic *facts machine* — it
+**The seam:** the `quebec-sante` CLI is a deterministic *facts machine* — it
 returns the numbers exactly as MSSS publishes them, plus objective derived
 metrics (regional average, delta-from-average). **This skill owns the
 interpretation**: what the numbers say about crowding, what they can't say, and
@@ -24,45 +24,45 @@ every answer follows. In short: possible emergency → 911 / nearest ER first;
 occupancy is not a wait time; always give the data's time and source.
 
 > For the **two pediatric ERs** (Sainte-Justine, Montreal Children's), use
-> **`msss-urgences-children`**. For **which clinics usually offer
-> appointments**, use **`msss-urgences-cliniques`** (its data is past offers,
+> **`quebec-sante-urgences-children`**. For **which clinics usually offer
+> appointments**, use **`quebec-sante-cliniques`** (its data is past offers,
 > not openings today).
 > For **trends** (this fiscal year vs previous years: average stay, delay to
-> physician, 24h+ stretcher stays), use **`msss-urgences-cumulatif`**. For
+> physician, 24h+ stretcher stays), use **`quebec-sante-urgences-cumulatif`**. For
 > **surgical waitlists** (elective surgery, by region/specialty), use
-> **`msss-urgences-chirurgies`**.
+> **`quebec-sante-chirurgies`**.
 > This generic skill is for every other ER question.
 
 ## 1. Get the data
 
 The CLI must be built and, ideally, linked onto your PATH — see **Install &
-link** in the repo README. Once linked you can call `msss-urgences` from
+link** in the repo README. Once linked you can call `quebec-sante` from
 anywhere; if it isn't linked, run `node dist/cli.js` from the repo root instead.
 
 Query it — **always use `--json`** so you parse structured data, not a table:
 
 ```bash
 # A specific hospital by its stable id (MSSS permit number):
-msss-urgences urgences --id <permit> --json
+quebec-sante urgences --id <permit> --json
 
 # A whole region (accent-insensitive name or slug):
-msss-urgences urgences --region montreal --json
+quebec-sante urgences --region montreal --json
 
 # All facilities in your region matching a name:
-msss-urgences urgences --region montreal --search "verdun" --json
+quebec-sante urgences --region montreal --search "verdun" --json
 
 # Everything currently reporting data:
-msss-urgences urgences --available-only --json
+quebec-sante urgences --available-only --json
 
 # "Is it worse than usual?" — add each hospital's fiscal-year-to-date baseline:
-msss-urgences urgences --region montreal --baseline --json
+quebec-sante urgences --region montreal --baseline --json
 
 # "When is it usually least busy?" — occupancy history from the archived hourly snapshots:
-msss-urgences urgences-historique --id <permit> --by weekday-hour --days 28 --json
+quebec-sante urgences-historique --id <permit> --by weekday-hour --days 28 --json
 ```
 
 `--region` takes a name, an alias or an RSS code (`montreal`, `mtl`, `06`) and
-means the same region in every `msss-urgences` command; `msss-urgences regions
+means the same region in every `quebec-sante` command; `quebec-sante regions
 --json` lists them.
 
 Each facility in the JSON has an `id` (the stable MSSS permit number), `name`,
@@ -82,7 +82,7 @@ Target a specific hospital by its **stable MSSS permit number** (`id`), never
 by name. To find one, query its region with `--json` and read the `id` field:
 
 ```bash
-msss-urgences urgences --region <name> --json
+quebec-sante urgences --region <name> --json
 ```
 
 Common ids (for convenience): CHU Sainte-Justine `51222800`,

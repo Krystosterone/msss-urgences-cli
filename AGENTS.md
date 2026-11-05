@@ -18,14 +18,14 @@ republisher indexsante.ca).
 ```bash
 npm install
 npm run build          # compiles src/ -> dist/
-npm link               # put `msss-urgences` on PATH (agents + you); undo: npm unlink -g quebec-sante-cli
-msss-urgences urgences --region montreal --json
-msss-urgences cliniques --region montreal --json
-msss-urgences urgences-cumulatif --region montreal --json
-msss-urgences chirurgies --region montreal --json
-msss-urgences urgences --region 06 --baseline --json   # live ER joined with fiscal-year-to-date values
-msss-urgences regions --json                           # region codes/aliases accepted by --region
-msss-urgences urgences-historique --region 06 --by weekday-hour --json  # history from the archived snapshots
+npm link               # put `quebec-sante` on PATH (agents + you); undo: npm unlink -g quebec-sante-cli
+quebec-sante urgences --region montreal --json
+quebec-sante cliniques --region montreal --json
+quebec-sante urgences-cumulatif --region montreal --json
+quebec-sante chirurgies --region montreal --json
+quebec-sante urgences --region 06 --baseline --json   # live ER joined with fiscal-year-to-date values
+quebec-sante regions --json                           # region codes/aliases accepted by --region
+quebec-sante urgences-historique --region 06 --by weekday-hour --json  # history from the archived snapshots
 ```
 
 During development, skip the build and run TypeScript directly:
@@ -40,12 +40,12 @@ During development, skip the build and run TypeScript directly:
 ```bash
 npm test               # deterministic suite against test/fixtures/*.csv
 RUN_LIVE=1 npm test    # also runs the opt-in live network smoke tests (all four tools)
-MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv msss-urgences urgences --json  # offline urgences
-MSSS_URGENCES_FIXTURE=test/fixtures/rdvoffert_DOuv.csv msss-urgences cliniques --json   # offline cliniques
-MSSS_URGENCES_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences-cumulatif --json  # offline cumulatif
-MSSS_URGENCES_FIXTURE=test/fixtures/Chirurgie_ListeAttente.csv msss-urgences chirurgies --json  # offline chirurgies
-MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv MSSS_URGENCES_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences --baseline --json  # offline --baseline
-npx tsx scripts/build-api.ts site && MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --json  # offline history, from this clone's archive/
+QUEBEC_SANTE_FIXTURE=test/fixtures/urgences_nbpers.csv quebec-sante urgences --json  # offline urgences
+QUEBEC_SANTE_FIXTURE=test/fixtures/rdvoffert_DOuv.csv quebec-sante cliniques --json   # offline cliniques
+QUEBEC_SANTE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv quebec-sante urgences-cumulatif --json  # offline cumulatif
+QUEBEC_SANTE_FIXTURE=test/fixtures/Chirurgie_ListeAttente.csv quebec-sante chirurgies --json  # offline chirurgies
+QUEBEC_SANTE_FIXTURE=test/fixtures/urgences_nbpers.csv QUEBEC_SANTE_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv quebec-sante urgences --baseline --json  # offline --baseline
+npx tsx scripts/build-api.ts site && QUEBEC_SANTE_API_FIXTURE=site/api/v1 quebec-sante urgences-historique --json  # offline history, from this clone's archive/
 ```
 
 Skill or answer-standard changes: `npm test` includes `test/skills.test.ts`
@@ -58,7 +58,7 @@ Node's built-in `fetch` ignores `HTTPS_PROXY`; behind a proxy run live fetches
 with `NODE_USE_ENV_PROXY=1` (Node ≥ 22.21).
 
 To force a live fetch past the cache, add `--refresh` to any command (e.g.
-`msss-urgences urgences-cumulatif --refresh`).
+`quebec-sante urgences-cumulatif --refresh`).
 
 ## CI
 
@@ -76,10 +76,10 @@ behind `RUN_LIVE=1`. Actions is free only while the repo is public.
 
 ## Env
 
-See `.env.example`. Slots: `MSSS_URGENCES_CACHE_DIR` (default
-`~/.cache/msss-urgences`); `MSSS_URGENCES_BASELINE_FIXTURE` (local cumulative
-CSV for `urgences --baseline`, offline runs only); `MSSS_URGENCES_API_URL`
-(history API base for `urgences-historique`); `MSSS_URGENCES_API_FIXTURE` (local
+See `.env.example`. Slots: `QUEBEC_SANTE_CACHE_DIR` (default
+`~/.cache/quebec-sante`); `QUEBEC_SANTE_BASELINE_FIXTURE` (local cumulative
+CSV for `urgences --baseline`, offline runs only); `QUEBEC_SANTE_API_URL`
+(history API base for `urgences-historique`); `QUEBEC_SANTE_API_FIXTURE` (local
 API directory, offline runs). No secrets.
 
 ## Scheduled job / databases
