@@ -82,12 +82,14 @@ cache semantics, see [`references/cli-reference.md`](references/cli-reference.md
 Always say, briefly:
 
 - Counts come from a **snapshot at the end of the fiscal period** (`dataDate`),
-  not from today. The data is published 13 times a year.
+  not from today. The data is published 13 times a year, and the latest
+  period can be several months old: say so (period 4 ends in late July).
 - Wait time starts at **the surgeon's decision to operate**. Time spent getting a
   family doctor or a specialist appointment is not measured.
 - These are **regional aggregates**. They are not per-hospital and they do not
   predict any one person's wait. Their surgeon's office is the authority on that.
-- Cardiac and cardio-thoracic surgery are only **partially** covered by the
+- When the question covers all specialties, or cardiac or vascular surgery:
+  cardiac and cardio-thoracic surgery are only **partially** covered by the
   source system (SIMASS).
 
 ## 4. Summarize for the human

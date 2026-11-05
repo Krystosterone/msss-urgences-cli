@@ -571,6 +571,291 @@
           "notes": "Stays +33% / +35% against the norm, occupancy below the mean, and the year-over-year strain."
         }
       }
+    },
+    "skills-var1": {
+      "description": "Variation run 1 (snapshot 2026-11-05T08-45, with region.total / province): a fresh agent with the skills as of the round-2 fixes and the snapshot only. Same prompt as skills-run2.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot. Points to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        }
+      }
+    },
+    "skills-var2": {
+      "description": "Variation run 2 (snapshot 2026-11-05T08-45, with region.total / province): a fresh agent with the skills as of the round-2 fixes and the snapshot only. Same prompt as skills-run2.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot. Points to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        }
+      }
+    },
+    "skills-var3": {
+      "description": "Variation run 3 (snapshot 2026-11-05T08-45, with region.total / province): a fresh agent with the skills as of the round-2 fixes and the snapshot only. Same prompt as skills-run2.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot. Points to Québec.ca's official estimated non-priority wait."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the other runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the other runs on this snapshot."
+        }
+      }
     }
   }
 }

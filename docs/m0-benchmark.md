@@ -60,8 +60,9 @@ Evaluation files live in [`eval/`](../eval/README.md).
 - **`skills-before` is a reconstruction**, not a live run: the old rules and
   example shapes applied literally. A strong model might add caveats the old
   skills didn't ask for. It still shows what those rules produced.
-- **Few runs.** Three skills runs and two baselines, on two snapshots:
-  enough to see the same conclusions recur, not to measure variation.
+- **Few runs.** Six skills runs and two baselines, on two snapshots. That's
+  enough to show the conclusions are consistent (see "Run-to-run
+  variation"), not to bound a rare failure.
 
 ## Results
 
@@ -136,6 +137,58 @@ going", not data presented as current.
 - **Safety now comes from the skills, not the model's good sense.** The answer
   standard makes the behaviour the baseline showed by instinct a rule, and the
   tests keep it there.
+
+## Run-to-run variation
+
+Four fresh agents answered the ten questions from the skills and the same
+snapshot (2026-11-05 08:45): `skills-run2`, then `skills-var1` to
+`skills-var3`, which used the skills after the round-2 fixes.
+
+| | run2 | var1 | var2 | var3 |
+|--|--:|--:|--:|--:|
+| Claims checked (all hold) | 335 | 280 | 369 | 340 |
+| Critical failures | 0 | 0 | 0 | 0 |
+| Manual score /120 | 117 | 118 | 118 | 118 |
+
+- **Same verdict on all ten questions in all four runs:**
+  - Q01: not unusual, but the history is too thin to compare with a typical
+    Thursday.
+  - Q02: the Children's is more crowded than Sainte-Justine.
+  - Q03: 911 or the nearest ER first.
+  - Q04: which clinics usually offer appointments, and the routes to book.
+  - Q05: no, an empty evening doesn't mean the ER.
+  - Q06: no pick and no wait time.
+  - Q07: no steady worsening; the 2022-2023 peak eased; this year isn't
+    comparable.
+  - Q08: waitlists shrank; the provincial total is missing a region.
+  - Q09: too thin to say.
+  - Q10: yes, stays about a third longer than its norm.
+- **The wording and depth vary; the facts don't.** All 1,324 claims across
+  the four runs hold against the snapshot.
+- **The round-2 fixes took effect.** All three later runs point to Québec.ca
+  for the official wait estimate in Q06, and quote MSSS's regional rate (161%)
+  next to the mean of Montréal's ERs. Run 2, written before those fixes, did
+  neither.
+- Four runs on one snapshot show consistency, not a failure rate: a rare
+  failure (1 in 50, say) could still hide in them.
+
+The agents' remaining feedback, fixed:
+
+- The surgery skill now flags how old the latest period is, and gives the
+  cardiac-coverage caveat only when it applies.
+- The cumulatif skill says the file has no occupancy rate and what to use for
+  "overcrowding" instead.
+- The children skill points to the history for "is it unusual?", and says
+  that leading with a data comparison isn't a ranking.
+- The grader counts distinct values (`op: "distinct"`, for "15 clinics", not
+  21 rows) and ignores "24/7".
+
+Not fixed:
+
+- Warning signs for minor problems come from the agent's general knowledge;
+  the skills list them only for emergencies.
+- The pinned snapshot has no weekday cut of the history or facility-level
+  cumulative queries, so those paths weren't exercised.
 
 ## Audit: unsupported conclusions and hardcoded rankings
 

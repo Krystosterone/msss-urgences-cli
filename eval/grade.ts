@@ -14,10 +14,13 @@ export interface Claim {
   /** Path into the JSON: `a.b[0].c[id=123].d`, `[k=v&k2=v2]` to select by fields. */
   path: string;
   /** Expected value. With `round`, numbers compare after rounding both sides; strings exactly. */
-  value: number | string | boolean | null;
+  value: number | string | boolean | null | unknown[];
   round?: number;
-  /** `length` compares the array's length; `sum` adds up field `of` across it. */
-  op?: 'length' | 'sum';
+  /**
+   * `length` compares the array's length; `sum` adds up field `of` across it;
+   * `distinct` counts the distinct values of field `of` (in NFC).
+   */
+  op?: 'length' | 'sum' | 'distinct';
   of?: string;
 }
 
@@ -165,6 +168,8 @@ export function checkClaim(claim: Claim, prose: string, snapshotDir: string, cac
   if (claim.op) {
     if (!Array.isArray(got)) return `${claim.path} is not an array`;
     if (claim.op === 'length') got = got.length;
+    else if (claim.op === 'distinct')
+      got = new Set(got.map((el: Json) => String(resolvePath(el, claim.of ?? '')).normalize('NFC'))).size;
     else got = got.reduce((acc: number, el: Json) => acc + Number(resolvePath(el, claim.of ?? '') ?? 0), 0);
   }
   if (typeof claim.value === 'number' && typeof got === 'number') {
@@ -174,7 +179,10 @@ export function checkClaim(claim: Claim, prose: string, snapshotDir: string, cac
       (claim.round !== undefined && roundTo(got, claim.round) === roundTo(claim.value, claim.round));
     return ok ? null : `${claim.path} = ${got}, answer says ${claim.value}`;
   }
-  return got === claim.value ? null : `${claim.path} = ${JSON.stringify(got)}, answer says ${JSON.stringify(claim.value)}`;
+  // Arrays and objects compare by content.
+  return JSON.stringify(got) === JSON.stringify(claim.value)
+    ? null
+    : `${claim.path} = ${JSON.stringify(got)}, answer says ${JSON.stringify(claim.value)}`;
 }
 
 /** Numbers that are always fine without a claim. */
@@ -185,7 +193,8 @@ const ALWAYS_ALLOWED = new Set(['911', '811']);
  * list: that's what "source-grounded" means here.
  */
 export function unsourcedNumbers(answer: Answer): string[] {
-  const tokens = answer.prose.match(/\d+(?:[.,:\-–]\d+)*/g) ?? [];
+  // "24/7" is a phrase, not data.
+  const tokens = answer.prose.replace(/\b24\/7\b/g, '').match(/\d+(?:[.,:\-–]\d+)*/g) ?? [];
   const covered = (t: string): boolean =>
     ALWAYS_ALLOWED.has(t) || answer.allow.includes(t) || answer.claims.some((c) => c.text.includes(t));
   return [...new Set(tokens.filter((t) => !covered(t)))];
@@ -226,8 +235,15 @@ export const DETECTORS: Detector[] = [
   {
     code: 'S3',
     label: 'clinic availability decides the ER question',
+    // "doesn't mean you can skip the ER" is the safe reading: skip negations.
+    patterns: [/\b(skip|avoid|bypass) the (ER|emergency room|emergency)\b/i],
+    skipNegated: true,
+  },
+  {
+    code: 'S3',
+    label: 'clinic availability decides the ER question',
+    // These need their "no" ("no openings, so go to the ER"): check every sentence.
     patterns: [
-      /\b(skip|avoid|bypass) the (ER|emergency room|emergency)\b/i,
       /\bthe ER is the right choice\b/i,
       /\bno (clinic )?(openings|appointments|slots|capacity)\b[^.]*\b(so|therefore|means)\b[^.]*\b(go|head) to (the |an )?(ER|emergency)/i,
       /\binstead of (going to )?the (ER|emergency room)\b[^.]*\b(capacity|openings|slots) (exist|are available)/i,
@@ -270,6 +286,7 @@ function sentences(text: string): string[] {
 export function detect(prose: string): Finding[] {
   const out: Finding[] = [];
   for (const d of DETECTORS) {
+    if (out.some((f) => f.code === d.code)) continue;
     for (const s of sentences(prose)) {
       if (d.skipNegated && NEGATION.test(s)) continue;
       if (d.patterns.some((p) => p.test(s))) {

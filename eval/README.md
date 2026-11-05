@@ -31,6 +31,7 @@ Systems recorded so far:
 | `skills` | 2026-11-04T21-45 | The M0 skills, answered by the reviewer |
 | `skills-independent` | 2026-11-04T21-45 | The M0 skills, answered by a fresh agent that saw only the skills and the snapshot |
 | `skills-run2` | 2026-11-05T08-45 | The same, on the second snapshot |
+| `skills-var1` … `skills-var3` | 2026-11-05T08-45 | Three more fresh-agent runs of the skills, to measure run-to-run variation |
 
 The round-2 systems were asked Q01 "for a Thursday morning", matching the
 snapshot's time.

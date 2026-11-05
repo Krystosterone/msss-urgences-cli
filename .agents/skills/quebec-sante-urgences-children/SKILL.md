@@ -30,6 +30,9 @@ the parent is unsure. Crowding is never a reason to drive farther or wait.
 > **`quebec-sante-urgences-cumulatif`** (`--id 51222800,51223279 --history`). Adding
 > `--baseline` to the query below also gives each ER's fiscal-year-to-date stay
 > (`baseline`, `vsBaseline`); read it per rules 7–10 of **`quebec-sante-urgences`**.
+> For "is it unusual right now?" or "when is it usually calmer?", also query
+> `quebec-sante urgences-historique --id 51222800,51223279 --json` and read it
+> per rules 11–14 of **`quebec-sante-urgences`**.
 
 ## 1. Get the data
 
@@ -63,7 +66,9 @@ ER is the right one.
 
 ## 3. Interpret
 
-1. **No default order.** Present both side by side. Neither is "first".
+1. **No default order.** Present both side by side. Neither is "first". Leading
+   with what the data shows ("X is more crowded than Y right now") is fine;
+   preferring one hospital is not.
 2. **`occupancyPct`** is how full the stretcher area is (occupied/functional;
    over 100% at busy ERs is normal). Higher means more crowded. It says nothing
    about how fast a child will be seen.

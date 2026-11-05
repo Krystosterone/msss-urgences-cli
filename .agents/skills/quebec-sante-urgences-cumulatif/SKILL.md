@@ -61,6 +61,11 @@ see [`references/cli-reference.md`](references/cli-reference.md).
 
 ## 2. Interpret (the opinions)
 
+0. **No occupancy here.** The cumulative file has no stretcher-occupancy rate.
+   For "has overcrowding worsened?", use the strain indicators it has (stretcher
+   `dmsHours`, `stretcherOver24hPct` / `stretcherOver48hPct`, `pecDelayHours`)
+   and say that's what you used. Live occupancy history only exists in
+   `urgences-historique`, which is days to weeks deep, not years.
 1. **Lower is better** for `dmsHours` (length of stay), `pecDelayHours` (delay
    to first physician assessment), `over24h` / `over48h` and their `%` shares.
    A negative `change` on these is an improvement.

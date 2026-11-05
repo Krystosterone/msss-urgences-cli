@@ -3,7 +3,10 @@
   "mustPass": [
     "skills",
     "skills-independent",
-    "skills-run2"
+    "skills-run2",
+    "skills-var1",
+    "skills-var2",
+    "skills-var3"
   ],
   "provenance": [
     {
