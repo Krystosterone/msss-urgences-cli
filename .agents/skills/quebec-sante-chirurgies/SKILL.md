@@ -1,19 +1,19 @@
 ---
-name: msss-urgences-chirurgies
-description: Report Québec surgical waitlists (patients waiting for an operating-room intervention) by region, specialty and wait time via the deterministic msss-urgences chirurgies CLI, and explain what the numbers do and do not mean. Use when asked how long the surgery waitlist is, how many people wait over 6 months or a year, how a region or specialty compares, or whether the list is growing.
+name: quebec-sante-chirurgies
+description: Report Québec surgical waitlists (patients waiting for an operating-room intervention) by region, specialty and wait time via the deterministic quebec-sante chirurgies CLI, and explain what the numbers do and do not mean. Use when asked how long the surgery waitlist is, how many people wait over 6 months or a year, how a region or specialty compares, or whether the list is growing.
 version: 0.1.0
 author: Krystian
 license: MIT
 ---
 
-# msss-urgences-chirurgies
+# quebec-sante-chirurgies
 
 Describe the province's elective-surgery waitlist using the MSSS
 `Chirurgie_ListeAttente.csv` dataset: how many people are waiting, for which
 specialty, in which region, and for how long since the surgeon decided to
 operate.
 
-**The seam:** the `msss-urgences chirurgies` CLI is a deterministic *facts
+**The seam:** the `quebec-sante chirurgies` CLI is a deterministic *facts
 machine*. It returns waitlist counts exactly as MSSS publishes them, plus a few
 objective derived figures: totals, % waiting over 6 and 12 months, the delta
 from the previous period, and a province-wide sum. **This skill owns the
@@ -24,8 +24,8 @@ answering.** It holds the safety, provenance, freshness and uncertainty rules
 every answer follows.
 
 > This is a **planning / context** tool, not a triage tool. For ER crowding,
-> use **`msss-urgences`**; for which clinics usually offer appointments,
-> **`msss-urgences-cliniques`**. Someone worried about their health while
+> use **`quebec-sante-urgences`**; for which clinics usually offer appointments,
+> **`quebec-sante-cliniques`**. Someone worried about their health while
 > waiting for surgery should contact their surgeon's office, or 811.
 
 ## 1. Get the data
@@ -35,13 +35,13 @@ README). Query with **always `--json`**:
 
 ```bash
 # Latest period, every region (+ derived province total):
-msss-urgences chirurgies --json
+quebec-sante chirurgies --json
 
 # One region (name, slug or RSS code) and/or a specialty:
-msss-urgences chirurgies --region montreal --specialty ortho --json
+quebec-sante chirurgies --region montreal --specialty ortho --json
 
 # A past fiscal period, for a trend:
-msss-urgences chirurgies --region RSS03 --period 2627-P01 --json
+quebec-sante chirurgies --region RSS03 --period 2627-P01 --json
 ```
 
 Key fields: `dataDate` / `period` (fiscal period), `previousPeriod`,

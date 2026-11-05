@@ -1,6 +1,6 @@
 # M0: interpretation safety and usefulness benchmark
 
-Milestone 0 of the product direction ([issue #12](https://github.com/Krystosterone/msss-urgences-cli/issues/12)):
+Milestone 0 of the product direction ([issue #12](https://github.com/Krystosterone/quebec-sante-cli/issues/12)):
 ten representative questions, a general-purpose baseline, the existing skills
 compared against it, an audit of unsupported conclusions, the corrections,
 one answer standard for every skill, and evaluations anyone can re-run.
@@ -196,19 +196,19 @@ What the skills said before M0, why it wasn't supported, and what replaced it.
 
 | Where | Before | Problem | Now |
 |-------|--------|---------|-----|
-| `msss-urgences-children` §3 rule 1 | "Rank Sainte-Justine (51222800) first, Montreal Children's (51223279) second." | A fixed preference, not data. | No default order; both shown side by side. |
-| `msss-urgences-children` description | "recommend the quieter one for a child" | The data can't say which ER sees a child sooner. | Compare and explain; never choose for the parent. |
-| `msss-urgences` rule 1 | "Lower `occupancyPct` = quieter = better." | Occupancy measures the stretcher area, not the wait. Applied literally, the cardiology institute (45%) and two psychiatric hospitals (75%) were among Montréal's four "best". | "Higher means more crowded", with the specialized ERs set apart. |
-| `msss-urgences` §4 example | "It carries the shortest non-priority wait of the region right now." | MSSS: a low count of people waiting or present "ne permet donc pas de déterminer que le patient sera plus rapidement pris en charge". | Counts, not wait times, with MSSS's caveat. |
-| `msss-urgences` description | "Use when asked … which hospital to go to" | Invites routing from crowding. | Routing questions start with 911 / 811, then the comparison as context. |
-| `msss-urgences` rule 10 | "Best time to go = the slots with the lowest occupancy" | Past crowding isn't a shorter visit, and it must never delay care. | "Calmest times", described as past crowding. |
-| `msss-urgences-cliniques` rule 1 | "`totalOffered` > 0 means a clinic has capacity today — prefer it over an ER visit." | The file is past offers, published weekly; the newest date was 7 days old. | The data answers "which clinics usually offer appointments, and when". |
-| `msss-urgences-cliniques` §3 | "There's clinic capacity … today — you can skip the ER." | Clinic offers can't decide whether someone needs an ER. | Never decides between a clinic and the ER. |
-| `msss-urgences-cliniques` §3 | "No clinic openings … this is a case where the ER is the right choice." | Rejected in issue #12: absent clinic capacity isn't proof an ER is needed. | Routes to 811, pharmacist, GAP; 911 for red flags. |
-| `msss-urgences-cliniques` rule 2 | "Larger `totalOffered` = better odds of being seen." | Offer volume isn't a person's odds. | Volume through the hub, not odds. |
-| `msss-urgences-cliniques` description, README, CLI help | "daily clinic appointment availability" | MSSS updates it weekly (Thursdays 14h), up to the day before. | "Appointments offered per past day, published weekly." |
+| `quebec-sante-urgences-children` §3 rule 1 | "Rank Sainte-Justine (51222800) first, Montreal Children's (51223279) second." | A fixed preference, not data. | No default order; both shown side by side. |
+| `quebec-sante-urgences-children` description | "recommend the quieter one for a child" | The data can't say which ER sees a child sooner. | Compare and explain; never choose for the parent. |
+| `quebec-sante-urgences` rule 1 | "Lower `occupancyPct` = quieter = better." | Occupancy measures the stretcher area, not the wait. Applied literally, the cardiology institute (45%) and two psychiatric hospitals (75%) were among Montréal's four "best". | "Higher means more crowded", with the specialized ERs set apart. |
+| `quebec-sante-urgences` §4 example | "It carries the shortest non-priority wait of the region right now." | MSSS: a low count of people waiting or present "ne permet donc pas de déterminer que le patient sera plus rapidement pris en charge". | Counts, not wait times, with MSSS's caveat. |
+| `quebec-sante-urgences` description | "Use when asked … which hospital to go to" | Invites routing from crowding. | Routing questions start with 911 / 811, then the comparison as context. |
+| `quebec-sante-urgences` rule 10 | "Best time to go = the slots with the lowest occupancy" | Past crowding isn't a shorter visit, and it must never delay care. | "Calmest times", described as past crowding. |
+| `quebec-sante-cliniques` rule 1 | "`totalOffered` > 0 means a clinic has capacity today — prefer it over an ER visit." | The file is past offers, published weekly; the newest date was 7 days old. | The data answers "which clinics usually offer appointments, and when". |
+| `quebec-sante-cliniques` §3 | "There's clinic capacity … today — you can skip the ER." | Clinic offers can't decide whether someone needs an ER. | Never decides between a clinic and the ER. |
+| `quebec-sante-cliniques` §3 | "No clinic openings … this is a case where the ER is the right choice." | Rejected in issue #12: absent clinic capacity isn't proof an ER is needed. | Routes to 811, pharmacist, GAP; 911 for red flags. |
+| `quebec-sante-cliniques` rule 2 | "Larger `totalOffered` = better odds of being seen." | Offer volume isn't a person's odds. | Volume through the hub, not odds. |
+| `quebec-sante-cliniques` description, README, CLI help | "daily clinic appointment availability" | MSSS updates it weekly (Thursdays 14h), up to the day before. | "Appointments offered per past day, published weekly." |
 | Every skill | No emergency rule | Nothing stopped crowding from steering a possible emergency. | Answer standard §1: 911 / nearest ER first. |
-| `msss-urgences-cumulatif`, `-chirurgies` | Sound | Kept; rule added that delays are past means, never "you'll wait X". | Linked to the answer standard. |
+| `quebec-sante-urgences-cumulatif`, `-chirurgies` | Sound | Kept; rule added that delays are past means, never "you'll wait X". | Linked to the answer standard. |
 
 ## Data and CLI findings
 

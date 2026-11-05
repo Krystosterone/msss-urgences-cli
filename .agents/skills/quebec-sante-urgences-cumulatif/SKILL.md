@@ -1,18 +1,18 @@
 ---
-name: msss-urgences-cumulatif
-description: Explain fiscal-year-to-date Québec ER performance and year-over-year trends (visits, average length of stay, delay to physician, 24h/48h stretcher stays) for a hospital, establishment, region or the province via the deterministic msss-urgences urgences-cumulatif CLI. Use for trend or comparison questions ("is Sainte-Justine's ER doing better than last year?", "how has Montréal's stretcher stay evolved since 2021?") — not for what is happening right now.
+name: quebec-sante-urgences-cumulatif
+description: Explain fiscal-year-to-date Québec ER performance and year-over-year trends (visits, average length of stay, delay to physician, 24h/48h stretcher stays) for a hospital, establishment, region or the province via the deterministic quebec-sante urgences-cumulatif CLI. Use for trend or comparison questions ("is Sainte-Justine's ER doing better than last year?", "how has Montréal's stretcher stay evolved since 2021?") — not for what is happening right now.
 version: 0.1.0
 author: Krystian
 license: MIT
 ---
 
-# msss-urgences-cumulatif
+# quebec-sante-urgences-cumulatif
 
 Explain how a Québec ER (or establishment, region, the province) has performed
 **so far this fiscal year** and how that compares with previous years, from the
 MSSS cumulative ER file.
 
-**The seam:** the `msss-urgences urgences-cumulatif` CLI is a deterministic
+**The seam:** the `quebec-sante urgences-cumulatif` CLI is a deterministic
 *facts machine* — verbatim indicators per fiscal year, plus objective derived
 shares and year-over-year differences. **This skill owns the opinions**: which
 direction is better, what counts as a meaningful change, and the summary.
@@ -24,11 +24,11 @@ past visits. They describe how an ER has been performing, never how long a
 visit today would take.
 
 > This is **trend** data (cumulated over months, updated every ~4 weeks). For
-> **right-now** ER occupancy use **`msss-urgences`** (generic) or
-> **`msss-urgences-children`** (pediatric); for which clinics usually offer
-> appointments use **`msss-urgences-cliniques`**. To set *yesterday* against this fiscal year
-> ("is it worse than usual right now?"), `msss-urgences` uses
-> `msss-urgences urgences --baseline`, which joins this file to the hourly one.
+> **right-now** ER occupancy use **`quebec-sante-urgences`** (generic) or
+> **`quebec-sante-urgences-children`** (pediatric); for which clinics usually offer
+> appointments use **`quebec-sante-cliniques`**. To set *yesterday* against this fiscal year
+> ("is it worse than usual right now?"), `quebec-sante-urgences` uses
+> `quebec-sante urgences --baseline`, which joins this file to the hourly one.
 
 ## 1. Get the data
 
@@ -37,19 +37,19 @@ README. Always pass **`--json`**:
 
 ```bash
 # One or more hospitals (permit numbers), with every fiscal year:
-msss-urgences urgences-cumulatif --id 51222800,51223279 --history --json
+quebec-sante urgences-cumulatif --id 51222800,51223279 --history --json
 
 # A hospital by name:
-msss-urgences urgences-cumulatif --search "sainte-justine" --json
+quebec-sante urgences-cumulatif --search "sainte-justine" --json
 
 # A region's total and its hospitals:
-msss-urgences urgences-cumulatif --region montreal --level region,facility --json
+quebec-sante urgences-cumulatif --region montreal --level region,facility --json
 
 # The province and every region:
-msss-urgences urgences-cumulatif --level province,region --json
+quebec-sante urgences-cumulatif --level province,region --json
 
 # Another year / baseline:
-msss-urgences urgences-cumulatif --year 2024-2025 --compare 2021-2022 --id 51222800 --json
+quebec-sante urgences-cumulatif --year 2024-2025 --compare 2021-2022 --id 51222800 --json
 ```
 
 Each `entries[]` item has `indicators` (`total` / `ambulatory` / `stretcher`

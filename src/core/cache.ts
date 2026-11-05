@@ -4,7 +4,7 @@ import { homedir } from 'node:os';
 import type { UrgencesReport } from './types';
 
 export interface CacheConfig {
-  /** Cache directory. Defaults to $MSSS_URGENCES_CACHE_DIR or ~/.cache/msss-urgences. */
+  /** Cache directory. Defaults to $QUEBEC_SANTE_CACHE_DIR or ~/.cache/quebec-sante. */
   dir?: string;
   /** Max age of a cached report in minutes before it's treated as stale. Default 30. */
   ttlMinutes?: number;
@@ -14,12 +14,12 @@ export interface CacheConfig {
 
 const DEFAULT_TTL_MINUTES = 30;
 
-/** Resolve the cache directory from env or config, falling back to ~/.cache/msss-urgences. */
+/** Resolve the cache directory from env or config, falling back to ~/.cache/quebec-sante. */
 export function cacheDir(cfg: CacheConfig = {}): string {
   return (
     cfg.dir ??
-    process.env.MSSS_URGENCES_CACHE_DIR ??
-    join(homedir(), '.cache', 'msss-urgences')
+    process.env.QUEBEC_SANTE_CACHE_DIR ??
+    join(homedir(), '.cache', 'quebec-sante')
   );
 }
 
@@ -66,7 +66,7 @@ export function readCache(cfg: CacheConfig = {}): CacheEntry | null {
 /** Emit a one-line warning to stderr when the cache is present-but-unusable. */
 function warnCache(reason: string): void {
   try {
-    process.stderr.write(`msss-urgences: warning — ${reason}; using a live fetch instead\n`);
+    process.stderr.write(`quebec-sante: warning — ${reason}; using a live fetch instead\n`);
   } catch {
     /* never let logging break the CLI */
   }

@@ -125,7 +125,7 @@ test('CLI: exit codes for chirurgies', async () => {
       process.stderr.write = errWrite;
     }
   };
-  process.env.MSSS_URGENCES_CACHE_DIR = freshCache().dir;
+  process.env.QUEBEC_SANTE_CACHE_DIR = freshCache().dir;
   const base = ['chirurgies', '--fixture', FIXTURE, '--json'];
   assert.equal(await quiet([...base, '--region', 'montreal']), 0);
   assert.equal(await quiet([...base, '--table']), 0);
@@ -137,5 +137,5 @@ test('CLI: exit codes for chirurgies', async () => {
   assert.equal(await quiet([...base, '--ttl', '0']), 2);
   assert.equal(await quiet(['chirurgies', 'extra']), 2);
   assert.equal(await quiet(['chirurgies', '--help']), 0);
-  delete process.env.MSSS_URGENCES_CACHE_DIR;
+  delete process.env.QUEBEC_SANTE_CACHE_DIR;
 });

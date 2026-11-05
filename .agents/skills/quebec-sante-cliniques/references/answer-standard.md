@@ -1,6 +1,6 @@
-# Answer standard (every msss-urgences skill)
+# Answer standard (every quebec-sante skill)
 
-Every `msss-urgences-*` skill carries an identical copy of this file, and
+Every `quebec-sante-*` skill carries an identical copy of this file, and
 `test/skills.test.ts` keeps them identical. It says what an answer built on
 MSSS data must and must not do. The skill's own body says how to read its
 dataset; this file wins wherever they disagree.

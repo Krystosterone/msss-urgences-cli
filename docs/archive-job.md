@@ -176,8 +176,8 @@ api/v1/index.json                months available, snapshot range, build commit
 api/v1/urgences/<YYYY-MM>.json   every snapshot of the month, per facility
 ```
 
-`msss-urgences urgences-historique` reads it (contract:
-[`cli-reference.md`](../.agents/skills/msss-urgences/references/cli-reference.md#urgences-historique-history)).
+`quebec-sante urgences-historique` reads it (contract:
+[`cli-reference.md`](../.agents/skills/quebec-sante-urgences/references/cli-reference.md#urgences-historique-history)).
 A month is `complete` once a later month has data, and clients cache complete
 months indefinitely. `pages.yml` runs on pushes to `main` that change
 `archive/urgences/` or the builder, and on manual runs. A failed deploy is
@@ -187,7 +187,7 @@ To build and query it locally:
 
 ```bash
 npx tsx scripts/build-api.ts site
-MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --table
+QUEBEC_SANTE_API_FIXTURE=site/api/v1 quebec-sante urgences-historique --table
 ```
 
 Free-tier limits: a month of hourly snapshots is about 4 MB of JSON (served
