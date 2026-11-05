@@ -1,7 +1,7 @@
 {
-  "name": "msss-urgences-cli",
+  "name": "quebec-sante-cli",
   "version": "0.1.0",
-  "description": "Deterministic CLI for Québec emergency-room occupancy and wait-time data from the MSSS hourly open-data CSV",
+  "description": "Deterministic CLI for Québec health-services open data from MSSS: ER occupancy and history, clinic appointment availability, fiscal-year ER indicators and surgical waitlists",
   "type": "commonjs",
   "bin": {
     "msss-urgences": "dist/cli.js"

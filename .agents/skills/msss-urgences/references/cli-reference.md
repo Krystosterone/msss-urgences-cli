@@ -89,14 +89,14 @@ msss-urgences urgences-historique [--region R] [--id N,...] [--search T]
 
 Reads the static history API built from the hourly snapshots archived in the
 repo (`archive/`), served by GitHub Pages at
-`https://krystosterone.github.io/msss-urgences-cli/api/v1` (override with
+`https://krystosterone.github.io/quebec-sante-cli/api/v1` (override with
 `--api` or `MSSS_URGENCES_API_URL`). The window is the `--days` before the
 **latest archived snapshot**, not the wall clock. Every number is DERIVED from
 the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 ```jsonc
 {
-  "source": "https://krystosterone.github.io/msss-urgences-cli/api/v1",
+  "source": "https://krystosterone.github.io/quebec-sante-cli/api/v1",
   "generatedAt": "…",          // when the API was built from the archive
   "cached": false,
   "window": { "from": "2026-10-06T21:45", "to": "2026-11-03T21:45", "days": 28,

@@ -435,7 +435,7 @@ Options:
   --days <n>           Window length in days, ending at the latest snapshot (default ${HISTORY_DEFAULT_DAYS})
   --by <grouping>      Profile grouping: hour (default), weekday-hour, or day
   --api <url>          History API base (default $MSSS_URGENCES_API_URL, else
-                       https://krystosterone.github.io/msss-urgences-cli/api/v1)
+                       https://krystosterone.github.io/quebec-sante-cli/api/v1)
   --refresh            Re-fetch the index and the current month (complete months stay cached)
   --ttl <minutes>      Cache TTL for the index and the current month (default ${HISTORY_DEFAULT_TTL_MINUTES})
   --json               Output JSON (default when piped)

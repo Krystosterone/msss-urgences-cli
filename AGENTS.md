@@ -1,4 +1,4 @@
-# msss-urgences-cli
+# quebec-sante-cli
 
 Deterministic, cache-aware CLI that reads Québec health-services data directly
 from canonical MSSS open-data CSVs (a plain HTTPS fetch + CSV parse — no
@@ -18,7 +18,7 @@ republisher indexsante.ca).
 ```bash
 npm install
 npm run build          # compiles src/ -> dist/
-npm link               # put `msss-urgences` on PATH (agents + you); undo: npm unlink -g msss-urgences-cli
+npm link               # put `msss-urgences` on PATH (agents + you); undo: npm unlink -g quebec-sante-cli
 msss-urgences urgences --region montreal --json
 msss-urgences cliniques --region montreal --json
 msss-urgences urgences-cumulatif --region montreal --json
