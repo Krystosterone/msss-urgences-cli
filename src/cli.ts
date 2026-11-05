@@ -36,7 +36,8 @@ Usage:
 
 Commands:
   urgences    Live Québec ER occupancy/wait data (MSSS hourly CSV)
-  cliniques   Daily clinic appointment availability (MSSS daily CSV)
+  cliniques   Clinic appointments offered per day and time slot (MSSS, published weekly,
+              past dates only: not current availability)
   urgences-cumulatif
               Fiscal-year-to-date ER indicators + year-over-year trends
               (MSSS cumulative CSV, updated each fiscal period)
@@ -82,7 +83,11 @@ Examples:
   msss-urgences urgences --region 06 --baseline --table
 `;
 
-const CLINIQUES_HELP = `msss-urgences cliniques — daily clinic appointment availability (MSSS daily CSV)
+const CLINIQUES_HELP = `msss-urgences cliniques — clinic appointments offered per day and time slot (MSSS)
+
+The counts are appointments clinics connected to the provincial booking hub
+offered for each past date. MSSS republishes the file weekly (Thursdays), up to
+the day before; it does not say which slots are still free, or bookable now.
 
 Usage:
   msss-urgences cliniques [options]
@@ -94,7 +99,7 @@ Options:
   --search <text>     Filter clinics by name (accent-insensitive substring)
   --date <YYYY-MM-DD> The date to report (default: the latest date in the source)
   --refresh           Force a fresh fetch, ignoring the local cache
-  --ttl <minutes>     Cache TTL (default 1440 — the dataset updates daily)
+  --ttl <minutes>     Cache TTL (default 1440; the dataset updates weekly)
   --json              Output JSON (default when piped)
   --table             Output a human-readable table (default on a TTY)
   --fixture <path>    Read a local CSV instead of the network (deterministic offline run)
@@ -246,7 +251,9 @@ export function formatTable(report: UrgencesReport): string {
   if (b) header.push('DMS', 'FY-DMS', 'ΔDMS%');
   header.push('ID', 'FACILITY');
   const blocks = report.regions.map((region) => {
-    const title = `${region.name} — avg ${fmtCell(region.averageOccupancyPct, '%')} · ${region.facilities.length} facilities`;
+    const title =
+      `${region.name} — MSSS regional rate ${fmtCell(region.total?.occupancyPct, '%')}` +
+      ` · mean of ERs ${fmtCell(region.averageOccupancyPct, '%')} · ${region.facilities.length} facilities`;
     const rows = region.facilities.map((f) => {
       const row = [
         fmtCell(f.occupancyPct, '%'),
@@ -264,7 +271,12 @@ export function formatTable(report: UrgencesReport): string {
     });
     return `${title}\n${renderGrid([header, ...rows])}`;
   });
-  let meta = `source: ${report.source}\ndataDate: ${report.dataDate} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}`;
+  let meta =
+    `source: ${report.source}\ndataDate: ${report.dataDate}` +
+    `${report.extractedAt ? ` (snapshot taken ${report.extractedAt})` : ''}` +
+    ` · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}` +
+    `\nprovince (MSSS "Ensemble du Québec"): ${fmtCell(report.province?.occupancyPct, '%')} occupancy · ` +
+    `${fmtCell(report.province?.waitingForCare)} waiting · ${fmtCell(report.province?.over24h)} on a stretcher >24h`;
   if (b) {
     meta +=
       b.status === 'ok'

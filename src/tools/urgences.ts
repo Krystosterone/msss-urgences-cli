@@ -1,7 +1,7 @@
 import { fetchUrgencesCsv } from '../core/fetch';
 import { readFile } from 'node:fs/promises';
-import { parseUrgences, slugify } from '../core/parse';
-import { withDerivedMetrics } from '../core/derive';
+import { normalizeDataDate, parseUrgences, slugify } from '../core/parse';
+import { withDerivedMetrics, withTotalOccupancy } from '../core/derive';
 import { readCache, writeCache, type CacheConfig } from '../core/cache';
 import type { Facility, Region, UrgencesBaselineMeta, UrgencesReport } from '../core/types';
 import { MSSS_URGENCES_CUMULATIF_URL, MSSS_URGENCES_URL } from '../core/source';
@@ -153,6 +153,9 @@ async function fetchLiveReport(opts: {
     const derived = withDerivedMetrics(cached.report.regions);
     const fresh: UrgencesReport = {
       ...cached.report,
+      dataDate: normalizeDataDate(cached.report.dataDate),
+      extractedAt: cached.report.extractedAt ?? null,
+      province: withTotalOccupancy(cached.report.province),
       regions: derived,
       cached: true,
       fetchedAt: new Date().toISOString(),
@@ -168,15 +171,17 @@ async function fetchLiveReport(opts: {
   const fixture = opts.fixture ?? process.env.MSSS_URGENCES_FIXTURE;
   const text = fixture ? await readFile(fixture, 'utf8') : await fetchUrgencesCsv();
 
-  const { regions, dataDate } = parseUrgences(text);
+  const { regions, dataDate, extractedAt, province } = parseUrgences(text);
   const derived = withDerivedMetrics(regions);
   const report: UrgencesReport = {
     source: SOURCE_URL,
     fetchedAt: new Date().toISOString(),
     dataDate,
+    extractedAt,
     cached: false,
     cacheAgeMinutes: 0,
     regions: derived,
+    province: withTotalOccupancy(province),
   };
 
   writeCache(report, cache);

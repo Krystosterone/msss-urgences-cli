@@ -1,0 +1,664 @@
+{
+  "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/chirurgie/Chirurgie_ListeAttente.csv",
+  "fetchedAt": "2026-11-05T03:17:50.702Z",
+  "dataDate": "2627-P03",
+  "period": {
+    "code": "2627-P03",
+    "fiscalYear": "2026-2027",
+    "number": 3
+  },
+  "previousPeriod": "2627-P02",
+  "cached": true,
+  "cacheAgeMinutes": 0,
+  "availablePeriods": [
+    "2627-P04",
+    "2627-P03",
+    "2627-P02",
+    "2627-P01",
+    "2526-P13",
+    "2526-P12",
+    "2526-P11",
+    "2526-P10",
+    "2526-P09",
+    "2526-P08",
+    "2526-P07",
+    "2526-P06",
+    "2526-P05",
+    "2526-P04",
+    "2526-P03",
+    "2526-P02",
+    "2526-P01",
+    "2425-P13",
+    "2425-P12",
+    "2425-P11",
+    "2425-P10",
+    "2425-P09",
+    "2425-P08",
+    "2425-P07",
+    "2425-P06",
+    "2425-P05",
+    "2425-P04",
+    "2425-P03",
+    "2425-P02",
+    "2425-P01",
+    "2324-P13",
+    "2324-P12",
+    "2324-P11",
+    "2324-P10",
+    "2324-P09",
+    "2324-P08",
+    "2324-P07",
+    "2324-P06",
+    "2324-P05",
+    "2324-P04",
+    "2324-P03",
+    "2324-P02",
+    "2324-P01",
+    "2223-P13",
+    "2223-P12",
+    "2223-P11",
+    "2223-P10",
+    "2223-P09",
+    "2223-P08",
+    "2223-P07",
+    "2223-P06",
+    "2223-P05",
+    "2223-P04",
+    "2223-P03",
+    "2223-P02",
+    "2223-P01",
+    "2122-P13",
+    "2122-P12",
+    "2122-P11",
+    "2122-P10",
+    "2122-P09",
+    "2122-P08",
+    "2122-P07",
+    "2122-P06",
+    "2122-P05",
+    "2122-P04",
+    "2122-P03",
+    "2122-P02",
+    "2122-P01",
+    "2021-P13",
+    "2021-P12",
+    "2021-P11",
+    "2021-P10",
+    "2021-P09",
+    "2021-P08",
+    "2021-P07",
+    "2021-P06",
+    "2021-P05",
+    "2021-P04",
+    "2021-P03",
+    "2021-P02",
+    "2021-P01",
+    "1920-P13",
+    "1920-P12"
+  ],
+  "missingRegions": [
+    "RSS04"
+  ],
+  "province": {
+    "code": null,
+    "name": "Ensemble du Québec",
+    "slug": "ensemble-du-quebec",
+    "overall": {
+      "key": "total",
+      "label": "Toutes spécialités",
+      "waiting": {
+        "under6m": 98419,
+        "from6to12m": 20813,
+        "over12m": 3590
+      },
+      "total": 122822,
+      "over6m": 24403,
+      "pctOver6m": 20,
+      "pctOver12m": 3
+    },
+    "specialties": [
+      {
+        "key": "chirurgie_orthopedique",
+        "label": "Chirurgie orthopédique",
+        "waiting": {
+          "under6m": 21323,
+          "from6to12m": 6238,
+          "over12m": 969
+        },
+        "total": 28530,
+        "over6m": 7207,
+        "pctOver6m": 25,
+        "pctOver12m": 3
+      }
+    ],
+    "previousPeriodTotal": 124096,
+    "deltaFromPreviousPeriod": -1274
+  },
+  "regions": [
+    {
+      "code": "RSS01",
+      "name": "Bas-Saint-Laurent",
+      "slug": "bas-saint-laurent",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 2160,
+          "from6to12m": 195,
+          "over12m": 5
+        },
+        "total": 2360,
+        "over6m": 200,
+        "pctOver6m": 8,
+        "pctOver12m": 0
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 604,
+            "from6to12m": 132,
+            "over12m": 0
+          },
+          "total": 736,
+          "over6m": 132,
+          "pctOver6m": 18,
+          "pctOver12m": 0
+        }
+      ],
+      "previousPeriodTotal": 2506,
+      "deltaFromPreviousPeriod": -146
+    },
+    {
+      "code": "RSS02",
+      "name": "Saguenay - Lac-Saint-Jean",
+      "slug": "saguenay-lac-saint-jean",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 3771,
+          "from6to12m": 169,
+          "over12m": 29
+        },
+        "total": 3969,
+        "over6m": 198,
+        "pctOver6m": 5,
+        "pctOver12m": 1
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 929,
+            "from6to12m": 35,
+            "over12m": 0
+          },
+          "total": 964,
+          "over6m": 35,
+          "pctOver6m": 4,
+          "pctOver12m": 0
+        }
+      ],
+      "previousPeriodTotal": 3921,
+      "deltaFromPreviousPeriod": 48
+    },
+    {
+      "code": "RSS03",
+      "name": "Capitale-Nationale",
+      "slug": "capitale-nationale",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 12217,
+          "from6to12m": 2164,
+          "over12m": 361
+        },
+        "total": 14742,
+        "over6m": 2525,
+        "pctOver6m": 17,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 2323,
+            "from6to12m": 688,
+            "over12m": 38
+          },
+          "total": 3049,
+          "over6m": 726,
+          "pctOver6m": 24,
+          "pctOver12m": 1
+        }
+      ],
+      "previousPeriodTotal": 14591,
+      "deltaFromPreviousPeriod": 151
+    },
+    {
+      "code": "RSS05",
+      "name": "Estrie",
+      "slug": "estrie",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 7575,
+          "from6to12m": 1537,
+          "over12m": 182
+        },
+        "total": 9294,
+        "over6m": 1719,
+        "pctOver6m": 18,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 1969,
+            "from6to12m": 312,
+            "over12m": 39
+          },
+          "total": 2320,
+          "over6m": 351,
+          "pctOver6m": 15,
+          "pctOver12m": 2
+        }
+      ],
+      "previousPeriodTotal": 9374,
+      "deltaFromPreviousPeriod": -80
+    },
+    {
+      "code": "RSS06",
+      "name": "Montréal",
+      "slug": "montreal",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 28066,
+          "from6to12m": 6130,
+          "over12m": 775
+        },
+        "total": 34971,
+        "over6m": 6905,
+        "pctOver6m": 20,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 4228,
+            "from6to12m": 1606,
+            "over12m": 218
+          },
+          "total": 6052,
+          "over6m": 1824,
+          "pctOver6m": 30,
+          "pctOver12m": 4
+        }
+      ],
+      "previousPeriodTotal": 35574,
+      "deltaFromPreviousPeriod": -603
+    },
+    {
+      "code": "RSS07",
+      "name": "Outaouais",
+      "slug": "outaouais",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 4075,
+          "from6to12m": 994,
+          "over12m": 695
+        },
+        "total": 5764,
+        "over6m": 1689,
+        "pctOver6m": 29,
+        "pctOver12m": 12
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 572,
+            "from6to12m": 310,
+            "over12m": 238
+          },
+          "total": 1120,
+          "over6m": 548,
+          "pctOver6m": 49,
+          "pctOver12m": 21
+        }
+      ],
+      "previousPeriodTotal": 5816,
+      "deltaFromPreviousPeriod": -52
+    },
+    {
+      "code": "RSS08",
+      "name": "Abitibi-Témiscamingue",
+      "slug": "abitibi-temiscamingue",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 1722,
+          "from6to12m": 555,
+          "over12m": 96
+        },
+        "total": 2373,
+        "over6m": 651,
+        "pctOver6m": 27,
+        "pctOver12m": 4
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 474,
+            "from6to12m": 142,
+            "over12m": 68
+          },
+          "total": 684,
+          "over6m": 210,
+          "pctOver6m": 31,
+          "pctOver12m": 10
+        }
+      ],
+      "previousPeriodTotal": 2349,
+      "deltaFromPreviousPeriod": 24
+    },
+    {
+      "code": "RSS09",
+      "name": "Côte-Nord",
+      "slug": "cote-nord",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 1092,
+          "from6to12m": 48,
+          "over12m": 10
+        },
+        "total": 1150,
+        "over6m": 58,
+        "pctOver6m": 5,
+        "pctOver12m": 1
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 245,
+            "from6to12m": 1,
+            "over12m": 0
+          },
+          "total": 246,
+          "over6m": 1,
+          "pctOver6m": 0,
+          "pctOver12m": 0
+        }
+      ],
+      "previousPeriodTotal": 1201,
+      "deltaFromPreviousPeriod": -51
+    },
+    {
+      "code": "RSS10",
+      "name": "Nord-du-Québec",
+      "slug": "nord-du-quebec",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 58,
+          "from6to12m": 3,
+          "over12m": 1
+        },
+        "total": 62,
+        "over6m": 4,
+        "pctOver6m": 6,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 0,
+            "from6to12m": 0,
+            "over12m": 0
+          },
+          "total": 0,
+          "over6m": 0,
+          "pctOver6m": null,
+          "pctOver12m": null
+        }
+      ],
+      "previousPeriodTotal": 69,
+      "deltaFromPreviousPeriod": -7
+    },
+    {
+      "code": "RSS11",
+      "name": "Gaspésie - Îles-de-la-Madeleine",
+      "slug": "gaspesie-iles-de-la-madeleine",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 745,
+          "from6to12m": 71,
+          "over12m": 16
+        },
+        "total": 832,
+        "over6m": 87,
+        "pctOver6m": 10,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 123,
+            "from6to12m": 12,
+            "over12m": 3
+          },
+          "total": 138,
+          "over6m": 15,
+          "pctOver6m": 11,
+          "pctOver12m": 2
+        }
+      ],
+      "previousPeriodTotal": 848,
+      "deltaFromPreviousPeriod": -16
+    },
+    {
+      "code": "RSS12",
+      "name": "Chaudière-Appalaches",
+      "slug": "chaudiere-appalaches",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 6374,
+          "from6to12m": 1430,
+          "over12m": 235
+        },
+        "total": 8039,
+        "over6m": 1665,
+        "pctOver6m": 21,
+        "pctOver12m": 3
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 1450,
+            "from6to12m": 397,
+            "over12m": 92
+          },
+          "total": 1939,
+          "over6m": 489,
+          "pctOver6m": 25,
+          "pctOver12m": 5
+        }
+      ],
+      "previousPeriodTotal": 8497,
+      "deltaFromPreviousPeriod": -458
+    },
+    {
+      "code": "RSS13",
+      "name": "Laval",
+      "slug": "laval",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 3498,
+          "from6to12m": 1022,
+          "over12m": 242
+        },
+        "total": 4762,
+        "over6m": 1264,
+        "pctOver6m": 27,
+        "pctOver12m": 5
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 790,
+            "from6to12m": 379,
+            "over12m": 21
+          },
+          "total": 1190,
+          "over6m": 400,
+          "pctOver6m": 34,
+          "pctOver12m": 2
+        }
+      ],
+      "previousPeriodTotal": 4678,
+      "deltaFromPreviousPeriod": 84
+    },
+    {
+      "code": "RSS14",
+      "name": "Lanaudière",
+      "slug": "lanaudiere",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 5163,
+          "from6to12m": 1599,
+          "over12m": 339
+        },
+        "total": 7101,
+        "over6m": 1938,
+        "pctOver6m": 27,
+        "pctOver12m": 5
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 1037,
+            "from6to12m": 275,
+            "over12m": 90
+          },
+          "total": 1402,
+          "over6m": 365,
+          "pctOver6m": 26,
+          "pctOver12m": 6
+        }
+      ],
+      "previousPeriodTotal": 7082,
+      "deltaFromPreviousPeriod": 19
+    },
+    {
+      "code": "RSS15",
+      "name": "Laurentides",
+      "slug": "laurentides",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 6968,
+          "from6to12m": 1349,
+          "over12m": 181
+        },
+        "total": 8498,
+        "over6m": 1530,
+        "pctOver6m": 18,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 2213,
+            "from6to12m": 657,
+            "over12m": 54
+          },
+          "total": 2924,
+          "over6m": 711,
+          "pctOver6m": 24,
+          "pctOver12m": 2
+        }
+      ],
+      "previousPeriodTotal": 8494,
+      "deltaFromPreviousPeriod": 4
+    },
+    {
+      "code": "RSS16",
+      "name": "Montérégie",
+      "slug": "monteregie",
+      "overall": {
+        "key": "total",
+        "label": "Toutes spécialités",
+        "waiting": {
+          "under6m": 14935,
+          "from6to12m": 3547,
+          "over12m": 423
+        },
+        "total": 18905,
+        "over6m": 3970,
+        "pctOver6m": 21,
+        "pctOver12m": 2
+      },
+      "specialties": [
+        {
+          "key": "chirurgie_orthopedique",
+          "label": "Chirurgie orthopédique",
+          "waiting": {
+            "under6m": 4366,
+            "from6to12m": 1292,
+            "over12m": 108
+          },
+          "total": 5766,
+          "over6m": 1400,
+          "pctOver6m": 24,
+          "pctOver12m": 2
+        }
+      ],
+      "previousPeriodTotal": 19096,
+      "deltaFromPreviousPeriod": -191
+    }
+  ]
+}

@@ -27,11 +27,30 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 ## Output (data contract)
 
-Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`),
-`cached`, `cacheAgeMinutes`, `regions[]`.
+Top level: `source`, `fetchedAt`, `dataDate` (the source's `Mise_a_jour`: when
+MSSS published the file, Québec local time, hour zero-padded), `extractedAt`
+(when the snapshot was taken, `Heure_de_l'extraction_(image)`, usually 45 min
+before `dataDate`; `null` if the file doesn't say), `cached`,
+`cacheAgeMinutes`, `regions[]`, `province`.
 
-Each `region`: `name`, `slug`, `regionCode`, `averageOccupancyPct`,
+Each `region`: `name`, `slug`, `regionCode`, `averageOccupancyPct`
+(DERIVED: the plain mean of its reporting facilities' `occupancyPct`), `total`,
 `facilities[]`.
+
+`region.total` is MSSS's own "Total régional" row and top-level `province` its
+"Ensemble du Québec" row, verbatim. Both describe the whole region or province
+whatever `--id`, `--search` or `--available-only` keep, and are `null` when the
+file has no such row:
+
+| Field | Meaning |
+|-------|---------|
+| `stretchersFunctional` / `stretchersOccupied` | Region/province totals |
+| `occupancyPct` | DERIVED: occupied/functional as an integer %: MSSS's regional rate, the figure Québec.ca and Index Santé show. It weights big ERs more than `averageOccupancyPct` does, so the two differ |
+| `over24h`, `over48h`, `totalPresent`, `waitingForCare` | Region/province head counts |
+| `dmsStretcher` / `dmsAmbulatory` (+ `…Display`) | Previous-day mean stays for the region/province, decimal hours (HH:MM) |
+
+A region whose ERs aren't reporting has a `total` of `null` metrics (MSSS
+writes "pas d'information disponible"), not zeros.
 
 Each `facility`:
 
@@ -120,7 +139,9 @@ the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 - `profile` keys: `hour` (0–23) for `--by hour`; `weekday` (ISO 1 = Monday …
   7 = Sunday), `weekdayName`, `hour` for `--by weekday-hour`; `date`
-  (YYYY-MM-DD) for `--by day`. Each row's `samples` is its snapshot count.
+  (YYYY-MM-DD) for `--by day`. Each row's `samples` is its snapshot count,
+  including snapshots where the facility wasn't reporting: a row can have
+  `samples: 1` and all-null values. Means ignore the nulls.
 - `latest.typicalOccupancyPct`: mean at the same hour over the rest of the
   window; `…SameWeekday`: same weekday and hour. `null` when there's no other
   sample.
@@ -142,6 +163,6 @@ the snapshots in the window (mean/min/max, 1 decimal; nulls ignored).
 
 - Source updates **hourly**; CLI caches locally for **30 min** by default (wall-clock TTL).
 - Repeated calls within the hour are cheap and return `cached: true`.
-- `--refresh` forces a fresh fetch. Note `dataDate` and `cached` when freshness matters.
+- `--refresh` forces a fresh fetch. Always give `dataDate` / `extractedAt`, and `cached`.
 - The `--baseline` file updates once per fiscal period (~4 weeks) and keeps its
   own 24 h cache, shared with `urgences-cumulatif`.

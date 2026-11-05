@@ -1,5 +1,5 @@
 import { parse as parseCsv } from 'csv-parse/sync';
-import type { Facility, Region } from './types';
+import type { Facility, Region, RegionTotal } from './types';
 import { ParseError } from './errors';
 
 /** Column names, as published (before whitespace trimming — the file pads some). */
@@ -41,6 +41,35 @@ function toNumber(text: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/**
+ * MSSS writes `Mise_a_jour` without zero-padding the hour before 10:00
+ * ("2026-11-04T8:45"). Pad it ("2026-11-04T08:45") so every dataDate has the
+ * same shape and sorts as text; anything else is returned as published.
+ */
+export function normalizeDataDate(text: string): string {
+  const t = clean(text);
+  const m = /^(\d{4}-\d{2}-\d{2})T(\d{1,2}):(\d{2})$/.exec(t);
+  return m ? `${m[1]}T${m[2]!.padStart(2, '0')}:${m[3]}` : t;
+}
+
+/**
+ * The snapshot's extraction time: `Heure_de_l'extraction_(image)` ("21:00:00")
+ * on the date of `Mise_a_jour`, the day before when the extraction hour is
+ * later than the publication hour (an extraction just before midnight,
+ * published after it). Null when either part is missing or malformed.
+ */
+export function extractionTime(extraction: string, dataDate: string): string | null {
+  const e = /^(\d{1,2}):(\d{2})(?::\d{2})?$/.exec(clean(extraction));
+  const d = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(dataDate);
+  if (!e || !d) return null;
+  const [eh, em] = [Number(e[1]), Number(e[2])];
+  if (eh > 23 || em > 59) return null;
+  const day = new Date(Date.UTC(Number(d[1]), Number(d[2]) - 1, Number(d[3])));
+  if (eh * 60 + em > Number(d[4]) * 60 + Number(d[5])) day.setUTCDate(day.getUTCDate() - 1);
+  const pad = (n: number): string => String(n).padStart(2, '0');
+  return `${day.toISOString().slice(0, 10)}T${pad(eh)}:${pad(em)}`;
+}
+
 /** ASCII slug from a display name: "Gaspésie-Îles-de-la-Madeleine" -> "gaspesie-iles-de-la-madeleine". */
 export function slugify(name: string): string {
   return clean(name)
@@ -67,7 +96,33 @@ interface RawRow {
   DMS_ambulatoire: string;
   DMS_sur_civiere_horaire: string;
   DMS_ambulatoire_horaire: string;
+  "Heure_de_l'extraction_(image)": string;
   [MISE_A_JOUR_HEADER]: string;
+}
+
+function displayCell(text: string): string | null {
+  return clean(text) === '' ? null : clean(text);
+}
+
+/** The counts every row carries, facility or aggregate. */
+function rowCounts(r: RawRow): Omit<RegionTotal, 'occupancyPct'> {
+  return {
+    stretchersFunctional: toNumber(r.Nombre_de_civieres_fonctionnelles),
+    stretchersOccupied: toNumber(r.Nombre_de_civieres_occupees),
+    over24h: toNumber(r.Nombre_de_patients_sur_civiere_plus_de_24_heures),
+    over48h: toNumber(r.Nombre_de_patients_sur_civiere_plus_de_48_heures),
+    totalPresent: toNumber(r.Nombre_total_de_patients_presents_a_lurgence),
+    waitingForCare: toNumber(r.Nombre_total_de_patients_en_attente_de_PEC),
+    dmsStretcher: toNumber(r.DMS_sur_civiere),
+    dmsAmbulatory: toNumber(r.DMS_ambulatoire),
+    dmsStretcherDisplay: displayCell(r.DMS_sur_civiere_horaire),
+    dmsAmbulatoryDisplay: displayCell(r.DMS_ambulatoire_horaire),
+  };
+}
+
+/** The province row: RSS 99, or named "Ensemble du Québec". */
+function isProvinceRow(r: RawRow): boolean {
+  return clean(r.RSS) === '99' || /^ensemble du qu/i.test(clean(r.Nom_installation));
 }
 
 /**
@@ -78,6 +133,9 @@ interface RawRow {
 export function parseUrgences(csv: string): {
   regions: Region[];
   dataDate: string;
+  extractedAt: string | null;
+  /** MSSS's "Ensemble du Québec" row (occupancyPct not derived yet). */
+  province: RegionTotal | null;
 } {
   let raw: RawRow[];
   try {
@@ -104,12 +162,20 @@ export function parseUrgences(csv: string): {
 
   // dataDate = the file's own Mise_a_jour (taken from the last row for resilience).
   const lastRow = raw[raw.length - 1]!;
-  const dataDate = clean(lastRow[MISE_A_JOUR_HEADER]);
+  const dataDate = normalizeDataDate(lastRow[MISE_A_JOUR_HEADER]);
+  const extractedAt = extractionTime(lastRow["Heure_de_l'extraction_(image)"], dataDate);
 
   const facilityRows = raw.filter((r) => clean(r.No_permis_installation) !== '');
   // Aggregate rows: the CSV carries a "Total régional" row per RSS and a final
-  // province-wide "Ensemble du Québec" row (RSS=99, blank permit). Both are
-  // filtered via the blank-permit check above.
+  // province-wide "Ensemble du Québec" row (RSS=99, blank permit). They are
+  // kept apart, verbatim, as region.total and province.
+  const aggregateRows = raw.filter((r) => clean(r.No_permis_installation) === '');
+  const provinceRow = aggregateRows.find(isProvinceRow);
+  const province: RegionTotal | null = provinceRow ? { ...rowCounts(provinceRow), occupancyPct: null } : null;
+  const totals = new Map<string, RegionTotal>();
+  for (const r of aggregateRows) {
+    if (!isProvinceRow(r)) totals.set(clean(r.RSS), { ...rowCounts(r), occupancyPct: null });
+  }
 
   const regions = new Map<string, Region>();
   for (const r of facilityRows) {
@@ -122,37 +188,32 @@ export function parseUrgences(csv: string): {
         regionCode: clean(r.RSS) === '' ? null : clean(r.RSS),
         facilities: [],
         averageOccupancyPct: null,
+        total: totals.get(clean(r.RSS)) ?? null,
       };
       regions.set(name, region);
     }
 
-    const functional = toNumber(r.Nombre_de_civieres_fonctionnelles);
-    const occupied = toNumber(r.Nombre_de_civieres_occupees);
-
+    const c = rowCounts(r);
     region.facilities.push({
       id: clean(r.No_permis_installation),
       name: clean(r.Nom_installation),
       establishment: clean(r.Nom_etablissement),
       regionCode: clean(r.RSS),
-      stretchersFunctional: functional,
-      stretchersOccupied: occupied,
+      stretchersFunctional: c.stretchersFunctional,
+      stretchersOccupied: c.stretchersOccupied,
       occupancyPct: null, // derived in derive.ts
-      over24h: toNumber(r.Nombre_de_patients_sur_civiere_plus_de_24_heures),
-      over48h: toNumber(r.Nombre_de_patients_sur_civiere_plus_de_48_heures),
-      totalPresent: toNumber(r.Nombre_total_de_patients_presents_a_lurgence),
-      waitingForCare: toNumber(r.Nombre_total_de_patients_en_attente_de_PEC),
-      dmsStretcher: toNumber(r.DMS_sur_civiere),
-      dmsAmbulatory: toNumber(r.DMS_ambulatoire),
-      dmsStretcherDisplay: clean(r.DMS_sur_civiere_horaire) === '' ? null : clean(r.DMS_sur_civiere_horaire),
-      dmsAmbulatoryDisplay: clean(r.DMS_ambulatoire_horaire) === '' ? null : clean(r.DMS_ambulatoire_horaire),
-      available:
-        functional !== null ||
-        occupied !== null ||
-        toNumber(r.Nombre_de_patients_sur_civiere_plus_de_24_heures) !== null ||
-        toNumber(r.Nombre_de_patients_sur_civiere_plus_de_48_heures) !== null,
+      over24h: c.over24h,
+      over48h: c.over48h,
+      totalPresent: c.totalPresent,
+      waitingForCare: c.waitingForCare,
+      dmsStretcher: c.dmsStretcher,
+      dmsAmbulatory: c.dmsAmbulatory,
+      dmsStretcherDisplay: c.dmsStretcherDisplay,
+      dmsAmbulatoryDisplay: c.dmsAmbulatoryDisplay,
+      available: c.stretchersFunctional !== null || c.stretchersOccupied !== null || c.over24h !== null || c.over48h !== null,
       deltaFromRegionAvgPct: null,
     });
   }
 
-  return { regions: [...regions.values()], dataDate };
+  return { regions: [...regions.values()], dataDate, extractedAt, province };
 }

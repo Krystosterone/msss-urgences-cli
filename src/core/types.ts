@@ -110,6 +110,26 @@ export interface UrgencesBaselineMeta {
   error?: string;
 }
 
+/**
+ * MSSS's own aggregate row for a region ("Total régional") or the province
+ * ("Ensemble du Québec"), verbatim, plus the occupancy derived from its
+ * stretcher counts. Null metrics = not published.
+ */
+export interface RegionTotal {
+  stretchersFunctional: number | null;
+  stretchersOccupied: number | null;
+  /** DERIVED: the row's occupied/functional as an integer % (MSSS's regional rate). */
+  occupancyPct: number | null;
+  over24h: number | null;
+  over48h: number | null;
+  totalPresent: number | null;
+  waitingForCare: number | null;
+  dmsStretcher: number | null;
+  dmsAmbulatory: number | null;
+  dmsStretcherDisplay: string | null;
+  dmsAmbulatoryDisplay: string | null;
+}
+
 /** A Québec administrative region and its facilities. */
 export interface Region {
   /** Display name from the CSV `Region` column (e.g. "Montréal"). */
@@ -121,6 +141,11 @@ export interface Region {
   facilities: Facility[];
   /** DERIVED (by core/derive): mean occupancyPct across available facilities. */
   averageOccupancyPct: number | null;
+  /**
+   * MSSS's "Total régional" row for the whole region, whatever facility
+   * filters apply. Null when the file has no such row.
+   */
+  total: RegionTotal | null;
 }
 
 /** Top-level report emitted by the `urgences` tool. */
@@ -129,13 +154,24 @@ export interface UrgencesReport {
   source: string;
   /** ISO-8601 timestamp stamped when the data was fetched (not cached). */
   fetchedAt: string;
-  /** The CSV's own `Mise_a_jour` data timestamp (e.g. "2026-08-23T15:45"). */
+  /**
+   * The CSV's own `Mise_a_jour`: when MSSS published it, Québec local time,
+   * hour zero-padded (e.g. "2026-08-23T15:45").
+   */
   dataDate: string;
+  /**
+   * When the snapshot was taken (`Heure_de_l'extraction_(image)` on that day,
+   * e.g. "2026-08-23T15:00"); MSSS publishes it about 45 minutes later.
+   * Null when the file doesn't say.
+   */
+  extractedAt: string | null;
   /** True when this report was served from the local cache, false on a live fetch. */
   cached: boolean;
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
   regions: Region[];
+  /** MSSS's "Ensemble du Québec" row: the province, whatever the filters. */
+  province: RegionTotal | null;
   /** Only with `--baseline`: what the facilities' `baseline` fields were joined from. */
   baseline?: UrgencesBaselineMeta;
 }

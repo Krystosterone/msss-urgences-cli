@@ -5,7 +5,7 @@ from canonical MSSS open-data CSVs (a plain HTTPS fetch + CSV parse — no
 browser, no HTML scraping), plus agent skills on top that own the
 human-facing recommendations. Ships four data tools plus `regions` (the shared
 RSS region registry behind every `--region`; `src/core/regions.ts`): `urgences` (hourly ER occupancy,
-Latin-1 CSV), `cliniques` (daily clinic appointment availability, UTF-8/BOM
+Latin-1 CSV), `cliniques` (clinic appointments offered per past day, published weekly, UTF-8/BOM
 CSV), `urgences-cumulatif` (fiscal-year-to-date ER indicators and
 year-over-year trends, UTF-8/BOM CSV updated each fiscal period) and
 `chirurgies` (surgical waitlist per fiscal period, UTF-8/BOM CSV), plus
@@ -47,6 +47,12 @@ MSSS_URGENCES_FIXTURE=test/fixtures/Chirurgie_ListeAttente.csv msss-urgences chi
 MSSS_URGENCES_FIXTURE=test/fixtures/urgences_nbpers.csv MSSS_URGENCES_BASELINE_FIXTURE=test/fixtures/Donnees_cumulatives_Urgence.csv msss-urgences urgences --baseline --json  # offline --baseline
 npx tsx scripts/build-api.ts site && MSSS_URGENCES_API_FIXTURE=site/api/v1 msss-urgences urgences-historique --json  # offline history, from this clone's archive/
 ```
+
+Skill or answer-standard changes: `npm test` includes `test/skills.test.ts`
+(the five copies of `references/answer-standard.md` must stay identical, and
+the unsafe rules removed in M0 must not come back) and `test/eval.test.ts`
+(the recorded benchmark answers in `eval/`, graded against a pinned snapshot;
+`npx tsx eval/grade.ts` prints the full report). See `eval/README.md`.
 
 Node's built-in `fetch` ignores `HTTPS_PROXY`; behind a proxy run live fetches
 with `NODE_USE_ENV_PROXY=1` (Node ≥ 22.21).

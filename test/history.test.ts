@@ -78,6 +78,17 @@ test('buildHistory: months, completeness, dedupe, skipped versions', () => {
   assert.deepEqual(sj.values[1], [16, 24, 0, 0, 53, 26, 7.07, 4.06], 'later republish of 16:45 wins');
 });
 
+test('buildHistory keeps the unpadded morning stamps MSSS publishes (T8:45)', () => {
+  const morning = version('2026-09-08T8:45', 8);
+  morning.csv = morning.csv.split('15:00:00,2026-09-08T8:45').join('8:00:00,2026-09-08T8:45');
+  const { index, months } = buildHistory([version('2026-09-07T15:45', 16), morning], {
+    generatedAt: 'x',
+    archiveCommit: 'abc',
+  });
+  assert.equal(index.datasets.urgences.skippedVersions, 0);
+  assert.deepEqual(months[0]!.snapshots, ['2026-09-07T15:45', '2026-09-08T08:45']);
+});
+
 test('shiftDays works on the naive local timestamp', () => {
   assert.equal(shiftDays('2026-09-08T15:45', -28), '2026-08-11T15:45');
   assert.equal(shiftDays('2026-03-01T00:15', -1), '2026-02-28T00:15');

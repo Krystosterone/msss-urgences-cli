@@ -1,0 +1,5456 @@
+{
+  "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/Donnees_cumulatives_Urgence.csv",
+  "fetchedAt": "2026-11-05T03:17:49.808Z",
+  "cached": true,
+  "cacheAgeMinutes": 0,
+  "fiscalYear": "2026-2027",
+  "period": 7,
+  "compareTo": "2025-2026",
+  "availableFiscalYears": [
+    "2026-2027",
+    "2025-2026",
+    "2024-2025",
+    "2023-2024",
+    "2022-2023",
+    "2021-2022"
+  ],
+  "levels": [
+    "province",
+    "region"
+  ],
+  "entries": [
+    {
+      "level": "province",
+      "id": null,
+      "key": "province",
+      "name": "Total provincial",
+      "establishment": null,
+      "regionCode": "99",
+      "regionLabel": "Total provincial",
+      "regionName": "Total provincial",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 108,
+      "indicators": {
+        "total": {
+          "visits": 1858526,
+          "patients75Plus": 327606,
+          "mentalHealth": 109963,
+          "dmsHours": 9.044366952329124,
+          "pecCount": 1475080,
+          "pecDelayHours": 3.0419230567155693
+        },
+        "ambulatory": {
+          "visits": 1244278,
+          "patients75Plus": 132358,
+          "mentalHealth": 42854,
+          "dmsHours": 5.053703619466246,
+          "pecCount": 868126,
+          "pecDelayHours": 3.5222276083451267
+        },
+        "stretcher": {
+          "visits": 614248,
+          "over24h": 136437,
+          "over48h": 32375,
+          "dmsHours": 17.12822655054997,
+          "pecCount": 606954,
+          "pecDelayHours": 2.3549436988268924,
+          "patients75Plus": 195248,
+          "mentalHealth": 67109
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 22.2,
+        "stretcherOver48hPct": 5.3,
+        "stretcherSharePct": 33.1
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 116,
+        "indicators": {
+          "total": {
+            "visits": 2011715,
+            "patients75Plus": 347228,
+            "mentalHealth": 120027,
+            "dmsHours": 8.596693904344194,
+            "pecCount": 1624773,
+            "pecDelayHours": 2.802467014708448
+          },
+          "ambulatory": {
+            "visits": 1335576,
+            "patients75Plus": 134799,
+            "mentalHealth": 46271,
+            "dmsHours": 4.782048922462419,
+            "pecCount": 956254,
+            "pecDelayHours": 3.287300867063912
+          },
+          "stretcher": {
+            "visits": 676139,
+            "over24h": 136959,
+            "over48h": 31334,
+            "dmsHours": 16.131754426399173,
+            "pecCount": 668519,
+            "pecDelayHours": 2.108957465016784,
+            "patients75Plus": 212429,
+            "mentalHealth": 73756
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 20.3,
+          "stretcherOver48hPct": 4.6,
+          "stretcherSharePct": 33.6
+        }
+      },
+      "change": {
+        "total": {
+          "visits": -153189,
+          "patients75Plus": -19622,
+          "mentalHealth": -10064,
+          "dmsHours": 0.45,
+          "pecCount": -149693,
+          "pecDelayHours": 0.24
+        },
+        "ambulatory": {
+          "visits": -91298,
+          "patients75Plus": -2441,
+          "mentalHealth": -3417,
+          "dmsHours": 0.27,
+          "pecCount": -88128,
+          "pecDelayHours": 0.23
+        },
+        "stretcher": {
+          "visits": -61891,
+          "over24h": -522,
+          "over48h": 1041,
+          "dmsHours": 1,
+          "pecCount": -61565,
+          "pecDelayHours": 0.25,
+          "patients75Plus": -17181,
+          "mentalHealth": -6647
+        },
+        "derived": {
+          "stretcherOver24hPct": 1.9,
+          "stretcherOver48hPct": 0.7,
+          "stretcherSharePct": -0.5
+        },
+        "facilityCount": -8
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 115,
+          "indicators": {
+            "total": {
+              "visits": 1812368,
+              "patients75Plus": 266999,
+              "mentalHealth": 110115,
+              "dmsHours": 8.304020151628517,
+              "pecCount": 1475267,
+              "pecDelayHours": 2.519819617209781
+            },
+            "ambulatory": {
+              "visits": 1229233,
+              "patients75Plus": 98796,
+              "mentalHealth": 45913,
+              "dmsHours": 4.580041266925527,
+              "pecCount": 897384,
+              "pecDelayHours": 3.0008735428014464
+            },
+            "stretcher": {
+              "visits": 583135,
+              "over24h": 121839,
+              "over48h": 29852,
+              "dmsHours": 16.154068144597737,
+              "pecCount": 577883,
+              "pecDelayHours": 1.7727997257037995,
+              "patients75Plus": 168203,
+              "mentalHealth": 64202
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 20.9,
+            "stretcherOver48hPct": 5.1,
+            "stretcherSharePct": 32.2
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 115,
+          "indicators": {
+            "total": {
+              "visits": 1930100,
+              "patients75Plus": 287058,
+              "mentalHealth": 110038,
+              "dmsHours": 8.878886217611063,
+              "pecCount": 1530330,
+              "pecDelayHours": 2.8124927806057807
+            },
+            "ambulatory": {
+              "visits": 1333437,
+              "patients75Plus": 107998,
+              "mentalHealth": 45108,
+              "dmsHours": 4.889528674770536,
+              "pecCount": 940159,
+              "pecDelayHours": 3.3422963952551292
+            },
+            "stretcher": {
+              "visits": 596663,
+              "over24h": 140469,
+              "over48h": 42656,
+              "dmsHours": 17.79439958755799,
+              "pecCount": 590171,
+              "pecDelayHours": 1.9685007231425773,
+              "patients75Plus": 179060,
+              "mentalHealth": 64930
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 23.5,
+            "stretcherOver48hPct": 7.1,
+            "stretcherSharePct": 30.9
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 115,
+          "indicators": {
+            "total": {
+              "visits": 1884897,
+              "patients75Plus": 303633,
+              "mentalHealth": 110497,
+              "dmsHours": 8.758813466258955,
+              "pecCount": 1523003,
+              "pecDelayHours": 2.793725541651008
+            },
+            "ambulatory": {
+              "visits": 1270039,
+              "patients75Plus": 117571,
+              "mentalHealth": 43685,
+              "dmsHours": 4.882416675568407,
+              "pecCount": 914766,
+              "pecDelayHours": 3.305983846931589
+            },
+            "stretcher": {
+              "visits": 614858,
+              "over24h": 135394,
+              "over48h": 34527,
+              "dmsHours": 16.765825009821604,
+              "pecCount": 608237,
+              "pecDelayHours": 2.023307956255356,
+              "patients75Plus": 186062,
+              "mentalHealth": 66812
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 22,
+            "stretcherOver48hPct": 5.6,
+            "stretcherSharePct": 32.6
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 115,
+          "indicators": {
+            "total": {
+              "visits": 2077882,
+              "patients75Plus": 340622,
+              "mentalHealth": 120581,
+              "dmsHours": 8.801656131767295,
+              "pecCount": 1668082,
+              "pecDelayHours": 3.0048199650523437
+            },
+            "ambulatory": {
+              "visits": 1402305,
+              "patients75Plus": 131717,
+              "mentalHealth": 47326,
+              "dmsHours": 5.059857367572201,
+              "pecCount": 1000362,
+              "pecDelayHours": 3.5697677743434664
+            },
+            "stretcher": {
+              "visits": 675577,
+              "over24h": 146678,
+              "over48h": 34716,
+              "dmsHours": 16.56856222244919,
+              "pecCount": 667720,
+              "pecDelayHours": 2.1584287825236124,
+              "patients75Plus": 208905,
+              "mentalHealth": 73255
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 21.7,
+            "stretcherOver48hPct": 5.1,
+            "stretcherSharePct": 32.5
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 116,
+          "indicators": {
+            "total": {
+              "visits": 2011715,
+              "patients75Plus": 347228,
+              "mentalHealth": 120027,
+              "dmsHours": 8.596693904344194,
+              "pecCount": 1624773,
+              "pecDelayHours": 2.802467014708448
+            },
+            "ambulatory": {
+              "visits": 1335576,
+              "patients75Plus": 134799,
+              "mentalHealth": 46271,
+              "dmsHours": 4.782048922462419,
+              "pecCount": 956254,
+              "pecDelayHours": 3.287300867063912
+            },
+            "stretcher": {
+              "visits": 676139,
+              "over24h": 136959,
+              "over48h": 31334,
+              "dmsHours": 16.131754426399173,
+              "pecCount": 668519,
+              "pecDelayHours": 2.108957465016784,
+              "patients75Plus": 212429,
+              "mentalHealth": 73756
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 20.3,
+            "stretcherOver48hPct": 4.6,
+            "stretcherSharePct": 33.6
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 108,
+          "indicators": {
+            "total": {
+              "visits": 1858526,
+              "patients75Plus": 327606,
+              "mentalHealth": 109963,
+              "dmsHours": 9.044366952329124,
+              "pecCount": 1475080,
+              "pecDelayHours": 3.0419230567155693
+            },
+            "ambulatory": {
+              "visits": 1244278,
+              "patients75Plus": 132358,
+              "mentalHealth": 42854,
+              "dmsHours": 5.053703619466246,
+              "pecCount": 868126,
+              "pecDelayHours": 3.5222276083451267
+            },
+            "stretcher": {
+              "visits": 614248,
+              "over24h": 136437,
+              "over48h": 32375,
+              "dmsHours": 17.12822655054997,
+              "pecCount": 606954,
+              "pecDelayHours": 2.3549436988268924,
+              "patients75Plus": 195248,
+              "mentalHealth": 67109
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 22.2,
+            "stretcherOver48hPct": 5.3,
+            "stretcherSharePct": 33.1
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:01",
+      "name": "Bas-Saint-Laurent",
+      "establishment": null,
+      "regionCode": "01",
+      "regionLabel": "Bas-Saint-Laurent",
+      "regionName": "Bas-Saint-Laurent",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 78209,
+          "patients75Plus": 15472,
+          "mentalHealth": 3425,
+          "dmsHours": 5.049109458843185,
+          "pecCount": 66946,
+          "pecDelayHours": 2.2653205900609783
+        },
+        "ambulatory": {
+          "visits": 59115,
+          "patients75Plus": 8125,
+          "mentalHealth": 1996,
+          "dmsHours": 3.5750223011643976,
+          "pecCount": 48169,
+          "pecDelayHours": 2.4675686414268285
+        },
+        "stretcher": {
+          "visits": 19094,
+          "over24h": 1123,
+          "over48h": 80,
+          "dmsHours": 9.612881446178553,
+          "pecCount": 18777,
+          "pecDelayHours": 1.7464897658482896,
+          "patients75Plus": 7347,
+          "mentalHealth": 1429
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 5.9,
+        "stretcherOver48hPct": 0.4,
+        "stretcherSharePct": 24.4
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 76732,
+            "patients75Plus": 14613,
+            "mentalHealth": 3194,
+            "dmsHours": 4.886915266410653,
+            "pecCount": 66049,
+            "pecDelayHours": 2.143802320162977
+          },
+          "ambulatory": {
+            "visits": 57823,
+            "patients75Plus": 7682,
+            "mentalHealth": 1890,
+            "dmsHours": 3.428581485260575,
+            "pecCount": 47475,
+            "pecDelayHours": 2.3478023345620507
+          },
+          "stretcher": {
+            "visits": 18909,
+            "over24h": 1081,
+            "over48h": 77,
+            "dmsHours": 9.346444285789834,
+            "pecCount": 18574,
+            "pecDelayHours": 1.6223798649246857,
+            "patients75Plus": 6931,
+            "mentalHealth": 1304
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 5.7,
+          "stretcherOver48hPct": 0.4,
+          "stretcherSharePct": 24.6
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 1477,
+          "patients75Plus": 859,
+          "mentalHealth": 231,
+          "dmsHours": 0.16,
+          "pecCount": 897,
+          "pecDelayHours": 0.12
+        },
+        "ambulatory": {
+          "visits": 1292,
+          "patients75Plus": 443,
+          "mentalHealth": 106,
+          "dmsHours": 0.15,
+          "pecCount": 694,
+          "pecDelayHours": 0.12
+        },
+        "stretcher": {
+          "visits": 185,
+          "over24h": 42,
+          "over48h": 3,
+          "dmsHours": 0.27,
+          "pecCount": 203,
+          "pecDelayHours": 0.12,
+          "patients75Plus": 416,
+          "mentalHealth": 125
+        },
+        "derived": {
+          "stretcherOver24hPct": 0.2,
+          "stretcherOver48hPct": 0,
+          "stretcherSharePct": -0.2
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 68720,
+              "patients75Plus": 11032,
+              "mentalHealth": 3031,
+              "dmsHours": 4.092770853544173,
+              "pecCount": 59767,
+              "pecDelayHours": 1.730149873676109
+            },
+            "ambulatory": {
+              "visits": 51829,
+              "patients75Plus": 5586,
+              "mentalHealth": 1908,
+              "dmsHours": 2.983995666304364,
+              "pecCount": 43094,
+              "pecDelayHours": 1.914308056548218
+            },
+            "stretcher": {
+              "visits": 16891,
+              "over24h": 312,
+              "over48h": 5,
+              "dmsHours": 7.494979673593432,
+              "pecCount": 16673,
+              "pecDelayHours": 1.2541639843526124,
+              "patients75Plus": 5446,
+              "mentalHealth": 1123
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 1.8,
+            "stretcherOver48hPct": 0,
+            "stretcherSharePct": 24.6
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 75750,
+              "patients75Plus": 11983,
+              "mentalHealth": 2710,
+              "dmsHours": 4.319033017968462,
+              "pecCount": 64902,
+              "pecDelayHours": 1.9212128456921378
+            },
+            "ambulatory": {
+              "visits": 57321,
+              "patients75Plus": 5871,
+              "mentalHealth": 1647,
+              "dmsHours": 3.14237467265245,
+              "pecCount": 46776,
+              "pecDelayHours": 2.0924007503848125
+            },
+            "stretcher": {
+              "visits": 18429,
+              "over24h": 500,
+              "over48h": 23,
+              "dmsHours": 7.978875278094308,
+              "pecCount": 18126,
+              "pecDelayHours": 1.4794449195140196,
+              "patients75Plus": 6112,
+              "mentalHealth": 1063
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 2.7,
+            "stretcherOver48hPct": 0.1,
+            "stretcherSharePct": 24.3
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 72263,
+              "patients75Plus": 12764,
+              "mentalHealth": 2931,
+              "dmsHours": 4.56324730882717,
+              "pecCount": 62673,
+              "pecDelayHours": 1.9725863565207062
+            },
+            "ambulatory": {
+              "visits": 53897,
+              "patients75Plus": 6418,
+              "mentalHealth": 1697,
+              "dmsHours": 3.307896368175512,
+              "pecCount": 44629,
+              "pecDelayHours": 2.160686250345441
+            },
+            "stretcher": {
+              "visits": 18366,
+              "over24h": 599,
+              "over48h": 27,
+              "dmsHours": 8.24720950246228,
+              "pecCount": 18044,
+              "pecDelayHours": 1.5073508122121233,
+              "patients75Plus": 6346,
+              "mentalHealth": 1234
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 3.3,
+            "stretcherOver48hPct": 0.1,
+            "stretcherSharePct": 25.4
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 82929,
+              "patients75Plus": 14216,
+              "mentalHealth": 3290,
+              "dmsHours": 4.706273592805626,
+              "pecCount": 71537,
+              "pecDelayHours": 2.0732504935286014
+            },
+            "ambulatory": {
+              "visits": 63984,
+              "patients75Plus": 7410,
+              "mentalHealth": 1986,
+              "dmsHours": 3.369071616862549,
+              "pecCount": 52883,
+              "pecDelayHours": 2.2779280991370894
+            },
+            "stretcher": {
+              "visits": 18945,
+              "over24h": 1085,
+              "over48h": 100,
+              "dmsHours": 9.222480044573473,
+              "pecCount": 18654,
+              "pecDelayHours": 1.4930014414543202,
+              "patients75Plus": 6806,
+              "mentalHealth": 1304
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 5.7,
+            "stretcherOver48hPct": 0.5,
+            "stretcherSharePct": 22.8
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 76732,
+              "patients75Plus": 14613,
+              "mentalHealth": 3194,
+              "dmsHours": 4.886915266410653,
+              "pecCount": 66049,
+              "pecDelayHours": 2.143802320162977
+            },
+            "ambulatory": {
+              "visits": 57823,
+              "patients75Plus": 7682,
+              "mentalHealth": 1890,
+              "dmsHours": 3.428581485260575,
+              "pecCount": 47475,
+              "pecDelayHours": 2.3478023345620507
+            },
+            "stretcher": {
+              "visits": 18909,
+              "over24h": 1081,
+              "over48h": 77,
+              "dmsHours": 9.346444285789834,
+              "pecCount": 18574,
+              "pecDelayHours": 1.6223798649246857,
+              "patients75Plus": 6931,
+              "mentalHealth": 1304
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 5.7,
+            "stretcherOver48hPct": 0.4,
+            "stretcherSharePct": 24.6
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 78209,
+              "patients75Plus": 15472,
+              "mentalHealth": 3425,
+              "dmsHours": 5.049109458843185,
+              "pecCount": 66946,
+              "pecDelayHours": 2.2653205900609783
+            },
+            "ambulatory": {
+              "visits": 59115,
+              "patients75Plus": 8125,
+              "mentalHealth": 1996,
+              "dmsHours": 3.5750223011643976,
+              "pecCount": 48169,
+              "pecDelayHours": 2.4675686414268285
+            },
+            "stretcher": {
+              "visits": 19094,
+              "over24h": 1123,
+              "over48h": 80,
+              "dmsHours": 9.612881446178553,
+              "pecCount": 18777,
+              "pecDelayHours": 1.7464897658482896,
+              "patients75Plus": 7347,
+              "mentalHealth": 1429
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 5.9,
+            "stretcherOver48hPct": 0.4,
+            "stretcherSharePct": 24.4
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:02",
+      "name": "Saguenay-Lac-Saint-Jean",
+      "establishment": null,
+      "regionCode": "02",
+      "regionLabel": "Saguenay-Lac-Saint-Jean",
+      "regionName": "Saguenay-Lac-Saint-Jean",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 6,
+      "indicators": {
+        "total": {
+          "visits": 102748,
+          "patients75Plus": 18226,
+          "mentalHealth": 5186,
+          "dmsHours": 6.460923180986492,
+          "pecCount": 86275,
+          "pecDelayHours": 2.9871952896100966
+        },
+        "ambulatory": {
+          "visits": 71216,
+          "patients75Plus": 8549,
+          "mentalHealth": 2162,
+          "dmsHours": 4.397201611997303,
+          "pecCount": 55273,
+          "pecDelayHours": 3.382067465127639
+        },
+        "stretcher": {
+          "visits": 31532,
+          "over24h": 2561,
+          "over48h": 135,
+          "dmsHours": 11.121902353165035,
+          "pecCount": 31002,
+          "pecDelayHours": 2.2831836207699863,
+          "patients75Plus": 9677,
+          "mentalHealth": 3024
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 8.1,
+        "stretcherOver48hPct": 0.4,
+        "stretcherSharePct": 30.7
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 6,
+        "indicators": {
+          "total": {
+            "visits": 100354,
+            "patients75Plus": 17386,
+            "mentalHealth": 5128,
+            "dmsHours": 6.318617513446842,
+            "pecCount": 84979,
+            "pecDelayHours": 2.7763841524245865
+          },
+          "ambulatory": {
+            "visits": 69297,
+            "patients75Plus": 8057,
+            "mentalHealth": 2238,
+            "dmsHours": 4.185875719327274,
+            "pecCount": 54430,
+            "pecDelayHours": 3.1039790709780153
+          },
+          "stretcher": {
+            "visits": 31057,
+            "over24h": 2685,
+            "over48h": 154,
+            "dmsHours": 11.077371034620928,
+            "pecCount": 30549,
+            "pecDelayHours": 2.192699206375186,
+            "patients75Plus": 9329,
+            "mentalHealth": 2890
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 8.6,
+          "stretcherOver48hPct": 0.5,
+          "stretcherSharePct": 30.9
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 2394,
+          "patients75Plus": 840,
+          "mentalHealth": 58,
+          "dmsHours": 0.14,
+          "pecCount": 1296,
+          "pecDelayHours": 0.21
+        },
+        "ambulatory": {
+          "visits": 1919,
+          "patients75Plus": 492,
+          "mentalHealth": -76,
+          "dmsHours": 0.21,
+          "pecCount": 843,
+          "pecDelayHours": 0.28
+        },
+        "stretcher": {
+          "visits": 475,
+          "over24h": -124,
+          "over48h": -19,
+          "dmsHours": 0.04,
+          "pecCount": 453,
+          "pecDelayHours": 0.09,
+          "patients75Plus": 348,
+          "mentalHealth": 134
+        },
+        "derived": {
+          "stretcherOver24hPct": -0.5,
+          "stretcherOver48hPct": -0.1,
+          "stretcherSharePct": -0.2
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 89687,
+              "patients75Plus": 13282,
+              "mentalHealth": 4421,
+              "dmsHours": 5.823895770847503,
+              "pecCount": 76701,
+              "pecDelayHours": 2.3346207278189914
+            },
+            "ambulatory": {
+              "visits": 61094,
+              "patients75Plus": 5519,
+              "mentalHealth": 1623,
+              "dmsHours": 3.448381101253807,
+              "pecCount": 48561,
+              "pecDelayHours": 2.6243095854240597
+            },
+            "stretcher": {
+              "visits": 28593,
+              "over24h": 2648,
+              "over48h": 255,
+              "dmsHours": 10.899602874829505,
+              "pecCount": 28140,
+              "pecDelayHours": 1.834706704572376,
+              "patients75Plus": 7763,
+              "mentalHealth": 2798
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 9.3,
+            "stretcherOver48hPct": 0.9,
+            "stretcherSharePct": 31.9
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 97619,
+              "patients75Plus": 14409,
+              "mentalHealth": 4713,
+              "dmsHours": 6.246374006767811,
+              "pecCount": 82709,
+              "pecDelayHours": 2.66142828403734
+            },
+            "ambulatory": {
+              "visits": 68249,
+              "patients75Plus": 5972,
+              "mentalHealth": 1821,
+              "dmsHours": 3.812181489024667,
+              "pecCount": 53811,
+              "pecDelayHours": 2.979110812741714
+            },
+            "stretcher": {
+              "visits": 29370,
+              "over24h": 3366,
+              "over48h": 506,
+              "dmsHours": 11.902867201982373,
+              "pecCount": 28898,
+              "pecDelayHours": 2.0698712713682608,
+              "patients75Plus": 8437,
+              "mentalHealth": 2892
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 11.5,
+            "stretcherOver48hPct": 1.7,
+            "stretcherSharePct": 30.1
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 94610,
+              "patients75Plus": 15133,
+              "mentalHealth": 4927,
+              "dmsHours": 5.99957486288741,
+              "pecCount": 81293,
+              "pecDelayHours": 2.6205065319277177
+            },
+            "ambulatory": {
+              "visits": 64350,
+              "patients75Plus": 6609,
+              "mentalHealth": 1893,
+              "dmsHours": 3.7537479409479415,
+              "pecCount": 51567,
+              "pecDelayHours": 2.941514518328905
+            },
+            "stretcher": {
+              "visits": 30260,
+              "over24h": 2515,
+              "over48h": 160,
+              "dmsHours": 10.775482411691268,
+              "pecCount": 29726,
+              "pecDelayHours": 2.063639855121218,
+              "patients75Plus": 8524,
+              "mentalHealth": 3034
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 8.3,
+            "stretcherOver48hPct": 0.5,
+            "stretcherSharePct": 32
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 105203,
+              "patients75Plus": 17024,
+              "mentalHealth": 5028,
+              "dmsHours": 6.354286712356113,
+              "pecCount": 89458,
+              "pecDelayHours": 2.9445065840953295
+            },
+            "ambulatory": {
+              "visits": 72634,
+              "patients75Plus": 7473,
+              "mentalHealth": 1875,
+              "dmsHours": 4.177032224730995,
+              "pecCount": 57455,
+              "pecDelayHours": 3.3506340904475955
+            },
+            "stretcher": {
+              "visits": 32569,
+              "over24h": 2940,
+              "over48h": 190,
+              "dmsHours": 11.209907162912245,
+              "pecCount": 32003,
+              "pecDelayHours": 2.2153856930079465,
+              "patients75Plus": 9551,
+              "mentalHealth": 3153
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 9,
+            "stretcherOver48hPct": 0.6,
+            "stretcherSharePct": 31
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 100354,
+              "patients75Plus": 17386,
+              "mentalHealth": 5128,
+              "dmsHours": 6.318617513446842,
+              "pecCount": 84979,
+              "pecDelayHours": 2.7763841524245865
+            },
+            "ambulatory": {
+              "visits": 69297,
+              "patients75Plus": 8057,
+              "mentalHealth": 2238,
+              "dmsHours": 4.185875719327274,
+              "pecCount": 54430,
+              "pecDelayHours": 3.1039790709780153
+            },
+            "stretcher": {
+              "visits": 31057,
+              "over24h": 2685,
+              "over48h": 154,
+              "dmsHours": 11.077371034620928,
+              "pecCount": 30549,
+              "pecDelayHours": 2.192699206375186,
+              "patients75Plus": 9329,
+              "mentalHealth": 2890
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 8.6,
+            "stretcherOver48hPct": 0.5,
+            "stretcherSharePct": 30.9
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 102748,
+              "patients75Plus": 18226,
+              "mentalHealth": 5186,
+              "dmsHours": 6.460923180986492,
+              "pecCount": 86275,
+              "pecDelayHours": 2.9871952896100966
+            },
+            "ambulatory": {
+              "visits": 71216,
+              "patients75Plus": 8549,
+              "mentalHealth": 2162,
+              "dmsHours": 4.397201611997303,
+              "pecCount": 55273,
+              "pecDelayHours": 3.382067465127639
+            },
+            "stretcher": {
+              "visits": 31532,
+              "over24h": 2561,
+              "over48h": 135,
+              "dmsHours": 11.121902353165035,
+              "pecCount": 31002,
+              "pecDelayHours": 2.2831836207699863,
+              "patients75Plus": 9677,
+              "mentalHealth": 3024
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 8.1,
+            "stretcherOver48hPct": 0.4,
+            "stretcherSharePct": 30.7
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:03",
+      "name": "Capitale-Nationale",
+      "establishment": null,
+      "regionCode": "03",
+      "regionLabel": "Capitale-Nationale",
+      "regionName": "Capitale-Nationale",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 12,
+      "indicators": {
+        "total": {
+          "visits": 226338,
+          "patients75Plus": 42458,
+          "mentalHealth": 12213,
+          "dmsHours": 7.245448477498253,
+          "pecCount": 183371,
+          "pecDelayHours": 2.120996990618291
+        },
+        "ambulatory": {
+          "visits": 149333,
+          "patients75Plus": 17226,
+          "mentalHealth": 4594,
+          "dmsHours": 3.959442807536029,
+          "pecCount": 107106,
+          "pecDelayHours": 2.5993875874782413
+        },
+        "stretcher": {
+          "visits": 77005,
+          "over24h": 11560,
+          "over48h": 1256,
+          "dmsHours": 13.617879939253585,
+          "pecCount": 76265,
+          "pecDelayHours": 1.449148786759617,
+          "patients75Plus": 25232,
+          "mentalHealth": 7619
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 15,
+        "stretcherOver48hPct": 1.6,
+        "stretcherSharePct": 34
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 12,
+        "indicators": {
+          "total": {
+            "visits": 220578,
+            "patients75Plus": 40460,
+            "mentalHealth": 12265,
+            "dmsHours": 6.90881773995795,
+            "pecCount": 182167,
+            "pecDelayHours": 1.9604921933659165
+          },
+          "ambulatory": {
+            "visits": 146447,
+            "patients75Plus": 16298,
+            "mentalHealth": 4477,
+            "dmsHours": 3.7445623388210985,
+            "pecCount": 108564,
+            "pecDelayHours": 2.4010898128702376
+          },
+          "stretcher": {
+            "visits": 74131,
+            "over24h": 9882,
+            "over48h": 1272,
+            "dmsHours": 13.15985591198164,
+            "pecCount": 73603,
+            "pecDelayHours": 1.3106132487051398,
+            "patients75Plus": 24162,
+            "mentalHealth": 7788
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 13.3,
+          "stretcherOver48hPct": 1.7,
+          "stretcherSharePct": 33.6
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 5760,
+          "patients75Plus": 1998,
+          "mentalHealth": -52,
+          "dmsHours": 0.34,
+          "pecCount": 1204,
+          "pecDelayHours": 0.16
+        },
+        "ambulatory": {
+          "visits": 2886,
+          "patients75Plus": 928,
+          "mentalHealth": 117,
+          "dmsHours": 0.21,
+          "pecCount": -1458,
+          "pecDelayHours": 0.2
+        },
+        "stretcher": {
+          "visits": 2874,
+          "over24h": 1678,
+          "over48h": -16,
+          "dmsHours": 0.46,
+          "pecCount": 2662,
+          "pecDelayHours": 0.14,
+          "patients75Plus": 1070,
+          "mentalHealth": -169
+        },
+        "derived": {
+          "stretcherOver24hPct": 1.7,
+          "stretcherOver48hPct": -0.1,
+          "stretcherSharePct": 0.4
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 195104,
+              "patients75Plus": 29997,
+              "mentalHealth": 11015,
+              "dmsHours": 6.970257194738303,
+              "pecCount": 162323,
+              "pecDelayHours": 1.8149849237494249
+            },
+            "ambulatory": {
+              "visits": 130453,
+              "patients75Plus": 11785,
+              "mentalHealth": 3712,
+              "dmsHours": 3.670155038809209,
+              "pecCount": 97911,
+              "pecDelayHours": 2.278128200894464
+            },
+            "stretcher": {
+              "visits": 64651,
+              "over24h": 10043,
+              "over48h": 1699,
+              "dmsHours": 13.629214156694317,
+              "pecCount": 64412,
+              "pecDelayHours": 1.1109729165372915,
+              "patients75Plus": 18212,
+              "mentalHealth": 7303
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 15.5,
+            "stretcherOver48hPct": 2.6,
+            "stretcherSharePct": 33.1
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 208210,
+              "patients75Plus": 32783,
+              "mentalHealth": 11094,
+              "dmsHours": 7.2828646558762795,
+              "pecCount": 168775,
+              "pecDelayHours": 1.960921606675554
+            },
+            "ambulatory": {
+              "visits": 140474,
+              "patients75Plus": 12993,
+              "mentalHealth": 4043,
+              "dmsHours": 3.7133511994311315,
+              "pecCount": 101401,
+              "pecDelayHours": 2.436947592013666
+            },
+            "stretcher": {
+              "visits": 67736,
+              "over24h": 11643,
+              "over48h": 2800,
+              "dmsHours": 14.685484138583782,
+              "pecCount": 67374,
+              "pecDelayHours": 1.2444803839595227,
+              "patients75Plus": 19790,
+              "mentalHealth": 7051
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 17.2,
+            "stretcherOver48hPct": 4.1,
+            "stretcherSharePct": 32.5
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 203701,
+              "patients75Plus": 34723,
+              "mentalHealth": 11210,
+              "dmsHours": 7.211019878536569,
+              "pecCount": 168305,
+              "pecDelayHours": 1.94229300641362
+            },
+            "ambulatory": {
+              "visits": 134448,
+              "patients75Plus": 13549,
+              "mentalHealth": 3954,
+              "dmsHours": 3.700256332063946,
+              "pecCount": 99478,
+              "pecDelayHours": 2.4147554791567534
+            },
+            "stretcher": {
+              "visits": 69253,
+              "over24h": 11115,
+              "over48h": 2234,
+              "dmsHours": 14.026827674533152,
+              "pecCount": 68827,
+              "pecDelayHours": 1.259426952923836,
+              "patients75Plus": 21174,
+              "mentalHealth": 7256
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16,
+            "stretcherOver48hPct": 3.2,
+            "stretcherSharePct": 34
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 226435,
+              "patients75Plus": 38910,
+              "mentalHealth": 12115,
+              "dmsHours": 7.172906783403625,
+              "pecCount": 185628,
+              "pecDelayHours": 2.097715278226704
+            },
+            "ambulatory": {
+              "visits": 151127,
+              "patients75Plus": 15250,
+              "mentalHealth": 4427,
+              "dmsHours": 3.8664791055058187,
+              "pecCount": 110914,
+              "pecDelayHours": 2.575675663627275
+            },
+            "stretcher": {
+              "visits": 75308,
+              "over24h": 12419,
+              "over48h": 1661,
+              "dmsHours": 13.80819779734188,
+              "pecCount": 74714,
+              "pecDelayHours": 1.3881762602873768,
+              "patients75Plus": 23660,
+              "mentalHealth": 7688
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16.5,
+            "stretcherOver48hPct": 2.2,
+            "stretcherSharePct": 33.3
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 220578,
+              "patients75Plus": 40460,
+              "mentalHealth": 12265,
+              "dmsHours": 6.90881773995795,
+              "pecCount": 182167,
+              "pecDelayHours": 1.9604921933659165
+            },
+            "ambulatory": {
+              "visits": 146447,
+              "patients75Plus": 16298,
+              "mentalHealth": 4477,
+              "dmsHours": 3.7445623388210985,
+              "pecCount": 108564,
+              "pecDelayHours": 2.4010898128702376
+            },
+            "stretcher": {
+              "visits": 74131,
+              "over24h": 9882,
+              "over48h": 1272,
+              "dmsHours": 13.15985591198164,
+              "pecCount": 73603,
+              "pecDelayHours": 1.3106132487051398,
+              "patients75Plus": 24162,
+              "mentalHealth": 7788
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 13.3,
+            "stretcherOver48hPct": 1.7,
+            "stretcherSharePct": 33.6
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 12,
+          "indicators": {
+            "total": {
+              "visits": 226338,
+              "patients75Plus": 42458,
+              "mentalHealth": 12213,
+              "dmsHours": 7.245448477498253,
+              "pecCount": 183371,
+              "pecDelayHours": 2.120996990618291
+            },
+            "ambulatory": {
+              "visits": 149333,
+              "patients75Plus": 17226,
+              "mentalHealth": 4594,
+              "dmsHours": 3.959442807536029,
+              "pecCount": 107106,
+              "pecDelayHours": 2.5993875874782413
+            },
+            "stretcher": {
+              "visits": 77005,
+              "over24h": 11560,
+              "over48h": 1256,
+              "dmsHours": 13.617879939253585,
+              "pecCount": 76265,
+              "pecDelayHours": 1.449148786759617,
+              "patients75Plus": 25232,
+              "mentalHealth": 7619
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 15,
+            "stretcherOver48hPct": 1.6,
+            "stretcherSharePct": 34
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:05",
+      "name": "Estrie",
+      "establishment": null,
+      "regionCode": "05",
+      "regionLabel": "Estrie",
+      "regionName": "Estrie",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 137502,
+          "patients75Plus": 24569,
+          "mentalHealth": 6861,
+          "dmsHours": 8.464835656935898,
+          "pecCount": 109209,
+          "pecDelayHours": 3.4420703040347713
+        },
+        "ambulatory": {
+          "visits": 92480,
+          "patients75Plus": 10026,
+          "mentalHealth": 2522,
+          "dmsHours": 5.509315356473471,
+          "pecCount": 64456,
+          "pecDelayHours": 4.356130814474645
+        },
+        "stretcher": {
+          "visits": 45022,
+          "over24h": 7888,
+          "over48h": 1087,
+          "dmsHours": 14.535790243288467,
+          "pecCount": 44753,
+          "pecDelayHours": 2.12558461009442,
+          "patients75Plus": 14543,
+          "mentalHealth": 4339
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 17.5,
+        "stretcherOver48hPct": 2.4,
+        "stretcherSharePct": 32.7
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 133625,
+            "patients75Plus": 23355,
+            "mentalHealth": 7130,
+            "dmsHours": 8.137910435505665,
+            "pecCount": 108870,
+            "pecDelayHours": 3.3037649566761593
+          },
+          "ambulatory": {
+            "visits": 85825,
+            "patients75Plus": 8823,
+            "mentalHealth": 2575,
+            "dmsHours": 5.374087597501376,
+            "pecCount": 61442,
+            "pecDelayHours": 4.278570652901203
+          },
+          "stretcher": {
+            "visits": 47800,
+            "over24h": 7060,
+            "over48h": 940,
+            "dmsHours": 13.100360123198513,
+            "pecCount": 47428,
+            "pecDelayHours": 2.040924196208522,
+            "patients75Plus": 14532,
+            "mentalHealth": 4555
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 14.8,
+          "stretcherOver48hPct": 2,
+          "stretcherSharePct": 35.8
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 3877,
+          "patients75Plus": 1214,
+          "mentalHealth": -269,
+          "dmsHours": 0.33,
+          "pecCount": 339,
+          "pecDelayHours": 0.14
+        },
+        "ambulatory": {
+          "visits": 6655,
+          "patients75Plus": 1203,
+          "mentalHealth": -53,
+          "dmsHours": 0.14,
+          "pecCount": 3014,
+          "pecDelayHours": 0.08
+        },
+        "stretcher": {
+          "visits": -2778,
+          "over24h": 828,
+          "over48h": 147,
+          "dmsHours": 1.44,
+          "pecCount": -2675,
+          "pecDelayHours": 0.08,
+          "patients75Plus": 11,
+          "mentalHealth": -216
+        },
+        "derived": {
+          "stretcherOver24hPct": 2.7,
+          "stretcherOver48hPct": 0.4,
+          "stretcherSharePct": -3.1
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 121048,
+              "patients75Plus": 18143,
+              "mentalHealth": 6637,
+              "dmsHours": 7.915626633878937,
+              "pecCount": 100233,
+              "pecDelayHours": 2.8641786664848676
+            },
+            "ambulatory": {
+              "visits": 77401,
+              "patients75Plus": 6154,
+              "mentalHealth": 2403,
+              "dmsHours": 4.80023501706122,
+              "pecCount": 56859,
+              "pecDelayHours": 3.6637084767192136
+            },
+            "stretcher": {
+              "visits": 43647,
+              "over24h": 6925,
+              "over48h": 1257,
+              "dmsHours": 13.440277275006808,
+              "pecCount": 43374,
+              "pecDelayHours": 1.8160746069073639,
+              "patients75Plus": 11989,
+              "mentalHealth": 4234
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 15.9,
+            "stretcherOver48hPct": 2.9,
+            "stretcherSharePct": 36.1
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 128410,
+              "patients75Plus": 19487,
+              "mentalHealth": 6749,
+              "dmsHours": 8.590214999264507,
+              "pecCount": 103808,
+              "pecDelayHours": 3.2326716068767984
+            },
+            "ambulatory": {
+              "visits": 84009,
+              "patients75Plus": 6681,
+              "mentalHealth": 2268,
+              "dmsHours": 5.22504226068371,
+              "pecCount": 59653,
+              "pecDelayHours": 4.1986442751319215
+            },
+            "stretcher": {
+              "visits": 44401,
+              "over24h": 8699,
+              "over48h": 2043,
+              "dmsHours": 14.957296745068305,
+              "pecCount": 44155,
+              "pecDelayHours": 1.9276513921916476,
+              "patients75Plus": 12806,
+              "mentalHealth": 4481
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 19.6,
+            "stretcherOver48hPct": 4.6,
+            "stretcherSharePct": 34.6
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 125515,
+              "patients75Plus": 20396,
+              "mentalHealth": 6757,
+              "dmsHours": 8.57093655251475,
+              "pecCount": 103151,
+              "pecDelayHours": 3.2931016422526205
+            },
+            "ambulatory": {
+              "visits": 82065,
+              "patients75Plus": 7702,
+              "mentalHealth": 2376,
+              "dmsHours": 5.297610586459243,
+              "pecCount": 59924,
+              "pecDelayHours": 4.234067976844744
+            },
+            "stretcher": {
+              "visits": 43450,
+              "over24h": 8437,
+              "over48h": 1765,
+              "dmsHours": 14.753341510037075,
+              "pecCount": 43227,
+              "pecDelayHours": 1.988674625941091,
+              "patients75Plus": 12694,
+              "mentalHealth": 4381
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 19.4,
+            "stretcherOver48hPct": 4.1,
+            "stretcherSharePct": 34.6
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 136886,
+              "patients75Plus": 22794,
+              "mentalHealth": 7013,
+              "dmsHours": 8.809579790239077,
+              "pecCount": 110970,
+              "pecDelayHours": 3.8052075385739887
+            },
+            "ambulatory": {
+              "visits": 90362,
+              "patients75Plus": 8479,
+              "mentalHealth": 2556,
+              "dmsHours": 5.995223935700601,
+              "pecCount": 64800,
+              "pecDelayHours": 4.9116290680727035
+            },
+            "stretcher": {
+              "visits": 46524,
+              "over24h": 8047,
+              "over48h": 1142,
+              "dmsHours": 14.275808483554487,
+              "pecCount": 46170,
+              "pecDelayHours": 2.2523352164705313,
+              "patients75Plus": 14315,
+              "mentalHealth": 4457
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 17.3,
+            "stretcherOver48hPct": 2.5,
+            "stretcherSharePct": 34
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 133625,
+              "patients75Plus": 23355,
+              "mentalHealth": 7130,
+              "dmsHours": 8.137910435505665,
+              "pecCount": 108870,
+              "pecDelayHours": 3.3037649566761593
+            },
+            "ambulatory": {
+              "visits": 85825,
+              "patients75Plus": 8823,
+              "mentalHealth": 2575,
+              "dmsHours": 5.374087597501376,
+              "pecCount": 61442,
+              "pecDelayHours": 4.278570652901203
+            },
+            "stretcher": {
+              "visits": 47800,
+              "over24h": 7060,
+              "over48h": 940,
+              "dmsHours": 13.100360123198513,
+              "pecCount": 47428,
+              "pecDelayHours": 2.040924196208522,
+              "patients75Plus": 14532,
+              "mentalHealth": 4555
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 14.8,
+            "stretcherOver48hPct": 2,
+            "stretcherSharePct": 35.8
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 137502,
+              "patients75Plus": 24569,
+              "mentalHealth": 6861,
+              "dmsHours": 8.464835656935898,
+              "pecCount": 109209,
+              "pecDelayHours": 3.4420703040347713
+            },
+            "ambulatory": {
+              "visits": 92480,
+              "patients75Plus": 10026,
+              "mentalHealth": 2522,
+              "dmsHours": 5.509315356473471,
+              "pecCount": 64456,
+              "pecDelayHours": 4.356130814474645
+            },
+            "stretcher": {
+              "visits": 45022,
+              "over24h": 7888,
+              "over48h": 1087,
+              "dmsHours": 14.535790243288467,
+              "pecCount": 44753,
+              "pecDelayHours": 2.12558461009442,
+              "patients75Plus": 14543,
+              "mentalHealth": 4339
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 17.5,
+            "stretcherOver48hPct": 2.4,
+            "stretcherSharePct": 32.7
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:06",
+      "name": "Montréal",
+      "establishment": null,
+      "regionCode": "06",
+      "regionLabel": "Montréal",
+      "regionName": "Montréal",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 17,
+      "indicators": {
+        "total": {
+          "visits": 425586,
+          "patients75Plus": 65198,
+          "mentalHealth": 30432,
+          "dmsHours": 11.00850502666389,
+          "pecCount": 346368,
+          "pecDelayHours": 2.703652017346996
+        },
+        "ambulatory": {
+          "visits": 253869,
+          "patients75Plus": 18257,
+          "mentalHealth": 9620,
+          "dmsHours": 5.60811967326981,
+          "pecCount": 176537,
+          "pecDelayHours": 3.46724154930065
+        },
+        "stretcher": {
+          "visits": 171717,
+          "over24h": 40995,
+          "over48h": 12481,
+          "dmsHours": 18.992516098839626,
+          "pecCount": 169831,
+          "pecDelayHours": 1.9099111502349722,
+          "patients75Plus": 46941,
+          "mentalHealth": 20812
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 23.9,
+        "stretcherOver48hPct": 7.3,
+        "stretcherSharePct": 40.3
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 21,
+        "indicators": {
+          "total": {
+            "visits": 489669,
+            "patients75Plus": 74958,
+            "mentalHealth": 35894,
+            "dmsHours": 10.460779016596474,
+            "pecCount": 401987,
+            "pecDelayHours": 2.58432932118037
+          },
+          "ambulatory": {
+            "visits": 298052,
+            "patients75Plus": 21366,
+            "mentalHealth": 11870,
+            "dmsHours": 5.330428064752312,
+            "pecCount": 212122,
+            "pecDelayHours": 3.331548071392877
+          },
+          "stretcher": {
+            "visits": 191617,
+            "over24h": 47135,
+            "over48h": 12880,
+            "dmsHours": 18.440819210833183,
+            "pecCount": 189865,
+            "pecDelayHours": 1.7495175563338865,
+            "patients75Plus": 53592,
+            "mentalHealth": 24024
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 24.6,
+          "stretcherOver48hPct": 6.7,
+          "stretcherSharePct": 39.1
+        }
+      },
+      "change": {
+        "total": {
+          "visits": -64083,
+          "patients75Plus": -9760,
+          "mentalHealth": -5462,
+          "dmsHours": 0.55,
+          "pecCount": -55619,
+          "pecDelayHours": 0.12
+        },
+        "ambulatory": {
+          "visits": -44183,
+          "patients75Plus": -3109,
+          "mentalHealth": -2250,
+          "dmsHours": 0.28,
+          "pecCount": -35585,
+          "pecDelayHours": 0.14
+        },
+        "stretcher": {
+          "visits": -19900,
+          "over24h": -6140,
+          "over48h": -399,
+          "dmsHours": 0.55,
+          "pecCount": -20034,
+          "pecDelayHours": 0.16,
+          "patients75Plus": -6651,
+          "mentalHealth": -3212
+        },
+        "derived": {
+          "stretcherOver24hPct": -0.7,
+          "stretcherOver48hPct": 0.6,
+          "stretcherSharePct": 1.2
+        },
+        "facilityCount": -4
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 21,
+          "indicators": {
+            "total": {
+              "visits": 449894,
+              "patients75Plus": 60193,
+              "mentalHealth": 32996,
+              "dmsHours": 10.15264814168572,
+              "pecCount": 381267,
+              "pecDelayHours": 2.564242827205082
+            },
+            "ambulatory": {
+              "visits": 284223,
+              "patients75Plus": 16773,
+              "mentalHealth": 12406,
+              "dmsHours": 5.557127583114511,
+              "pecCount": 217276,
+              "pecDelayHours": 3.2384069174178878
+            },
+            "stretcher": {
+              "visits": 165671,
+              "over24h": 41829,
+              "over48h": 11140,
+              "dmsHours": 18.03666308527141,
+              "pecCount": 163991,
+              "pecDelayHours": 1.6710250477837874,
+              "patients75Plus": 43420,
+              "mentalHealth": 20590
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 25.2,
+            "stretcherOver48hPct": 6.7,
+            "stretcherSharePct": 36.8
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 21,
+          "indicators": {
+            "total": {
+              "visits": 470449,
+              "patients75Plus": 63735,
+              "mentalHealth": 32983,
+              "dmsHours": 10.979760552625732,
+              "pecCount": 381856,
+              "pecDelayHours": 2.8406135042470932
+            },
+            "ambulatory": {
+              "visits": 299714,
+              "patients75Plus": 17718,
+              "mentalHealth": 11910,
+              "dmsHours": 5.911887609706439,
+              "pecCount": 213696,
+              "pecDelayHours": 3.6975762609813323
+            },
+            "stretcher": {
+              "visits": 170735,
+              "over24h": 46651,
+              "over48h": 15730,
+              "dmsHours": 19.876076312218743,
+              "pecCount": 168160,
+              "pecDelayHours": 1.7515940390765405,
+              "patients75Plus": 46017,
+              "mentalHealth": 21073
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 27.3,
+            "stretcherOver48hPct": 9.2,
+            "stretcherSharePct": 36.3
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 21,
+          "indicators": {
+            "total": {
+              "visits": 458360,
+              "patients75Plus": 66052,
+              "mentalHealth": 33148,
+              "dmsHours": 10.864176206717671,
+              "pecCount": 378395,
+              "pecDelayHours": 2.678061139814216
+            },
+            "ambulatory": {
+              "visits": 282500,
+              "patients75Plus": 19018,
+              "mentalHealth": 11374,
+              "dmsHours": 5.669406589970502,
+              "pecCount": 204726,
+              "pecDelayHours": 3.463199722501728
+            },
+            "stretcher": {
+              "visits": 175860,
+              "over24h": 46953,
+              "over48h": 13637,
+              "dmsHours": 19.209009692053026,
+              "pecCount": 173669,
+              "pecDelayHours": 1.7525172518475436,
+              "patients75Plus": 47034,
+              "mentalHealth": 21774
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 26.7,
+            "stretcherOver48hPct": 7.8,
+            "stretcherSharePct": 38.4
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 21,
+          "indicators": {
+            "total": {
+              "visits": 506551,
+              "patients75Plus": 74248,
+              "mentalHealth": 35755,
+              "dmsHours": 10.664437644646508,
+              "pecCount": 411275,
+              "pecDelayHours": 2.7509954403312182
+            },
+            "ambulatory": {
+              "visits": 311990,
+              "patients75Plus": 20911,
+              "mentalHealth": 12277,
+              "dmsHours": 5.646684497544437,
+              "pecCount": 218905,
+              "pecDelayHours": 3.587904758279212
+            },
+            "stretcher": {
+              "visits": 194561,
+              "over24h": 50308,
+              "over48h": 14021,
+              "dmsHours": 18.71069976482669,
+              "pecCount": 192370,
+              "pecDelayHours": 1.7986451037641582,
+              "patients75Plus": 53337,
+              "mentalHealth": 23478
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 25.9,
+            "stretcherOver48hPct": 7.2,
+            "stretcherSharePct": 38.4
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 21,
+          "indicators": {
+            "total": {
+              "visits": 489669,
+              "patients75Plus": 74958,
+              "mentalHealth": 35894,
+              "dmsHours": 10.460779016596474,
+              "pecCount": 401987,
+              "pecDelayHours": 2.58432932118037
+            },
+            "ambulatory": {
+              "visits": 298052,
+              "patients75Plus": 21366,
+              "mentalHealth": 11870,
+              "dmsHours": 5.330428064752312,
+              "pecCount": 212122,
+              "pecDelayHours": 3.331548071392877
+            },
+            "stretcher": {
+              "visits": 191617,
+              "over24h": 47135,
+              "over48h": 12880,
+              "dmsHours": 18.440819210833183,
+              "pecCount": 189865,
+              "pecDelayHours": 1.7495175563338865,
+              "patients75Plus": 53592,
+              "mentalHealth": 24024
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 24.6,
+            "stretcherOver48hPct": 6.7,
+            "stretcherSharePct": 39.1
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 17,
+          "indicators": {
+            "total": {
+              "visits": 425586,
+              "patients75Plus": 65198,
+              "mentalHealth": 30432,
+              "dmsHours": 11.00850502666389,
+              "pecCount": 346368,
+              "pecDelayHours": 2.703652017346996
+            },
+            "ambulatory": {
+              "visits": 253869,
+              "patients75Plus": 18257,
+              "mentalHealth": 9620,
+              "dmsHours": 5.60811967326981,
+              "pecCount": 176537,
+              "pecDelayHours": 3.46724154930065
+            },
+            "stretcher": {
+              "visits": 171717,
+              "over24h": 40995,
+              "over48h": 12481,
+              "dmsHours": 18.992516098839626,
+              "pecCount": 169831,
+              "pecDelayHours": 1.9099111502349722,
+              "patients75Plus": 46941,
+              "mentalHealth": 20812
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 23.9,
+            "stretcherOver48hPct": 7.3,
+            "stretcherSharePct": 40.3
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:07",
+      "name": "Outaouais",
+      "establishment": null,
+      "regionCode": "07",
+      "regionLabel": "Outaouais",
+      "regionName": "Outaouais",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 91817,
+          "patients75Plus": 13924,
+          "mentalHealth": 5134,
+          "dmsHours": 10.135796348533859,
+          "pecCount": 67061,
+          "pecDelayHours": 4.789998562668483
+        },
+        "ambulatory": {
+          "visits": 64704,
+          "patients75Plus": 6164,
+          "mentalHealth": 1843,
+          "dmsHours": 5.963928191799924,
+          "pecCount": 41380,
+          "pecDelayHours": 4.4591425004027725
+        },
+        "stretcher": {
+          "visits": 27113,
+          "over24h": 7779,
+          "over48h": 2212,
+          "dmsHours": 20.091778984660905,
+          "pecCount": 25681,
+          "pecDelayHours": 5.323109573009011,
+          "patients75Plus": 7760,
+          "mentalHealth": 3291
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 28.7,
+        "stretcherOver48hPct": 8.2,
+        "stretcherSharePct": 29.5
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 91961,
+            "patients75Plus": 13643,
+            "mentalHealth": 4913,
+            "dmsHours": 10.03099350690933,
+            "pecCount": 67284,
+            "pecDelayHours": 4.246314098118092
+          },
+          "ambulatory": {
+            "visits": 66778,
+            "patients75Plus": 6160,
+            "mentalHealth": 1898,
+            "dmsHours": 5.559029171283957,
+            "pecCount": 43145,
+            "pecDelayHours": 4.074509612289308
+          },
+          "stretcher": {
+            "visits": 25183,
+            "over24h": 7532,
+            "over48h": 2818,
+            "dmsHours": 21.889343759237935,
+            "pecCount": 24139,
+            "pecDelayHours": 4.553389972888502,
+            "patients75Plus": 7483,
+            "mentalHealth": 3015
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 29.9,
+          "stretcherOver48hPct": 11.2,
+          "stretcherSharePct": 27.4
+        }
+      },
+      "change": {
+        "total": {
+          "visits": -144,
+          "patients75Plus": 281,
+          "mentalHealth": 221,
+          "dmsHours": 0.1,
+          "pecCount": -223,
+          "pecDelayHours": 0.54
+        },
+        "ambulatory": {
+          "visits": -2074,
+          "patients75Plus": 4,
+          "mentalHealth": -55,
+          "dmsHours": 0.4,
+          "pecCount": -1765,
+          "pecDelayHours": 0.38
+        },
+        "stretcher": {
+          "visits": 1930,
+          "over24h": 247,
+          "over48h": -606,
+          "dmsHours": -1.8,
+          "pecCount": 1542,
+          "pecDelayHours": 0.77,
+          "patients75Plus": 277,
+          "mentalHealth": 276
+        },
+        "derived": {
+          "stretcherOver24hPct": -1.2,
+          "stretcherOver48hPct": -3,
+          "stretcherSharePct": 2.1
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 73168,
+              "patients75Plus": 9573,
+              "mentalHealth": 4717,
+              "dmsHours": 8.02982465012027,
+              "pecCount": 56566,
+              "pecDelayHours": 2.316078622022652
+            },
+            "ambulatory": {
+              "visits": 53752,
+              "patients75Plus": 4478,
+              "mentalHealth": 2116,
+              "dmsHours": 3.8595263587091337,
+              "pecCount": 37474,
+              "pecDelayHours": 2.321426737352713
+            },
+            "stretcher": {
+              "visits": 19416,
+              "over24h": 4885,
+              "over48h": 2009,
+              "dmsHours": 19.57503858501579,
+              "pecCount": 19092,
+              "pecDelayHours": 2.3055812789533716,
+              "patients75Plus": 5095,
+              "mentalHealth": 2601
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 25.2,
+            "stretcherOver48hPct": 10.3,
+            "stretcherSharePct": 26.5
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 84452,
+              "patients75Plus": 10682,
+              "mentalHealth": 4733,
+              "dmsHours": 8.569979834041165,
+              "pecCount": 63134,
+              "pecDelayHours": 2.8597072540592676
+            },
+            "ambulatory": {
+              "visits": 63239,
+              "patients75Plus": 5056,
+              "mentalHealth": 2116,
+              "dmsHours": 4.291939819134114,
+              "pecCount": 42342,
+              "pecDelayHours": 2.902212919664741
+            },
+            "stretcher": {
+              "visits": 21213,
+              "over24h": 5738,
+              "over48h": 2787,
+              "dmsHours": 21.323431609023817,
+              "pecCount": 20792,
+              "pecDelayHours": 2.7731463223034503,
+              "patients75Plus": 5626,
+              "mentalHealth": 2617
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 27,
+            "stretcherOver48hPct": 13.1,
+            "stretcherSharePct": 25.1
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 83083,
+              "patients75Plus": 11221,
+              "mentalHealth": 4579,
+              "dmsHours": 9.658455888154682,
+              "pecCount": 61584,
+              "pecDelayHours": 3.4316986690265874
+            },
+            "ambulatory": {
+              "visits": 61573,
+              "patients75Plus": 5397,
+              "mentalHealth": 1980,
+              "dmsHours": 5.082657635832445,
+              "pecCount": 40606,
+              "pecDelayHours": 3.4020239072496135
+            },
+            "stretcher": {
+              "visits": 21510,
+              "over24h": 6476,
+              "over48h": 2929,
+              "dmsHours": 22.756811340978356,
+              "pecCount": 20978,
+              "pecDelayHours": 3.489138528723213,
+              "patients75Plus": 5824,
+              "mentalHealth": 2599
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 30.1,
+            "stretcherOver48hPct": 13.6,
+            "stretcherSharePct": 25.9
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 92926,
+              "patients75Plus": 13165,
+              "mentalHealth": 5239,
+              "dmsHours": 9.387611815375196,
+              "pecCount": 69450,
+              "pecDelayHours": 4.169803171746261
+            },
+            "ambulatory": {
+              "visits": 68487,
+              "patients75Plus": 6089,
+              "mentalHealth": 2175,
+              "dmsHours": 5.5235263099404115,
+              "pecCount": 45863,
+              "pecDelayHours": 4.02105541382911
+            },
+            "stretcher": {
+              "visits": 24439,
+              "over24h": 6920,
+              "over48h": 2038,
+              "dmsHours": 20.216190071879648,
+              "pecCount": 23587,
+              "pecDelayHours": 4.459031069374372,
+              "patients75Plus": 7076,
+              "mentalHealth": 3064
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 28.3,
+            "stretcherOver48hPct": 8.3,
+            "stretcherSharePct": 26.3
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 91961,
+              "patients75Plus": 13643,
+              "mentalHealth": 4913,
+              "dmsHours": 10.03099350690933,
+              "pecCount": 67284,
+              "pecDelayHours": 4.246314098118092
+            },
+            "ambulatory": {
+              "visits": 66778,
+              "patients75Plus": 6160,
+              "mentalHealth": 1898,
+              "dmsHours": 5.559029171283957,
+              "pecCount": 43145,
+              "pecDelayHours": 4.074509612289308
+            },
+            "stretcher": {
+              "visits": 25183,
+              "over24h": 7532,
+              "over48h": 2818,
+              "dmsHours": 21.889343759237935,
+              "pecCount": 24139,
+              "pecDelayHours": 4.553389972888502,
+              "patients75Plus": 7483,
+              "mentalHealth": 3015
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.9,
+            "stretcherOver48hPct": 11.2,
+            "stretcherSharePct": 27.4
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 91817,
+              "patients75Plus": 13924,
+              "mentalHealth": 5134,
+              "dmsHours": 10.135796348533859,
+              "pecCount": 67061,
+              "pecDelayHours": 4.789998562668483
+            },
+            "ambulatory": {
+              "visits": 64704,
+              "patients75Plus": 6164,
+              "mentalHealth": 1843,
+              "dmsHours": 5.963928191799924,
+              "pecCount": 41380,
+              "pecDelayHours": 4.4591425004027725
+            },
+            "stretcher": {
+              "visits": 27113,
+              "over24h": 7779,
+              "over48h": 2212,
+              "dmsHours": 20.091778984660905,
+              "pecCount": 25681,
+              "pecDelayHours": 5.323109573009011,
+              "patients75Plus": 7760,
+              "mentalHealth": 3291
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 28.7,
+            "stretcherOver48hPct": 8.2,
+            "stretcherSharePct": 29.5
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:08",
+      "name": "Abitibi-Témiscamingue",
+      "establishment": null,
+      "regionCode": "08",
+      "regionLabel": "Abitibi-Témiscamingue",
+      "regionName": "Abitibi-Témiscamingue",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 6,
+      "indicators": {
+        "total": {
+          "visits": 61765,
+          "patients75Plus": 8865,
+          "mentalHealth": 3476,
+          "dmsHours": 6.044994747114962,
+          "pecCount": 51555,
+          "pecDelayHours": 2.949113999073266
+        },
+        "ambulatory": {
+          "visits": 49539,
+          "patients75Plus": 5259,
+          "mentalHealth": 2519,
+          "dmsHours": 4.705288117554968,
+          "pecCount": 39470,
+          "pecDelayHours": 3.276526271711286
+        },
+        "stretcher": {
+          "visits": 12226,
+          "over24h": 1350,
+          "over48h": 90,
+          "dmsHours": 11.473403607066906,
+          "pecCount": 12085,
+          "pecDelayHours": 1.8797749505815289,
+          "patients75Plus": 3606,
+          "mentalHealth": 957
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 11,
+        "stretcherOver48hPct": 0.7,
+        "stretcherSharePct": 19.8
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 6,
+        "indicators": {
+          "total": {
+            "visits": 61437,
+            "patients75Plus": 8412,
+            "mentalHealth": 3320,
+            "dmsHours": 5.64556617619133,
+            "pecCount": 52065,
+            "pecDelayHours": 2.705922255300533
+          },
+          "ambulatory": {
+            "visits": 49589,
+            "patients75Plus": 5007,
+            "mentalHealth": 2444,
+            "dmsHours": 4.356192423947068,
+            "pecCount": 40359,
+            "pecDelayHours": 2.9705570353301347
+          },
+          "stretcher": {
+            "visits": 11848,
+            "over24h": 1097,
+            "over48h": 66,
+            "dmsHours": 11.042152519881462,
+            "pecCount": 11706,
+            "pecDelayHours": 1.793535864798679,
+            "patients75Plus": 3405,
+            "mentalHealth": 876
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 9.3,
+          "stretcherOver48hPct": 0.6,
+          "stretcherSharePct": 19.3
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 328,
+          "patients75Plus": 453,
+          "mentalHealth": 156,
+          "dmsHours": 0.4,
+          "pecCount": -510,
+          "pecDelayHours": 0.24
+        },
+        "ambulatory": {
+          "visits": -50,
+          "patients75Plus": 252,
+          "mentalHealth": 75,
+          "dmsHours": 0.35,
+          "pecCount": -889,
+          "pecDelayHours": 0.31
+        },
+        "stretcher": {
+          "visits": 378,
+          "over24h": 253,
+          "over48h": 24,
+          "dmsHours": 0.43,
+          "pecCount": 379,
+          "pecDelayHours": 0.09,
+          "patients75Plus": 201,
+          "mentalHealth": 81
+        },
+        "derived": {
+          "stretcherOver24hPct": 1.7,
+          "stretcherOver48hPct": 0.1,
+          "stretcherSharePct": 0.5
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 57812,
+              "patients75Plus": 6301,
+              "mentalHealth": 3464,
+              "dmsHours": 5.61374528644572,
+              "pecCount": 47565,
+              "pecDelayHours": 2.6024225387481463
+            },
+            "ambulatory": {
+              "visits": 47535,
+              "patients75Plus": 3628,
+              "mentalHealth": 2565,
+              "dmsHours": 4.3358621249839295,
+              "pecCount": 37369,
+              "pecDelayHours": 2.873604904243268
+            },
+            "stretcher": {
+              "visits": 10277,
+              "over24h": 1179,
+              "over48h": 148,
+              "dmsHours": 11.524436741158791,
+              "pecCount": 10196,
+              "pecDelayHours": 1.6085216152303734,
+              "patients75Plus": 2673,
+              "mentalHealth": 899
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 11.5,
+            "stretcherOver48hPct": 1.4,
+            "stretcherSharePct": 17.8
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 60186,
+              "patients75Plus": 6635,
+              "mentalHealth": 3336,
+              "dmsHours": 5.953056750923987,
+              "pecCount": 50051,
+              "pecDelayHours": 2.885125499768014
+            },
+            "ambulatory": {
+              "visits": 49690,
+              "patients75Plus": 3658,
+              "mentalHealth": 2438,
+              "dmsHours": 4.653451611099929,
+              "pecCount": 39645,
+              "pecDelayHours": 3.170741399363798
+            },
+            "stretcher": {
+              "visits": 10496,
+              "over24h": 1280,
+              "over48h": 184,
+              "dmsHours": 12.105627196603997,
+              "pecCount": 10406,
+              "pecDelayHours": 1.7969799741602066,
+              "patients75Plus": 2977,
+              "mentalHealth": 898
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 12.2,
+            "stretcherOver48hPct": 1.8,
+            "stretcherSharePct": 17.4
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 58037,
+              "patients75Plus": 6878,
+              "mentalHealth": 3076,
+              "dmsHours": 6.091842512343658,
+              "pecCount": 49276,
+              "pecDelayHours": 2.760853638462718
+            },
+            "ambulatory": {
+              "visits": 46770,
+              "patients75Plus": 3830,
+              "mentalHealth": 2147,
+              "dmsHours": 4.765138787921983,
+              "pecCount": 38130,
+              "pecDelayHours": 3.047851509455955
+            },
+            "stretcher": {
+              "visits": 11267,
+              "over24h": 1193,
+              "over48h": 194,
+              "dmsHours": 11.599070096545468,
+              "pecCount": 11146,
+              "pecDelayHours": 1.7790459208086609,
+              "patients75Plus": 3048,
+              "mentalHealth": 929
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 10.6,
+            "stretcherOver48hPct": 1.7,
+            "stretcherSharePct": 19.4
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 66762,
+              "patients75Plus": 8221,
+              "mentalHealth": 3578,
+              "dmsHours": 6.206149660152648,
+              "pecCount": 55951,
+              "pecDelayHours": 3.163335914957334
+            },
+            "ambulatory": {
+              "visits": 54258,
+              "patients75Plus": 4622,
+              "mentalHealth": 2575,
+              "dmsHours": 5.024177049160185,
+              "pecCount": 43597,
+              "pecDelayHours": 3.491712719784491
+            },
+            "stretcher": {
+              "visits": 12504,
+              "over24h": 1340,
+              "over48h": 170,
+              "dmsHours": 11.335026013897776,
+              "pecCount": 12354,
+              "pecDelayHours": 2.0045012411634557,
+              "patients75Plus": 3599,
+              "mentalHealth": 1003
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 10.7,
+            "stretcherOver48hPct": 1.4,
+            "stretcherSharePct": 18.7
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 61437,
+              "patients75Plus": 8412,
+              "mentalHealth": 3320,
+              "dmsHours": 5.64556617619133,
+              "pecCount": 52065,
+              "pecDelayHours": 2.705922255300533
+            },
+            "ambulatory": {
+              "visits": 49589,
+              "patients75Plus": 5007,
+              "mentalHealth": 2444,
+              "dmsHours": 4.356192423947068,
+              "pecCount": 40359,
+              "pecDelayHours": 2.9705570353301347
+            },
+            "stretcher": {
+              "visits": 11848,
+              "over24h": 1097,
+              "over48h": 66,
+              "dmsHours": 11.042152519881462,
+              "pecCount": 11706,
+              "pecDelayHours": 1.793535864798679,
+              "patients75Plus": 3405,
+              "mentalHealth": 876
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 9.3,
+            "stretcherOver48hPct": 0.6,
+            "stretcherSharePct": 19.3
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 61765,
+              "patients75Plus": 8865,
+              "mentalHealth": 3476,
+              "dmsHours": 6.044994747114962,
+              "pecCount": 51555,
+              "pecDelayHours": 2.949113999073266
+            },
+            "ambulatory": {
+              "visits": 49539,
+              "patients75Plus": 5259,
+              "mentalHealth": 2519,
+              "dmsHours": 4.705288117554968,
+              "pecCount": 39470,
+              "pecDelayHours": 3.276526271711286
+            },
+            "stretcher": {
+              "visits": 12226,
+              "over24h": 1350,
+              "over48h": 90,
+              "dmsHours": 11.473403607066906,
+              "pecCount": 12085,
+              "pecDelayHours": 1.8797749505815289,
+              "patients75Plus": 3606,
+              "mentalHealth": 957
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 11,
+            "stretcherOver48hPct": 0.7,
+            "stretcherSharePct": 19.8
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:09",
+      "name": "Côte-Nord",
+      "establishment": null,
+      "regionCode": "09",
+      "regionLabel": "Côte-Nord",
+      "regionName": "Côte-Nord",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 53084,
+          "patients75Plus": 7014,
+          "mentalHealth": 3237,
+          "dmsHours": 7.433014813000779,
+          "pecCount": 43602,
+          "pecDelayHours": 3.1565991939717346
+        },
+        "ambulatory": {
+          "visits": 41207,
+          "patients75Plus": 4050,
+          "mentalHealth": 1970,
+          "dmsHours": 4.740580227739085,
+          "pecCount": 31998,
+          "pecDelayHours": 3.3825343858296693
+        },
+        "stretcher": {
+          "visits": 11877,
+          "over24h": 2468,
+          "over48h": 1018,
+          "dmsHours": 16.774359593238096,
+          "pecCount": 11604,
+          "pecDelayHours": 2.5335834865372093,
+          "patients75Plus": 2964,
+          "mentalHealth": 1267
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 20.8,
+        "stretcherOver48hPct": 8.6,
+        "stretcherSharePct": 22.4
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 53916,
+            "patients75Plus": 6785,
+            "mentalHealth": 3103,
+            "dmsHours": 6.965547837788824,
+            "pecCount": 44593,
+            "pecDelayHours": 2.908230389921687
+          },
+          "ambulatory": {
+            "visits": 41897,
+            "patients75Plus": 3871,
+            "mentalHealth": 1916,
+            "dmsHours": 4.848242170614179,
+            "pecCount": 32877,
+            "pecDelayHours": 3.096008768372351
+          },
+          "stretcher": {
+            "visits": 12019,
+            "over24h": 2081,
+            "over48h": 633,
+            "dmsHours": 14.346258008153756,
+            "pecCount": 11716,
+            "pecDelayHours": 2.3812937435984978,
+            "patients75Plus": 2914,
+            "mentalHealth": 1187
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 17.3,
+          "stretcherOver48hPct": 5.3,
+          "stretcherSharePct": 22.3
+        }
+      },
+      "change": {
+        "total": {
+          "visits": -832,
+          "patients75Plus": 229,
+          "mentalHealth": 134,
+          "dmsHours": 0.47,
+          "pecCount": -991,
+          "pecDelayHours": 0.25
+        },
+        "ambulatory": {
+          "visits": -690,
+          "patients75Plus": 179,
+          "mentalHealth": 54,
+          "dmsHours": -0.11,
+          "pecCount": -879,
+          "pecDelayHours": 0.29
+        },
+        "stretcher": {
+          "visits": -142,
+          "over24h": 387,
+          "over48h": 385,
+          "dmsHours": 2.43,
+          "pecCount": -112,
+          "pecDelayHours": 0.15,
+          "patients75Plus": 50,
+          "mentalHealth": 80
+        },
+        "derived": {
+          "stretcherOver24hPct": 3.5,
+          "stretcherOver48hPct": 3.3,
+          "stretcherSharePct": 0.1
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 51601,
+              "patients75Plus": 5835,
+              "mentalHealth": 2839,
+              "dmsHours": 6.413650462200344,
+              "pecCount": 41237,
+              "pecDelayHours": 2.405121135819235
+            },
+            "ambulatory": {
+              "visits": 40420,
+              "patients75Plus": 3225,
+              "mentalHealth": 1699,
+              "dmsHours": 3.670463329484853,
+              "pecCount": 30370,
+              "pecDelayHours": 2.5012668752057956
+            },
+            "stretcher": {
+              "visits": 11181,
+              "over24h": 2049,
+              "over48h": 935,
+              "dmsHours": 16.330440007353747,
+              "pecCount": 10867,
+              "pecDelayHours": 2.1364226813083445,
+              "patients75Plus": 2610,
+              "mentalHealth": 1140
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 18.3,
+            "stretcherOver48hPct": 8.4,
+            "stretcherSharePct": 21.7
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 54934,
+              "patients75Plus": 6073,
+              "mentalHealth": 2776,
+              "dmsHours": 6.493552566109635,
+              "pecCount": 43590,
+              "pecDelayHours": 2.808127392878081
+            },
+            "ambulatory": {
+              "visits": 43674,
+              "patients75Plus": 3433,
+              "mentalHealth": 1793,
+              "dmsHours": 4.4222387970468064,
+              "pecCount": 32605,
+              "pecDelayHours": 2.932459021281671
+            },
+            "stretcher": {
+              "visits": 11260,
+              "over24h": 1869,
+              "over48h": 712,
+              "dmsHours": 14.527527481744622,
+              "pecCount": 10985,
+              "pecDelayHours": 2.439093915945987,
+              "patients75Plus": 2640,
+              "mentalHealth": 983
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16.6,
+            "stretcherOver48hPct": 6.3,
+            "stretcherSharePct": 20.5
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 52711,
+              "patients75Plus": 6199,
+              "mentalHealth": 2896,
+              "dmsHours": 6.144719792832616,
+              "pecCount": 42153,
+              "pecDelayHours": 2.619551626745954
+            },
+            "ambulatory": {
+              "visits": 41523,
+              "patients75Plus": 3647,
+              "mentalHealth": 1871,
+              "dmsHours": 3.8655212639848866,
+              "pecCount": 31204,
+              "pecDelayHours": 2.7572819011807606
+            },
+            "stretcher": {
+              "visits": 11188,
+              "over24h": 1931,
+              "over48h": 667,
+              "dmsHours": 14.603708040360706,
+              "pecCount": 10949,
+              "pecDelayHours": 2.227028521123187,
+              "patients75Plus": 2552,
+              "mentalHealth": 1025
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 17.3,
+            "stretcherOver48hPct": 6,
+            "stretcherSharePct": 21.2
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 58396,
+              "patients75Plus": 7135,
+              "mentalHealth": 3154,
+              "dmsHours": 6.380286354278451,
+              "pecCount": 46478,
+              "pecDelayHours": 3.212847846770993
+            },
+            "ambulatory": {
+              "visits": 46312,
+              "patients75Plus": 4178,
+              "mentalHealth": 1889,
+              "dmsHours": 4.579015877814245,
+              "pecCount": 34699,
+              "pecDelayHours": 3.4166358780752564
+            },
+            "stretcher": {
+              "visits": 12084,
+              "over24h": 1785,
+              "over48h": 515,
+              "dmsHours": 13.28366588969804,
+              "pecCount": 11779,
+              "pecDelayHours": 2.612521766609125,
+              "patients75Plus": 2957,
+              "mentalHealth": 1265
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 14.8,
+            "stretcherOver48hPct": 4.3,
+            "stretcherSharePct": 20.7
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 53916,
+              "patients75Plus": 6785,
+              "mentalHealth": 3103,
+              "dmsHours": 6.965547837788824,
+              "pecCount": 44593,
+              "pecDelayHours": 2.908230389921687
+            },
+            "ambulatory": {
+              "visits": 41897,
+              "patients75Plus": 3871,
+              "mentalHealth": 1916,
+              "dmsHours": 4.848242170614179,
+              "pecCount": 32877,
+              "pecDelayHours": 3.096008768372351
+            },
+            "stretcher": {
+              "visits": 12019,
+              "over24h": 2081,
+              "over48h": 633,
+              "dmsHours": 14.346258008153756,
+              "pecCount": 11716,
+              "pecDelayHours": 2.3812937435984978,
+              "patients75Plus": 2914,
+              "mentalHealth": 1187
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 17.3,
+            "stretcherOver48hPct": 5.3,
+            "stretcherSharePct": 22.3
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 53084,
+              "patients75Plus": 7014,
+              "mentalHealth": 3237,
+              "dmsHours": 7.433014813000779,
+              "pecCount": 43602,
+              "pecDelayHours": 3.1565991939717346
+            },
+            "ambulatory": {
+              "visits": 41207,
+              "patients75Plus": 4050,
+              "mentalHealth": 1970,
+              "dmsHours": 4.740580227739085,
+              "pecCount": 31998,
+              "pecDelayHours": 3.3825343858296693
+            },
+            "stretcher": {
+              "visits": 11877,
+              "over24h": 2468,
+              "over48h": 1018,
+              "dmsHours": 16.774359593238096,
+              "pecCount": 11604,
+              "pecDelayHours": 2.5335834865372093,
+              "patients75Plus": 2964,
+              "mentalHealth": 1267
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 20.8,
+            "stretcherOver48hPct": 8.6,
+            "stretcherSharePct": 22.4
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:10",
+      "name": "Nord-du-Québec",
+      "establishment": null,
+      "regionCode": "10",
+      "regionLabel": "Error",
+      "regionName": "Nord-du-Québec",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 5,
+      "indicators": {
+        "total": {
+          "visits": 13982,
+          "patients75Plus": 1533,
+          "mentalHealth": 1059,
+          "dmsHours": 3.7308337306695907,
+          "pecCount": 13102,
+          "pecDelayHours": 0.8935108295595245
+        },
+        "ambulatory": {
+          "visits": 12019,
+          "patients75Plus": 1209,
+          "mentalHealth": 717,
+          "dmsHours": 2.3378549010363217,
+          "pecCount": 11175,
+          "pecDelayHours": 0.876386726323639
+        },
+        "stretcher": {
+          "visits": 1963,
+          "over24h": 198,
+          "over48h": 38,
+          "dmsHours": 12.259724486330446,
+          "pecCount": 1927,
+          "pecDelayHours": 0.9928164100789943,
+          "patients75Plus": 324,
+          "mentalHealth": 342
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 10.1,
+        "stretcherOver48hPct": 1.9,
+        "stretcherSharePct": 14
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 1,
+        "indicators": {
+          "total": {
+            "visits": 978,
+            "patients75Plus": 92,
+            "mentalHealth": 49,
+            "dmsHours": 5.090976482617587,
+            "pecCount": 860,
+            "pecDelayHours": 1.5036673126614983
+          },
+          "ambulatory": {
+            "visits": 747,
+            "patients75Plus": 51,
+            "mentalHealth": 22,
+            "dmsHours": 3.054183400267738,
+            "pecCount": 633,
+            "pecDelayHours": 1.6405630156222568
+          },
+          "stretcher": {
+            "visits": 231,
+            "over24h": 22,
+            "over48h": 1,
+            "dmsHours": 11.677489177489177,
+            "pecCount": 227,
+            "pecDelayHours": 1.1219273127753304,
+            "patients75Plus": 41,
+            "mentalHealth": 27
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 9.5,
+          "stretcherOver48hPct": 0.4,
+          "stretcherSharePct": 23.6
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 13004,
+          "patients75Plus": 1441,
+          "mentalHealth": 1010,
+          "dmsHours": -1.36,
+          "pecCount": 12242,
+          "pecDelayHours": -0.61
+        },
+        "ambulatory": {
+          "visits": 11272,
+          "patients75Plus": 1158,
+          "mentalHealth": 695,
+          "dmsHours": -0.72,
+          "pecCount": 10542,
+          "pecDelayHours": -0.76
+        },
+        "stretcher": {
+          "visits": 1732,
+          "over24h": 176,
+          "over48h": 37,
+          "dmsHours": 0.58,
+          "pecCount": 1700,
+          "pecDelayHours": -0.13,
+          "patients75Plus": 283,
+          "mentalHealth": 315
+        },
+        "derived": {
+          "stretcherOver24hPct": 0.6,
+          "stretcherOver48hPct": 1.5,
+          "stretcherSharePct": -9.6
+        },
+        "facilityCount": 4
+      },
+      "history": [
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 978,
+              "patients75Plus": 92,
+              "mentalHealth": 49,
+              "dmsHours": 5.090976482617587,
+              "pecCount": 860,
+              "pecDelayHours": 1.5036673126614983
+            },
+            "ambulatory": {
+              "visits": 747,
+              "patients75Plus": 51,
+              "mentalHealth": 22,
+              "dmsHours": 3.054183400267738,
+              "pecCount": 633,
+              "pecDelayHours": 1.6405630156222568
+            },
+            "stretcher": {
+              "visits": 231,
+              "over24h": 22,
+              "over48h": 1,
+              "dmsHours": 11.677489177489177,
+              "pecCount": 227,
+              "pecDelayHours": 1.1219273127753304,
+              "patients75Plus": 41,
+              "mentalHealth": 27
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 9.5,
+            "stretcherOver48hPct": 0.4,
+            "stretcherSharePct": 23.6
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 13982,
+              "patients75Plus": 1533,
+              "mentalHealth": 1059,
+              "dmsHours": 3.7308337306695907,
+              "pecCount": 13102,
+              "pecDelayHours": 0.8935108295595245
+            },
+            "ambulatory": {
+              "visits": 12019,
+              "patients75Plus": 1209,
+              "mentalHealth": 717,
+              "dmsHours": 2.3378549010363217,
+              "pecCount": 11175,
+              "pecDelayHours": 0.876386726323639
+            },
+            "stretcher": {
+              "visits": 1963,
+              "over24h": 198,
+              "over48h": 38,
+              "dmsHours": 12.259724486330446,
+              "pecCount": 1927,
+              "pecDelayHours": 0.9928164100789943,
+              "patients75Plus": 324,
+              "mentalHealth": 342
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 10.1,
+            "stretcherOver48hPct": 1.9,
+            "stretcherSharePct": 14
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:11",
+      "name": "Gaspésie-Îles-de-la-Madeleine",
+      "establishment": null,
+      "regionCode": "11",
+      "regionLabel": "Gaspésie-Îles-de-la-Madeleine",
+      "regionName": "Gaspésie-Îles-de-la-Madeleine",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 53835,
+          "patients75Plus": 10289,
+          "mentalHealth": 2121,
+          "dmsHours": 5.495011098727594,
+          "pecCount": 46778,
+          "pecDelayHours": 1.9620054774086584
+        },
+        "ambulatory": {
+          "visits": 43043,
+          "patients75Plus": 6617,
+          "mentalHealth": 1383,
+          "dmsHours": 3.580762906344302,
+          "pecCount": 36128,
+          "pecDelayHours": 2.130868570699242
+        },
+        "stretcher": {
+          "visits": 10792,
+          "over24h": 1723,
+          "over48h": 376,
+          "dmsHours": 13.129831794127336,
+          "pecCount": 10650,
+          "pecDelayHours": 1.3891711267605635,
+          "patients75Plus": 3672,
+          "mentalHealth": 738
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 16,
+        "stretcherOver48hPct": 3.5,
+        "stretcherSharePct": 20
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 55298,
+            "patients75Plus": 10146,
+            "mentalHealth": 2197,
+            "dmsHours": 5.165648792803437,
+            "pecCount": 48363,
+            "pecDelayHours": 1.991145710563861
+          },
+          "ambulatory": {
+            "visits": 44137,
+            "patients75Plus": 6503,
+            "mentalHealth": 1479,
+            "dmsHours": 3.4284575047893804,
+            "pecCount": 37342,
+            "pecDelayHours": 2.142456148572653
+          },
+          "stretcher": {
+            "visits": 11161,
+            "over24h": 1468,
+            "over48h": 294,
+            "dmsHours": 12.035500228971918,
+            "pecCount": 11021,
+            "pecDelayHours": 1.4784667906723528,
+            "patients75Plus": 3643,
+            "mentalHealth": 718
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 13.2,
+          "stretcherOver48hPct": 2.6,
+          "stretcherSharePct": 20.2
+        }
+      },
+      "change": {
+        "total": {
+          "visits": -1463,
+          "patients75Plus": 143,
+          "mentalHealth": -76,
+          "dmsHours": 0.33,
+          "pecCount": -1585,
+          "pecDelayHours": -0.03
+        },
+        "ambulatory": {
+          "visits": -1094,
+          "patients75Plus": 114,
+          "mentalHealth": -96,
+          "dmsHours": 0.15,
+          "pecCount": -1214,
+          "pecDelayHours": -0.01
+        },
+        "stretcher": {
+          "visits": -369,
+          "over24h": 255,
+          "over48h": 82,
+          "dmsHours": 1.09,
+          "pecCount": -371,
+          "pecDelayHours": -0.09,
+          "patients75Plus": 29,
+          "mentalHealth": 20
+        },
+        "derived": {
+          "stretcherOver24hPct": 2.8,
+          "stretcherOver48hPct": 0.9,
+          "stretcherSharePct": -0.2
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 50079,
+              "patients75Plus": 7904,
+              "mentalHealth": 1986,
+              "dmsHours": 4.767877248391985,
+              "pecCount": 44115,
+              "pecDelayHours": 1.6127087221529584
+            },
+            "ambulatory": {
+              "visits": 40090,
+              "patients75Plus": 4759,
+              "mentalHealth": 1344,
+              "dmsHours": 2.9948717191873837,
+              "pecCount": 34297,
+              "pecDelayHours": 1.7203111950186767
+            },
+            "stretcher": {
+              "visits": 9989,
+              "over24h": 1246,
+              "over48h": 280,
+              "dmsHours": 11.883683802182402,
+              "pecCount": 9818,
+              "pecDelayHours": 1.2368234082524163,
+              "patients75Plus": 3145,
+              "mentalHealth": 642
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 12.5,
+            "stretcherOver48hPct": 2.8,
+            "stretcherSharePct": 19.9
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 55150,
+              "patients75Plus": 8678,
+              "mentalHealth": 2164,
+              "dmsHours": 5.419111398206911,
+              "pecCount": 48234,
+              "pecDelayHours": 1.9616873183047463
+            },
+            "ambulatory": {
+              "visits": 45008,
+              "patients75Plus": 5335,
+              "mentalHealth": 1471,
+              "dmsHours": 3.4873922969249915,
+              "pecCount": 38298,
+              "pecDelayHours": 2.1014206355423264
+            },
+            "stretcher": {
+              "visits": 10142,
+              "over24h": 1638,
+              "over48h": 545,
+              "dmsHours": 13.991662503560555,
+              "pecCount": 9936,
+              "pecDelayHours": 1.4230896347736626,
+              "patients75Plus": 3343,
+              "mentalHealth": 693
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16.2,
+            "stretcherOver48hPct": 5.4,
+            "stretcherSharePct": 18.4
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 53357,
+              "patients75Plus": 8917,
+              "mentalHealth": 2112,
+              "dmsHours": 5.2474558685416675,
+              "pecCount": 47460,
+              "pecDelayHours": 1.8347302640820342
+            },
+            "ambulatory": {
+              "visits": 42817,
+              "patients75Plus": 5443,
+              "mentalHealth": 1420,
+              "dmsHours": 3.3694880538104024,
+              "pecCount": 37075,
+              "pecDelayHours": 1.9668081216752828
+            },
+            "stretcher": {
+              "visits": 10540,
+              "over24h": 1610,
+              "over48h": 346,
+              "dmsHours": 12.876388309087076,
+              "pecCount": 10385,
+              "pecDelayHours": 1.3632053174985288,
+              "patients75Plus": 3474,
+              "mentalHealth": 692
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 15.3,
+            "stretcherOver48hPct": 3.3,
+            "stretcherSharePct": 19.8
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 59275,
+              "patients75Plus": 10027,
+              "mentalHealth": 2228,
+              "dmsHours": 4.979395946389239,
+              "pecCount": 51783,
+              "pecDelayHours": 2.0621670131982395
+            },
+            "ambulatory": {
+              "visits": 47749,
+              "patients75Plus": 6370,
+              "mentalHealth": 1417,
+              "dmsHours": 3.5647351777000567,
+              "pecCount": 40433,
+              "pecDelayHours": 2.2234668669980797
+            },
+            "stretcher": {
+              "visits": 11526,
+              "over24h": 1169,
+              "over48h": 158,
+              "dmsHours": 10.839940545047911,
+              "pecCount": 11350,
+              "pecDelayHours": 1.4875558247674985,
+              "patients75Plus": 3657,
+              "mentalHealth": 811
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 10.1,
+            "stretcherOver48hPct": 1.4,
+            "stretcherSharePct": 19.4
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 55298,
+              "patients75Plus": 10146,
+              "mentalHealth": 2197,
+              "dmsHours": 5.165648792803437,
+              "pecCount": 48363,
+              "pecDelayHours": 1.991145710563861
+            },
+            "ambulatory": {
+              "visits": 44137,
+              "patients75Plus": 6503,
+              "mentalHealth": 1479,
+              "dmsHours": 3.4284575047893804,
+              "pecCount": 37342,
+              "pecDelayHours": 2.142456148572653
+            },
+            "stretcher": {
+              "visits": 11161,
+              "over24h": 1468,
+              "over48h": 294,
+              "dmsHours": 12.035500228971918,
+              "pecCount": 11021,
+              "pecDelayHours": 1.4784667906723528,
+              "patients75Plus": 3643,
+              "mentalHealth": 718
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 13.2,
+            "stretcherOver48hPct": 2.6,
+            "stretcherSharePct": 20.2
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 53835,
+              "patients75Plus": 10289,
+              "mentalHealth": 2121,
+              "dmsHours": 5.495011098727594,
+              "pecCount": 46778,
+              "pecDelayHours": 1.9620054774086584
+            },
+            "ambulatory": {
+              "visits": 43043,
+              "patients75Plus": 6617,
+              "mentalHealth": 1383,
+              "dmsHours": 3.580762906344302,
+              "pecCount": 36128,
+              "pecDelayHours": 2.130868570699242
+            },
+            "stretcher": {
+              "visits": 10792,
+              "over24h": 1723,
+              "over48h": 376,
+              "dmsHours": 13.129831794127336,
+              "pecCount": 10650,
+              "pecDelayHours": 1.3891711267605635,
+              "patients75Plus": 3672,
+              "mentalHealth": 738
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16,
+            "stretcherOver48hPct": 3.5,
+            "stretcherSharePct": 20
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:12",
+      "name": "Chaudière-Appalaches",
+      "establishment": null,
+      "regionCode": "12",
+      "regionLabel": "Chaudière-Appalaches",
+      "regionName": "Chaudière-Appalaches",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 5,
+      "indicators": {
+        "total": {
+          "visits": 133085,
+          "patients75Plus": 24389,
+          "mentalHealth": 5982,
+          "dmsHours": 6.977347674627327,
+          "pecCount": 113915,
+          "pecDelayHours": 2.1167124610455157
+        },
+        "ambulatory": {
+          "visits": 101808,
+          "patients75Plus": 12458,
+          "mentalHealth": 2966,
+          "dmsHours": 3.906833497585871,
+          "pecCount": 82701,
+          "pecDelayHours": 2.5104594328430787
+        },
+        "stretcher": {
+          "visits": 31277,
+          "over24h": 7187,
+          "over48h": 1889,
+          "dmsHours": 16.972005325176823,
+          "pecCount": 31214,
+          "pecDelayHours": 1.0734860781842905,
+          "patients75Plus": 11931,
+          "mentalHealth": 3016
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 23,
+        "stretcherOver48hPct": 6,
+        "stretcherSharePct": 23.5
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 5,
+        "indicators": {
+          "total": {
+            "visits": 131660,
+            "patients75Plus": 23343,
+            "mentalHealth": 5892,
+            "dmsHours": 6.576555865697842,
+            "pecCount": 115989,
+            "pecDelayHours": 1.8516067184531853
+          },
+          "ambulatory": {
+            "visits": 101392,
+            "patients75Plus": 12000,
+            "mentalHealth": 2930,
+            "dmsHours": 3.6515112659556745,
+            "pecCount": 85759,
+            "pecDelayHours": 2.169935144481109
+          },
+          "stretcher": {
+            "visits": 30268,
+            "over24h": 6505,
+            "over48h": 1557,
+            "dmsHours": 16.374894773358005,
+            "pecCount": 30230,
+            "pecDelayHours": 0.9485459348697028,
+            "patients75Plus": 11343,
+            "mentalHealth": 2962
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 21.5,
+          "stretcherOver48hPct": 5.1,
+          "stretcherSharePct": 23
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 1425,
+          "patients75Plus": 1046,
+          "mentalHealth": 90,
+          "dmsHours": 0.4,
+          "pecCount": -2074,
+          "pecDelayHours": 0.27
+        },
+        "ambulatory": {
+          "visits": 416,
+          "patients75Plus": 458,
+          "mentalHealth": 36,
+          "dmsHours": 0.26,
+          "pecCount": -3058,
+          "pecDelayHours": 0.34
+        },
+        "stretcher": {
+          "visits": 1009,
+          "over24h": 682,
+          "over48h": 332,
+          "dmsHours": 0.6,
+          "pecCount": 984,
+          "pecDelayHours": 0.12,
+          "patients75Plus": 588,
+          "mentalHealth": 54
+        },
+        "derived": {
+          "stretcherOver24hPct": 1.5,
+          "stretcherOver48hPct": 0.9,
+          "stretcherSharePct": 0.5
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 104062,
+              "patients75Plus": 16522,
+              "mentalHealth": 5068,
+              "dmsHours": 5.788769809237655,
+              "pecCount": 89397,
+              "pecDelayHours": 1.353930817961826
+            },
+            "ambulatory": {
+              "visits": 75659,
+              "patients75Plus": 6848,
+              "mentalHealth": 2392,
+              "dmsHours": 2.9359102023553043,
+              "pecCount": 61019,
+              "pecDelayHours": 1.6071174188003374
+            },
+            "stretcher": {
+              "visits": 28403,
+              "over24h": 4237,
+              "over48h": 336,
+              "dmsHours": 13.388125687036188,
+              "pecCount": 28378,
+              "pecDelayHours": 0.8095234179841975,
+              "patients75Plus": 9674,
+              "mentalHealth": 2676
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 14.9,
+            "stretcherOver48hPct": 1.2,
+            "stretcherSharePct": 27.3
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 129414,
+              "patients75Plus": 19716,
+              "mentalHealth": 5372,
+              "dmsHours": 6.093865479949792,
+              "pecCount": 110648,
+              "pecDelayHours": 1.7234715142714832
+            },
+            "ambulatory": {
+              "visits": 100338,
+              "patients75Plus": 9222,
+              "mentalHealth": 2824,
+              "dmsHours": 3.325607419145511,
+              "pecCount": 81606,
+              "pecDelayHours": 2.0139436608691623
+            },
+            "stretcher": {
+              "visits": 29076,
+              "over24h": 6343,
+              "over48h": 1117,
+              "dmsHours": 15.646812147475583,
+              "pecCount": 29042,
+              "pecDelayHours": 0.9072649859590325,
+              "patients75Plus": 10494,
+              "mentalHealth": 2548
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 21.8,
+            "stretcherOver48hPct": 3.8,
+            "stretcherSharePct": 22.5
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 124819,
+              "patients75Plus": 20195,
+              "mentalHealth": 5348,
+              "dmsHours": 5.628340160997569,
+              "pecCount": 108790,
+              "pecDelayHours": 1.7473692511566625
+            },
+            "ambulatory": {
+              "visits": 97107,
+              "patients75Plus": 10069,
+              "mentalHealth": 2801,
+              "dmsHours": 3.286062081575536,
+              "pecCount": 81111,
+              "pecDelayHours": 2.0571173213935907
+            },
+            "stretcher": {
+              "visits": 27712,
+              "over24h": 4597,
+              "over48h": 664,
+              "dmsHours": 13.836033487297923,
+              "pecCount": 27679,
+              "pecDelayHours": 0.8396783763061445,
+              "patients75Plus": 10126,
+              "mentalHealth": 2547
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16.6,
+            "stretcherOver48hPct": 2.4,
+            "stretcherSharePct": 22.2
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 136777,
+              "patients75Plus": 22714,
+              "mentalHealth": 5839,
+              "dmsHours": 6.2471176074924895,
+              "pecCount": 118381,
+              "pecDelayHours": 2.046333927460206
+            },
+            "ambulatory": {
+              "visits": 106864,
+              "patients75Plus": 11670,
+              "mentalHealth": 3010,
+              "dmsHours": 3.6115425681239715,
+              "pecCount": 88524,
+              "pecDelayHours": 2.4096779561349333
+            },
+            "stretcher": {
+              "visits": 29913,
+              "over24h": 5819,
+              "over48h": 1517,
+              "dmsHours": 15.662692474843714,
+              "pecCount": 29857,
+              "pecDelayHours": 0.9690432822379267,
+              "patients75Plus": 11044,
+              "mentalHealth": 2829
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 19.5,
+            "stretcherOver48hPct": 5.1,
+            "stretcherSharePct": 21.9
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 131660,
+              "patients75Plus": 23343,
+              "mentalHealth": 5892,
+              "dmsHours": 6.576555865697842,
+              "pecCount": 115989,
+              "pecDelayHours": 1.8516067184531853
+            },
+            "ambulatory": {
+              "visits": 101392,
+              "patients75Plus": 12000,
+              "mentalHealth": 2930,
+              "dmsHours": 3.6515112659556745,
+              "pecCount": 85759,
+              "pecDelayHours": 2.169935144481109
+            },
+            "stretcher": {
+              "visits": 30268,
+              "over24h": 6505,
+              "over48h": 1557,
+              "dmsHours": 16.374894773358005,
+              "pecCount": 30230,
+              "pecDelayHours": 0.9485459348697028,
+              "patients75Plus": 11343,
+              "mentalHealth": 2962
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 21.5,
+            "stretcherOver48hPct": 5.1,
+            "stretcherSharePct": 23
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 5,
+          "indicators": {
+            "total": {
+              "visits": 133085,
+              "patients75Plus": 24389,
+              "mentalHealth": 5982,
+              "dmsHours": 6.977347674627327,
+              "pecCount": 113915,
+              "pecDelayHours": 2.1167124610455157
+            },
+            "ambulatory": {
+              "visits": 101808,
+              "patients75Plus": 12458,
+              "mentalHealth": 2966,
+              "dmsHours": 3.906833497585871,
+              "pecCount": 82701,
+              "pecDelayHours": 2.5104594328430787
+            },
+            "stretcher": {
+              "visits": 31277,
+              "over24h": 7187,
+              "over48h": 1889,
+              "dmsHours": 16.972005325176823,
+              "pecCount": 31214,
+              "pecDelayHours": 1.0734860781842905,
+              "patients75Plus": 11931,
+              "mentalHealth": 3016
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 23,
+            "stretcherOver48hPct": 6,
+            "stretcherSharePct": 23.5
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:13",
+      "name": "Laval",
+      "establishment": null,
+      "regionCode": "13",
+      "regionLabel": "Laval",
+      "regionName": "Laval",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 1,
+      "indicators": {
+        "total": {
+          "visits": 51005,
+          "patients75Plus": 10576,
+          "mentalHealth": 3445,
+          "dmsHours": 11.49501302159919,
+          "pecCount": 38814,
+          "pecDelayHours": 3.9963347918563166
+        },
+        "ambulatory": {
+          "visits": 30841,
+          "patients75Plus": 3300,
+          "mentalHealth": 673,
+          "dmsHours": 6.173735818841444,
+          "pecCount": 18796,
+          "pecDelayHours": 5.007689771464375
+        },
+        "stretcher": {
+          "visits": 20164,
+          "over24h": 6233,
+          "over48h": 884,
+          "dmsHours": 19.633949254997898,
+          "pecCount": 20018,
+          "pecDelayHours": 3.0467180370999434,
+          "patients75Plus": 7276,
+          "mentalHealth": 2772
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 30.9,
+        "stretcherOver48hPct": 4.4,
+        "stretcherSharePct": 39.5
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 1,
+        "indicators": {
+          "total": {
+            "visits": 49510,
+            "patients75Plus": 9929,
+            "mentalHealth": 3404,
+            "dmsHours": 11.270592186763617,
+            "pecCount": 38790,
+            "pecDelayHours": 3.594381856721376
+          },
+          "ambulatory": {
+            "visits": 29861,
+            "patients75Plus": 2887,
+            "mentalHealth": 684,
+            "dmsHours": 5.935653230337603,
+            "pecCount": 19248,
+            "pecDelayHours": 4.488623190288165
+          },
+          "stretcher": {
+            "visits": 19649,
+            "over24h": 5921,
+            "over48h": 812,
+            "dmsHours": 19.378211514863633,
+            "pecCount": 19542,
+            "pecDelayHours": 2.7135939543319805,
+            "patients75Plus": 7042,
+            "mentalHealth": 2720
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 30.1,
+          "stretcherOver48hPct": 4.1,
+          "stretcherSharePct": 39.7
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 1495,
+          "patients75Plus": 647,
+          "mentalHealth": 41,
+          "dmsHours": 0.22,
+          "pecCount": 24,
+          "pecDelayHours": 0.4
+        },
+        "ambulatory": {
+          "visits": 980,
+          "patients75Plus": 413,
+          "mentalHealth": -11,
+          "dmsHours": 0.24,
+          "pecCount": -452,
+          "pecDelayHours": 0.52
+        },
+        "stretcher": {
+          "visits": 515,
+          "over24h": 312,
+          "over48h": 72,
+          "dmsHours": 0.26,
+          "pecCount": 476,
+          "pecDelayHours": 0.33,
+          "patients75Plus": 234,
+          "mentalHealth": 52
+        },
+        "derived": {
+          "stretcherOver24hPct": 0.8,
+          "stretcherOver48hPct": 0.3,
+          "stretcherSharePct": -0.2
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 48611,
+              "patients75Plus": 7779,
+              "mentalHealth": 3009,
+              "dmsHours": 8.263298836111622,
+              "pecCount": 37154,
+              "pecDelayHours": 2.8758189263306466
+            },
+            "ambulatory": {
+              "visits": 32391,
+              "patients75Plus": 2417,
+              "mentalHealth": 899,
+              "dmsHours": 4.912678701902787,
+              "pecCount": 20981,
+              "pecDelayHours": 3.6682748677374746
+            },
+            "stretcher": {
+              "visits": 16220,
+              "over24h": 2657,
+              "over48h": 158,
+              "dmsHours": 14.954417009179341,
+              "pecCount": 16173,
+              "pecDelayHours": 1.847777245340313,
+              "patients75Plus": 5362,
+              "mentalHealth": 2110
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 16.4,
+            "stretcherOver48hPct": 1,
+            "stretcherSharePct": 33.4
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 50867,
+              "patients75Plus": 8447,
+              "mentalHealth": 3104,
+              "dmsHours": 9.067392147932622,
+              "pecCount": 37776,
+              "pecDelayHours": 3.1862988846533944
+            },
+            "ambulatory": {
+              "visits": 34122,
+              "patients75Plus": 2500,
+              "mentalHealth": 924,
+              "dmsHours": 5.4220398293053,
+              "pecCount": 21089,
+              "pecDelayHours": 4.085989681297779
+            },
+            "stretcher": {
+              "visits": 16745,
+              "over24h": 3668,
+              "over48h": 265,
+              "dmsHours": 16.49568189509306,
+              "pecCount": 16687,
+              "pecDelayHours": 2.049271305673745,
+              "patients75Plus": 5947,
+              "mentalHealth": 2180
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 21.9,
+            "stretcherOver48hPct": 1.6,
+            "stretcherSharePct": 32.9
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 48849,
+              "patients75Plus": 9371,
+              "mentalHealth": 3068,
+              "dmsHours": 9.441063259568603,
+              "pecCount": 37927,
+              "pecDelayHours": 2.923497471751288
+            },
+            "ambulatory": {
+              "visits": 31334,
+              "patients75Plus": 2946,
+              "mentalHealth": 734,
+              "dmsHours": 5.3325279160727055,
+              "pecCount": 20453,
+              "pecDelayHours": 3.7512546923298395
+            },
+            "stretcher": {
+              "visits": 17515,
+              "over24h": 3697,
+              "over48h": 400,
+              "dmsHours": 16.791154407333398,
+              "pecCount": 17474,
+              "pecDelayHours": 1.954622661605178,
+              "patients75Plus": 6425,
+              "mentalHealth": 2334
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 21.1,
+            "stretcherOver48hPct": 2.3,
+            "stretcherSharePct": 35.9
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 51863,
+              "patients75Plus": 9984,
+              "mentalHealth": 3432,
+              "dmsHours": 10.678605706915869,
+              "pecCount": 39833,
+              "pecDelayHours": 3.837695831485342
+            },
+            "ambulatory": {
+              "visits": 32587,
+              "patients75Plus": 3104,
+              "mentalHealth": 729,
+              "dmsHours": 6.59021978771357,
+              "pecCount": 20652,
+              "pecDelayHours": 4.956141401424672
+            },
+            "stretcher": {
+              "visits": 19276,
+              "over24h": 4759,
+              "over48h": 448,
+              "dmsHours": 17.590217656959723,
+              "pecCount": 19181,
+              "pecDelayHours": 2.6334761395825725,
+              "patients75Plus": 6880,
+              "mentalHealth": 2703
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 24.7,
+            "stretcherOver48hPct": 2.3,
+            "stretcherSharePct": 37.2
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 49510,
+              "patients75Plus": 9929,
+              "mentalHealth": 3404,
+              "dmsHours": 11.270592186763617,
+              "pecCount": 38790,
+              "pecDelayHours": 3.594381856721376
+            },
+            "ambulatory": {
+              "visits": 29861,
+              "patients75Plus": 2887,
+              "mentalHealth": 684,
+              "dmsHours": 5.935653230337603,
+              "pecCount": 19248,
+              "pecDelayHours": 4.488623190288165
+            },
+            "stretcher": {
+              "visits": 19649,
+              "over24h": 5921,
+              "over48h": 812,
+              "dmsHours": 19.378211514863633,
+              "pecCount": 19542,
+              "pecDelayHours": 2.7135939543319805,
+              "patients75Plus": 7042,
+              "mentalHealth": 2720
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 30.1,
+            "stretcherOver48hPct": 4.1,
+            "stretcherSharePct": 39.7
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 1,
+          "indicators": {
+            "total": {
+              "visits": 51005,
+              "patients75Plus": 10576,
+              "mentalHealth": 3445,
+              "dmsHours": 11.49501302159919,
+              "pecCount": 38814,
+              "pecDelayHours": 3.9963347918563166
+            },
+            "ambulatory": {
+              "visits": 30841,
+              "patients75Plus": 3300,
+              "mentalHealth": 673,
+              "dmsHours": 6.173735818841444,
+              "pecCount": 18796,
+              "pecDelayHours": 5.007689771464375
+            },
+            "stretcher": {
+              "visits": 20164,
+              "over24h": 6233,
+              "over48h": 884,
+              "dmsHours": 19.633949254997898,
+              "pecCount": 20018,
+              "pecDelayHours": 3.0467180370999434,
+              "patients75Plus": 7276,
+              "mentalHealth": 2772
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 30.9,
+            "stretcherOver48hPct": 4.4,
+            "stretcherSharePct": 39.5
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:14",
+      "name": "Lanaudière",
+      "establishment": null,
+      "regionCode": "14",
+      "regionLabel": "Lanaudière",
+      "regionName": "Lanaudière",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 2,
+      "indicators": {
+        "total": {
+          "visits": 91476,
+          "patients75Plus": 18032,
+          "mentalHealth": 5691,
+          "dmsHours": 9.735259958896323,
+          "pecCount": 65596,
+          "pecDelayHours": 3.5275100912318504
+        },
+        "ambulatory": {
+          "visits": 61953,
+          "patients75Plus": 6671,
+          "mentalHealth": 2906,
+          "dmsHours": 5.854748397979114,
+          "pecCount": 36211,
+          "pecDelayHours": 4.40808857959061
+        },
+        "stretcher": {
+          "visits": 29523,
+          "over24h": 8654,
+          "over48h": 794,
+          "dmsHours": 17.878379991870744,
+          "pecCount": 29385,
+          "pecDelayHours": 2.4423772805475203,
+          "patients75Plus": 11361,
+          "mentalHealth": 2785
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 29.3,
+        "stretcherOver48hPct": 2.7,
+        "stretcherSharePct": 32.3
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 2,
+        "indicators": {
+          "total": {
+            "visits": 88737,
+            "patients75Plus": 16757,
+            "mentalHealth": 5527,
+            "dmsHours": 8.820825782931584,
+            "pecCount": 66945,
+            "pecDelayHours": 3.0567327242097577
+          },
+          "ambulatory": {
+            "visits": 58860,
+            "patients75Plus": 5724,
+            "mentalHealth": 2828,
+            "dmsHours": 5.244485761883189,
+            "pecCount": 37198,
+            "pecDelayHours": 3.743949607505779
+          },
+          "stretcher": {
+            "visits": 29877,
+            "over24h": 6574,
+            "over48h": 415,
+            "dmsHours": 15.866492136277254,
+            "pecCount": 29747,
+            "pecDelayHours": 2.1973824157804898,
+            "patients75Plus": 11033,
+            "mentalHealth": 2699
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 22,
+          "stretcherOver48hPct": 1.4,
+          "stretcherSharePct": 33.7
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 2739,
+          "patients75Plus": 1275,
+          "mentalHealth": 164,
+          "dmsHours": 0.91,
+          "pecCount": -1349,
+          "pecDelayHours": 0.47
+        },
+        "ambulatory": {
+          "visits": 3093,
+          "patients75Plus": 947,
+          "mentalHealth": 78,
+          "dmsHours": 0.61,
+          "pecCount": -987,
+          "pecDelayHours": 0.66
+        },
+        "stretcher": {
+          "visits": -354,
+          "over24h": 2080,
+          "over48h": 379,
+          "dmsHours": 2.01,
+          "pecCount": -362,
+          "pecDelayHours": 0.24,
+          "patients75Plus": 328,
+          "mentalHealth": 86
+        },
+        "derived": {
+          "stretcherOver24hPct": 7.3,
+          "stretcherOver48hPct": 1.3,
+          "stretcherSharePct": -1.4
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 75873,
+              "patients75Plus": 11953,
+              "mentalHealth": 4787,
+              "dmsHours": 9.888986292151944,
+              "pecCount": 56753,
+              "pecDelayHours": 3.4939033668313177
+            },
+            "ambulatory": {
+              "visits": 50123,
+              "patients75Plus": 3777,
+              "mentalHealth": 2576,
+              "dmsHours": 6.038610019352393,
+              "pecCount": 31156,
+              "pecDelayHours": 4.508117724782813
+            },
+            "stretcher": {
+              "visits": 25750,
+              "over24h": 7161,
+              "over48h": 737,
+              "dmsHours": 17.383837162891044,
+              "pecCount": 25597,
+              "pecDelayHours": 2.259428133939308,
+              "patients75Plus": 8176,
+              "mentalHealth": 2211
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 27.8,
+            "stretcherOver48hPct": 2.9,
+            "stretcherSharePct": 33.9
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 78215,
+              "patients75Plus": 12831,
+              "mentalHealth": 4680,
+              "dmsHours": 10.478959964343298,
+              "pecCount": 55182,
+              "pecDelayHours": 3.8919024269186004
+            },
+            "ambulatory": {
+              "visits": 52919,
+              "patients75Plus": 4143,
+              "mentalHealth": 2510,
+              "dmsHours": 6.1925125558768,
+              "pecCount": 30009,
+              "pecDelayHours": 4.910689348750932
+            },
+            "stretcher": {
+              "visits": 25296,
+              "over24h": 8060,
+              "over48h": 1553,
+              "dmsHours": 19.446168630086447,
+              "pecCount": 25173,
+              "pecDelayHours": 2.677395743675984,
+              "patients75Plus": 8688,
+              "mentalHealth": 2170
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 31.9,
+            "stretcherOver48hPct": 6.1,
+            "stretcherSharePct": 32.3
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 77587,
+              "patients75Plus": 13980,
+              "mentalHealth": 4825,
+              "dmsHours": 10.389357008548108,
+              "pecCount": 55677,
+              "pecDelayHours": 4.1244102442061665
+            },
+            "ambulatory": {
+              "visits": 51226,
+              "patients75Plus": 4727,
+              "mentalHealth": 2588,
+              "dmsHours": 6.328828741481104,
+              "pecCount": 29471,
+              "pecDelayHours": 5.216915828743135
+            },
+            "stretcher": {
+              "visits": 26361,
+              "over24h": 7784,
+              "over48h": 999,
+              "dmsHours": 18.27997652255647,
+              "pecCount": 26206,
+              "pecDelayHours": 2.895789619849568,
+              "patients75Plus": 9253,
+              "mentalHealth": 2237
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.5,
+            "stretcherOver48hPct": 3.8,
+            "stretcherSharePct": 34
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 85713,
+              "patients75Plus": 15694,
+              "mentalHealth": 5494,
+              "dmsHours": 10.041968967497475,
+              "pecCount": 63528,
+              "pecDelayHours": 3.531294035700792
+            },
+            "ambulatory": {
+              "visits": 56404,
+              "patients75Plus": 5112,
+              "mentalHealth": 2839,
+              "dmsHours": 5.795110477783294,
+              "pecCount": 34368,
+              "pecDelayHours": 4.4481865802167375
+            },
+            "stretcher": {
+              "visits": 29309,
+              "over24h": 8585,
+              "over48h": 1136,
+              "dmsHours": 18.21487852612584,
+              "pecCount": 29160,
+              "pecDelayHours": 2.45064372809023,
+              "patients75Plus": 10582,
+              "mentalHealth": 2655
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.3,
+            "stretcherOver48hPct": 3.9,
+            "stretcherSharePct": 34.2
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 88737,
+              "patients75Plus": 16757,
+              "mentalHealth": 5527,
+              "dmsHours": 8.820825782931584,
+              "pecCount": 66945,
+              "pecDelayHours": 3.0567327242097577
+            },
+            "ambulatory": {
+              "visits": 58860,
+              "patients75Plus": 5724,
+              "mentalHealth": 2828,
+              "dmsHours": 5.244485761883189,
+              "pecCount": 37198,
+              "pecDelayHours": 3.743949607505779
+            },
+            "stretcher": {
+              "visits": 29877,
+              "over24h": 6574,
+              "over48h": 415,
+              "dmsHours": 15.866492136277254,
+              "pecCount": 29747,
+              "pecDelayHours": 2.1973824157804898,
+              "patients75Plus": 11033,
+              "mentalHealth": 2699
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 22,
+            "stretcherOver48hPct": 1.4,
+            "stretcherSharePct": 33.7
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 2,
+          "indicators": {
+            "total": {
+              "visits": 91476,
+              "patients75Plus": 18032,
+              "mentalHealth": 5691,
+              "dmsHours": 9.735259958896323,
+              "pecCount": 65596,
+              "pecDelayHours": 3.5275100912318504
+            },
+            "ambulatory": {
+              "visits": 61953,
+              "patients75Plus": 6671,
+              "mentalHealth": 2906,
+              "dmsHours": 5.854748397979114,
+              "pecCount": 36211,
+              "pecDelayHours": 4.40808857959061
+            },
+            "stretcher": {
+              "visits": 29523,
+              "over24h": 8654,
+              "over48h": 794,
+              "dmsHours": 17.878379991870744,
+              "pecCount": 29385,
+              "pecDelayHours": 2.4423772805475203,
+              "patients75Plus": 11361,
+              "mentalHealth": 2785
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.3,
+            "stretcherOver48hPct": 2.7,
+            "stretcherSharePct": 32.3
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:15",
+      "name": "Laurentides",
+      "establishment": null,
+      "regionCode": "15",
+      "regionLabel": "Laurentides",
+      "regionName": "Laurentides",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 6,
+      "indicators": {
+        "total": {
+          "visits": 118980,
+          "patients75Plus": 22991,
+          "mentalHealth": 7711,
+          "dmsHours": 11.35663377598476,
+          "pecCount": 87611,
+          "pecDelayHours": 3.9537826617408522
+        },
+        "ambulatory": {
+          "visits": 77350,
+          "patients75Plus": 8863,
+          "mentalHealth": 2409,
+          "dmsHours": 6.198160073260073,
+          "pecCount": 46372,
+          "pecDelayHours": 4.988556893767312
+        },
+        "stretcher": {
+          "visits": 41630,
+          "over24h": 13335,
+          "over48h": 3615,
+          "dmsHours": 20.941258827768436,
+          "pecCount": 41239,
+          "pecDelayHours": 2.79021054099275,
+          "patients75Plus": 14128,
+          "mentalHealth": 5302
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 32,
+        "stretcherOver48hPct": 8.7,
+        "stretcherSharePct": 35
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 6,
+        "indicators": {
+          "total": {
+            "visits": 113133,
+            "patients75Plus": 21537,
+            "mentalHealth": 7344,
+            "dmsHours": 11.286701338247905,
+            "pecCount": 87063,
+            "pecDelayHours": 3.6311966621871505
+          },
+          "ambulatory": {
+            "visits": 72369,
+            "patients75Plus": 7858,
+            "mentalHealth": 2339,
+            "dmsHours": 5.942200543203737,
+            "pecCount": 46659,
+            "pecDelayHours": 4.521684240982446
+          },
+          "stretcher": {
+            "visits": 40764,
+            "over24h": 12441,
+            "over48h": 3582,
+            "dmsHours": 20.77488154717125,
+            "pecCount": 40404,
+            "pecDelayHours": 2.6028514503514506,
+            "patients75Plus": 13679,
+            "mentalHealth": 5005
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 30.5,
+          "stretcherOver48hPct": 8.8,
+          "stretcherSharePct": 36
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 5847,
+          "patients75Plus": 1454,
+          "mentalHealth": 367,
+          "dmsHours": 0.07,
+          "pecCount": 548,
+          "pecDelayHours": 0.32
+        },
+        "ambulatory": {
+          "visits": 4981,
+          "patients75Plus": 1005,
+          "mentalHealth": 70,
+          "dmsHours": 0.26,
+          "pecCount": -287,
+          "pecDelayHours": 0.47
+        },
+        "stretcher": {
+          "visits": 866,
+          "over24h": 894,
+          "over48h": 33,
+          "dmsHours": 0.17,
+          "pecCount": 835,
+          "pecDelayHours": 0.19,
+          "patients75Plus": 449,
+          "mentalHealth": 297
+        },
+        "derived": {
+          "stretcherOver24hPct": 1.5,
+          "stretcherOver48hPct": -0.1,
+          "stretcherSharePct": -1
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 98896,
+              "patients75Plus": 15366,
+              "mentalHealth": 6510,
+              "dmsHours": 11.998730832838987,
+              "pecCount": 75261,
+              "pecDelayHours": 3.707838307873785
+            },
+            "ambulatory": {
+              "visits": 65829,
+              "patients75Plus": 5634,
+              "mentalHealth": 2399,
+              "dmsHours": 6.306380555006998,
+              "pecCount": 42447,
+              "pecDelayHours": 4.636863369482989
+            },
+            "stretcher": {
+              "visits": 33067,
+              "over24h": 11697,
+              "over48h": 4251,
+              "dmsHours": 23.330926872376956,
+              "pecCount": 32814,
+              "pecDelayHours": 2.5060851906029264,
+              "patients75Plus": 9732,
+              "mentalHealth": 4111
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 35.4,
+            "stretcherOver48hPct": 12.9,
+            "stretcherSharePct": 33.4
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 102731,
+              "patients75Plus": 16438,
+              "mentalHealth": 6611,
+              "dmsHours": 12.245749811535847,
+              "pecCount": 75726,
+              "pecDelayHours": 3.9393146893625257
+            },
+            "ambulatory": {
+              "visits": 68885,
+              "patients75Plus": 5983,
+              "mentalHealth": 2266,
+              "dmsHours": 6.364762704346214,
+              "pecCount": 42155,
+              "pecDelayHours": 4.869984310547054
+            },
+            "stretcher": {
+              "visits": 33846,
+              "over24h": 12402,
+              "over48h": 4639,
+              "dmsHours": 24.21501639780181,
+              "pecCount": 33571,
+              "pecDelayHours": 2.770675748579296,
+              "patients75Plus": 10455,
+              "mentalHealth": 4345
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 36.6,
+            "stretcherOver48hPct": 13.7,
+            "stretcherSharePct": 32.9
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 102458,
+              "patients75Plus": 18066,
+              "mentalHealth": 7004,
+              "dmsHours": 11.739251631020624,
+              "pecCount": 77276,
+              "pecDelayHours": 4.0367079832174415
+            },
+            "ambulatory": {
+              "visits": 66831,
+              "patients75Plus": 6737,
+              "mentalHealth": 2173,
+              "dmsHours": 6.5798296033610475,
+              "pecCount": 41981,
+              "pecDelayHours": 5.065016780077759
+            },
+            "stretcher": {
+              "visits": 35627,
+              "over24h": 11659,
+              "over48h": 3364,
+              "dmsHours": 21.41756677207985,
+              "pecCount": 35295,
+              "pecDelayHours": 2.8136046654389197,
+              "patients75Plus": 11329,
+              "mentalHealth": 4831
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 32.7,
+            "stretcherOver48hPct": 9.4,
+            "stretcherSharePct": 34.8
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 114089,
+              "patients75Plus": 20477,
+              "mentalHealth": 7519,
+              "dmsHours": 11.661447361757538,
+              "pecCount": 87271,
+              "pecDelayHours": 3.831517075164334
+            },
+            "ambulatory": {
+              "visits": 74259,
+              "patients75Plus": 7545,
+              "mentalHealth": 2378,
+              "dmsHours": 6.282252173698361,
+              "pecCount": 47761,
+              "pecDelayHours": 4.793348350234616
+            },
+            "stretcher": {
+              "visits": 39830,
+              "over24h": 12625,
+              "over48h": 3957,
+              "dmsHours": 21.690411847574413,
+              "pecCount": 39510,
+              "pecDelayHours": 2.668823490536854,
+              "patients75Plus": 12932,
+              "mentalHealth": 5141
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 31.7,
+            "stretcherOver48hPct": 9.9,
+            "stretcherSharePct": 34.9
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 113133,
+              "patients75Plus": 21537,
+              "mentalHealth": 7344,
+              "dmsHours": 11.286701338247905,
+              "pecCount": 87063,
+              "pecDelayHours": 3.6311966621871505
+            },
+            "ambulatory": {
+              "visits": 72369,
+              "patients75Plus": 7858,
+              "mentalHealth": 2339,
+              "dmsHours": 5.942200543203737,
+              "pecCount": 46659,
+              "pecDelayHours": 4.521684240982446
+            },
+            "stretcher": {
+              "visits": 40764,
+              "over24h": 12441,
+              "over48h": 3582,
+              "dmsHours": 20.77488154717125,
+              "pecCount": 40404,
+              "pecDelayHours": 2.6028514503514506,
+              "patients75Plus": 13679,
+              "mentalHealth": 5005
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 30.5,
+            "stretcherOver48hPct": 8.8,
+            "stretcherSharePct": 36
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 6,
+          "indicators": {
+            "total": {
+              "visits": 118980,
+              "patients75Plus": 22991,
+              "mentalHealth": 7711,
+              "dmsHours": 11.35663377598476,
+              "pecCount": 87611,
+              "pecDelayHours": 3.9537826617408522
+            },
+            "ambulatory": {
+              "visits": 77350,
+              "patients75Plus": 8863,
+              "mentalHealth": 2409,
+              "dmsHours": 6.198160073260073,
+              "pecCount": 46372,
+              "pecDelayHours": 4.988556893767312
+            },
+            "stretcher": {
+              "visits": 41630,
+              "over24h": 13335,
+              "over48h": 3615,
+              "dmsHours": 20.941258827768436,
+              "pecCount": 41239,
+              "pecDelayHours": 2.79021054099275,
+              "patients75Plus": 14128,
+              "mentalHealth": 5302
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 32,
+            "stretcherOver48hPct": 8.7,
+            "stretcherSharePct": 35
+          }
+        }
+      ]
+    },
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:16",
+      "name": "Montérégie",
+      "establishment": null,
+      "regionCode": "16",
+      "regionLabel": "Montérégie",
+      "regionName": "Montérégie",
+      "fiscalYear": "2026-2027",
+      "period": 7,
+      "facilityCount": 8,
+      "indicators": {
+        "total": {
+          "visits": 219114,
+          "patients75Plus": 44070,
+          "mentalHealth": 13990,
+          "dmsHours": 11.21942064151284,
+          "pecCount": 154877,
+          "pecDelayHours": 4.442266323526986
+        },
+        "ambulatory": {
+          "visits": 135801,
+          "patients75Plus": 15584,
+          "mentalHealth": 4574,
+          "dmsHours": 5.982026386239995,
+          "pecCount": 72354,
+          "pecDelayHours": 5.239604667483637
+        },
+        "stretcher": {
+          "visits": 83313,
+          "over24h": 23383,
+          "over48h": 6420,
+          "dmsHours": 19.75642419750419,
+          "pecCount": 82523,
+          "pecDelayHours": 3.7431809953319415,
+          "patients75Plus": 28486,
+          "mentalHealth": 9416
+        }
+      },
+      "derived": {
+        "stretcherOver24hPct": 28.1,
+        "stretcherOver48hPct": 7.7,
+        "stretcherSharePct": 38
+      },
+      "previous": {
+        "fiscalYear": "2025-2026",
+        "period": 7,
+        "facilityCount": 8,
+        "indicators": {
+          "total": {
+            "visits": 208574,
+            "patients75Plus": 41529,
+            "mentalHealth": 13640,
+            "dmsHours": 10.633990094642671,
+            "pecCount": 153696,
+            "pecDelayHours": 3.8444027531982323
+          },
+          "ambulatory": {
+            "visits": 126254,
+            "patients75Plus": 14145,
+            "mentalHealth": 4564,
+            "dmsHours": 5.530673906041263,
+            "pecCount": 72134,
+            "pecDelayHours": 4.598827548574721
+          },
+          "stretcher": {
+            "visits": 82320,
+            "over24h": 21209,
+            "over48h": 5686,
+            "dmsHours": 18.460934726271457,
+            "pecCount": 81562,
+            "pecDelayHours": 3.1771842177321137,
+            "patients75Plus": 27384,
+            "mentalHealth": 9076
+          }
+        },
+        "derived": {
+          "stretcherOver24hPct": 25.8,
+          "stretcherOver48hPct": 6.9,
+          "stretcherSharePct": 39.5
+        }
+      },
+      "change": {
+        "total": {
+          "visits": 10540,
+          "patients75Plus": 2541,
+          "mentalHealth": 350,
+          "dmsHours": 0.59,
+          "pecCount": 1181,
+          "pecDelayHours": 0.6
+        },
+        "ambulatory": {
+          "visits": 9547,
+          "patients75Plus": 1439,
+          "mentalHealth": 10,
+          "dmsHours": 0.45,
+          "pecCount": 220,
+          "pecDelayHours": 0.64
+        },
+        "stretcher": {
+          "visits": 993,
+          "over24h": 2174,
+          "over48h": 734,
+          "dmsHours": 1.3,
+          "pecCount": 961,
+          "pecDelayHours": 0.57,
+          "patients75Plus": 1102,
+          "mentalHealth": 340
+        },
+        "derived": {
+          "stretcherOver24hPct": 2.3,
+          "stretcherOver48hPct": 0.8,
+          "stretcherSharePct": -1.5
+        },
+        "facilityCount": 0
+      },
+      "history": [
+        {
+          "fiscalYear": "2021-2022",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 199150,
+              "patients75Plus": 32670,
+              "mentalHealth": 12596,
+              "dmsHours": 10.443741254498285,
+              "pecCount": 146236,
+              "pecDelayHours": 3.161582810586237
+            },
+            "ambulatory": {
+              "visits": 132873,
+              "patients75Plus": 11318,
+              "mentalHealth": 5355,
+              "dmsHours": 5.214012233486109,
+              "pecCount": 80306,
+              "pecDelayHours": 3.8178715579574787
+            },
+            "stretcher": {
+              "visits": 66277,
+              "over24h": 20218,
+              "over48h": 6496,
+              "dmsHours": 20.928370676604757,
+              "pecCount": 65930,
+              "pecDelayHours": 2.3621906651836126,
+              "patients75Plus": 21352,
+              "mentalHealth": 7241
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 30.5,
+            "stretcherOver48hPct": 9.8,
+            "stretcherSharePct": 33.3
+          }
+        },
+        {
+          "fiscalYear": "2022-2023",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 202065,
+              "patients75Plus": 34059,
+              "mentalHealth": 12229,
+              "dmsHours": 11.548208809321531,
+              "pecCount": 143340,
+              "pecDelayHours": 3.6149983140319053
+            },
+            "ambulatory": {
+              "visits": 137856,
+              "patients75Plus": 12358,
+              "mentalHealth": 5014,
+              "dmsHours": 5.714297644724285,
+              "pecCount": 79471,
+              "pecDelayHours": 4.240087152686024
+            },
+            "stretcher": {
+              "visits": 64209,
+              "over24h": 21601,
+              "over48h": 8900,
+              "dmsHours": 24.073550389266995,
+              "pecCount": 63869,
+              "pecDelayHours": 2.83721198425249,
+              "patients75Plus": 21701,
+              "mentalHealth": 7215
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 33.6,
+            "stretcherOver48hPct": 13.9,
+            "stretcherSharePct": 31.8
+          }
+        },
+        {
+          "fiscalYear": "2023-2024",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 202472,
+              "patients75Plus": 37626,
+              "mentalHealth": 12190,
+              "dmsHours": 11.01565175541419,
+              "pecCount": 148925,
+              "pecDelayHours": 3.7121925764273582
+            },
+            "ambulatory": {
+              "visits": 130566,
+              "patients75Plus": 13874,
+              "mentalHealth": 4669,
+              "dmsHours": 5.997188471730773,
+              "pecCount": 77592,
+              "pecDelayHours": 4.39378930459612
+            },
+            "stretcher": {
+              "visits": 71906,
+              "over24h": 20943,
+              "over48h": 6665,
+              "dmsHours": 20.128113540208357,
+              "pecCount": 71333,
+              "pecDelayHours": 2.9707902334434593,
+              "patients75Plus": 23752,
+              "mentalHealth": 7521
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.1,
+            "stretcherOver48hPct": 9.3,
+            "stretcherSharePct": 35.5
+          }
+        },
+        {
+          "fiscalYear": "2024-2025",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 212617,
+              "patients75Plus": 40554,
+              "mentalHealth": 13730,
+              "dmsHours": 11.395409757398934,
+              "pecCount": 155276,
+              "pecDelayHours": 4.038022245692975
+            },
+            "ambulatory": {
+              "visits": 133210,
+              "patients75Plus": 14382,
+              "mentalHealth": 5044,
+              "dmsHours": 6.14494514092202,
+              "pecCount": 76714,
+              "pecDelayHours": 4.900329177203641
+            },
+            "stretcher": {
+              "visits": 79407,
+              "over24h": 23518,
+              "over48h": 7297,
+              "dmsHours": 20.203378721859117,
+              "pecCount": 78562,
+              "pecDelayHours": 3.195999207278611,
+              "patients75Plus": 26172,
+              "mentalHealth": 8686
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 29.6,
+            "stretcherOver48hPct": 9.2,
+            "stretcherSharePct": 37.3
+          }
+        },
+        {
+          "fiscalYear": "2025-2026",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 208574,
+              "patients75Plus": 41529,
+              "mentalHealth": 13640,
+              "dmsHours": 10.633990094642671,
+              "pecCount": 153696,
+              "pecDelayHours": 3.8444027531982323
+            },
+            "ambulatory": {
+              "visits": 126254,
+              "patients75Plus": 14145,
+              "mentalHealth": 4564,
+              "dmsHours": 5.530673906041263,
+              "pecCount": 72134,
+              "pecDelayHours": 4.598827548574721
+            },
+            "stretcher": {
+              "visits": 82320,
+              "over24h": 21209,
+              "over48h": 5686,
+              "dmsHours": 18.460934726271457,
+              "pecCount": 81562,
+              "pecDelayHours": 3.1771842177321137,
+              "patients75Plus": 27384,
+              "mentalHealth": 9076
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 25.8,
+            "stretcherOver48hPct": 6.9,
+            "stretcherSharePct": 39.5
+          }
+        },
+        {
+          "fiscalYear": "2026-2027",
+          "period": 7,
+          "facilityCount": 8,
+          "indicators": {
+            "total": {
+              "visits": 219114,
+              "patients75Plus": 44070,
+              "mentalHealth": 13990,
+              "dmsHours": 11.21942064151284,
+              "pecCount": 154877,
+              "pecDelayHours": 4.442266323526986
+            },
+            "ambulatory": {
+              "visits": 135801,
+              "patients75Plus": 15584,
+              "mentalHealth": 4574,
+              "dmsHours": 5.982026386239995,
+              "pecCount": 72354,
+              "pecDelayHours": 5.239604667483637
+            },
+            "stretcher": {
+              "visits": 83313,
+              "over24h": 23383,
+              "over48h": 6420,
+              "dmsHours": 19.75642419750419,
+              "pecCount": 82523,
+              "pecDelayHours": 3.7431809953319415,
+              "patients75Plus": 28486,
+              "mentalHealth": 9416
+            }
+          },
+          "derived": {
+            "stretcherOver24hPct": 28.1,
+            "stretcherOver48hPct": 7.7,
+            "stretcherSharePct": 38
+          }
+        }
+      ]
+    }
+  ],
+  "missingFromFiscalYear": [
+    {
+      "level": "region",
+      "id": null,
+      "key": "region:04",
+      "name": "Mauricie et Centre-du-Québec",
+      "regionCode": "04",
+      "regionName": "Mauricie et Centre-du-Québec",
+      "fiscalYears": [
+        "2025-2026",
+        "2024-2025",
+        "2023-2024",
+        "2022-2023",
+        "2021-2022"
+      ]
+    }
+  ]
+}
