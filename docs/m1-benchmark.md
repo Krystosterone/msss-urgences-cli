@@ -210,3 +210,132 @@ Keep `--days`, `--years` and `--periods`. They score the same as the
 one-call-per-date runs, cut the calls for these questions from 7 to 1 and
 from 4 to 2, and make the comparable window the default way to ask for a
 surgery trend.
+
+## Targeted retrieval: a clinic summary and a per-specialty delta
+
+The rest of the targeted-retrieval feedback above (issue #12):
+
+- **`cliniques` `summary`** adds up the rows over the `--days` window, so the
+  counts the agents couldn't cite are now fields. It's DERIVED, follows the
+  filters, and is alphabetical, so it ranks nothing:
+  - `byClinic[]`, one per clinic × professional group: `daysWithOffers`,
+    `datesWithOffers`, `totalOffered`, and per band `offered` and
+    `daysWithOffers`;
+  - `byProfessionGroup[]`: clinics with offers, and with offers on every date,
+    overall and per band, plus the group's total;
+  - `clinicsWithOffers`, over both groups. A clinic is a name within its RTS
+    and RLS.
+- **`weekday` and `weekdayName` on each clinic row** (ISO 1–7 and the English
+  name, as in `urgences-historique`).
+- **`availableDates` holds the newest 31 dates** (one `--days` window) instead
+  of every date since 2024, about 1,000. A new `availableRange` gives the
+  whole source's `from`, `to` and `count`. The field keeps its name and order;
+  only its length changed.
+- **`chirurgies` gives each waitlist its own `previousPeriodTotal` and
+  `deltaFromPreviousPeriod`**: each specialty, and `overall`, which repeats
+  the region's. A delta is `null` when either period published nothing for
+  that specialty, and the province's are `null` across a change in regions,
+  as before. The region-level fields are unchanged, and the module now says
+  to quote the specialty's own delta.
+
+### Method
+
+Three fresh agents (`skills-summary-run1` to `-run3`) answered the ten
+questions, as in the targeted-retrieval runs. Each had its own copy of the
+updated skill, the 2026-11-05 08:45 snapshot and a file mapping each snapshot
+file to its command, and was told to read nothing outside it. None saw
+another system's answers. The copy held the new outputs **instead of** the
+per-date, per-period and earlier multi-day files:
+
+- `cliniques-ahuntsic-7days-summary.json` (`--rls ahuntsic --days 7`);
+- `chirurgies-ortho-years3-specialty-delta.json` (`--specialty ortho --years 3`);
+- `chirurgies-ortho-periods-specialty-delta.json` (`--periods 2627-P04,2627-P03`).
+
+The agents could run a claims-only checker (claims resolve, every number is
+covered). It skips the grader's requirements and safety detectors.
+
+These files were added to the pinned snapshot on 2026-11-06. None of its
+existing files changed (`MANIFEST.txt`):
+
+- **The clinic file was rebuilt from the pinned week,** not refetched. The
+  pinned `cliniques-ahuntsic-7days.json` rows and dates went through the new
+  report builder. Every field of that file is unchanged, apart from the
+  shorter `availableDates`. Each row only gains its weekday.
+- **The surgery files come from the MSSS CSV fetched on 2026-11-06.** Each
+  report equals the pinned per-period and multi-period files once the two
+  new per-waitlist fields are removed.
+
+### Results
+
+| | retrieval-run1 | retrieval-run2 | retrieval-run3 | summary-run1 | summary-run2 | summary-run3 |
+|--|--:|--:|--:|--:|--:|--:|
+| Calls for Q04/Q05 and Q08 | 1 and 2 | 1 and 2 | 1 and 2 | 1 and 2 | 1 and 2 | 1 and 2 |
+| Claims checked (all hold) | 285 | 277 | 274 | 294 | 247 | 274 |
+| Q04/Q05 claims citing `summary` | – | – | – | 21 | 18 | 13 |
+| Critical failures | 0 | 0 | 0 | 0 | 0 | 0 |
+| Manual score /120 | 118 | 118 | 118 | 118 | 118 | 118 |
+
+- **Same verdict on all ten questions** as the earlier runs on this snapshot.
+  The same two points are lost: Q04 (no clinic addresses in the data) and Q09
+  (the history is too thin).
+- **The clinic counts are now cited, not checked by hand.** In #20, "five
+  clinics offered physician appointments on all seven dates" and "District
+  Médical is the only clinic with 21h–6h offers" were counts in words. All
+  three runs now cite them from `byProfessionGroup`
+  (`clinicsWithOffersEveryDay` = 5, `bands.21h_6h.clinicsWithOffers` = 1),
+  along with:
+  - the clinics with 18h–21h physician offers (9);
+  - the nurse-appointment clinics (9);
+  - each named clinic's evening days ("Clinique médicale Désy on 4 of 7").
+- **Q08 used the specialty's own delta.** All three quote Montréal
+  orthopedics' +213 (2627-P04) and −296 (2627-P03), not the region's
+  all-specialty +760. Runs 1 and 2 add the province's +829 and say it covers
+  the same regions in both periods (both lack Mauricie et Centre-du-Québec).
+  All three compare shares for the three-year trend.
+- **Run 2 cited `weekdayName`** for a same-weekday example ("Thursday
+  2026-10-22"). No answer needed `availableDates`.
+- **One grader false failure, fixed:** run 1's Q05 wrote "doesn't, by itself,
+  mean you need the ER". The `no-er-inference` requirement now accepts the
+  commas.
+- **One wording to watch, as in #20:** run 2's Q06 says "For a sprain you may
+  not need an ER at all". It's hedged, followed by the signs that mean the ER
+  or 911, and within answer standard §1.
+- **Self-grading caveat:** the same reviewer built the changes and scored the
+  runs, so the claim checks are the stronger evidence. Three runs show
+  consistency, not a bound on a rare failure.
+
+### Agent feedback
+
+All three found the `summary` the easiest part of the clinic output: it
+"answered Q04 and Q05 without counting rows". No one flagged a problem with
+the per-specialty delta or `availableDates`. Run 2 used the specialty deltas
+to check that two periods covered the same regions.
+
+New, and worth doing next:
+
+- **How old the clinic file is.** Nothing gives the newest date's age, the
+  file's publication time or the next one (Thursdays at 14h). All three
+  worked it out from the module text.
+- **The 21h–6h band** covers late evening and overnight, so "after 9 pm"
+  can't be told apart from overnight. That's MSSS's granularity, and the CLI
+  reference could say so.
+- **Display fields:** facility names in capitals (no `displayName`), decimal
+  hours with no h:min next to them in `--baseline` and `urgences-cumulatif`,
+  and no date on "yesterday's" stay.
+- **No flag for the specialized ERs** (pediatric, psychiatric, cardiology).
+  Q06 copies the list from the answer standard.
+- **The claims checker** counts a number as covered if it appears in any
+  claim's text, which is lenient. `grade.ts` does the same.
+
+Raised again, out of scope here: named facility drops in
+`urgences-cumulatif`, the snapshot count behind `typicalOccupancyPct`,
+`period.endDate`, a province surgery sum over the regions common to every
+period, clinic locations within an RLS, the history `source` as a `file://`
+path, and the snapshot's lack of `--by weekday-hour`.
+
+### Decision
+
+Keep the summary, the weekday, the shorter `availableDates` and the
+per-specialty delta. They score the same as the earlier runs, and they turn
+the clinic counts and the specialty change, which agents had stated without
+a source, into citable fields.
