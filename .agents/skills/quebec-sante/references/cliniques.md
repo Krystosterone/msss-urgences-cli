@@ -49,13 +49,19 @@ To pair clinics with ERs in the same region, match a clinic's `rssCode` with
 the ER report's `regionCode`.
 
 The report has `clinics[]` (each: `name`, `regionName`, `rlsName`, `rssCode`,
-`date`, `professionGroup`, `totalOffered`, and `slots` with six time bands
-`6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate` (the date of
-the appointments: the last day of the window), `window` (`from`, `to`,
-`days`), `dates` (the days in the window that have rows, newest first) and
-`availableDates` (distinct dates present, newest first). `null` slots = no appointments offered in that band. For the full
-command contract, field dictionary, exit codes, and cache semantics, see
-[`cli-cliniques.md`](cli-cliniques.md).
+`date`, `weekdayName`, `professionGroup`, `totalOffered`, and `slots` with six
+time bands `6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate`
+(the date of the appointments: the last day of the window), `window` (`from`,
+`to`, `days`), `dates` (the days in the window that have rows, newest first),
+`availableDates` (the newest 31 dates in the source) and `availableRange`
+(the whole source). `null` slots = no appointments offered in that band.
+
+`summary` adds up those rows over the window: `byClinic[]` (one per clinic
+and professional group: `daysWithOffers`, `datesWithOffers`, `totalOffered`,
+and per band `offered` and `daysWithOffers`), `byProfessionGroup[]` (how many
+clinics offered, and how many on every date, overall and per band) and
+`clinicsWithOffers`. For the full command contract, field dictionary, exit
+codes, and cache semantics, see [`cli-cliniques.md`](cli-cliniques.md).
 
 ## 2. Interpret
 
@@ -64,15 +70,20 @@ command contract, field dictionary, exit codes, and cache semantics, see
 2. **Look at several dates before calling a pattern.** One day can be unusual,
    and weekdays differ from weekends. Use `--days 7`, so the window includes
    the same weekday as the person's need, in one call. Each row carries its
-   `date`; count a clinic's days from those rows, and state the window
-   (`window.from` to `window.to`) and how many of its `dates` had data.
+   `date` and `weekdayName`. Take a clinic's days and band totals from
+   `summary.byClinic` ("evening slots on 4 of 7 days" is its band
+   `daysWithOffers` against `dates`), and counts of clinics from
+   `summary.byProfessionGroup`, rather than counting rows yourself. State the
+   window (`window.from` to `window.to`) and how many of its `dates` had data.
 3. **Time bands are the appointment's scheduled time.** A clinic that offered
    `18h_21h` slots on most recent days is one that does evening appointments.
    Don't call it open tonight.
 4. **`professionGroup`:** `Médecin` covers physicians and residents;
    `Infirmière` covers nurses and specialized nurse practitioners. Say which.
    Each row is one clinic *and* group, so a clinic offering both appears
-   twice: count distinct `name`s when you say how many clinics.
+   twice: say how many clinics from `summary.clinicsWithOffers` (either
+   group) or `byProfessionGroup[].clinicsWithOffers` (one group), not from
+   the number of rows.
 5. **More offers = a clinic that offers more appointments through the hub,**
    not better odds for this person. Don't rank clinics as if it were.
 6. **Match the RLS to where the person is,** and name it. A clinic in a

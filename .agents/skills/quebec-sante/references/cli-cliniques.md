@@ -48,19 +48,22 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 Top level: `source`, `fetchedAt`, `dataDate` (the day the report is for: the
 last day of the window), `window`, `dates`, `cached`, `cacheAgeMinutes`,
-`availableDates` (newest first), `clinics[]` (newest date first, source order
-within a date).
+`availableDates`, `availableRange`, `clinics[]` (newest date first, source
+order within a date), `summary`.
 
 | Field | Meaning |
 |-------|---------|
 | `window` | `{ from, to, days }`: the calendar days reported, inclusive. `days` is 1 unless `--days` was given, and `to` equals `dataDate` |
 | `dates` | The dates in `window` that the source has rows for, newest first. A day in the window with no rows isn't listed, and isn't zero offers |
+| `availableDates` | The newest 31 dates the source has, newest first: enough to pick any `--days` window that ends at the latest date. Not the whole source |
+| `availableRange` | `{ from, to, count }`: the oldest and newest dates in the source, and how many distinct dates it has |
 
 Each `clinic`:
 
 | Field | Meaning |
 |-------|---------|
 | `date` | The appointments' scheduled date (YYYY-MM-DD) |
+| `weekday` / `weekdayName` | DERIVED: that date's ISO weekday, 1 (Monday) to 7 (Sunday), and its English name (`Thursday`), as in `urgences-historique` |
 | `regionCode` / `regionName` | RTS region code / display name |
 | `rssCode` | DERIVED: the two-digit RSS region the RTS belongs to (`061` → `06`) — the same code as `urgences` `regionCode`, for joining |
 | `rlsCode` / `rlsName` | Local service network (RLS) code / name |
@@ -70,6 +73,44 @@ Each `clinic`:
 | `totalOffered` | DERIVED: sum of non-null slots across all bands |
 
 `null` slot = no appointments offered in that band (not missing data).
+
+### `summary` (over the window)
+
+DERIVED from the rows in `clinics[]`, so it follows the same filters and
+window. It counts and sums; it doesn't rank. A **clinic** is a `name` within
+its RTS and RLS. A **day with offers** is a date in `dates` with at least one
+appointment offered (in that band, for a band). "Every day" means on every
+date in `dates`, so state `dates.length` with it.
+
+| Field | Meaning |
+|-------|---------|
+| `clinicsWithOffers` | Distinct clinics with at least one offer in the window, either professional group |
+| `byProfessionGroup[]` | One entry per `professionGroup`, alphabetical |
+| `byClinic[]` | One entry per clinic × `professionGroup`, alphabetical by `name`, then group |
+
+Each `byProfessionGroup` entry:
+
+| Field | Meaning |
+|-------|---------|
+| `professionGroup` | `Médecin` / `Infirmière` |
+| `clinicsWithOffers` | Distinct clinics with an offer from this group on at least one date |
+| `clinicsWithOffersEveryDay` | … on every date in `dates` |
+| `totalOffered` | Appointments this group offered over the window, every clinic and band |
+| `bands.6h_9h … bands.21h_6h` | Per band: `offered` (sum), `clinicsWithOffers`, `clinicsWithOffersEveryDay` |
+
+Each `byClinic` entry:
+
+| Field | Meaning |
+|-------|---------|
+| `name`, `professionGroup`, `regionCode`, `regionName`, `rssCode`, `rlsCode`, `rlsName` | As on the rows |
+| `daysWithOffers` | Dates in the window with at least one offer, out of `dates.length` |
+| `datesWithOffers` | Those dates, newest first. Rows give each one's `weekdayName` |
+| `totalOffered` | Appointments offered over the window, all bands |
+| `bands.6h_9h … bands.21h_6h` | Per band: `offered` (sum over the window; `0` = none offered) and `daysWithOffers` |
+
+Select an entry by fields, e.g.
+`summary.byClinic[name=District Médical&professionGroup=Médecin].bands.21h_6h.daysWithOffers`.
+Add `rlsCode` when a name appears in more than one RLS.
 
 ## Freshness & cache
 

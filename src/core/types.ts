@@ -230,6 +230,72 @@ export interface Clinic {
   totalOffered: number;
 }
 
+/** A clinic row as the report emits it: the parsed row plus its weekday. */
+export interface ClinicReportRow extends Clinic {
+  /** DERIVED: ISO weekday of `date`, 1 (Monday) – 7 (Sunday), as in `urgences-historique`. */
+  weekday: number;
+  /** DERIVED: English name of that weekday, e.g. "Thursday". */
+  weekdayName: string;
+}
+
+/** One time band of one clinic × professional group, summed over the window. */
+export interface ClinicBandSummary {
+  /** DERIVED: appointments offered in this band over the window (0 = none offered). */
+  offered: number;
+  /** DERIVED: dates in the window with at least one offer in this band. */
+  daysWithOffers: number;
+}
+
+/** One clinic × professional group, summed over the report's window. */
+export interface ClinicSummary {
+  name: string;
+  professionGroup: string;
+  regionCode: string | null;
+  regionName: string;
+  rssCode: string | null;
+  rlsCode: string | null;
+  rlsName: string;
+  /** DERIVED: dates in the window with at least one offer (out of the report's `dates`). */
+  daysWithOffers: number;
+  /** Those dates, newest first. */
+  datesWithOffers: string[];
+  /** DERIVED: appointments offered over the window, all bands. */
+  totalOffered: number;
+  bands: Record<(typeof CLINIQUE_BAND_KEYS)[number], ClinicBandSummary>;
+}
+
+/** One time band of one professional group, over the window. */
+export interface ProfessionGroupBandSummary {
+  /** DERIVED: appointments offered in this band over the window, every clinic. */
+  offered: number;
+  /** DERIVED: distinct clinics with an offer in this band on at least one date. */
+  clinicsWithOffers: number;
+  /** DERIVED: distinct clinics with an offer in this band on every date in `dates`. */
+  clinicsWithOffersEveryDay: number;
+}
+
+/** One professional group, over the window. */
+export interface ProfessionGroupSummary {
+  professionGroup: string;
+  /** DERIVED: distinct clinics with an offer from this group on at least one date. */
+  clinicsWithOffers: number;
+  /** DERIVED: distinct clinics with an offer from this group on every date in `dates`. */
+  clinicsWithOffersEveryDay: number;
+  /** DERIVED: appointments offered by this group over the window, every clinic and band. */
+  totalOffered: number;
+  bands: Record<(typeof CLINIQUE_BAND_KEYS)[number], ProfessionGroupBandSummary>;
+}
+
+/** DERIVED counts over the rows in `clinics[]` (so over the filters and the window). */
+export interface CliniquesSummary {
+  /** Distinct clinics (a name within its RLS) with at least one offer, any professional group. */
+  clinicsWithOffers: number;
+  /** Per professional group, alphabetical. */
+  byProfessionGroup: ProfessionGroupSummary[];
+  /** Per clinic × professional group, alphabetical by name, then group. */
+  byClinic: ClinicSummary[];
+}
+
 /** Top-level report emitted by the `cliniques` tool. */
 export interface CliniquesReport {
   /** Source URL the data was fetched from. */
@@ -249,10 +315,18 @@ export interface CliniquesReport {
   cached: boolean;
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
-  /** Distinct dates present in the source (newest first). */
+  /**
+   * The newest dates present in the source (newest first), at most
+   * CLINIQUES_MAX_DAYS of them: enough to pick any window ending at the
+   * latest date. `availableRange` covers the whole source.
+   */
   availableDates: string[];
+  /** Every date the source has: oldest, newest, and how many distinct dates. */
+  availableRange: { from: string; to: string; count: number };
   /** Matching rows, newest date first. */
-  clinics: Clinic[];
+  clinics: ClinicReportRow[];
+  /** DERIVED: per clinic and per professional group over the rows in `clinics`. */
+  summary: CliniquesSummary;
 }
 
 /**

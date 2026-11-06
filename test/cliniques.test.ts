@@ -1,7 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn, type ChildProcess } from 'node:child_process';
-import { fetchCliniquesReport } from '../src/tools/cliniques';
+import { buildCliniquesReport, fetchCliniquesReport, weekdayOf } from '../src/tools/cliniques';
+import type { Clinic } from '../src/core/types';
 import { main } from '../src/cli';
 
 const FIXTURE = 'test/fixtures/rdvoffert_DOuv.csv';
@@ -77,6 +78,93 @@ test('days outside 1..31 is a usage error', async () => {
       (err: Error) => err.name === 'UsageError',
     );
   }
+});
+
+test('each row carries its ISO weekday and name, right after its date', async () => {
+  assert.deepEqual(weekdayOf('2026-10-22'), { weekday: 4, weekdayName: 'Thursday' });
+  assert.deepEqual(weekdayOf('2026-10-25'), { weekday: 7, weekdayName: 'Sunday' });
+  assert.deepEqual(weekdayOf('2026-10-26'), { weekday: 1, weekdayName: 'Monday' });
+  const r = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { rls: 'kamouraska', days: 2 } });
+  for (const c of r.clinics) {
+    assert.deepEqual({ weekday: c.weekday, weekdayName: c.weekdayName }, weekdayOf(c.date));
+    assert.deepEqual(Object.keys(c).slice(0, 3), ['date', 'weekday', 'weekdayName']);
+  }
+});
+
+const row = (date: string, name: string, professionGroup: string, slots: Partial<Clinic['slots']>, rlsCode = '0642'): Clinic => {
+  const full = { '6h_9h': null, '9h_12h': null, '12h_15h': null, '15h_18h': null, '18h_21h': null, '21h_6h': null, ...slots };
+  return {
+    date,
+    regionCode: '064',
+    regionName: 'RTS du Nord',
+    rssCode: '06',
+    rlsCode,
+    rlsName: rlsCode === '0642' ? 'RLS A' : 'RLS B',
+    name,
+    professionGroup,
+    slots: full,
+    totalOffered: Object.values(full).reduce((n: number, v) => n + (v ?? 0), 0),
+  };
+};
+
+test('summary: per clinic × group and per group, over the window', () => {
+  const dates = ['2026-10-28', '2026-10-27', '2026-10-26'];
+  const rows = [
+    row('2026-10-28', 'Zeta', 'Médecin', { '9h_12h': 5, '18h_21h': 2 }),
+    row('2026-10-27', 'Zeta', 'Médecin', { '9h_12h': 3, '18h_21h': 1 }),
+    row('2026-10-26', 'Zeta', 'Médecin', { '9h_12h': 4 }),
+    row('2026-10-28', 'Zeta', 'Infirmière', { '6h_9h': 1 }),
+    row('2026-10-28', 'Alpha', 'Médecin', { '18h_21h': 7 }),
+    row('2026-10-26', 'Alpha', 'Médecin', { '18h_21h': 1, '21h_6h': 2 }),
+    row('2026-10-27', 'Alpha', 'Médecin', {}), // a row with no offers
+    row('2026-10-28', 'Alpha', 'Médecin', { '9h_12h': 9 }, '0643'), // same name, another RLS
+  ];
+  const r = buildCliniquesReport(rows, dates, { days: 3 }, { cached: false, cacheAgeMinutes: 0 });
+  const s = r.summary;
+  assert.equal(s.clinicsWithOffers, 3); // Alpha (RLS A), Alpha (RLS B), Zeta
+  // Alphabetical (name, group, RLS), not ranked by volume.
+  assert.deepEqual(
+    s.byClinic.map((c) => `${c.name}/${c.professionGroup}/${c.rlsCode}`),
+    ['Alpha/Médecin/0642', 'Alpha/Médecin/0643', 'Zeta/Infirmière/0642', 'Zeta/Médecin/0642'],
+  );
+  const zeta = s.byClinic.find((c) => c.name === 'Zeta' && c.professionGroup === 'Médecin')!;
+  assert.equal(zeta.daysWithOffers, 3);
+  assert.deepEqual(zeta.datesWithOffers, dates);
+  assert.equal(zeta.totalOffered, 15);
+  assert.deepEqual(zeta.bands['9h_12h'], { offered: 12, daysWithOffers: 3 });
+  assert.deepEqual(zeta.bands['18h_21h'], { offered: 3, daysWithOffers: 2 });
+  assert.deepEqual(zeta.bands['21h_6h'], { offered: 0, daysWithOffers: 0 });
+  const alpha = s.byClinic.find((c) => c.name === 'Alpha' && c.rlsCode === '0642')!;
+  assert.equal(alpha.daysWithOffers, 2); // the empty 2026-10-27 row isn't a day with offers
+  assert.deepEqual(alpha.datesWithOffers, ['2026-10-28', '2026-10-26']);
+  const med = s.byProfessionGroup.find((g) => g.professionGroup === 'Médecin')!;
+  assert.deepEqual(s.byProfessionGroup.map((g) => g.professionGroup), ['Infirmière', 'Médecin']);
+  assert.equal(med.clinicsWithOffers, 3);
+  assert.equal(med.clinicsWithOffersEveryDay, 1); // Zeta
+  assert.equal(med.totalOffered, 15 + 10 + 9);
+  assert.deepEqual(med.bands['18h_21h'], { offered: 11, clinicsWithOffers: 2, clinicsWithOffersEveryDay: 0 });
+  assert.deepEqual(med.bands['9h_12h'], { offered: 21, clinicsWithOffers: 2, clinicsWithOffersEveryDay: 1 });
+  assert.equal(r.clinics.reduce((n, c) => n + c.totalOffered, 0), s.byProfessionGroup.reduce((n, g) => n + g.totalOffered, 0));
+});
+
+test('summary follows the filters and the window', async () => {
+  const r = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { rls: 'kamouraska', days: 7 } });
+  assert.equal(r.summary.clinicsWithOffers, new Set(r.clinics.map((c) => c.name)).size);
+  for (const c of r.summary.byClinic) {
+    const mine = r.clinics.filter((x) => x.name === c.name && x.professionGroup === c.professionGroup);
+    assert.equal(c.totalOffered, mine.reduce((n, x) => n + x.totalOffered, 0));
+    assert.ok(c.daysWithOffers <= r.dates.length);
+  }
+  const empty = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { date: '2026-03-01', days: 3 } });
+  assert.deepEqual(empty.summary, { clinicsWithOffers: 0, byProfessionGroup: [], byClinic: [] });
+});
+
+test('availableDates keeps the newest 31 dates; availableRange spans the source', () => {
+  const dates = Array.from({ length: 40 }, (_, i) => new Date(Date.UTC(2026, 9, 28 - i)).toISOString().slice(0, 10));
+  const r = buildCliniquesReport([], dates, {}, { cached: false, cacheAgeMinutes: 0 });
+  assert.equal(r.availableDates.length, 31);
+  assert.deepEqual(r.availableDates, dates.slice(0, 31));
+  assert.deepEqual(r.availableRange, { from: dates[39], to: '2026-10-28', count: 40 });
 });
 
 test('region filter is accent-insensitive', async () => {
@@ -160,6 +248,8 @@ test('CLI: a multi-day table shows a DATE column', async () => {
   assert.equal(code, 0);
   assert.match(stdout, /^DATE\s+TOTAL/m);
   assert.match(stdout, /2026-08-18 → 2026-08-19 \(2 days, 2 with data\)/);
+  assert.match(stdout, /^Summary over 2 date\(s\) with data/m);
+  assert.match(stdout, /^available dates: 2026-08-18 → 2026-08-19 \(2 dates\)$/m);
 });
 
 test('CLI: --version of the binary includes both commands in help', async () => {
