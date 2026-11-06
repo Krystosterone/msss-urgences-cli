@@ -63,7 +63,7 @@ Each region (and `province`):
 | `overall` | All specialties combined, from the published `Total` column |
 | `specialties[]` | One waitlist per specialty (narrowed by `--specialty`) |
 | `previousPeriodTotal` | DERIVED: `overall.total` in `previousPeriod`; `null` if the region was absent |
-| `deltaFromPreviousPeriod` | DERIVED: `overall.total − previousPeriodTotal` |
+| `deltaFromPreviousPeriod` | DERIVED: `overall.total − previousPeriodTotal`: all specialties, even with `--specialty` |
 
 Each waitlist (`overall`, `specialties[]`):
 
@@ -74,10 +74,13 @@ Each waitlist (`overall`, `specialties[]`):
 | `total` | DERIVED: sum of non-null bands |
 | `over6m` | DERIVED: `from6to12m + over12m` |
 | `pctOver6m` / `pctOver12m` | DERIVED: integer % of `total`; `null` when `total` is 0 |
+| `previousPeriodTotal` | DERIVED: this waitlist's `total` in `previousPeriod`; `null` if the region was absent or nothing was published for it there |
+| `deltaFromPreviousPeriod` | DERIVED: `total − previousPeriodTotal` for this specialty; `null` when either period has nothing published for it. On `overall`, the same as the region's |
 
 `province` is DERIVED by summing the regions present in the period. It ignores
 `--region` and honours `--specialty`. It **excludes `missingRegions`**, and its
-delta is `null` when the previous period covers a different set of regions.
+deltas (its own and each specialty's) are `null` when the previous period
+covers a different set of regions.
 
 ### Several periods (`--periods`, `--years`)
 

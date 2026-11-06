@@ -461,6 +461,7 @@ function fmtWaitRow(w: ChirurgieWaitlist): string[] {
     String(w.total),
     fmtCell(w.pctOver6m, '%'),
     fmtCell(w.pctOver12m, '%'),
+    fmtDelta(w.deltaFromPreviousPeriod),
     w.label,
   ];
 }
@@ -469,7 +470,7 @@ function chirurgiesBlock(r: ChirurgieRegion, previousPeriod: string | null, show
   const delta =
     r.deltaFromPreviousPeriod === null ? '' : ` · ${fmtDelta(r.deltaFromPreviousPeriod)} vs ${previousPeriod}`;
   const title = `${r.name}${r.code ? ` (${r.code})` : ' (derived)'} — ${r.overall.total} waiting${delta}`;
-  const header = ['0-6m', '6-12m', '>12m', 'TOTAL', '%>6m', '%>12m', 'SPECIALTY'];
+  const header = ['0-6m', '6-12m', '>12m', 'TOTAL', '%>6m', '%>12m', 'Δ PREV', 'SPECIALTY'];
   const rows = r.specialties.map(fmtWaitRow);
   if (showOverall) rows.push(fmtWaitRow(r.overall));
   return `${title}\n${renderGrid([header, ...rows])}`;

@@ -597,6 +597,17 @@ export interface ChirurgieWaitlist {
   pctOver6m: number | null;
   /** DERIVED: over12m / total as an integer %, null when total is 0. */
   pctOver12m: number | null;
+  /**
+   * DERIVED: `total` for the same key in the previous period; null when the
+   * region is absent from it or nothing was published for this key there.
+   * On `overall`, equal to the region's `previousPeriodTotal`.
+   */
+  previousPeriodTotal: number | null;
+  /**
+   * DERIVED: `total − previousPeriodTotal`; null when not comparable (either
+   * side unpublished). On `overall`, equal to the region's delta.
+   */
+  deltaFromPreviousPeriod: number | null;
 }
 
 /** One region's surgical waitlist for the reported period. */

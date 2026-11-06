@@ -81,13 +81,33 @@ function regionMatches(code: string, name: string, filter: string): boolean {
   return want !== '' && slugify(name).includes(want);
 }
 
-/** Build a waitlist (verbatim bands + derived totals/percentages). */
-function waitlist(key: ChirurgieWaitlist['key'], label: string, waiting: ChirurgieWaitBands): ChirurgieWaitlist {
+/** Build a waitlist (verbatim bands + derived totals/percentages, and the change from `previous`). */
+function waitlist(
+  key: ChirurgieWaitlist['key'],
+  label: string,
+  waiting: ChirurgieWaitBands,
+  previous: { total: number | null; delta: number | null },
+): ChirurgieWaitlist {
   const total = (waiting.under6m ?? 0) + (waiting.from6to12m ?? 0) + (waiting.over12m ?? 0);
   const over6m = (waiting.from6to12m ?? 0) + (waiting.over12m ?? 0);
   const pct = (n: number) => (total === 0 ? null : Math.round((100 * n) / total));
-  return { key, label, waiting, total, over6m, pctOver6m: pct(over6m), pctOver12m: pct(waiting.over12m ?? 0) };
+  return {
+    key,
+    label,
+    waiting,
+    total,
+    over6m,
+    pctOver6m: pct(over6m),
+    pctOver12m: pct(waiting.over12m ?? 0),
+    previousPeriodTotal: previous.total,
+    deltaFromPreviousPeriod: previous.delta,
+  };
 }
+
+/** True when at least one band was published. */
+const published = (b: ChirurgieWaitBands): boolean =>
+  b.under6m !== null || b.from6to12m !== null || b.over12m !== null;
+const bandsTotal = (b: ChirurgieWaitBands): number => (b.under6m ?? 0) + (b.from6to12m ?? 0) + (b.over12m ?? 0);
 
 const emptyBands = (): ChirurgieWaitBands => ({ under6m: null, from6to12m: null, over12m: null });
 
@@ -97,31 +117,55 @@ function addInto(bands: ChirurgieWaitBands, band: keyof ChirurgieWaitBands, v: n
   bands[band] = (bands[band] ?? 0) + v;
 }
 
-/** Aggregate a set of rows (one region, or every region) into a ChirurgieRegion. */
+/** Per-band sums of the `Total` column and of each specialty column over `rows`. */
+function sumBands(rows: ChirurgieRow[], specialties: ChirurgieSpecialtyKey[]) {
+  const overall = emptyBands();
+  const perSpecialty = new Map(specialties.map((k) => [k, emptyBands()]));
+  for (const r of rows) {
+    addInto(overall, r.band, r.total);
+    for (const [k, bands] of perSpecialty) addInto(bands, r.band, r.counts[k]);
+  }
+  return { overall, perSpecialty };
+}
+
+/**
+ * Aggregate a set of rows (one region, or every region) into a ChirurgieRegion.
+ * `previousRows` is the same scope in the previous period, or null when there
+ * is nothing comparable (the region was absent, or the province covered other regions).
+ */
 function buildRegion(
   code: string | null,
   name: string,
   rows: ChirurgieRow[],
   specialties: ChirurgieSpecialtyKey[],
-  previousPeriodTotal: number | null,
+  previousRows: ChirurgieRow[] | null,
 ): ChirurgieRegion {
-  const overallBands = emptyBands();
-  const perSpecialty = new Map(specialties.map((k) => [k, emptyBands()]));
-  for (const r of rows) {
-    addInto(overallBands, r.band, r.total);
-    for (const [k, bands] of perSpecialty) addInto(bands, r.band, r.counts[k]);
-  }
-  const overall = waitlist('total', 'Toutes spécialités', overallBands);
+  const current = sumBands(rows, specialties);
+  const previous = previousRows ? sumBands(previousRows, specialties) : null;
+  const previousPeriodTotal = previousRows ? sumTotals(previousRows) : null;
+  const overallTotal = bandsTotal(current.overall);
+  const deltaFromPreviousPeriod = previousPeriodTotal === null ? null : overallTotal - previousPeriodTotal;
+  const overall = waitlist('total', 'Toutes spécialités', current.overall, {
+    total: previousPeriodTotal,
+    delta: deltaFromPreviousPeriod,
+  });
+  const specialtyWaitlist = (k: ChirurgieSpecialtyKey, label: string): ChirurgieWaitlist => {
+    const now = current.perSpecialty.get(k)!;
+    const before = previous?.perSpecialty.get(k);
+    const prevTotal = before && published(before) ? bandsTotal(before) : null;
+    const delta = prevTotal !== null && published(now) ? bandsTotal(now) - prevTotal : null;
+    return waitlist(k, label, now, { total: prevTotal, delta });
+  };
   return {
     code,
     name,
     slug: slugify(name),
     overall,
-    specialties: CHIRURGIE_SPECIALTIES.filter((s) => perSpecialty.has(s.key)).map((s) =>
-      waitlist(s.key, s.label, perSpecialty.get(s.key)!),
+    specialties: CHIRURGIE_SPECIALTIES.filter((s) => current.perSpecialty.has(s.key)).map((s) =>
+      specialtyWaitlist(s.key, s.label),
     ),
     previousPeriodTotal,
-    deltaFromPreviousPeriod: previousPeriodTotal === null ? null : overall.total - previousPeriodTotal,
+    deltaFromPreviousPeriod,
   };
 }
 
@@ -167,7 +211,7 @@ export function buildChirurgiesReport(
   for (const [code, regionRows] of current) {
     const name = RSS_REGIONS[code] ?? code;
     const prevRows = previous.get(code);
-    regions.push(buildRegion(code, name, regionRows, specialties, prevRows ? sumTotals(prevRows) : null));
+    regions.push(buildRegion(code, name, regionRows, specialties, prevRows ?? null));
   }
 
   // Province: like-for-like only — compare with the previous period when it
@@ -179,7 +223,7 @@ export function buildChirurgiesReport(
     PROVINCE_NAME,
     [...current.values()].flat(),
     specialties,
-    previousPeriod && sameRegionSet ? sumTotals([...previous.values()].flat()) : null,
+    previousPeriod && sameRegionSet ? [...previous.values()].flat() : null,
   );
 
   return {

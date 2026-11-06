@@ -73,6 +73,42 @@ test('province delta is null when the previous period covers a different region 
   assert.ok(p02.regions.every((r) => r.deltaFromPreviousPeriod !== null));
 });
 
+test('each specialty carries its own delta from the previous period', async () => {
+  const [mtl] = (await report({ region: 'montreal' })).regions;
+  const [prev] = (await report({ region: 'montreal', period: '2627-P03' })).regions;
+  for (const s of mtl!.specialties) {
+    const before = prev!.specialties.find((p) => p.key === s.key)!;
+    assert.equal(s.previousPeriodTotal, before.total, s.key);
+    assert.equal(s.deltaFromPreviousPeriod, s.total - before.total, s.key);
+  }
+  const ortho = mtl!.specialties.find((s) => s.key === 'chirurgie_orthopedique')!;
+  assert.equal(ortho.deltaFromPreviousPeriod, 213);
+  // The region-level delta is still the all-specialty one, and overall repeats it.
+  assert.equal(mtl!.deltaFromPreviousPeriod, 760);
+  assert.equal(mtl!.overall.previousPeriodTotal, mtl!.previousPeriodTotal);
+  assert.equal(mtl!.overall.deltaFromPreviousPeriod, 760);
+  assert.equal(mtl!.specialties.reduce((n, s) => n + s.deltaFromPreviousPeriod!, 0), 760);
+  // With --specialty, the specialty keeps its delta and the region's stays all-specialty.
+  const [narrow] = (await report({ region: 'montreal', specialty: 'ortho' })).regions;
+  assert.equal(narrow!.specialties[0]!.deltaFromPreviousPeriod, 213);
+  assert.equal(narrow!.deltaFromPreviousPeriod, 760);
+});
+
+test('specialty deltas are null where the period-level delta is', async () => {
+  const oldest = await report({ period: '2627-P01' });
+  assert.ok(oldest.regions.every((r) => r.specialties.every((s) => s.previousPeriodTotal === null && s.deltaFromPreviousPeriod === null)));
+  const p02 = await report({ period: '2627-P02' });
+  assert.ok(p02.province.specialties.every((s) => s.deltaFromPreviousPeriod === null)); // different region set
+  // Nord-du-Québec published no urology in P01 or P02: not comparable, not a change of 0.
+  const unpublished = p02.regions.flatMap((r) =>
+    r.specialties.filter((s) => s.deltaFromPreviousPeriod === null).map((s) => `${r.code}/${s.key}`),
+  );
+  assert.deepEqual(unpublished, ['RSS10/urologie']);
+  const uro = p02.regions.find((r) => r.code === 'RSS10')!.specialties.find((s) => s.key === 'urologie')!;
+  assert.deepEqual(uro.waiting, { under6m: null, from6to12m: null, over12m: null });
+  assert.equal(uro.previousPeriodTotal, null);
+});
+
 test('a band row absent from the source yields null, and totals treat it as 0', async () => {
   const [cn] = (await report({ period: '2627-P02', region: 'RSS09' })).regions;
   assert.equal(cn!.name, 'Côte-Nord');

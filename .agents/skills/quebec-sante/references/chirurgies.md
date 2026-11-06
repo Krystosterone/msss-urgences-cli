@@ -43,8 +43,10 @@ Key fields: `dataDate` / `period` (fiscal period), `previousPeriod`,
 `missingRegions`, `province` (derived), `regions[]`. Each region has
 `overall` (all specialties) and `specialties[]`. Each of those has
 `waiting.{under6m, from6to12m, over12m}`, `total`, `over6m`, `pctOver6m`,
-`pctOver12m`. Regions also carry `deltaFromPreviousPeriod`. For the full contract, exit codes and
-cache semantics, see [`cli-chirurgies.md`](cli-chirurgies.md).
+`pctOver12m`, and `deltaFromPreviousPeriod` (that waitlist's change since
+`previousPeriod`). Regions also carry their own all-specialty
+`deltaFromPreviousPeriod`. For the full contract, exit codes and cache
+semantics, see [`cli-chirurgies.md`](cli-chirurgies.md).
 
 ## 2. Interpret (the opinions)
 
@@ -60,13 +62,14 @@ cache semantics, see [`cli-chirurgies.md`](cli-chirurgies.md).
    (`--years 3` for the same period across fiscal years, `--periods` for
    consecutive ones) and say so. `--years` compares like with like, since
    waitlists move with the season; name any year listed in `notInSource`.
-   A region's `deltaFromPreviousPeriod` is its all-specialty total, even with
-   `--specialty`: for one specialty, compare that specialty's `total` across
-   the `reports`.
+   For one specialty, quote that specialty's own
+   `specialties[].deltaFromPreviousPeriod`. The region-level
+   `deltaFromPreviousPeriod` is all specialties, even with `--specialty`, so
+   don't put it next to a specialty's figures.
 4. **Read `missingRegions` before quoting the province.** `province` sums only
    the regions present. When a region is missing, say the provincial figure
-   excludes it. `province.deltaFromPreviousPeriod` is `null` when the two
-   periods cover different regions. Never compute your own delta across that gap.
+   excludes it. `province.deltaFromPreviousPeriod`, and each of its
+   specialties' deltas, are `null` when the two periods cover different regions. Never compute your own delta across that gap.
    The same goes across years: when one period lists a region in
    `missingRegions` and the other doesn't, say the provincial change partly
    reflects the missing region, or compare percentages or regions instead.
