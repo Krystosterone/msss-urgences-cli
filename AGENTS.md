@@ -120,8 +120,8 @@ Setup and credentials: `docs/archive-job.md`. Consequences for agents:
 - `README.md` is the front door, agents first: skill routing, how to call the
   CLI, a one-line-per-command overview, links. Don't put option tables, output
   contracts or internals there. Options belong in each command's `--help`
-  (`src/cli.ts`), output contracts in the matching skill's
-  `references/cli-reference.md`, archive/API operations in
+  (`src/cli.ts`), output contracts in the skill's
+  `references/cli-<command>.md`, archive/API operations in
   `docs/archive-job.md`, and anything the code already says, nowhere.
 - No changelog and no versioning policy: the git history is the record of
   changes.
