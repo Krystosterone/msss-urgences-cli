@@ -27,9 +27,17 @@ quebec-sante chirurgies --json
 # One region (name, slug or RSS code) and/or a specialty:
 quebec-sante chirurgies --region montreal --specialty ortho --json
 
-# A past fiscal period, for a trend:
+# A past fiscal period:
 quebec-sante chirurgies --region RSS03 --period 2627-P01 --json
+
+# For a trend, in one call: the same period in each of the last 3 fiscal
+# years (comparable windows), or any list of periods:
+quebec-sante chirurgies --region montreal --specialty ortho --years 3 --json
+quebec-sante chirurgies --region montreal --periods 2627-P04,2627-P03,2627-P02 --json
 ```
+
+`--years` and `--periods` return `periods`, `notInSource` and `reports[]`:
+one entry per period, each with the fields below.
 
 Key fields: `dataDate` / `period` (fiscal period), `previousPeriod`,
 `missingRegions`, `province` (derived), `regions[]`. Each region has
@@ -48,10 +56,13 @@ cache semantics, see [`cli-chirurgies.md`](cli-chirurgies.md).
    largest count. A small region with a high `pctOver6m` is the more telling
    signal.
 3. **Trend = `deltaFromPreviousPeriod`**, which is one fiscal period (~4 weeks).
-   One period is noise. Before calling a trend, query 3–4 earlier `--period`
-   values and say so. A region's `deltaFromPreviousPeriod` is its
-   all-specialty total, even with `--specialty`: for one specialty, compare
-   that specialty's `total` across `--period` queries.
+   One period is noise. Before calling a trend, look at 3–4 periods
+   (`--years 3` for the same period across fiscal years, `--periods` for
+   consecutive ones) and say so. `--years` compares like with like, since
+   waitlists move with the season; name any year listed in `notInSource`.
+   A region's `deltaFromPreviousPeriod` is its all-specialty total, even with
+   `--specialty`: for one specialty, compare that specialty's `total` across
+   the `reports`.
 4. **Read `missingRegions` before quoting the province.** `province` sums only
    the regions present. When a region is missing, say the provincial figure
    excludes it. `province.deltaFromPreviousPeriod` is `null` when the two

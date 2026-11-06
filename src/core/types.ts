@@ -577,3 +577,26 @@ export interface ChirurgiesReport {
   province: ChirurgieRegion;
   regions: ChirurgieRegion[];
 }
+
+/** One period inside a multi-period `chirurgies` report: the single-period report minus the shared fields. */
+export type ChirurgiesPeriodReport = Omit<
+  ChirurgiesReport,
+  'source' | 'fetchedAt' | 'cached' | 'cacheAgeMinutes' | 'availablePeriods'
+>;
+
+/** Top-level report emitted by `chirurgies --periods` / `--years`. */
+export interface ChirurgiesMultiReport {
+  source: string;
+  fetchedAt: string;
+  cached: boolean;
+  cacheAgeMinutes: number;
+  availablePeriods: string[];
+  /** The period codes reported, in the order of `reports`. */
+  periods: string[];
+  /**
+   * With `--years`: the same period of earlier fiscal years that the source
+   * doesn't have. Empty otherwise.
+   */
+  notInSource: string[];
+  reports: ChirurgiesPeriodReport[];
+}

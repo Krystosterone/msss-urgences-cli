@@ -1,9 +1,19 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
+import { spawnSync } from 'node:child_process';
 import { join } from 'node:path';
-import { fetchChirurgiesReport, decodePeriod, resolveSpecialties } from '../src/tools/chirurgies';
+import {
+  fetchChirurgiesReport,
+  fetchChirurgiesMultiReport,
+  buildChirurgiesMultiReport,
+  selectPeriods,
+  samePeriodYearsBack,
+  decodePeriod,
+  resolveSpecialties,
+} from '../src/tools/chirurgies';
+import { parseChirurgies } from '../src/core/parseChirurgies';
 import { main } from '../src/cli';
 
 const FIXTURE = 'test/fixtures/Chirurgie_ListeAttente.csv';
@@ -138,4 +148,99 @@ test('CLI: exit codes for chirurgies', async () => {
   assert.equal(await quiet(['chirurgies', 'extra']), 2);
   assert.equal(await quiet(['chirurgies', '--help']), 0);
   delete process.env.QUEBEC_SANTE_CACHE_DIR;
+});
+
+test('--periods reports each period, in the order given, like a single-period call', async () => {
+  const cache = freshCache();
+  const multi = await fetchChirurgiesMultiReport({
+    fixture: FIXTURE,
+    cache,
+    filters: { region: 'montreal', specialty: 'ortho', periods: ['2627-P04', '2627-P01', '2627-P04'] },
+  });
+  assert.deepEqual(multi.periods, ['2627-P04', '2627-P01']); // duplicates dropped
+  assert.deepEqual(multi.notInSource, []);
+  assert.equal(multi.availablePeriods.length, 4);
+  assert.equal(multi.reports.length, 2);
+  for (const r of multi.reports) {
+    const single = await fetchChirurgiesReport({
+      fixture: FIXTURE,
+      cache,
+      filters: { region: 'montreal', specialty: 'ortho', period: r.dataDate },
+    });
+    const { source, fetchedAt, cached, cacheAgeMinutes, availablePeriods, ...rest } = single;
+    assert.deepEqual(r, rest);
+    assert.equal('source' in r, false);
+  }
+});
+
+test('--periods with an unknown period is a usage error', async () => {
+  await assert.rejects(
+    fetchChirurgiesMultiReport({ fixture: FIXTURE, cache: freshCache(), filters: { periods: ['2627-P04', '2526-P04'] } }),
+    /period 2526-P04 is not in the source/,
+  );
+});
+
+test('samePeriodYearsBack steps fiscal years, across the century', () => {
+  assert.equal(samePeriodYearsBack('2627-P04', 0), '2627-P04');
+  assert.equal(samePeriodYearsBack('2627-P04', 2), '2425-P04');
+  assert.equal(samePeriodYearsBack('0001-P13', 1), '9900-P13');
+});
+
+test('--years takes the same period from earlier fiscal years, newest first', () => {
+  const avail = ['2627-P04', '2627-P03', '2526-P04', '2526-P03', '2425-P04'];
+  assert.deepEqual(selectPeriods(avail, { years: 3 }), { codes: ['2627-P04', '2526-P04', '2425-P04'], notInSource: [] });
+  assert.deepEqual(selectPeriods(avail, { years: 3, period: '2627-P03' }), {
+    codes: ['2627-P03', '2526-P03'],
+    notInSource: ['2425-P03'],
+  });
+  assert.deepEqual(selectPeriods(avail, { years: 1 }), { codes: ['2627-P04'], notInSource: [] });
+  assert.throws(() => selectPeriods(avail, { years: 0 }), /years must be/);
+  assert.throws(() => selectPeriods(avail, { years: 2, periods: ['2627-P04'] }), /not both/);
+});
+
+test('--years on rows spanning fiscal years builds one report per year', async () => {
+  // The fixture holds one fiscal year; relabel 2627-P01 as last year's P04 to get a second year.
+  const { rows, periods } = parseChirurgies(readFileSync(FIXTURE, 'utf8'));
+  const lastYear = rows.filter((r) => r.period === '2627-P01').map((r) => ({ ...r, period: '2526-P04' }));
+  const multi = buildChirurgiesMultiReport([...rows, ...lastYear], [...periods, '2526-P04'], { years: 3 }, { cached: false, cacheAgeMinutes: 0 });
+  assert.deepEqual(multi.periods, ['2627-P04', '2526-P04']);
+  assert.deepEqual(multi.notInSource, ['2425-P04']);
+  assert.deepEqual(multi.reports.map((r) => r.missingRegions), [['RSS04'], []]);
+  assert.equal(multi.reports[1]!.previousPeriod, null);
+});
+
+test('CLI: chirurgies --periods / --years', () => {
+  // A subprocess: the test runner itself writes to this process's stdout.
+  const env = { ...process.env, QUEBEC_SANTE_CACHE_DIR: freshCache().dir };
+  const cli = (args: string[]) => {
+    const r = spawnSync('node', ['--import', 'tsx', 'src/cli.ts', 'chirurgies', '--fixture', FIXTURE, ...args], {
+      encoding: 'utf8',
+      env,
+    });
+    return { code: r.status, out: r.stdout };
+  };
+  const ok = cli(['--json', '--region', 'montreal', '--periods', '2627-p04, 2627-P02']);
+  assert.equal(ok.code, 0);
+  const report = JSON.parse(ok.out);
+  assert.deepEqual(report.periods, ['2627-P04', '2627-P02']);
+  assert.equal(report.reports[1].regions[0].code, 'RSS06');
+  const years = JSON.parse(cli(['--json', '--years', '2']).out);
+  assert.deepEqual(years.periods, ['2627-P04']);
+  assert.deepEqual(years.notInSource, ['2526-P04']);
+  const table = cli(['--table', '--periods', '2627-P04,2627-P03']);
+  assert.equal(table.code, 0);
+  assert.match(table.out, /== 2627-P04 \(fiscal 2026-2027, P4\) ==/);
+  assert.match(table.out, /== 2627-P03 /);
+  for (const bad of [
+    ['--periods', '2627-P04,2627-P99'],
+    ['--periods', ','],
+    ['--periods', '2627-P04', '--years', '2'],
+    ['--periods', '2627-P04', '--period', '2627-P03'],
+    ['--years', '0'],
+    ['--years', '14'],
+    ['--years', 'x'],
+    ['--periods', '2627-P04,2526-P04'], // well-formed but absent
+  ]) {
+    assert.equal(cli(['--json', ...bad]).code, 2, bad.join(' '));
+  }
 });
