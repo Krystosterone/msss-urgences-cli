@@ -49,8 +49,9 @@ npx tsx scripts/build-api.ts site && QUEBEC_SANTE_API_FIXTURE=site/api/v1 quebec
 ```
 
 Skill or answer-standard changes: `npm test` includes `test/skills.test.ts`
-(the five copies of `references/answer-standard.md` must stay identical, and
-the unsafe rules removed in M0 must not come back) and `test/eval.test.ts`
+(one skill, `.agents/skills/quebec-sante`, whose `SKILL.md` links every module
+and CLI reference; one `answer-standard.md`; and the unsafe rules removed in
+M0 must not come back) and `test/eval.test.ts`
 (the recorded benchmark answers in `eval/`, graded against a pinned snapshot;
 `npx tsx eval/grade.ts` prints the full report). See `eval/README.md`.
 
@@ -119,8 +120,8 @@ Setup and credentials: `docs/archive-job.md`. Consequences for agents:
 - `README.md` is the front door, agents first: skill routing, how to call the
   CLI, a one-line-per-command overview, links. Don't put option tables, output
   contracts or internals there. Options belong in each command's `--help`
-  (`src/cli.ts`), output contracts in the matching skill's
-  `references/cli-reference.md`, archive/API operations in
+  (`src/cli.ts`), output contracts in the skill's
+  `references/cli-<command>.md`, archive/API operations in
   `docs/archive-job.md`, and anything the code already says, nowhere.
 - No changelog and no versioning policy: the git history is the record of
   changes.

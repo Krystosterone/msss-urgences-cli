@@ -177,7 +177,7 @@ api/v1/urgences/<YYYY-MM>.json   every snapshot of the month, per facility
 ```
 
 `quebec-sante urgences-historique` reads it (contract:
-[`cli-reference.md`](../.agents/skills/quebec-sante-urgences/references/cli-reference.md#urgences-historique-history)).
+[`cli-urgences.md`](../.agents/skills/quebec-sante/references/cli-urgences.md#urgences-historique-history)).
 A month is `complete` once a later month has data, and clients cache complete
 months indefinitely. `pages.yml` runs on pushes to `main` that change
 `archive/urgences/` or the builder, and on manual runs. A failed deploy is
