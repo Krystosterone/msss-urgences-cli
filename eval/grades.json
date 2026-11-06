@@ -1141,6 +1141,291 @@
           "notes": "Same verdict as the M0 runs on this snapshot."
         }
       }
+    },
+    "skills-retrieval-run1": {
+      "description": "Targeted retrieval, run 1 (snapshot 2026-11-05T08-45, with the files added on 2026-11-06): a fresh agent with only the quebec-sante skill after cliniques --days and chirurgies --years / --periods, and a snapshot holding the multi-day and multi-period outputs instead of the per-date and per-period files. Same questions as skills-m1-run1 to -run3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs. Read the week from one --days 7 output, and the counts stated in words (\"five clinics … on every one of those dates\", \"evening slots regularly at\" four clinics) check out against the file. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --days 7 output: only District Médical offered 21h–6h physician slots, every day of the week (checked against the file)."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --years 3 and --periods outputs: the same period over three fiscal years, Mauricie et Centre-du-Québec named as missing from 2627-P04, shares compared rather than counts."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        }
+      }
+    },
+    "skills-retrieval-run2": {
+      "description": "Targeted retrieval, run 2 (snapshot 2026-11-05T08-45, with the files added on 2026-11-06): a fresh agent with only the quebec-sante skill after cliniques --days and chirurgies --years / --periods, and a snapshot holding the multi-day and multi-period outputs instead of the per-date and per-period files. Same questions as skills-m1-run1 to -run3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs. Read the week from one --days 7 output, and the counts stated in words (\"District Médical offered physician appointments every day of the window\") check out against the file. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --days 7 output: only District Médical offered 21h–6h physician slots, every day of the week (checked against the file)."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --years 3 and --periods outputs: the same period over three fiscal years, Mauricie et Centre-du-Québec named as missing from 2627-P04, shares compared rather than counts."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        }
+      }
+    },
+    "skills-retrieval-run3": {
+      "description": "Targeted retrieval, run 3 (snapshot 2026-11-05T08-45, with the files added on 2026-11-06): a fresh agent with only the quebec-sante skill after cliniques --days and chirurgies --years / --periods, and a snapshot holding the multi-day and multi-period outputs instead of the per-date and per-period files. Same questions as skills-m1-run1 to -run3.",
+      "answers": {
+        "Q01": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q02": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q03": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q04": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs. Read the week from one --days 7 output, and the counts stated in words (\"District Médical offered some every day of the week\" in 18h–21h; same weekday picked, Thursday 2026-10-22) check out against the file. No addresses or contact details: the data has none."
+        },
+        "Q05": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --days 7 output: only District Médical offered 21h–6h physician slots, every day of the week (checked against the file)."
+        },
+        "Q06": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot. Its lead says \"For a sprain you may not need the ER at all\": hedged, followed by the signs that mean the ER, and within answer standard §1 (take a problem the person calls minor at their word); not S3, since no clinic data decides it."
+        },
+        "Q07": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        },
+        "Q08": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs, from the --years 3 and --periods outputs: the same period over three fiscal years, Mauricie et Centre-du-Québec named as missing from 2627-P04, shares compared rather than counts."
+        },
+        "Q09": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 1,
+          "notes": "Same verdict as the M1 runs on this snapshot. Correctly too thin to answer yet."
+        },
+        "Q10": {
+          "correct": 2,
+          "grounded": 2,
+          "fresh": 2,
+          "uncertain": 2,
+          "safe": 2,
+          "useful": 2,
+          "notes": "Same verdict as the M1 runs on this snapshot."
+        }
+      }
     }
   }
 }

@@ -16,6 +16,7 @@ import {
   type ChirurgieWaitBands,
   type ChirurgieWaitlist,
   type ChirurgiesReport,
+  type ChirurgiesMultiReport,
 } from '../core/types';
 
 export interface ChirurgiesFilters {
@@ -26,6 +27,18 @@ export interface ChirurgiesFilters {
   /** A fiscal period code, e.g. "2627-P04". Defaults to the latest present. */
   period?: string;
 }
+
+export interface ChirurgiesMultiFilters extends Omit<ChirurgiesFilters, 'period'> {
+  /** Explicit period codes, reported in this order. */
+  periods?: string[];
+  /** The same period number in each of the last `years` fiscal years, ending at `period`. */
+  years?: number;
+  /** With `years`: the newest period (default: the latest in the source). */
+  period?: string;
+}
+
+/** Most periods one multi-period call reports: a full fiscal year of periods. */
+export const CHIRURGIES_MAX_PERIODS = 13;
 
 export const SOURCE_URL = MSSS_CHIRURGIES_URL;
 const PROVINCE_NAME = 'Ensemble du Québec';
@@ -182,6 +195,86 @@ export function buildChirurgiesReport(
     province,
     regions: filters.region ? regions.filter((r) => regionMatches(r.code!, r.name, filters.region!)) : regions,
   };
+}
+
+/** The same period number `back` fiscal years earlier: ("2627-P04", 1) → "2526-P04". */
+export function samePeriodYearsBack(code: string, back: number): string {
+  const m = /^(\d{2})(\d{2})-P(\d{2})$/.exec(code);
+  if (!m) throw new UsageError(`not a fiscal period: ${code}`);
+  const start = (Number(m[1]) - back + 100) % 100;
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${pad(start)}${pad((start + 1) % 100)}-P${m[3]}`;
+}
+
+/** Resolve `--periods` / `--years` to the period codes to report. */
+export function selectPeriods(
+  available: string[],
+  filters: ChirurgiesMultiFilters,
+): { codes: string[]; notInSource: string[] } {
+  if (filters.periods && filters.years !== undefined) {
+    throw new UsageError('give either periods or years, not both');
+  }
+  if (filters.periods) {
+    const codes = [...new Set(filters.periods)];
+    if (codes.length === 0 || codes.length > CHIRURGIES_MAX_PERIODS) {
+      throw new UsageError(`periods takes 1 to ${CHIRURGIES_MAX_PERIODS} period codes (got ${codes.length})`);
+    }
+    return { codes, notInSource: [] }; // an unknown code fails in buildChirurgiesReport, naming the available ones
+  }
+  const years = filters.years;
+  if (years === undefined || !Number.isInteger(years) || years < 1 || years > CHIRURGIES_MAX_PERIODS) {
+    throw new UsageError(`years must be a whole number from 1 to ${CHIRURGIES_MAX_PERIODS} (got ${years})`);
+  }
+  const newest = filters.period ?? available[0]!;
+  // The newest period must exist (buildChirurgiesReport names the available ones if not);
+  // an earlier year the source lacks is listed in notInSource rather than failing the call.
+  const codes = [newest];
+  const notInSource: string[] = [];
+  for (let back = 1; back < years; back++) {
+    const code = samePeriodYearsBack(newest, back);
+    (available.includes(code) ? codes : notInSource).push(code);
+  }
+  return { codes, notInSource };
+}
+
+/** Assemble a multi-period report (one entry per period) from parsed rows. */
+export function buildChirurgiesMultiReport(
+  rows: ChirurgieRow[],
+  periods: string[],
+  filters: ChirurgiesMultiFilters,
+  meta: { cached: boolean; cacheAgeMinutes: number },
+): ChirurgiesMultiReport {
+  const { codes, notInSource } = selectPeriods(periods, filters);
+  const reports = codes.map((period) => {
+    const full = buildChirurgiesReport(rows, periods, { region: filters.region, specialty: filters.specialty, period }, meta);
+    const { source: _s, fetchedAt: _f, cached: _c, cacheAgeMinutes: _a, availablePeriods: _p, ...rest } = full;
+    return rest;
+  });
+  return {
+    source: SOURCE_URL,
+    fetchedAt: new Date().toISOString(),
+    cached: meta.cached,
+    cacheAgeMinutes: meta.cacheAgeMinutes,
+    availablePeriods: periods,
+    periods: codes,
+    notInSource,
+    reports,
+  };
+}
+
+/** Several periods in one call: `--periods` codes, or the same period over `--years` fiscal years. */
+export async function fetchChirurgiesMultiReport(opts: {
+  filters: ChirurgiesMultiFilters;
+  cache?: CacheConfig;
+  fixture?: string;
+}): Promise<ChirurgiesMultiReport> {
+  const cache = opts.cache ?? {};
+  const cached = readChirurgiesCache(cache);
+  const { rows, periods } = cached ?? (await loadFresh(opts.fixture, cache));
+  return buildChirurgiesMultiReport(rows, periods, opts.filters, {
+    cached: cached !== null,
+    cacheAgeMinutes: cached ? Math.round((Date.now() - Date.parse(cached.storedAt)) / 60_000) : 0,
+  });
 }
 
 /**

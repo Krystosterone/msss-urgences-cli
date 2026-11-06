@@ -14,7 +14,9 @@ quebec-sante chirurgies [options]
 |--------|-------------|
 | `--region <name\|code>` | Region by name, alias, unique name prefix or RSS code (`montreal`, `RSS06`, `06`, `6`); otherwise an accent-insensitive substring of the region name. Same spellings in every command (`quebec-sante regions` lists them) |
 | `--specialty <name>` | Specialties by label or key (accent-insensitive substring), e.g. `ortho`, `gynécologie`. `chirurgie` matches six of them |
-| `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04`; default = latest in the source |
+| `--period <YYZZ-Pnn>` | Fiscal period, e.g. `2627-P04`; default = latest in the source. With `--years`, the newest period |
+| `--periods <list>` | Several periods in one call, comma-separated (up to 13), reported in that order. Not with `--period` |
+| `--years <n>` | The same period number in each of the last `n` fiscal years (1–13), newest first: `2627-P04`, `2526-P04`, … |
 | `--refresh` | Force a fresh fetch, ignoring the local cache |
 | `--ttl <minutes>` | Cache TTL (default 1440) |
 | `--json` | JSON output (default when piped) |
@@ -27,9 +29,11 @@ Specialty keys: `chirurgie_generale`, `chirurgie_orthopedique`,
 `obstetrique_gynecologie`, `ophtalmologie`, `orl`, `urologie`, `autres`.
 
 Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or bad
-usage. Bad usage includes a malformed `--period`, a period absent from the
-source (the message lists the latest ones), and an unknown `--specialty` (the
-message lists the keys). A `--region` that matches nothing is **not** an
+usage. Bad usage includes a malformed `--period` or `--periods` entry, a
+period absent from the source (the message lists the latest ones), `--periods`
+with `--years` or `--period`, and an unknown `--specialty` (the message lists
+the keys). With `--years`, an earlier year the source doesn't have is not an
+error: it's listed in `notInSource`. A `--region` that matches nothing is **not** an
 error: `regions` comes back empty.
 
 ## Source
@@ -74,6 +78,18 @@ Each waitlist (`overall`, `specialties[]`):
 `province` is DERIVED by summing the regions present in the period. It ignores
 `--region` and honours `--specialty`. It **excludes `missingRegions`**, and its
 delta is `null` when the previous period covers a different set of regions.
+
+### Several periods (`--periods`, `--years`)
+
+Top level: `source`, `fetchedAt`, `cached`, `cacheAgeMinutes`,
+`availablePeriods`, `periods` (the codes reported, in order), `notInSource`
+(`--years` only: earlier years' periods the source lacks), `reports[]`.
+
+Each `reports[]` entry is the single-period report above without the shared
+top-level fields: `dataDate`, `period`, `previousPeriod`, `missingRegions`,
+`province`, `regions[]`. It's identical to a `--period` call for that period:
+`missingRegions` and `deltaFromPreviousPeriod` are per period, so check
+coverage in each one before comparing them.
 
 ## Freshness & cache
 

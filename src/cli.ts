@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util';
 import { fetchUrgencesReport, type UrgencesFilters } from './tools/urgences';
-import { fetchCliniquesReport, type CliniquesFilters } from './tools/cliniques';
+import { fetchCliniquesReport, CLINIQUES_MAX_DAYS, type CliniquesFilters } from './tools/cliniques';
 import {
   fetchUrgencesCumulatifReport,
   DEFAULT_TTL_MINUTES as CUMULATIF_DEFAULT_TTL,
   type UrgencesCumulatifFilters,
 } from './tools/urgencesCumulatif';
-import { fetchChirurgiesReport, type ChirurgiesFilters } from './tools/chirurgies';
+import {
+  fetchChirurgiesReport,
+  fetchChirurgiesMultiReport,
+  CHIRURGIES_MAX_PERIODS,
+  type ChirurgiesFilters,
+  type ChirurgiesMultiFilters,
+} from './tools/chirurgies';
 import {
   fetchUrgencesHistoriqueReport,
   HISTORY_DEFAULT_DAYS,
@@ -23,7 +29,13 @@ import { REGIONS, datasetCodes, resolveRegion, type RssRegion } from './core/reg
 import type { Facility, Region, UrgencesReport } from './core/types';
 import type { Clinic, CliniquesReport } from './core/types';
 import { CLINIQUE_BAND_KEYS, CUMULATIF_LEVELS, CHIRURGIE_SPECIALTIES } from './core/types';
-import type { ChirurgieRegion, ChirurgiesReport, ChirurgieWaitlist } from './core/types';
+import type {
+  ChirurgieRegion,
+  ChirurgiesMultiReport,
+  ChirurgiesPeriodReport,
+  ChirurgiesReport,
+  ChirurgieWaitlist,
+} from './core/types';
 import type { CumulatifEntry, CumulatifLevel, UrgencesCumulatifReport } from './core/types';
 import { formatVersion, type BuildInfo } from './core/version';
 
@@ -107,7 +119,10 @@ Options:
                       its RTS sub-regions), or one RTS by code ("061") or name ("Montérégie-Est")
   --rls <name>        Filter to a local service network (RLS) by name (accent-insensitive)
   --search <text>     Filter clinics by name (accent-insensitive substring)
-  --date <YYYY-MM-DD> The date to report (default: the latest date in the source)
+  --date <YYYY-MM-DD> The date to report (default: the latest date in the source); with
+                      --days, the last day of the window
+  --days <n>          Report n calendar days ending at --date, in one call (1-${CLINIQUES_MAX_DAYS},
+                      default 1). Rows come newest date first; "dates" lists the days present
   --refresh           Force a fresh fetch, ignoring the local cache
   --ttl <minutes>     Cache TTL (default 1440; the dataset updates weekly)
   --json              Output JSON (default when piped)
@@ -118,6 +133,7 @@ Options:
 Examples:
   quebec-sante cliniques --region montreal --table
   quebec-sante cliniques --search "Sainte-Justine" --json
+  quebec-sante cliniques --region montreal --rls ahuntsic --days 7 --json
 `;
 
 const CUMULATIF_HELP = `quebec-sante urgences-cumulatif — fiscal-year-to-date ER indicators and
@@ -163,7 +179,12 @@ Usage:
 Options:
   --region <name|code> Filter to a region by name, alias or RSS code ("montreal", "RSS06", "06")
   --specialty <name>   Filter to specialties by name (accent-insensitive substring), e.g. "ortho"
-  --period <YYZZ-Pnn>  Fiscal period to report, e.g. "2627-P04" (default: the latest in the source)
+  --period <YYZZ-Pnn>  Fiscal period to report, e.g. "2627-P04" (default: the latest in the source);
+                       with --years, the newest period
+  --periods <list>     Several periods in one call, comma-separated, e.g. "2627-P04,2627-P03"
+                       (up to ${CHIRURGIES_MAX_PERIODS}); output is { periods, reports[] }, one report per period
+  --years <n>          The same period in each of the last n fiscal years, newest first
+                       (1-${CHIRURGIES_MAX_PERIODS}), e.g. 2627-P04, 2526-P04, 2425-P04; same output as --periods
   --refresh            Force a fresh fetch, ignoring the local cache
   --ttl <minutes>      Cache TTL (default ${CHIRURGIES_DEFAULT_TTL_MINUTES}; the source updates ~every 4 weeks)
   --json               Output JSON (default when piped)
@@ -177,6 +198,7 @@ Examples:
   quebec-sante chirurgies --region montreal --table
   quebec-sante chirurgies --specialty ortho --json
   quebec-sante chirurgies --region RSS03 --period 2627-P01 --json
+  quebec-sante chirurgies --region montreal --specialty ortho --years 3 --json
 `;
 
 const REGIONS_HELP = `quebec-sante regions — Québec health regions (RSS) shared by every command
@@ -379,7 +401,11 @@ export function parseLevels(raw: string): CumulatifLevel[] | string {
 /** Render a clinc report as an aligned human-readable table. */
 function formatCliniquesTable(report: CliniquesReport): string {
   if (report.clinics.length === 0) return 'No clinics matched the filters.';
-  const header = ['TOTAL', '6-9', '9-12', '12-15', '15-18', '18-21', '21-6', 'REGION', 'CLINIC'];
+  const multiDay = report.window.days > 1;
+  const header = [
+    ...(multiDay ? ['DATE'] : []),
+    'TOTAL', '6-9', '9-12', '12-15', '15-18', '18-21', '21-6', 'REGION', 'CLINIC',
+  ];
   // Group by region so a table reads naturally.
   const byRegion = new Map<string, Clinic[]>();
   for (const c of report.clinics) {
@@ -390,6 +416,7 @@ function formatCliniquesTable(report: CliniquesReport): string {
   const blocks = [...byRegion.entries()].map(([region, clinics]) => {
     const title = `${region} — ${clinics.length} clinic row(s)`;
     const rows = clinics.map((c) => [
+      ...(multiDay ? [c.date] : []),
       String(c.totalOffered),
       ...CLINIQUE_BAND_KEYS.map((k) => fmtCell(c.slots[k])),
       region,
@@ -397,7 +424,10 @@ function formatCliniquesTable(report: CliniquesReport): string {
     ]);
     return `${title}\n${renderGrid([header, ...rows])}`;
   });
-  const meta = `source: ${report.source}\ndate: ${report.dataDate} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\navailable dates: ${report.availableDates.join(', ')}`;
+  const when = multiDay
+    ? `${report.window.from} → ${report.window.to} (${report.window.days} days, ${report.dates.length} with data)`
+    : report.dataDate;
+  const meta = `source: ${report.source}\ndate: ${when} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\navailable dates: ${report.availableDates.join(', ')}`;
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
@@ -424,20 +454,39 @@ function chirurgiesBlock(r: ChirurgieRegion, previousPeriod: string | null, show
 }
 
 /** Render a surgical-waitlist report as aligned human-readable tables. */
-function formatChirurgiesTable(report: ChirurgiesReport): string {
+function chirurgiesPeriodBlocks(report: ChirurgiesPeriodReport): { blocks: string[]; missing: string } {
   // The overall row only adds information when every specialty is listed.
   const showOverall = report.province.specialties.length === CHIRURGIE_SPECIALTIES.length;
   const blocks = report.regions.map((r) => chirurgiesBlock(r, report.previousPeriod, showOverall));
   if (blocks.length === 0) blocks.push('No regions matched the filters.');
   blocks.push(chirurgiesBlock(report.province, report.previousPeriod, showOverall));
-  const p = report.period;
   const missing = report.missingRegions.length
-    ? `\nmissing from this period (not in province total): ${report.missingRegions.join(', ')}`
+    ? `missing from this period (not in province total): ${report.missingRegions.join(', ')}`
     : '';
+  return { blocks, missing };
+}
+
+function formatChirurgiesTable(report: ChirurgiesReport): string {
+  const { blocks, missing } = chirurgiesPeriodBlocks(report);
+  const p = report.period;
   const meta =
     `source: ${report.source}\nperiod: ${p.code} (fiscal ${p.fiscalYear}, P${p.number}) · ` +
-    `${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}${missing}`;
+    `${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}${missing ? `\n${missing}` : ''}`;
   return `${blocks.join('\n\n')}\n\n${meta}`;
+}
+
+function formatChirurgiesMultiTable(report: ChirurgiesMultiReport): string {
+  const sections = report.reports.map((r) => {
+    const { blocks, missing } = chirurgiesPeriodBlocks(r);
+    const p = r.period;
+    const title = `== ${p.code} (fiscal ${p.fiscalYear}, P${p.number}) ==`;
+    return [title, ...blocks, ...(missing ? [missing] : [])].join('\n\n');
+  });
+  const absent = report.notInSource.length ? `\nnot in the source: ${report.notInSource.join(', ')}` : '';
+  const meta =
+    `source: ${report.source}\nperiods: ${report.periods.join(', ')} · ` +
+    `${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}${absent}`;
+  return `${sections.join('\n\n')}\n\n${meta}`;
 }
 
 const HISTORIQUE_HELP = `quebec-sante urgences-historique — ER occupancy history (archived hourly snapshots)
@@ -543,6 +592,8 @@ function parseCli(args: string[]): { values: Record<string, unknown>; positional
       history: { type: 'boolean' },
       specialty: { type: 'string' },
       period: { type: 'string' },
+      periods: { type: 'string' },
+      years: { type: 'string' },
       days: { type: 'string' },
       by: { type: 'string' },
       api: { type: 'string' },
@@ -642,6 +693,16 @@ async function runCliniques(values: Record<string, unknown>, positionals: string
     }
     filters.date = values.date;
   }
+  if (typeof values.days === 'string') {
+    const days = Number(values.days);
+    if (!/^\d+$/.test(values.days) || days < 1 || days > CLINIQUES_MAX_DAYS) {
+      process.stderr.write(
+        `--days must be a whole number of days between 1 and ${CLINIQUES_MAX_DAYS} (got "${values.days}").\n`,
+      );
+      return 2;
+    }
+    filters.days = days;
+  }
   const cache = { ttlMinutes, refresh: values.refresh === true };
   try {
     const report = await fetchCliniquesReport({
@@ -660,6 +721,10 @@ async function runCliniques(values: Record<string, unknown>, positionals: string
     }
     if (err instanceof ParseError) {
       process.stderr.write(`parse error: ${err.message}\n`);
+      return 2;
+    }
+    if (err instanceof UsageError) {
+      process.stderr.write(`${err.message}\n`);
       return 2;
     }
     process.stderr.write(`error: ${(err as Error).message}\n`);
@@ -749,15 +814,61 @@ async function runChirurgies(values: Record<string, unknown>, positionals: strin
   const filters: ChirurgiesFilters = {};
   if (typeof values.region === 'string' && values.region !== '') filters.region = values.region;
   if (typeof values.specialty === 'string' && values.specialty !== '') filters.specialty = values.specialty;
-  if (typeof values.period === 'string') {
-    const period = values.period.trim().toUpperCase();
+  const toPeriod = (raw: string, flag: string): string | null => {
+    const period = raw.trim().toUpperCase();
     const m = /^(\d{2})(\d{2})-P(\d{2})$/.exec(period);
     const valid = m !== null && (Number(m[1]) + 1) % 100 === Number(m[2]) && Number(m[3]) >= 1 && Number(m[3]) <= 13;
-    if (!valid) {
-      process.stderr.write(`--period must be a fiscal period like "2627-P04" (P01-P13; got "${values.period}").\n`);
+    if (valid) return period;
+    process.stderr.write(`${flag} must be a fiscal period like "2627-P04" (P01-P13; got "${raw}").\n`);
+    return null;
+  };
+  if (typeof values.period === 'string') {
+    const period = toPeriod(values.period, '--period');
+    if (period === null) return 2;
+    filters.period = period;
+  }
+  const multi = typeof values.periods === 'string' || typeof values.years === 'string';
+  if (multi) {
+    if (typeof values.periods === 'string' && typeof values.years === 'string') {
+      process.stderr.write(`Give either --periods or --years, not both.\n`);
       return 2;
     }
-    filters.period = period;
+    if (typeof values.periods === 'string' && filters.period !== undefined) {
+      process.stderr.write(`--periods lists every period to report; drop --period.\n`);
+      return 2;
+    }
+    const mf: ChirurgiesMultiFilters = { region: filters.region, specialty: filters.specialty, period: filters.period };
+    if (typeof values.periods === 'string') {
+      const list = parseIdList(values.periods) ?? [];
+      const codes = list.map((p) => toPeriod(p, '--periods'));
+      if (codes.some((c) => c === null)) return 2;
+      if (codes.length === 0 || codes.length > CHIRURGIES_MAX_PERIODS) {
+        process.stderr.write(`--periods takes 1 to ${CHIRURGIES_MAX_PERIODS} periods (got ${codes.length}).\n`);
+        return 2;
+      }
+      mf.periods = codes as string[];
+    } else {
+      const raw = values.years as string;
+      const years = Number(raw);
+      if (!/^\d+$/.test(raw) || years < 1 || years > CHIRURGIES_MAX_PERIODS) {
+        process.stderr.write(`--years must be a whole number between 1 and ${CHIRURGIES_MAX_PERIODS} (got "${raw}").\n`);
+        return 2;
+      }
+      mf.years = years;
+    }
+    try {
+      const report = await fetchChirurgiesMultiReport({
+        filters: mf,
+        cache: { ttlMinutes, refresh: values.refresh === true },
+        fixture: typeof values.fixture === 'string' ? values.fixture : undefined,
+      });
+      const output =
+        resolveFormat(values) === 'json' ? JSON.stringify(report, null, 2) : formatChirurgiesMultiTable(report);
+      process.stdout.write(`${output}\n`);
+      return 0;
+    } catch (err) {
+      return chirurgiesError(err);
+    }
   }
   try {
     const report = await fetchChirurgiesReport({
@@ -770,21 +881,25 @@ async function runChirurgies(values: Record<string, unknown>, positionals: strin
     process.stdout.write(`${output}\n`);
     return 0;
   } catch (err) {
-    if (err instanceof UsageError) {
-      process.stderr.write(`usage error: ${err.message}\n`);
-      return 2;
-    }
-    if (err instanceof FetchError) {
-      process.stderr.write(`fetch error: ${err.message}\n`);
-      return 1;
-    }
-    if (err instanceof ParseError) {
-      process.stderr.write(`parse error: ${err.message}\n`);
-      return 2;
-    }
-    process.stderr.write(`error: ${(err as Error).message}\n`);
+    return chirurgiesError(err);
+  }
+}
+
+function chirurgiesError(err: unknown): number {
+  if (err instanceof UsageError) {
+    process.stderr.write(`usage error: ${err.message}\n`);
+    return 2;
+  }
+  if (err instanceof FetchError) {
+    process.stderr.write(`fetch error: ${err.message}\n`);
     return 1;
   }
+  if (err instanceof ParseError) {
+    process.stderr.write(`parse error: ${err.message}\n`);
+    return 2;
+  }
+  process.stderr.write(`error: ${(err as Error).message}\n`);
+  return 1;
 }
 
 async function runUrgencesHistorique(values: Record<string, unknown>, positionals: string[]): Promise<number> {

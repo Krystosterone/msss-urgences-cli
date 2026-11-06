@@ -236,14 +236,22 @@ export interface CliniquesReport {
   source: string;
   /** ISO-8601 timestamp stamped when the data was fetched (not cached). */
   fetchedAt: string;
-  /** The `date` the report is for (the requested date, or the latest present). */
+  /**
+   * The `date` the report is for: the requested date, or the latest present.
+   * With a multi-day window, its last day (`window.to`).
+   */
   dataDate: string;
+  /** The calendar-day window reported, inclusive. `days` is 1 unless `--days` was given. */
+  window: { from: string; to: string; days: number };
+  /** The dates in `window` that the source has rows for (newest first). */
+  dates: string[];
   /** True when this report was served from the local cache, false on a live fetch. */
   cached: boolean;
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
   /** Distinct dates present in the source (newest first). */
   availableDates: string[];
+  /** Matching rows, newest date first. */
   clinics: Clinic[];
 }
 
@@ -568,4 +576,27 @@ export interface ChirurgiesReport {
    */
   province: ChirurgieRegion;
   regions: ChirurgieRegion[];
+}
+
+/** One period inside a multi-period `chirurgies` report: the single-period report minus the shared fields. */
+export type ChirurgiesPeriodReport = Omit<
+  ChirurgiesReport,
+  'source' | 'fetchedAt' | 'cached' | 'cacheAgeMinutes' | 'availablePeriods'
+>;
+
+/** Top-level report emitted by `chirurgies --periods` / `--years`. */
+export interface ChirurgiesMultiReport {
+  source: string;
+  fetchedAt: string;
+  cached: boolean;
+  cacheAgeMinutes: number;
+  availablePeriods: string[];
+  /** The period codes reported, in the order of `reports`. */
+  periods: string[];
+  /**
+   * With `--years`: the same period of earlier fiscal years that the source
+   * doesn't have. Empty otherwise.
+   */
+  notInSource: string[];
+  reports: ChirurgiesPeriodReport[];
 }

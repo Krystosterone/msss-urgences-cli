@@ -15,7 +15,8 @@ quebec-sante cliniques [options]
 | `--region <name\|code>` | An RSS region by name, alias or code (`montreal`, `06`) — all of its RTS sub-regions; otherwise one RTS by code (`061`) or name substring (`Montérégie-Est`). Same spellings in every command (`quebec-sante regions` lists them) |
 | `--rls <name>` | Filter to a local service network (RLS) by name (accent-insensitive) |
 | `--search <text>` | Filter clinics by name (accent-insensitive substring) |
-| `--date <YYYY-MM-DD>` | The date to report; default = the latest date present in the source |
+| `--date <YYYY-MM-DD>` | The date to report; default = the latest date present in the source. With `--days`, the last day of the window |
+| `--days <n>` | Report `n` calendar days ending at `--date`, in one call (1–31, default 1). Rows come newest date first |
 | `--refresh` | Force a fresh fetch, ignoring the local cache |
 | `--ttl <minutes>` | Cache TTL (default 1440; the dataset updates weekly) |
 | `--json` | JSON output (default when piped) |
@@ -45,8 +46,15 @@ Exit codes: `0` success · `1` network/HTTP error · `2` structure changed or ba
 
 ## Output (data contract)
 
-Top level: `source`, `fetchedAt`, `dataDate` (the day the report is for),
-`cached`, `cacheAgeMinutes`, `availableDates` (newest first), `clinics[]`.
+Top level: `source`, `fetchedAt`, `dataDate` (the day the report is for: the
+last day of the window), `window`, `dates`, `cached`, `cacheAgeMinutes`,
+`availableDates` (newest first), `clinics[]` (newest date first, source order
+within a date).
+
+| Field | Meaning |
+|-------|---------|
+| `window` | `{ from, to, days }`: the calendar days reported, inclusive. `days` is 1 unless `--days` was given, and `to` equals `dataDate` |
+| `dates` | The dates in `window` that the source has rows for, newest first. A day in the window with no rows isn't listed, and isn't zero offers |
 
 Each `clinic`:
 
