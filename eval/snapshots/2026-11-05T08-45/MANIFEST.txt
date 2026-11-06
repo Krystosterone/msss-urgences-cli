@@ -2,3 +2,7 @@ archiveRev: 898190a40eb870a1dd0508db377517d7b9e54612
 createdAt: 2026-11-05T14:11:54Z
 build-api: build-api: 35 snapshots (2026-11-03T22:45 → 2026-11-05T08:45), 1 month file(s), 0 skipped → /tmp/tmp.OKEbmcpFps/site
 urgences-*.json: regenerated 2026-11-05T14:37:09Z from the same archiveRev, adding region.total and province (no other change)
+added 2026-11-06, for the targeted-retrieval runs (cliniques --days, chirurgies --years / --periods); no existing file changed:
+  chirurgies-ortho-years3.json: chirurgies --specialty ortho --years 3 --json, fetched 2026-11-06. Each of its reports equals the matching chirurgies-ortho-<period>.json minus the shared top-level fields.
+  chirurgies-ortho-periods.json: chirurgies --specialty ortho --periods 2627-P04,2627-P03 --json, fetched 2026-11-06. Same check.
+  cliniques-ahuntsic-7days.json: the --rls ahuntsic --date 2026-10-28 --days 7 shape, built from the seven cliniques-ahuntsic-<date>.json files above (names in NFC, as the CLI emits since #17), not refetched: MSSS's 2026-11-05 14h republication revised two 2026-10-26 rows (Clinique Familiale Pas-à-Pas and District Médical Junior, physicians), so a live fetch no longer reproduces the pinned week.

@@ -34,6 +34,7 @@ Systems recorded so far:
 | `skills-run2` | 2026-11-05T08-45 | The same, on the second snapshot |
 | `skills-var1` … `skills-var3` | 2026-11-05T08-45 | Three more fresh-agent runs of the skills, to measure run-to-run variation |
 | `skills-m1-run1` … `skills-m1-run3` | 2026-11-05T08-45 | Three fresh-agent runs of the single M1 `quebec-sante` skill ([`docs/m1-benchmark.md`](../docs/m1-benchmark.md)) |
+| `skills-retrieval-run1` … `-run3` | 2026-11-05T08-45 | Three fresh-agent runs after `cliniques --days` and `chirurgies --years` / `--periods`, from the multi-day and multi-period files added to that snapshot ([`docs/m1-benchmark.md`](../docs/m1-benchmark.md)) |
 
 The round-2 systems were asked Q01 "for a Thursday morning", matching the
 snapshot's time.

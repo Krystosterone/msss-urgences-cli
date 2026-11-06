@@ -38,15 +38,13 @@ cli urgences-cumulatif "${C[@]}" --level province,region --history --json >"$out
 cli urgences-cumulatif "${C[@]}" --id 12934659,51222800,51223279 --history --json \
   >"$out/cumulatif-facilities.json"
 
-for p in 2627-P04 2627-P03 2526-P04 2425-P04; do
-  cli chirurgies --specialty ortho --period "$p" --json >"$out/chirurgies-ortho-$p.json"
-done
+# One call each: the same period over three fiscal years, and the latest two periods.
+cli chirurgies --specialty ortho --years 3 --json >"$out/chirurgies-ortho-years3.json"
+last2=$(cli chirurgies --specialty ortho --json | node -e \
+  'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).availablePeriods.slice(0,2).join(",")))')
+cli chirurgies --specialty ortho --periods "$last2" --json >"$out/chirurgies-ortho-periods.json"
 
-latest=$(cli cliniques --rls ahuntsic --json | node -e \
-  'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>console.log(JSON.parse(s).availableDates.slice(0,7).join(" ")))')
-for d in $latest; do
-  cli cliniques --rls ahuntsic --date "$d" --json >"$out/cliniques-ahuntsic-$d.json"
-done
+cli cliniques --rls ahuntsic --days 7 --json >"$out/cliniques-ahuntsic-7days.json"
 
 {
   echo "archiveRev: $(git rev-parse "$rev")"
