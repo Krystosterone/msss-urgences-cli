@@ -5,6 +5,7 @@ import { readCliniquesCache, writeCliniquesCache, type CacheConfig } from '../co
 import type { Clinic, CliniquesReport } from '../core/types';
 import { MSSS_CLINIQUES_URL } from '../core/source';
 import { resolveRegion, rssCodeOf, type RssRegion } from '../core/regions';
+import { UsageError } from '../core/errors';
 
 export interface CliniquesFilters {
   /**
@@ -17,8 +18,26 @@ export interface CliniquesFilters {
   rls?: string;
   /** Filter to a clinic by name (accent-insensitive substring). */
   search?: string;
-  /** A specific date (YYYY-MM-DD). Defaults to the latest date present in the source. */
+  /**
+   * A specific date (YYYY-MM-DD), or the last day of the window when `days`
+   * is more than 1. Defaults to the latest date present in the source.
+   */
   date?: string;
+  /**
+   * Window length in calendar days, ending at `date` (default 1: that date
+   * only). Lets one call cover the week a pattern needs.
+   */
+  days?: number;
+}
+
+/** Largest `days` window: a month keeps a region's output a manageable size. */
+export const CLINIQUES_MAX_DAYS = 31;
+
+/** The ISO date `n` calendar days before `iso` (UTC, so no DST drift). */
+export function shiftDate(iso: string, n: number): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() - n);
+  return d.toISOString().slice(0, 10);
 }
 
 export const SOURCE_URL = MSSS_CLINIQUES_URL;
@@ -38,10 +57,10 @@ function regionMatches(c: Clinic, filter: string, resolved: RssRegion | null): b
 function clinicMatches(
   c: Clinic,
   filters: CliniquesFilters,
-  wantedDate: string,
+  window: { from: string; to: string },
   resolved: RssRegion | null,
 ): boolean {
-  if (c.date !== wantedDate) return false;
+  if (c.date < window.from || c.date > window.to) return false;
   if (filters.region && !regionMatches(c, filters.region, resolved)) return false;
   if (
     filters.rls &&
@@ -78,17 +97,26 @@ export async function fetchCliniquesReport(opts: {
       ? { clinics: cached.clinics, dates: cached.dates }
       : await loadFresh(opts.fixture, cache);
 
-  const wantedDate = filters.date ?? dates[0]!;
+  const days = filters.days ?? 1;
+  if (!Number.isInteger(days) || days < 1 || days > CLINIQUES_MAX_DAYS) {
+    throw new UsageError(`days must be a whole number from 1 to ${CLINIQUES_MAX_DAYS} (got ${days})`);
+  }
+  const to = filters.date ?? dates[0]!;
+  const window = { from: shiftDate(to, days - 1), to, days };
   const resolved = filters.region ? resolveRegion(filters.region) : null;
   // rssCode is re-derived so rows from a cache written before it existed carry it too.
+  // Newest date first, the same order as availableDates; source order within a date.
   const matched = clinics
-    .filter((c) => clinicMatches(c, filters, wantedDate, resolved))
-    .map((c) => ({ ...c, rssCode: rssCodeOf(c.regionCode) }));
+    .filter((c) => clinicMatches(c, filters, window, resolved))
+    .map((c) => ({ ...c, rssCode: rssCodeOf(c.regionCode) }))
+    .sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1));
 
   const report: CliniquesReport = {
     source: SOURCE_URL,
     fetchedAt: new Date().toISOString(),
-    dataDate: wantedDate,
+    dataDate: to,
+    window,
+    dates: dates.filter((d) => d >= window.from && d <= window.to),
     cached: cached !== null,
     cacheAgeMinutes:
       cached !== null

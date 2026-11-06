@@ -236,14 +236,22 @@ export interface CliniquesReport {
   source: string;
   /** ISO-8601 timestamp stamped when the data was fetched (not cached). */
   fetchedAt: string;
-  /** The `date` the report is for (the requested date, or the latest present). */
+  /**
+   * The `date` the report is for: the requested date, or the latest present.
+   * With a multi-day window, its last day (`window.to`).
+   */
   dataDate: string;
+  /** The calendar-day window reported, inclusive. `days` is 1 unless `--days` was given. */
+  window: { from: string; to: string; days: number };
+  /** The dates in `window` that the source has rows for (newest first). */
+  dates: string[];
   /** True when this report was served from the local cache, false on a live fetch. */
   cached: boolean;
   /** Cache-freshness: age of the served data in minutes. */
   cacheAgeMinutes: number;
   /** Distinct dates present in the source (newest first). */
   availableDates: string[];
+  /** Matching rows, newest date first. */
   clinics: Clinic[];
 }
 

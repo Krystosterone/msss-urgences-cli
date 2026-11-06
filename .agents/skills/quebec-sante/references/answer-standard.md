@@ -78,8 +78,9 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
   that dates it:
   - `urgences`: `dataDate`, when MSSS published it (Québec time), and
     `extractedAt`, when the snapshot was taken.
-  - `cliniques`: `dataDate`, the date of the appointments, and say the file is
-    published weekly.
+  - `cliniques`: `dataDate`, the date of the appointments (for a `--days`
+    window, `window.from` to `window.to`), and say the file is published
+    weekly.
   - `urgences-cumulatif` and `--baseline`: the fiscal year and period
     (April 1 → end of period N).
   - `chirurgies`: the period, an end-of-period snapshot that can be months

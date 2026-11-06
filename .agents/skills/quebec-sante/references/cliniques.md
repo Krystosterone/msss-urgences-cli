@@ -36,8 +36,11 @@ quebec-sante cliniques --region montreal --rls ahuntsic --json
 # A specific clinic by name:
 quebec-sante cliniques --search <clinic> --json
 
-# An earlier date, to see whether a pattern holds:
-quebec-sante cliniques --date YYYY-MM-DD --rls ahuntsic --json
+# The last 7 days in one call, to see whether a pattern holds:
+quebec-sante cliniques --region montreal --rls ahuntsic --days 7 --json
+
+# A window ending on an earlier date (here, the 7 days to that date):
+quebec-sante cliniques --date YYYY-MM-DD --days 7 --rls ahuntsic --json
 ```
 
 `--region` takes the same names and RSS codes as every other `quebec-sante`
@@ -46,10 +49,11 @@ To pair clinics with ERs in the same region, match a clinic's `rssCode` with
 the ER report's `regionCode`.
 
 The report has `clinics[]` (each: `name`, `regionName`, `rlsName`, `rssCode`,
-`professionGroup`, `totalOffered`, and `slots` with six time bands
+`date`, `professionGroup`, `totalOffered`, and `slots` with six time bands
 `6h_9h, 9h_12h, 12h_15h, 15h_18h, 18h_21h, 21h_6h`), `dataDate` (the date of
-the appointments), and `availableDates` (distinct dates present, newest
-first). `null` slots = no appointments offered in that band. For the full
+the appointments: the last day of the window), `window` (`from`, `to`,
+`days`), `dates` (the days in the window that have rows, newest first) and
+`availableDates` (distinct dates present, newest first). `null` slots = no appointments offered in that band. For the full
 command contract, field dictionary, exit codes, and cache semantics, see
 [`cli-cliniques.md`](cli-cliniques.md).
 
@@ -58,9 +62,10 @@ command contract, field dictionary, exit codes, and cache semantics, see
 1. **The question this data answers:** "which clinics around here usually
    offer appointments, and at what times?". Not "is there a slot for me now?".
 2. **Look at several dates before calling a pattern.** One day can be unusual,
-   and weekdays differ from weekends. Query 3–7 of the `availableDates`, ideally
-   including the same weekday as the person's need. Say how many dates you
-   looked at.
+   and weekdays differ from weekends. Use `--days 7`, so the window includes
+   the same weekday as the person's need, in one call. Each row carries its
+   `date`; count a clinic's days from those rows, and state the window
+   (`window.from` to `window.to`) and how many of its `dates` had data.
 3. **Time bands are the appointment's scheduled time.** A clinic that offered
    `18h_21h` slots on most recent days is one that does evening appointments.
    Don't call it open tonight.

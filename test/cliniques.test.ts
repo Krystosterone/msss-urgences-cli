@@ -34,6 +34,51 @@ test('--date picks a specific day', async () => {
   assert.ok(report.clinics.every((c) => c.date === '2026-08-18'));
 });
 
+test('a single date by default: window of 1 day, dates = [that date]', async () => {
+  const report = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE });
+  assert.deepEqual(report.window, { from: '2026-08-19', to: '2026-08-19', days: 1 });
+  assert.deepEqual(report.dates, ['2026-08-19']);
+});
+
+test('--days covers several dates in one call, newest first, ending at --date', async () => {
+  const one = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { rls: 'kamouraska', date: '2026-08-18' } });
+  const two = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { rls: 'kamouraska', date: '2026-08-19' } });
+  const both = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { rls: 'kamouraska', days: 7 } });
+  assert.deepEqual(both.window, { from: '2026-08-13', to: '2026-08-19', days: 7 });
+  assert.equal(both.dataDate, '2026-08-19');
+  assert.deepEqual(both.dates, ['2026-08-19', '2026-08-18']); // only days the source has
+  assert.equal(both.clinics.length, one.clinics.length + two.clinics.length);
+  const order = both.clinics.map((c) => c.date);
+  assert.deepEqual(order, [...order].sort().reverse());
+  // The same rows as the single-day calls, in the same within-day order.
+  assert.deepEqual(both.clinics.filter((c) => c.date === '2026-08-18'), one.clinics);
+});
+
+test('--days ending at an earlier --date excludes later dates', async () => {
+  const r = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { date: '2026-08-18', days: 2 } });
+  assert.deepEqual(r.window, { from: '2026-08-17', to: '2026-08-18', days: 2 });
+  assert.deepEqual(r.dates, ['2026-08-18']);
+  assert.ok(r.clinics.every((c) => c.date === '2026-08-18'));
+});
+
+test('a days window crosses month and year ends', async () => {
+  const r = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { date: '2026-03-01', days: 3 } });
+  assert.deepEqual(r.window, { from: '2026-02-27', to: '2026-03-01', days: 3 });
+  assert.deepEqual(r.dates, []);
+  assert.equal(r.clinics.length, 0);
+  const y = await fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { date: '2026-01-01', days: 2 } });
+  assert.equal(y.window.from, '2025-12-31');
+});
+
+test('days outside 1..31 is a usage error', async () => {
+  for (const days of [0, 32, 1.5]) {
+    await assert.rejects(
+      fetchCliniquesReport({ fixture: FIXTURE, cache: CACHE, filters: { days } }),
+      (err: Error) => err.name === 'UsageError',
+    );
+  }
+});
+
 test('region filter is accent-insensitive', async () => {
   const report = await fetchCliniquesReport({
     fixture: FIXTURE,
@@ -97,6 +142,24 @@ test('CLI: cliniques rejects an impossible calendar date with exit 2', async () 
 test('CLI: cliniques accepts a well-formed present date', async () => {
   const code = await main(['cliniques', '--date', '2026-08-19', '--region', 'bas-saint-laurent', '--fixture', FIXTURE, '--json']);
   assert.equal(code, 0);
+});
+
+test('CLI: cliniques --days validates and returns the window', async () => {
+  for (const bad of ['0', '32', 'abc', '2.5']) {
+    assert.equal(await main(['cliniques', '--days', bad, '--fixture', FIXTURE]), 2, bad);
+  }
+  const { stdout, code } = await runCli(['cliniques', '--rls', 'kamouraska', '--days', '7', '--fixture', FIXTURE, '--json']);
+  assert.equal(code, 0);
+  const report = JSON.parse(stdout);
+  assert.deepEqual(report.window, { from: '2026-08-13', to: '2026-08-19', days: 7 });
+  assert.deepEqual(report.dates, ['2026-08-19', '2026-08-18']);
+});
+
+test('CLI: a multi-day table shows a DATE column', async () => {
+  const { stdout, code } = await runCli(['cliniques', '--rls', 'kamouraska', '--days', '2', '--fixture', FIXTURE, '--table']);
+  assert.equal(code, 0);
+  assert.match(stdout, /^DATE\s+TOTAL/m);
+  assert.match(stdout, /2026-08-18 → 2026-08-19 \(2 days, 2 with data\)/);
 });
 
 test('CLI: --version of the binary includes both commands in help', async () => {

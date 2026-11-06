@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { parseArgs } from 'node:util';
 import { fetchUrgencesReport, type UrgencesFilters } from './tools/urgences';
-import { fetchCliniquesReport, type CliniquesFilters } from './tools/cliniques';
+import { fetchCliniquesReport, CLINIQUES_MAX_DAYS, type CliniquesFilters } from './tools/cliniques';
 import {
   fetchUrgencesCumulatifReport,
   DEFAULT_TTL_MINUTES as CUMULATIF_DEFAULT_TTL,
@@ -107,7 +107,10 @@ Options:
                       its RTS sub-regions), or one RTS by code ("061") or name ("Montérégie-Est")
   --rls <name>        Filter to a local service network (RLS) by name (accent-insensitive)
   --search <text>     Filter clinics by name (accent-insensitive substring)
-  --date <YYYY-MM-DD> The date to report (default: the latest date in the source)
+  --date <YYYY-MM-DD> The date to report (default: the latest date in the source); with
+                      --days, the last day of the window
+  --days <n>          Report n calendar days ending at --date, in one call (1-${CLINIQUES_MAX_DAYS},
+                      default 1). Rows come newest date first; "dates" lists the days present
   --refresh           Force a fresh fetch, ignoring the local cache
   --ttl <minutes>     Cache TTL (default 1440; the dataset updates weekly)
   --json              Output JSON (default when piped)
@@ -118,6 +121,7 @@ Options:
 Examples:
   quebec-sante cliniques --region montreal --table
   quebec-sante cliniques --search "Sainte-Justine" --json
+  quebec-sante cliniques --region montreal --rls ahuntsic --days 7 --json
 `;
 
 const CUMULATIF_HELP = `quebec-sante urgences-cumulatif — fiscal-year-to-date ER indicators and
@@ -379,7 +383,11 @@ export function parseLevels(raw: string): CumulatifLevel[] | string {
 /** Render a clinc report as an aligned human-readable table. */
 function formatCliniquesTable(report: CliniquesReport): string {
   if (report.clinics.length === 0) return 'No clinics matched the filters.';
-  const header = ['TOTAL', '6-9', '9-12', '12-15', '15-18', '18-21', '21-6', 'REGION', 'CLINIC'];
+  const multiDay = report.window.days > 1;
+  const header = [
+    ...(multiDay ? ['DATE'] : []),
+    'TOTAL', '6-9', '9-12', '12-15', '15-18', '18-21', '21-6', 'REGION', 'CLINIC',
+  ];
   // Group by region so a table reads naturally.
   const byRegion = new Map<string, Clinic[]>();
   for (const c of report.clinics) {
@@ -390,6 +398,7 @@ function formatCliniquesTable(report: CliniquesReport): string {
   const blocks = [...byRegion.entries()].map(([region, clinics]) => {
     const title = `${region} — ${clinics.length} clinic row(s)`;
     const rows = clinics.map((c) => [
+      ...(multiDay ? [c.date] : []),
       String(c.totalOffered),
       ...CLINIQUE_BAND_KEYS.map((k) => fmtCell(c.slots[k])),
       region,
@@ -397,7 +406,10 @@ function formatCliniquesTable(report: CliniquesReport): string {
     ]);
     return `${title}\n${renderGrid([header, ...rows])}`;
   });
-  const meta = `source: ${report.source}\ndate: ${report.dataDate} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\navailable dates: ${report.availableDates.join(', ')}`;
+  const when = multiDay
+    ? `${report.window.from} → ${report.window.to} (${report.window.days} days, ${report.dates.length} with data)`
+    : report.dataDate;
+  const meta = `source: ${report.source}\ndate: ${when} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\navailable dates: ${report.availableDates.join(', ')}`;
   return `${blocks.join('\n\n')}\n\n${meta}`;
 }
 
@@ -642,6 +654,16 @@ async function runCliniques(values: Record<string, unknown>, positionals: string
     }
     filters.date = values.date;
   }
+  if (typeof values.days === 'string') {
+    const days = Number(values.days);
+    if (!/^\d+$/.test(values.days) || days < 1 || days > CLINIQUES_MAX_DAYS) {
+      process.stderr.write(
+        `--days must be a whole number of days between 1 and ${CLINIQUES_MAX_DAYS} (got "${values.days}").\n`,
+      );
+      return 2;
+    }
+    filters.days = days;
+  }
   const cache = { ttlMinutes, refresh: values.refresh === true };
   try {
     const report = await fetchCliniquesReport({
@@ -660,6 +682,10 @@ async function runCliniques(values: Record<string, unknown>, positionals: string
     }
     if (err instanceof ParseError) {
       process.stderr.write(`parse error: ${err.message}\n`);
+      return 2;
+    }
+    if (err instanceof UsageError) {
+      process.stderr.write(`${err.message}\n`);
       return 2;
     }
     process.stderr.write(`error: ${(err as Error).message}\n`);
