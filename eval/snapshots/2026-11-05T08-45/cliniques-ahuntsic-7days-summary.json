@@ -1,0 +1,3654 @@
+{
+  "source": "https://msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/rdvoffert_DOuv.csv",
+  "fetchedAt": "2026-11-05T14:11:26.810Z",
+  "dataDate": "2026-10-28",
+  "window": {
+    "from": "2026-10-22",
+    "to": "2026-10-28",
+    "days": 7
+  },
+  "dates": [
+    "2026-10-28",
+    "2026-10-27",
+    "2026-10-26",
+    "2026-10-25",
+    "2026-10-24",
+    "2026-10-23",
+    "2026-10-22"
+  ],
+  "cached": true,
+  "cacheAgeMinutes": 0,
+  "availableDates": [
+    "2026-10-28",
+    "2026-10-27",
+    "2026-10-26",
+    "2026-10-25",
+    "2026-10-24",
+    "2026-10-23",
+    "2026-10-22",
+    "2026-10-21",
+    "2026-10-20",
+    "2026-10-19",
+    "2026-10-18",
+    "2026-10-17",
+    "2026-10-16",
+    "2026-10-15",
+    "2026-10-14",
+    "2026-10-13",
+    "2026-10-12",
+    "2026-10-11",
+    "2026-10-10",
+    "2026-10-09",
+    "2026-10-08",
+    "2026-10-07",
+    "2026-10-06",
+    "2026-10-05",
+    "2026-10-04",
+    "2026-10-03",
+    "2026-10-02",
+    "2026-10-01",
+    "2026-09-30",
+    "2026-09-29",
+    "2026-09-28"
+  ],
+  "availableRange": {
+    "from": "2024-01-01",
+    "to": "2026-10-28",
+    "count": 1032
+  },
+  "clinics": [
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 73,
+        "12h_15h": 68,
+        "15h_18h": 27,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 172
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale et sportive Régina Assumpta",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 7,
+        "12h_15h": 4,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 16
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 33,
+        "9h_12h": 181,
+        "12h_15h": 126,
+        "15h_18h": 58,
+        "18h_21h": 25,
+        "21h_6h": 3
+      },
+      "totalOffered": 426
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE LE M.D",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 12,
+        "12h_15h": 10,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 22
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 3,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 7
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Urgence 241 Ahuntsic",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 22,
+        "12h_15h": 21,
+        "15h_18h": 13,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 58
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 12,
+        "12h_15h": 21,
+        "15h_18h": 20,
+        "18h_21h": 7,
+        "21h_6h": null
+      },
+      "totalOffered": 60
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 22,
+        "12h_15h": 18,
+        "15h_18h": 10,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 53
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 8,
+        "9h_12h": 14,
+        "12h_15h": 9,
+        "15h_18h": 7,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 38
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 20,
+        "12h_15h": 11,
+        "15h_18h": 17,
+        "18h_21h": 5,
+        "21h_6h": null
+      },
+      "totalOffered": 53
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 7,
+        "9h_12h": 28,
+        "12h_15h": 37,
+        "15h_18h": 30,
+        "18h_21h": 11,
+        "21h_6h": null
+      },
+      "totalOffered": 113
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 7,
+        "12h_15h": 3,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 13
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 11,
+        "12h_15h": 7,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 22
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical St-Sulpice",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 20,
+        "12h_15h": 11,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 41
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 6,
+        "12h_15h": 4,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 13
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 49,
+        "12h_15h": 50,
+        "15h_18h": 30,
+        "18h_21h": 8,
+        "21h_6h": null
+      },
+      "totalOffered": 143
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 13,
+        "12h_15h": 3,
+        "15h_18h": 4,
+        "18h_21h": 4,
+        "21h_6h": null
+      },
+      "totalOffered": 24
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 7,
+        "9h_12h": 19,
+        "12h_15h": 15,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 46
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 6,
+        "12h_15h": 11,
+        "15h_18h": 7,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 27
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 2,
+        "12h_15h": 4,
+        "15h_18h": 2,
+        "18h_21h": 3,
+        "21h_6h": null
+      },
+      "totalOffered": 11
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": 3,
+      "weekdayName": "Wednesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE MÉDICALE BBS-MED",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 12,
+        "12h_15h": 1,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 14
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 15,
+        "12h_15h": 7,
+        "15h_18h": 7,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 34
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE LE M.D",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 12,
+        "12h_15h": 14,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 29
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE MÉDICALE BBS-MED",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 12,
+        "12h_15h": 7,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 20
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 8,
+        "9h_12h": 97,
+        "12h_15h": 54,
+        "15h_18h": 34,
+        "18h_21h": 2,
+        "21h_6h": null
+      },
+      "totalOffered": 195
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 20,
+        "9h_12h": 65,
+        "12h_15h": 36,
+        "15h_18h": 8,
+        "18h_21h": 9,
+        "21h_6h": null
+      },
+      "totalOffered": 138
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Urgence 241 Ahuntsic",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 22,
+        "12h_15h": 27,
+        "15h_18h": 9,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 60
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 7,
+        "12h_15h": 13,
+        "15h_18h": 8,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 30
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 34,
+        "9h_12h": 171,
+        "12h_15h": 161,
+        "15h_18h": 87,
+        "18h_21h": 26,
+        "21h_6h": 5
+      },
+      "totalOffered": 484
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical St-Sulpice",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 21,
+        "12h_15h": 14,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 45
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 10,
+        "9h_12h": 21,
+        "12h_15h": 12,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 48
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 11,
+        "12h_15h": 6,
+        "15h_18h": 4,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 25
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 9,
+        "9h_12h": 22,
+        "12h_15h": 18,
+        "15h_18h": 12,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 61
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 3,
+        "12h_15h": 3,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 8
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 16,
+        "12h_15h": 5,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 27
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 39,
+        "12h_15h": 26,
+        "15h_18h": 24,
+        "18h_21h": 5,
+        "21h_6h": null
+      },
+      "totalOffered": 100
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 13,
+        "12h_15h": 8,
+        "15h_18h": 6,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 29
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 1,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 1
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 2,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 7
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 7,
+        "9h_12h": 33,
+        "12h_15h": 30,
+        "15h_18h": 21,
+        "18h_21h": 13,
+        "21h_6h": null
+      },
+      "totalOffered": 104
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 23,
+        "12h_15h": 13,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 37
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 5,
+        "12h_15h": 4,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 10
+    },
+    {
+      "date": "2026-10-27",
+      "weekday": 2,
+      "weekdayName": "Tuesday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 18,
+        "12h_15h": 24,
+        "15h_18h": 15,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 59
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE MÉDICALE BBS-MED",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 12,
+        "12h_15h": 10,
+        "15h_18h": 6,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 29
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 14,
+        "9h_12h": 56,
+        "12h_15h": 52,
+        "15h_18h": 33,
+        "18h_21h": 7,
+        "21h_6h": null
+      },
+      "totalOffered": 162
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical St-Sulpice",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 23,
+        "12h_15h": 16,
+        "15h_18h": 6,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 49
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 29,
+        "12h_15h": 14,
+        "15h_18h": 7,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 56
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 3,
+        "12h_15h": 1,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 4
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 8,
+        "9h_12h": 22,
+        "12h_15h": 18,
+        "15h_18h": 6,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 54
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 10,
+        "12h_15h": 9,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 25
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 14,
+        "12h_15h": 11,
+        "15h_18h": 8,
+        "18h_21h": 6,
+        "21h_6h": null
+      },
+      "totalOffered": 44
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 16,
+        "12h_15h": 9,
+        "15h_18h": 4,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 35
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Urgence 241 Ahuntsic",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 1,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 1
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 5,
+        "12h_15h": 5,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 15
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 15,
+        "9h_12h": 178,
+        "12h_15h": 177,
+        "15h_18h": 85,
+        "18h_21h": 16,
+        "21h_6h": 1
+      },
+      "totalOffered": 472
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 67,
+        "12h_15h": 49,
+        "15h_18h": 26,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 147
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 8,
+        "12h_15h": 9,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 18
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 18,
+        "12h_15h": 17,
+        "15h_18h": 20,
+        "18h_21h": 5,
+        "21h_6h": null
+      },
+      "totalOffered": 61
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 6,
+        "12h_15h": 7,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 15
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 31,
+        "12h_15h": 31,
+        "15h_18h": 23,
+        "18h_21h": 4,
+        "21h_6h": null
+      },
+      "totalOffered": 91
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 5,
+        "12h_15h": 7,
+        "15h_18h": 3,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 18
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 2,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 2
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": 1,
+      "weekdayName": "Monday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 8,
+        "9h_12h": 45,
+        "12h_15h": 30,
+        "15h_18h": 13,
+        "18h_21h": 5,
+        "21h_6h": null
+      },
+      "totalOffered": 101
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": null,
+        "12h_15h": 4,
+        "15h_18h": 3,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 7
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 15,
+        "12h_15h": 15,
+        "15h_18h": 10,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 45
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 30,
+        "12h_15h": 7,
+        "15h_18h": 7,
+        "18h_21h": 8,
+        "21h_6h": 3
+      },
+      "totalOffered": 56
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 11,
+        "12h_15h": 3,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 16
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 9,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 14
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 8,
+        "12h_15h": 8,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 20
+    },
+    {
+      "date": "2026-10-25",
+      "weekday": 7,
+      "weekdayName": "Sunday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 6,
+        "12h_15h": 9,
+        "15h_18h": 6,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 21
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": null,
+        "12h_15h": null,
+        "15h_18h": 2,
+        "18h_21h": 3,
+        "21h_6h": null
+      },
+      "totalOffered": 5
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 11,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 14
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 31,
+        "12h_15h": 17,
+        "15h_18h": 11,
+        "18h_21h": 3,
+        "21h_6h": 6
+      },
+      "totalOffered": 72
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 18,
+        "12h_15h": 19,
+        "15h_18h": 8,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 49
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 1,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 5
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 11,
+        "9h_12h": 37,
+        "12h_15h": 12,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 60
+    },
+    {
+      "date": "2026-10-24",
+      "weekday": 6,
+      "weekdayName": "Saturday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 6,
+        "12h_15h": 3,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 10
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 8,
+        "9h_12h": 40,
+        "12h_15h": 27,
+        "15h_18h": 12,
+        "18h_21h": 2,
+        "21h_6h": null
+      },
+      "totalOffered": 89
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 1,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 6
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 17,
+        "12h_15h": 14,
+        "15h_18h": 8,
+        "18h_21h": 5,
+        "21h_6h": null
+      },
+      "totalOffered": 47
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 9,
+        "12h_15h": 8,
+        "15h_18h": 3,
+        "18h_21h": 1,
+        "21h_6h": null
+      },
+      "totalOffered": 24
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE MÉDICALE BBS-MED",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 12,
+        "12h_15h": 4,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 18
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 9,
+        "9h_12h": 23,
+        "12h_15h": 14,
+        "15h_18h": 9,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 55
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 52,
+        "12h_15h": 23,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 84
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 6,
+        "12h_15h": 2,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 13
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 4,
+        "15h_18h": 7,
+        "18h_21h": 3,
+        "21h_6h": null
+      },
+      "totalOffered": 18
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 8,
+        "12h_15h": 3,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 11
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 7,
+        "12h_15h": 3,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 13
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": null,
+        "12h_15h": null,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 1
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 18,
+        "12h_15h": 8,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 30
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 4,
+        "9h_12h": 17,
+        "12h_15h": 24,
+        "15h_18h": 11,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 56
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 2,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 2
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 47,
+        "12h_15h": 20,
+        "15h_18h": 12,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 81
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 21,
+        "9h_12h": 134,
+        "12h_15h": 78,
+        "15h_18h": 29,
+        "18h_21h": 1,
+        "21h_6h": 5
+      },
+      "totalOffered": 268
+    },
+    {
+      "date": "2026-10-23",
+      "weekday": 5,
+      "weekdayName": "Friday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 3,
+        "12h_15h": 2,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 5
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE LE M.D",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 2,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 2
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical St-Sulpice",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 5,
+        "9h_12h": 23,
+        "12h_15h": 19,
+        "15h_18h": 8,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 55
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 3,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 9
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 3,
+        "12h_15h": 2,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 7
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 10,
+        "12h_15h": 4,
+        "15h_18h": 4,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 21
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Urgence 241 Ahuntsic",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 4,
+        "12h_15h": 10,
+        "15h_18h": 12,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 26
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 6,
+        "12h_15h": 8,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 20
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 24,
+        "12h_15h": 18,
+        "15h_18h": 8,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 56
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC de Montréal-Nord",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 9,
+        "12h_15h": 4,
+        "15h_18h": 6,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 20
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLINIQUE MÉDICALE BBS-MED",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 11,
+        "12h_15h": 2,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 13
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical Junior",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 11,
+        "9h_12h": 85,
+        "12h_15h": 60,
+        "15h_18h": 18,
+        "18h_21h": 2,
+        "21h_6h": null
+      },
+      "totalOffered": 176
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "District Médical",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 16,
+        "9h_12h": 154,
+        "12h_15h": 113,
+        "15h_18h": 52,
+        "18h_21h": 5,
+        "21h_6h": 2
+      },
+      "totalOffered": 342
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 21,
+        "12h_15h": 12,
+        "15h_18h": 5,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 40
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Désy",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 17,
+        "12h_15h": 16,
+        "15h_18h": 18,
+        "18h_21h": 8,
+        "21h_6h": null
+      },
+      "totalOffered": 62
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 7,
+        "9h_12h": 31,
+        "12h_15h": 9,
+        "15h_18h": 9,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 56
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Rayons De Soleil",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 1,
+        "12h_15h": null,
+        "15h_18h": null,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 1
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": null,
+        "9h_12h": 6,
+        "12h_15h": 2,
+        "15h_18h": 1,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 9
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique médicale Omnisanté",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 6,
+        "9h_12h": 44,
+        "12h_15h": 32,
+        "15h_18h": 13,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 95
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CLSC DE MONTRÉAL-NORD-EST",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 1,
+        "9h_12h": 8,
+        "12h_15h": 6,
+        "15h_18h": 3,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 18
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Infirmière",
+      "slots": {
+        "6h_9h": 3,
+        "9h_12h": 13,
+        "12h_15h": 4,
+        "15h_18h": 2,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 22
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 9,
+        "9h_12h": 74,
+        "12h_15h": 43,
+        "15h_18h": 24,
+        "18h_21h": null,
+        "21h_6h": null
+      },
+      "totalOffered": 150
+    },
+    {
+      "date": "2026-10-22",
+      "weekday": 4,
+      "weekdayName": "Thursday",
+      "regionCode": "064",
+      "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+      "rssCode": "06",
+      "rlsCode": "0642",
+      "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+      "name": "Clinique Familiale Pas-à-Pas",
+      "professionGroup": "Médecin",
+      "slots": {
+        "6h_9h": 2,
+        "9h_12h": 6,
+        "12h_15h": 12,
+        "15h_18h": 9,
+        "18h_21h": 6,
+        "21h_6h": null
+      },
+      "totalOffered": 35
+    }
+  ],
+  "summary": {
+    "clinicsWithOffers": 15,
+    "byProfessionGroup": [
+      {
+        "professionGroup": "Infirmière",
+        "clinicsWithOffers": 9,
+        "clinicsWithOffersEveryDay": 0,
+        "totalOffered": 702,
+        "bands": {
+          "6h_9h": {
+            "offered": 81,
+            "clinicsWithOffers": 6,
+            "clinicsWithOffersEveryDay": 0
+          },
+          "9h_12h": {
+            "offered": 315,
+            "clinicsWithOffers": 9,
+            "clinicsWithOffersEveryDay": 0
+          },
+          "12h_15h": {
+            "offered": 197,
+            "clinicsWithOffers": 8,
+            "clinicsWithOffersEveryDay": 0
+          },
+          "15h_18h": {
+            "offered": 101,
+            "clinicsWithOffers": 8,
+            "clinicsWithOffersEveryDay": 0
+          },
+          "18h_21h": {
+            "offered": 8,
+            "clinicsWithOffers": 3,
+            "clinicsWithOffersEveryDay": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "clinicsWithOffers": 0,
+            "clinicsWithOffersEveryDay": 0
+          }
+        }
+      },
+      {
+        "professionGroup": "Médecin",
+        "clinicsWithOffers": 15,
+        "clinicsWithOffersEveryDay": 5,
+        "totalOffered": 6070,
+        "bands": {
+          "6h_9h": {
+            "offered": 371,
+            "clinicsWithOffers": 14,
+            "clinicsWithOffersEveryDay": 2
+          },
+          "9h_12h": {
+            "offered": 2552,
+            "clinicsWithOffers": 15,
+            "clinicsWithOffersEveryDay": 4
+          },
+          "12h_15h": {
+            "offered": 1908,
+            "clinicsWithOffers": 15,
+            "clinicsWithOffersEveryDay": 5
+          },
+          "15h_18h": {
+            "offered": 1008,
+            "clinicsWithOffers": 14,
+            "clinicsWithOffersEveryDay": 2
+          },
+          "18h_21h": {
+            "offered": 206,
+            "clinicsWithOffers": 9,
+            "clinicsWithOffersEveryDay": 1
+          },
+          "21h_6h": {
+            "offered": 25,
+            "clinicsWithOffers": 1,
+            "clinicsWithOffersEveryDay": 1
+          }
+        }
+      }
+    ],
+    "byClinic": [
+      {
+        "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 89,
+        "bands": {
+          "6h_9h": {
+            "offered": 8,
+            "daysWithOffers": 4
+          },
+          "9h_12h": {
+            "offered": 48,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 21,
+            "daysWithOffers": 4
+          },
+          "15h_18h": {
+            "offered": 12,
+            "daysWithOffers": 4
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CENTRE MÉDICAL MIEUX-ÊTRE SUCC. AHUNTSIC",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 7,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 801,
+        "bands": {
+          "6h_9h": {
+            "offered": 32,
+            "daysWithOffers": 6
+          },
+          "9h_12h": {
+            "offered": 376,
+            "daysWithOffers": 6
+          },
+          "12h_15h": {
+            "offered": 257,
+            "daysWithOffers": 7
+          },
+          "15h_18h": {
+            "offered": 134,
+            "daysWithOffers": 7
+          },
+          "18h_21h": {
+            "offered": 2,
+            "daysWithOffers": 1
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique Familiale Pas-à-Pas",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 2,
+        "datesWithOffers": [
+          "2026-10-27",
+          "2026-10-22"
+        ],
+        "totalOffered": 17,
+        "bands": {
+          "6h_9h": {
+            "offered": 1,
+            "daysWithOffers": 1
+          },
+          "9h_12h": {
+            "offered": 7,
+            "daysWithOffers": 2
+          },
+          "12h_15h": {
+            "offered": 6,
+            "daysWithOffers": 2
+          },
+          "15h_18h": {
+            "offered": 3,
+            "daysWithOffers": 2
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique Familiale Pas-à-Pas",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 6,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 192,
+        "bands": {
+          "6h_9h": {
+            "offered": 22,
+            "daysWithOffers": 5
+          },
+          "9h_12h": {
+            "offered": 67,
+            "daysWithOffers": 6
+          },
+          "12h_15h": {
+            "offered": 55,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 36,
+            "daysWithOffers": 4
+          },
+          "18h_21h": {
+            "offered": 12,
+            "daysWithOffers": 2
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLINIQUE LE M.D",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 3,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-22"
+        ],
+        "totalOffered": 53,
+        "bands": {
+          "6h_9h": {
+            "offered": 3,
+            "daysWithOffers": 1
+          },
+          "9h_12h": {
+            "offered": 26,
+            "daysWithOffers": 3
+          },
+          "12h_15h": {
+            "offered": 24,
+            "daysWithOffers": 2
+          },
+          "15h_18h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLINIQUE MÉDICALE BBS-MED",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 94,
+        "bands": {
+          "6h_9h": {
+            "offered": 4,
+            "daysWithOffers": 4
+          },
+          "9h_12h": {
+            "offered": 59,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 24,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 7,
+            "daysWithOffers": 2
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Désy",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 259,
+        "bands": {
+          "6h_9h": {
+            "offered": 40,
+            "daysWithOffers": 5
+          },
+          "9h_12h": {
+            "offered": 109,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 77,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 33,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Désy",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 6,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 396,
+        "bands": {
+          "6h_9h": {
+            "offered": 31,
+            "daysWithOffers": 6
+          },
+          "9h_12h": {
+            "offered": 133,
+            "daysWithOffers": 6
+          },
+          "12h_15h": {
+            "offered": 111,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 84,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 37,
+            "daysWithOffers": 4
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale et sportive Régina Assumpta",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 1,
+        "datesWithOffers": [
+          "2026-10-28"
+        ],
+        "totalOffered": 16,
+        "bands": {
+          "6h_9h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "9h_12h": {
+            "offered": 7,
+            "daysWithOffers": 1
+          },
+          "12h_15h": {
+            "offered": 4,
+            "daysWithOffers": 1
+          },
+          "15h_18h": {
+            "offered": 5,
+            "daysWithOffers": 1
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Omnisanté",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 58,
+        "bands": {
+          "6h_9h": {
+            "offered": 1,
+            "daysWithOffers": 1
+          },
+          "9h_12h": {
+            "offered": 26,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 20,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 8,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 3,
+            "daysWithOffers": 1
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Omnisanté",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 7,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 459,
+        "bands": {
+          "6h_9h": {
+            "offered": 33,
+            "daysWithOffers": 6
+          },
+          "9h_12h": {
+            "offered": 205,
+            "daysWithOffers": 7
+          },
+          "12h_15h": {
+            "offered": 137,
+            "daysWithOffers": 7
+          },
+          "15h_18h": {
+            "offered": 72,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 12,
+            "daysWithOffers": 3
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Rayons De Soleil",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 19,
+        "bands": {
+          "6h_9h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "9h_12h": {
+            "offered": 13,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 5,
+            "daysWithOffers": 3
+          },
+          "15h_18h": {
+            "offered": 1,
+            "daysWithOffers": 1
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Rayons De Soleil",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 6,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 327,
+        "bands": {
+          "6h_9h": {
+            "offered": 10,
+            "daysWithOffers": 4
+          },
+          "9h_12h": {
+            "offered": 105,
+            "daysWithOffers": 6
+          },
+          "12h_15h": {
+            "offered": 121,
+            "daysWithOffers": 6
+          },
+          "15h_18h": {
+            "offered": 80,
+            "daysWithOffers": 6
+          },
+          "18h_21h": {
+            "offered": 11,
+            "daysWithOffers": 2
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "Clinique médicale Urgence 241 Ahuntsic",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 4,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-22"
+        ],
+        "totalOffered": 145,
+        "bands": {
+          "6h_9h": {
+            "offered": 4,
+            "daysWithOffers": 2
+          },
+          "9h_12h": {
+            "offered": 49,
+            "daysWithOffers": 4
+          },
+          "12h_15h": {
+            "offered": 58,
+            "daysWithOffers": 3
+          },
+          "15h_18h": {
+            "offered": 34,
+            "daysWithOffers": 3
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC AHUNTSIC",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 152,
+        "bands": {
+          "6h_9h": {
+            "offered": 23,
+            "daysWithOffers": 5
+          },
+          "9h_12h": {
+            "offered": 64,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 37,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 25,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 3,
+            "daysWithOffers": 3
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC AHUNTSIC",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 7,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 157,
+        "bands": {
+          "6h_9h": {
+            "offered": 4,
+            "daysWithOffers": 4
+          },
+          "9h_12h": {
+            "offered": 80,
+            "daysWithOffers": 7
+          },
+          "12h_15h": {
+            "offered": 56,
+            "daysWithOffers": 7
+          },
+          "15h_18h": {
+            "offered": 17,
+            "daysWithOffers": 4
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC de Montréal-Nord",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 3,
+        "datesWithOffers": [
+          "2026-10-27",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 19,
+        "bands": {
+          "6h_9h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "9h_12h": {
+            "offered": 10,
+            "daysWithOffers": 3
+          },
+          "12h_15h": {
+            "offered": 6,
+            "daysWithOffers": 3
+          },
+          "15h_18h": {
+            "offered": 3,
+            "daysWithOffers": 2
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC de Montréal-Nord",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 6,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 186,
+        "bands": {
+          "6h_9h": {
+            "offered": 3,
+            "daysWithOffers": 3
+          },
+          "9h_12h": {
+            "offered": 64,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 44,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 58,
+            "daysWithOffers": 6
+          },
+          "18h_21h": {
+            "offered": 17,
+            "daysWithOffers": 5
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC DE MONTRÉAL-NORD-EST",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 87,
+        "bands": {
+          "6h_9h": {
+            "offered": 8,
+            "daysWithOffers": 5
+          },
+          "9h_12h": {
+            "offered": 36,
+            "daysWithOffers": 5
+          },
+          "12h_15h": {
+            "offered": 25,
+            "daysWithOffers": 5
+          },
+          "15h_18h": {
+            "offered": 16,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 2,
+            "daysWithOffers": 2
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "CLSC DE MONTRÉAL-NORD-EST",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 5,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 126,
+        "bands": {
+          "6h_9h": {
+            "offered": 9,
+            "daysWithOffers": 3
+          },
+          "9h_12h": {
+            "offered": 56,
+            "daysWithOffers": 4
+          },
+          "12h_15h": {
+            "offered": 30,
+            "daysWithOffers": 4
+          },
+          "15h_18h": {
+            "offered": 26,
+            "daysWithOffers": 5
+          },
+          "18h_21h": {
+            "offered": 5,
+            "daysWithOffers": 2
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "District Médical",
+        "professionGroup": "Infirmière",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 1,
+        "datesWithOffers": [
+          "2026-10-26"
+        ],
+        "totalOffered": 2,
+        "bands": {
+          "6h_9h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "9h_12h": {
+            "offered": 2,
+            "daysWithOffers": 1
+          },
+          "12h_15h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "15h_18h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "District Médical",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 7,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 2120,
+        "bands": {
+          "6h_9h": {
+            "offered": 124,
+            "daysWithOffers": 7
+          },
+          "9h_12h": {
+            "offered": 879,
+            "daysWithOffers": 7
+          },
+          "12h_15h": {
+            "offered": 679,
+            "daysWithOffers": 7
+          },
+          "15h_18h": {
+            "offered": 329,
+            "daysWithOffers": 7
+          },
+          "18h_21h": {
+            "offered": 84,
+            "daysWithOffers": 7
+          },
+          "21h_6h": {
+            "offered": 25,
+            "daysWithOffers": 7
+          }
+        }
+      },
+      {
+        "name": "District Médical Junior",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 7,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-25",
+          "2026-10-24",
+          "2026-10-23",
+          "2026-10-22"
+        ],
+        "totalOffered": 808,
+        "bands": {
+          "6h_9h": {
+            "offered": 72,
+            "daysWithOffers": 7
+          },
+          "9h_12h": {
+            "offered": 359,
+            "daysWithOffers": 7
+          },
+          "12h_15h": {
+            "offered": 248,
+            "daysWithOffers": 7
+          },
+          "15h_18h": {
+            "offered": 103,
+            "daysWithOffers": 6
+          },
+          "18h_21h": {
+            "offered": 26,
+            "daysWithOffers": 4
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      },
+      {
+        "name": "District Médical St-Sulpice",
+        "professionGroup": "Médecin",
+        "regionCode": "064",
+        "regionName": "RTS du Nord-de-l'Île-de-Montréal",
+        "rssCode": "06",
+        "rlsCode": "0642",
+        "rlsName": "RLS d'Ahuntsic - Montréal-Nord",
+        "daysWithOffers": 4,
+        "datesWithOffers": [
+          "2026-10-28",
+          "2026-10-27",
+          "2026-10-26",
+          "2026-10-22"
+        ],
+        "totalOffered": 190,
+        "bands": {
+          "6h_9h": {
+            "offered": 20,
+            "daysWithOffers": 4
+          },
+          "9h_12h": {
+            "offered": 87,
+            "daysWithOffers": 4
+          },
+          "12h_15h": {
+            "offered": 60,
+            "daysWithOffers": 4
+          },
+          "15h_18h": {
+            "offered": 23,
+            "daysWithOffers": 4
+          },
+          "18h_21h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          },
+          "21h_6h": {
+            "offered": 0,
+            "daysWithOffers": 0
+          }
+        }
+      }
+    ]
+  }
+}

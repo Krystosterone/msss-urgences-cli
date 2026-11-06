@@ -122,7 +122,8 @@ Options:
   --date <YYYY-MM-DD> The date to report (default: the latest date in the source); with
                       --days, the last day of the window
   --days <n>          Report n calendar days ending at --date, in one call (1-${CLINIQUES_MAX_DAYS},
-                      default 1). Rows come newest date first; "dates" lists the days present
+                      default 1). Rows come newest date first; "dates" lists the days present,
+                      and "summary" totals each clinic and professional group over the window
   --refresh           Force a fresh fetch, ignoring the local cache
   --ttl <minutes>     Cache TTL (default 1440; the dataset updates weekly)
   --json              Output JSON (default when piped)
@@ -424,11 +425,32 @@ function formatCliniquesTable(report: CliniquesReport): string {
     ]);
     return `${title}\n${renderGrid([header, ...rows])}`;
   });
+  if (multiDay) blocks.push(formatCliniquesSummary(report));
   const when = multiDay
     ? `${report.window.from} → ${report.window.to} (${report.window.days} days, ${report.dates.length} with data)`
     : report.dataDate;
-  const meta = `source: ${report.source}\ndate: ${when} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\navailable dates: ${report.availableDates.join(', ')}`;
+  const range = report.availableRange;
+  const meta =
+    `source: ${report.source}\ndate: ${when} · ${report.cached ? 'cached' : 'live'} · fetched ${report.fetchedAt}\n` +
+    `available dates: ${range.from} → ${range.to} (${range.count} dates)`;
   return `${blocks.join('\n\n')}\n\n${meta}`;
+}
+
+/** The window summary: per clinic × group, each band as "offered/days with offers". */
+function formatCliniquesSummary(report: CliniquesReport): string {
+  const n = report.dates.length;
+  const header = ['DAYS', 'TOTAL', '6-9', '9-12', '12-15', '15-18', '18-21', '21-6', 'CLINIC'];
+  const rows = report.summary.byClinic.map((s) => [
+    `${s.daysWithOffers}/${n}`,
+    String(s.totalOffered),
+    ...CLINIQUE_BAND_KEYS.map((k) => (s.bands[k].daysWithOffers ? `${s.bands[k].offered}/${s.bands[k].daysWithOffers}d` : '—')),
+    `${s.name} (${s.professionGroup})`,
+  ]);
+  const groups = report.summary.byProfessionGroup
+    .map((g) => `${g.professionGroup}: ${g.clinicsWithOffers} clinic(s) with offers, ${g.clinicsWithOffersEveryDay} every day`)
+    .join(' · ');
+  const title = `Summary over ${n} date(s) with data — ${report.summary.clinicsWithOffers} clinic(s) with offers (${groups})`;
+  return `${title}\n${renderGrid([header, ...rows])}`;
 }
 
 function fmtWaitRow(w: ChirurgieWaitlist): string[] {
@@ -439,6 +461,7 @@ function fmtWaitRow(w: ChirurgieWaitlist): string[] {
     String(w.total),
     fmtCell(w.pctOver6m, '%'),
     fmtCell(w.pctOver12m, '%'),
+    fmtDelta(w.deltaFromPreviousPeriod),
     w.label,
   ];
 }
@@ -447,7 +470,7 @@ function chirurgiesBlock(r: ChirurgieRegion, previousPeriod: string | null, show
   const delta =
     r.deltaFromPreviousPeriod === null ? '' : ` · ${fmtDelta(r.deltaFromPreviousPeriod)} vs ${previousPeriod}`;
   const title = `${r.name}${r.code ? ` (${r.code})` : ' (derived)'} — ${r.overall.total} waiting${delta}`;
-  const header = ['0-6m', '6-12m', '>12m', 'TOTAL', '%>6m', '%>12m', 'SPECIALTY'];
+  const header = ['0-6m', '6-12m', '>12m', 'TOTAL', '%>6m', '%>12m', 'Δ PREV', 'SPECIALTY'];
   const rows = r.specialties.map(fmtWaitRow);
   if (showOverall) rows.push(fmtWaitRow(r.overall));
   return `${title}\n${renderGrid([header, ...rows])}`;
