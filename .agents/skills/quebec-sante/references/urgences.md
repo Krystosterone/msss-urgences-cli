@@ -137,8 +137,10 @@ For a general ER-occupancy question, apply these rules:
     shorter wait, and it's never a reason to delay care for a possible
     emergency.
 12. **Check the sample size before trusting a slot.** Each profile row has
-    `samples`; with fewer than ~3 per slot (a short `--days`, or an archive that
-    started recently: `window.archiveStart`), say the history is still thin.
+    `samples`; with fewer than ~3 per slot (a short `--days`, or a window that
+    falls in the archive's hole from 2025-11-01 to 2026-11-05), say the history
+    is thin. Judge coverage from `window.snapshots` (about 24 a day when
+    complete), not `window.archiveStart`, the oldest snapshot overall.
 13. **"Is now unusual?" = `latest.deltaFromTypicalPct`.** Treat roughly ±10
     points as normal; +10 to +20 is "somewhat busier"; +20 or more is "busier
     than usual for this hour"; −20 or less is "quieter than usual". Only once

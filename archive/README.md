@@ -8,6 +8,9 @@ Every file is stored **byte for byte as MSSS serves it**: no re-encoding, no
 reformatting, no newline conversion (see [`.gitattributes`](../.gitattributes)).
 A file is committed only when its bytes change, so **each commit touching a file
 is one published version**, and the file's git history is its archive.
+The urgences versions from 2023-02-01 to 2025-11-01 were captured by another
+project and imported byte for byte
+([Imported history](../docs/archive-job.md#imported-history)).
 
 | File | Source | Encoding | MSSS updates | Why it's archived |
 |------|--------|----------|--------------|-------------------|
@@ -23,8 +26,8 @@ every fiscal period since 2019-20 P12).
 
 You don't need git to use the history: the `pages` workflow builds a
 static JSON API from these files and serves it on GitHub Pages at
-`https://krystosterone.github.io/msss-urgences-cli/api/v1/`. That's what
-`msss-urgences urgences-historique` reads. See
+`https://krystosterone.github.io/quebec-sante-cli/api/v1/`. That's what
+`quebec-sante urgences-historique` reads. See
 [`docs/archive-job.md`](../docs/archive-job.md#history-api-github-pages).
 
 ## Reading the history
@@ -44,7 +47,7 @@ To clone the code without downloading every past version of the data, use a
 partial clone. Old versions are then fetched on demand by `git show`:
 
 ```bash
-git clone --filter=blob:none https://github.com/Krystosterone/msss-urgences-cli.git
+git clone --filter=blob:none https://github.com/Krystosterone/quebec-sante-cli.git
 ```
 
 The data is © Gouvernement du Québec (MSSS), published on

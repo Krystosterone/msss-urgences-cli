@@ -25,9 +25,14 @@ function git(repo: string, args: string[], input?: string): Buffer {
  * Every committed version of `path`, oldest first, decoded from Latin-1 (the
  * archive holds MSSS's bytes verbatim). Streams blobs through
  * `git cat-file --batch` in chunks so memory stays bounded.
+ *
+ * `--full-history` because versions can reach main through a merge (the
+ * imported history in docs/archive-job.md): by default `git log -- path`
+ * follows only the parent the merge result matches, and drops the merged
+ * branch's versions. Merges are skipped since their content is a parent's.
  */
 export function* archivedVersions(repo: string, path = URGENCES_ARCHIVE_PATH): Generator<ArchivedVersion> {
-  const commits = git(repo, ['log', '--reverse', '--format=%H', '--', path])
+  const commits = git(repo, ['log', '--full-history', '--no-merges', '--reverse', '--format=%H', '--', path])
     .toString('utf8')
     .split('\n')
     .filter(Boolean);

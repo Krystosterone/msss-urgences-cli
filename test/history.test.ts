@@ -276,3 +276,54 @@ test('buildApiSite reads every archived version from git history', { skip: !hasG
   // Accented names survive: the archive's Latin-1 bytes are decoded as Latin-1.
   assert.ok(sept.facilities.some((f: { region: string }) => f.region === 'Montréal'));
 });
+
+test('buildApiSite reads versions that reached main through a merge', { skip: !hasGit }, () => {
+  const repo = mkdtempSync(join(tmpdir(), 'msss-api-merge-'));
+  const env = {
+    ...process.env,
+    GIT_CONFIG_GLOBAL: '/dev/null',
+    GIT_CONFIG_NOSYSTEM: '1',
+    GIT_AUTHOR_NAME: 't',
+    GIT_AUTHOR_EMAIL: 't@example.test',
+    GIT_COMMITTER_NAME: 't',
+    GIT_COMMITTER_EMAIL: 't@example.test',
+  };
+  const git = (...args: string[]) => {
+    const r = spawnSync('git', args, { cwd: repo, env, encoding: 'utf8' });
+    assert.equal(r.status, 0, r.stderr);
+  };
+  const target = join(repo, URGENCES_ARCHIVE_PATH);
+  const commit = (v: ArchivedVersion) => {
+    writeFileSync(target, Buffer.from(v.csv, 'latin1'));
+    git('add', '-A');
+    git('commit', '-q', '-m', v.ref);
+  };
+  git('init', '-q', '-b', 'main');
+  mkdirSync(join(repo, 'archive/urgences'), { recursive: true });
+  const base = version('2026-09-07T15:45', 16);
+  commit(base);
+  // An import branch: older versions, then the file put back as it was, so the
+  // merge is clean and its result matches main (what hides the branch from a
+  // plain `git log -- path`).
+  git('checkout', '-q', '-b', 'import');
+  commit(version('2026-08-30T15:45', 4));
+  commit(version('2026-08-31T15:45', 8));
+  commit({ ...base, ref: 'restore' });
+  git('checkout', '-q', 'main');
+  commit(version('2026-09-08T15:45', 20));
+  git('merge', '-q', '--no-ff', 'import', '-m', 'merge import');
+
+  const index = buildApiSite(repo, join(repo, 'site'), { generatedAt: 'fixed' });
+  const u = index.datasets.urgences;
+  assert.equal(u.snapshots, 4);
+  assert.equal(u.skippedVersions, 0);
+  assert.equal(u.first, '2026-08-30T15:45');
+  assert.equal(u.last, '2026-09-08T15:45');
+  assert.deepEqual(
+    u.months.map((m) => [m.month, m.snapshots]),
+    [
+      ['2026-08', 2],
+      ['2026-09', 2],
+    ],
+  );
+});

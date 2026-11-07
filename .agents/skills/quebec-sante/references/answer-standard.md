@@ -85,7 +85,8 @@ how serious it is, **Info-Santé 811** (a nurse, 24/7) can advise them.
     (April 1 → end of period N).
   - `chirurgies`: the period, an end-of-period snapshot that can be months
     old.
-  - `urgences-historique`: the window, its snapshot count and `archiveStart`.
+  - `urgences-historique`: the window and its snapshot count (about 24 a day
+    when complete).
 - **Check freshness against the current time.** If an hourly `dataDate` is more
   than about 2 hours old, say the data may be stale. Say which date the clinic
   data is for, since it's never today.

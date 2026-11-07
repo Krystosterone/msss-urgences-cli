@@ -84,10 +84,12 @@ Questions that are about a decision more than a dataset:
   - `--baseline`: yesterday's stretcher stay against this fiscal year's mean;
   - `urgences-historique`: now against the same hour (and weekday), with its
     sample count.
-- **"Has overcrowding worsened over time?"** Years come from
+- **"Has overcrowding worsened over time?"** Fiscal years come from
   `urgences-cumulatif`, which has no occupancy rate (use its strain
-  indicators); occupancy history from `urgences-historique` is only days to
-  weeks deep. Say which you used, and check coverage first.
+  indicators). Hourly occupancy from `urgences-historique` covers
+  2023-02-01 → 2025-11-01, then 2026-11-05 onward, with nothing in between:
+  compare like periods (`--by day` with a `--days` that reaches back far
+  enough) and check `window.snapshots` first. Say which you used.
 - **ERs and clinics in the same region:** match a clinic's `rssCode` with the
   ER report's `regionCode`. Put them side by side as context, without claiming
   one explains the other, and never as a reason to choose one over the other.
