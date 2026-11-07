@@ -142,7 +142,8 @@ arrives through the job's direct pushes.
   machine is often rejected as non-fast-forward. Run `git pull --rebase` and
   push again. Merging PRs isn't affected.
 - **Log noise:** `git log -- . ':(exclude)archive/'` shows only code changes.
-- **Clone size:** urgences adds an estimated 35–50 MB of history a year;
+- **Clone size:** urgences adds about 27 MB of history a year (75 MB for the
+  2023–2026 history, imported included);
   cumulatif about 1 MB. To clone the code without old data versions:
   `git clone --filter=blob:none …`.
 
@@ -194,6 +195,34 @@ Free-tier limits: a month of hourly snapshots is about 4 MB of JSON (served
 gzipped). GitHub Pages' soft limits (1 GB site, 100 GB/month bandwidth) leave
 years of headroom. With a custom Actions workflow, Pages' 10-builds-per-hour
 limit doesn't apply.
+
+## Imported history
+
+The job started on 2026-11-05. The urgences versions from **2023-02-01 to
+2025-11-01** (22,857 of them) come from
+[jlomako/quebec-emergency-rooms](https://github.com/jlomako/quebec-emergency-rooms)
+(MIT, © 2022 jlomako). Its GitHub Actions workflow ran `wget -N` on the same
+MSSS URL every hour into `data/urgence_time.csv`, until MSSS started refusing
+GitHub's runners.
+
+- **Byte for byte.** Each version became one commit of
+  `archive/urgences/Releve_horaire_urgences_7jours_nbpers.csv` with the
+  captured blob unchanged (same git blob id as upstream). Two empty versions,
+  failed downloads, were left out by the job's own checks (≥ 1000 bytes,
+  starting `RSS,`).
+- **Commits:** `archive: import urgences (<capture time, UTC>)`, author
+  `actions-user` (the capturing workflow), committer `msss-archive-bot`, both
+  dated at the capture time. The body names the upstream commit. A last
+  commit, `archive: end of the imported urgences history`, puts the file back
+  as the job had it, so the branch merges into `main` without a conflict.
+- **Merge it with a merge commit** (not squash, not rebase). A squash would
+  drop every imported version. The builder reads history with
+  `git log --full-history`, so versions that reach `main` through a merge are
+  included (`test/history.test.ts`).
+- **Not imported:** the gap from 2025-11-01 to 2026-11-05. No copy of MSSS's
+  own bytes for it has been found. The copies that exist are re-exports
+  (Données Québec datastore dumps, derived tables), which `archive/` doesn't
+  take.
 
 ## Adding a source
 
