@@ -219,10 +219,11 @@ GitHub's runners.
   drop every imported version. The builder reads history with
   `git log --full-history`, so versions that reach `main` through a merge are
   included (`test/history.test.ts`).
-- **Not imported:** the gap from 2025-11-01 to 2026-11-05. No copy of MSSS's
-  own bytes for it has been found. The copies that exist are re-exports
-  (Données Québec datastore dumps, derived tables), which `archive/` doesn't
-  take.
+- **Not imported:** the gap from 2025-11-01 to 2026-11-05. The only copies
+  of MSSS's own bytes found for it are two Wayback Machine captures
+  (2026-01-14 and 2026-02-09), not yet imported. The other copies are
+  re-exports (Données Québec datastore dumps, derived tables), which
+  `archive/` doesn't take.
 
 ## Adding a source
 
